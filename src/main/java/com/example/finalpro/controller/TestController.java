@@ -31,6 +31,9 @@ public class TestController {
         model.addAttribute("list", ts.findAll());
     }
 
-
+    @RequestMapping("/list_jpa_id")
+    public void list_jpa_id(Model model){
+        model.addAttribute("list", ts.findById());
+    }
 
 }

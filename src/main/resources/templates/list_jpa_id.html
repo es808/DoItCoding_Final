@@ -15,13 +15,12 @@
     </thead>
     <tbody th:each="d:${list}">
     <tr>
-        <td th:text="${d.cateid}"></td>
-        <td th:text="${d.catename}"></td>
         <td th:text="${d}"></td>
+<!--        <td th:text="${d.catename}"></td>-->
     </tr>
     </tbody>
 </table>
 
-<p th:each="d:${list_jpa_id}"><a th:text = "${d.catename}"></a></p>
+<!--<p th:each="d:${list_jpa_id}"><a th:text = "${d.catename}"></a></p>-->
 </body>
 </html>
