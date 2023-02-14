@@ -1,5 +1,6 @@
 package com.example.finalpro.db;
 
+import com.example.finalpro.vo.CustomerVO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -21,6 +22,14 @@ public class DBManager {
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	public static List<CustomerVO> findAll() {
+		List<CustomerVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("customer.findAll");
+		session.close();
+		return list;
 	}
 
 //	public static List<CustomerVO> findAll() {
