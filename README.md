@@ -14,3 +14,6 @@
  - DataBase : ORACLE
  - ORM : MyBatis, JPA
  - Framework : SpringBoot(3.0)
+
+2/15
+영민 - 개발틀 완성
