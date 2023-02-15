@@ -1,8 +1,9 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
-import com.example.finalpro.dao.TestDAO;
-import com.example.finalpro.service.TestService;
+import com.example.finalpro.service.CustomerService;
+import com.example.finalpro.service.CategoryService;
+import com.example.finalpro.service.TicketService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,13 @@ public class TestController {
     private CustomerDAO dao;
 
     @Autowired
-    private TestService ts;
+    private CategoryService ts;
+
+    @Autowired
+    private CustomerService cs;
+
+    @Autowired
+    private TicketService ticketService;
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
 
@@ -35,5 +42,16 @@ public class TestController {
     public void list_jpa_id(Model model){
         model.addAttribute("list", ts.findById());
     }
+
+    @RequestMapping("/list_customer")
+    public void list_customer(Model model){
+        model.addAttribute("list", cs.findAll());
+    }
+
+    @RequestMapping("/list_ticket")
+    public void list_ticket(Model model){
+        model.addAttribute("list", ticketService.findAll());
+    }
+
 
 }

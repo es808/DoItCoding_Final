@@ -1,6 +1,6 @@
 package com.example.finalpro.service;
 
-import com.example.finalpro.dao.TestDAO;
+import com.example.finalpro.dao.CategoryDAO;
 import com.example.finalpro.entity.Category;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Service
 @Setter
-public class TestService {
+public class CategoryService {
 
     @Autowired
-    private TestDAO dao;
+    private CategoryDAO dao;
 
     public List<Category> findAll(){
         return dao.findAll();

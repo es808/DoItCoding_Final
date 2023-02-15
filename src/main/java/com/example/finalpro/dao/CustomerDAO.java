@@ -1,14 +1,12 @@
 package com.example.finalpro.dao;
 
-import com.example.finalpro.db.DBManager;
-import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.entity.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class CustomerDAO {
-    public List<CustomerVO> findAll() {
-        return DBManager.findAll();
-    }
+public interface CustomerDAO extends JpaRepository<Customer, String> {
+
 }
