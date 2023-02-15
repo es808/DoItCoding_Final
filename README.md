@@ -14,3 +14,6 @@
  - DataBase : ORACLE
  - ORM : MyBatis, JPA
  - Framework : SpringBoot(3.0)
+
+### 브런치
+23.02.15 유근형
