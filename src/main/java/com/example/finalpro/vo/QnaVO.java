@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class QnaVO {
     private int no;
-    private String custId;
+    private String custid;
     private String title;
     private String content;
     private int hit;

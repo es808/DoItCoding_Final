@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class TicketVO {
-    private int ticketId;
-    private int cateId;
-    private String placeId;
+    private int ticketid;
+    private int cateid;
+    private String placeid;
     private String ticket_name;
     private int price;
     private String ticket_date;

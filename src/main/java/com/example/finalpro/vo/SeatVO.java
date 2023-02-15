@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class SeatVO {
-    private int seatId;
-    private String placeId;
-    private int ticketId;
-    private String seatName;
+    private int seatid;
+    private String placeid;
+    private int ticketid;
+    private String seatname;
     private String check_seat;
 }

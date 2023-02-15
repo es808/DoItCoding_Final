@@ -10,9 +10,9 @@ import lombok.Data;
 @Table(name = "review")
 public class Review {
     @Id
-    private int reviewId;
-    private String custId;
-    private int ticketId;
+    private int reviewid;
+    private String custid;
+    private int ticketid;
     private int score;
     private String review_content;
 }

@@ -10,8 +10,8 @@ import lombok.Data;
 @Table(name = "book")
 public class Book {
     @Id
-    private int bookId;
-    private String custId;
-    private int ticketId;
-    private int seatId;
+    private int bookid;
+    private String custid;
+    private int ticketid;
+    private int seatid;
 }

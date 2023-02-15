@@ -10,6 +10,6 @@ import lombok.Data;
 @Table(name = "table")
 public class Place {
     @Id
-    private String placeId;
-    private int seatNum;
+    private String placeid;
+    private int seatnum;
 }

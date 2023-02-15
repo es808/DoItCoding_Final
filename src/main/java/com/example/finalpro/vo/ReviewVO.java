@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class ReviewVO {
-    private int reviewId;
-    private String custId;
-    private int ticketId;
+    private int reviewid;
+    private String custid;
+    private int ticketid;
     private int score;
     private String review_content;
 }

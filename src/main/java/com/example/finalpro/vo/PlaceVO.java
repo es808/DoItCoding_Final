@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PlaceVO {
-    private String placeId;
-    private int seatNum;
+    private String placeid;
+    private int seatnum;
 }

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class DrawVO {
-    private int drawId;
-    private int ticketId;
-    private String custId;
-    private int seatId;
+    private int drawid;
+    private int ticketid;
+    private String custid;
+    private int seatid;
 }

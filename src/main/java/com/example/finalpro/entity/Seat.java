@@ -10,9 +10,9 @@ import lombok.Data;
 @Table(name = "seat")
 public class Seat {
     @Id
-    private int seatId;
-    private String placeId;
-    private int ticketId;
-    private String seatName;
+    private int seatid;
+    private String placeid;
+    private int ticketid;
+    private String seatname;
     private String check_seat;
 }
