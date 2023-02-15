@@ -14,3 +14,6 @@
  - DataBase : ORACLE
  - ORM : MyBatis, JPA
  - Framework : SpringBoot(3.0)
+
+2/15
+ - 은선: Git 사용법 숙지
