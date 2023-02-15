@@ -21,4 +21,5 @@ public class Customer {
     private String phone;
     private String gender;
     private int cateid;
+    private String favor;
 }

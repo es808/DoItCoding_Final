@@ -14,4 +14,5 @@ public class CustomerVO {
     private String phone;
     private String gender;
     private int cateid;
+    private String favor;
 }
