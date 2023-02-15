@@ -14,3 +14,6 @@
  - DataBase : ORACLE
  - ORM : MyBatis, JPA
  - Framework : SpringBoot(3.0)
+
+### 📝 프로젝트 기록
+ - 2/15 개발툴 기본설정 완료.
