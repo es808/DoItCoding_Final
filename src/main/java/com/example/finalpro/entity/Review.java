@@ -16,4 +16,3 @@ public class Review {
     private int score;
     private String review_content;
 }
-}

@@ -1,4 +1,7 @@
 package com.example.finalpro.dao;
 
-public class NoticeDAO {
+import com.example.finalpro.entity.Notice;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface NoticeDAO extends JpaRepository<Notice, Integer> {
 }
