@@ -1,0 +1,220 @@
+< 1. Category 테이블 >
+  *cateid		==> 직접 입력 (1, 2, 3)
+  catename
+insert into category(cateid,catename) values();
+
+< 2. Customer 테이블 >
+  *custid
+  cateid		==> 선호장르 (favor 대신함)
+  pwd
+  name
+  birth
+  phone		==> unique
+  email		==> unique
+  addr
+  gender
+insert into customer(custid,cateid,pwd,name,birth,email,addr,gender) values();
+
+< 3. Place 테이블 : 상영관 유형 - 좌석수에 따른 구분 >
+  *placeid	==> 직접 입력 (a, b, c)
+  seatnum	==> 좌석수
+insert into place(placeid, seatnum) values();
+
+< 4. Ticket 테이블 > - 장르별 인스턴스 20개
+  *ticketid	==> 정해야 할 것! (100번대나 1000번대로 구별짓기?)
+  cateid		==>1 영화 (시사회라 0원), 2 뮤지컬, 3 연극, 4 콘서트
+  placeid
+  ticket_name
+  price
+  ticket_date
+  content
+  img_fname
+  vid_url
+  min_age
+  runtime
+  cast		==> 캐스팅: 감독 및 배우 3-4명 정도
+  loc		==> 장소명
+  lat		==> 위도
+  lng		==> 경도
+insert into ticket(ticketid,cateid,placeid,ticket_name,price,ticket_date,content,img_fname,vid_url,min_age,runtime,cast,loc,lat,lng) values();
+
+< 5. Seat 테이블 : 좌석 상세 - a열 3번 자리 >
+  *seatid
+  placeid
+  ticketid
+  seatname	==> 예시: a1
+  check_seat	==> 빈좌석(디폴트값 Null), 예매좌석(Y)
+insert into seat(seatid,placeid,ticketid,seatname,check_seat) values();
+
+< 6. Book 테이블 : 예매 >
+  *bookid
+  custid
+  ticketid
+  seatid
+insert into book(bookid,custid,ticketid,seatid) values();
+
+< 7. Draw 테이블 : 드로우 >
+  *drawid
+  custid
+  ticketid
+  seatid
+insert into draw(drawid,custid,ticketid,seatid) values();
+
+< 8. Review 테이블 >
+  *reviewid
+  custid
+  ticketid
+  score
+  review_content
+insert into review(reviewid,custid,ticketid,score,reviewcontent) values();
+
+< 9. Notice 테이블 >
+  *notice_no
+  notice_category	==> '예매/드로우','결제/환불','기타'
+  notice_title
+  notice_content
+  notice_hit
+  notice_date
+  notice_fname
+insert into notice(notice_no,notice_category,notice_title,notice_content,notice_hit,notice_date,notice_fname) values();
+
+< 10. Qna 테이블 >
+  *qna_no
+  custid		==> fk
+  qna_category	==> '예매/드로우','결제/환불','기타'
+  qna_title
+  qna_content
+  qna_hit
+  qna_date
+  qna_fname
+  qna_open	==> qna 공개 여부: 공개(디폴트값 Null), 비공개(N)
+  qna_answer	==> 미답변(디폴트값 Null), 답변완료(not null)
+insert into qna(qna_no,custid,qna_category,qna_title,qna_content,qna_hit,qna_date,qna_fname,qna_open,qna_answer) values();
+
+------------------------------------------------------------
+
+< 사용자 생성 SQL >
+create user c##final identified by final123;
+grant connect,resource,dba to c##final;
+
+------------------------------------------------------------
+
+< 테이블 생성 SQL >
+
+  1. Category 테이블
+create table category(
+	cateid number primary key,
+	catename varchar2(20) not null
+);
+
+  2. Customer 테이블
+create table customer(
+	custid varchar2(20) primary key,
+	cateid number references category(cateid) not null,
+	pwd varchar2(20) not null,
+	name varchar2(20) not null,
+	birth date not null,
+	phone varchar2(20) not null,
+	email varchar2(30) not null,
+	addr varchar2(300) not null,
+	gender varchar2(10) not null,
+	constraints phone_uq unique (phone),
+	constraints email_uq unique (email)
+);
+
+  3. Place 테이블
+create table place(
+	placeid varchar2(10) primary key,
+	seatnum number not null
+);
+
+  4. Ticket 테이블
+create table ticket(
+	ticketid number primary key,
+	cateid number references category(cateid),
+	placeid varchar2(10) references place(placeid),
+	ticket_name varchar2(50) not null,
+	price number not null,
+	ticket_date date not null,
+	content varchar2(500) not null,
+	img_fname varchar2(300) not null,
+	img_fname_main varchar2(300),
+	vid_url varchar2(100),
+	min_age number not null,
+	runtime number not null,
+	cast varchar2(200) not null,
+	loc varchar2(100),
+	lat varchar2(100),
+	lng varchar2(100)
+);
+
+  5. Seat 테이블
+create table seat(
+	seatid number primary key,
+	placeid varchar2(10) references place(placeid),
+	ticketid number references ticket(ticketid),
+	seatname varchar2(10) not null,
+	check_seat char
+);
+
+create sequence seq_seatid;
+
+  6. Book 테이블
+create table book(
+	bookid number primary key,
+	custid varchar2(20) references customer(custid),
+	ticketid number references ticket(ticketid),
+	seatid number references seat(seatid)
+);
+
+create sequence seq_bookid;
+
+  7. Draw 테이블
+create table draw(
+	drawid number primary key,
+	custid varchar2(20) references customer(custid),
+	ticketid number references ticket(ticketid),
+	seatid number references seat(seatid)
+);
+
+create sequence seq_drawid;
+
+  8. Review 테이블
+create table review(
+	reviewid number primary key,
+	custid varchar2(20) references customer(custid),
+	ticketid number references ticket(ticketid),
+	score number not null,
+	review_content varchar2(500) not null
+);
+
+create sequence seq_reviewid;
+
+  9. Notice 테이블
+create table notice(
+	notice_no number primary key,
+	notice_category varchar2(20) not null,
+	notice_title varchar2(100) not null,
+	notice_content varchar2(1000) not null,
+	notice_hit number default 0,
+	notice_date date default sysdate,
+	notice_fname varchar2(300)
+);
+
+create sequence seq_notice_no;
+
+  10. Qna 테이블
+create table qna(
+	qna_no number primary key,
+	custid varchar2(20) references customer(custid),
+	qna_category varchar2(20) not null,
+	qna_title varchar2(100) not null,
+	qna_content varchar2(1000) not null,
+	qna_hit number default 0,
+	qna_date date default sysdate,
+	qna_fname varchar2(300),
+	qna_open char,
+	qna_answer varchar2(1000)
+);
+
+create sequence seq_qna_no;

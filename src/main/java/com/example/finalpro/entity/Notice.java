@@ -12,11 +12,11 @@ import java.util.Date;
 @Table(name = "notice")
 public class Notice {
     @Id
-    private int no;
-    private String title;
-    private String content;
-    private String hit;
+    private int notice_no;
+    private String notice_title;
+    private String notice_content;
+    private String notice_hit;
     private Date notice_date;
-    private String category;
-    private String f_name;
+    private String notice_category;
+    private String notice_fname;
 }
