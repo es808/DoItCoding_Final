@@ -53,5 +53,4 @@ public class TestController {
         model.addAttribute("list", ticketService.findAll());
     }
 
-
 }
