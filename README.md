@@ -29,9 +29,13 @@ Spring 구조 복습
 
 - main.html을 Spring으로 옮기기 (dao, entity, service, mapper 작성)
 - 카테고리, 시간 별로 Ticket을 출력하는 경우 쿼리문이 복잡하기 때문에 jpa가 아니라 mybatis로 작성.
+
 DAO / CustomerDAO, RankingDAO, ReviewDAO, TicketDAO
+
 entity / Customer, Ranking
+
 service / CustomerService, RankingService
+
 resources/db/ TicketMapper.xml
 
 
