@@ -18,10 +18,15 @@
 ### 브런치
 1.23.02.15 
 유근형 브런치 생성.
+
+
 2.23.02.17
 2차 프로젝트의 main 페이지를 스프링으로 옮기기
+
+
 3.23.02.20
 Spring 구조 복습
+
 - main.html을 Spring으로 옮기기 (dao, entity, service, mapper 작성)
 - 카테고리, 시간 별로 Ticket을 출력하는 경우 쿼리문이 복잡하기 때문에 jpa가 아니라 mybatis로 작성.
 DAO / CustomerDAO, RankingDAO, ReviewDAO, TicketDAO
