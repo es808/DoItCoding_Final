@@ -1,9 +1,9 @@
 package com.example.finalpro.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -22,8 +22,11 @@ public class Ticket {
     private String cast;
     private String content;
     private String img_fname;
+    private String img_fname_main;
     private String vid_url;
     private String loc;
     private String lat;
     private String lng;
+    @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER)
+    private List<Qna> qnaList;
 }

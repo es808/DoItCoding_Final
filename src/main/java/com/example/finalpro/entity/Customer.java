@@ -1,13 +1,11 @@
 package com.example.finalpro.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,7 +23,7 @@ public class Customer {
     private String phone;
     private String gender;
     private String role;
-    private String favor;
     private int cateid;
-    private String favor;
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    private List<Qna> qnaList;
 }
