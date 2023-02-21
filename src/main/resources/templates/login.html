@@ -7,12 +7,12 @@
 <body>
 <h2>로그인</h2>
 <a href="/join">회원가입</a><br>
-<form action="/login_submit" method="post">소
-    아이디 : <input type="text" name="id"><br>
-    암호 : <input type="password" name="pwd"><br>
+<form action="/login" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    아이디 : <input type="text" name="username"><br>
+    암호 : <input type="password" name="password"><br>
     <input type="submit" value="로그인">
-    <input type="reset" value="취">
+    <input type="reset" value="취소">
 </form>
 </body>
 </html>
