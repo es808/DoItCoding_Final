@@ -110,7 +110,7 @@ public class TestController {
     }
 
     @GetMapping("/service1")
-    public void service1(HttpSession session) {
+    public void service1(HttpSession session, Model m) {
         //인증된(로그인한) 회원의 정보를 가져오기 위하여
         //시큐리티의 인증객체가 필요.
         Authentication authentication =
@@ -126,7 +126,8 @@ public class TestController {
         //만약, id뿐 아니라 로그인한 회원의 다른정보도 필요하다면 dao를 통해 회원 정보를 가져와서 상태유지
 
         session.setAttribute("id", id);
-        System.out.println(session.getAttribute("id"));
+        System.out.println("session id = "+session.getAttribute("id"));
+        m.addAttribute("id", id);
     }
 
 
