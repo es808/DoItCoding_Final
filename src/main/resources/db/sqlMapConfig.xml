@@ -6,8 +6,8 @@
 	<properties resource="db/db.properties"/>
 	<typeAliases>
 		<typeAlias type="com.example.finalpro.vo.CustomerVO" alias="customerVO"/>
-        <typeAlias type="com.example.finalpro.vo.TicketVO" alias="ticketVO"></typeAlias>
-
+        <typeAlias type="com.example.finalpro.vo.TicketVO" alias="ticketVO"/>
+        <typeAlias type="com.example.finalpro.vo.RankingVO" alias="rankingVO"/>
 	</typeAliases>
   <environments default="development">
     <environment id="development">
@@ -22,5 +22,7 @@
   </environments>
   <mappers>
     <mapper resource="db/CustomerMapper.xml"/>
+      <mapper resource="db/TicketMapper.xml"/>
+      <mapper resource="db/RankingMapper.xml"/>
   </mappers>
 </configuration>

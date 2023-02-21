@@ -1,6 +1,7 @@
 package com.example.finalpro.db;
 
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.RankingVO;
 import com.example.finalpro.vo.TicketVO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -8,7 +9,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
@@ -37,8 +40,22 @@ public class DBManager {
 	// time=0은 과거, time=1은 현재, time=2는 미래
 	public static List<TicketVO> findAllTicketByCategory(int time, int cateid){
 		List<TicketVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("time", time);
+		map.put("cateid", cateid);
+
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findAllTicketByCategory");
+		list = session.selectList("ticket.findAllTicketByCategory", map);
+		session.close();
+
+		return list;
+	}
+
+	public static List<RankingVO> findAllRankingOrderByScore(int cateid){
+		List<RankingVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("ranking.findAllRankingOrderByScore", cateid);
+		System.out.println("list 출력 "+list );
 		session.close();
 
 		return list;

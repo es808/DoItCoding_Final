@@ -1,14 +1,9 @@
-package com.example.finalpro.entity;
+package com.example.finalpro.vo;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
 @Data
-@Table(name = "ticket")
-@SecondaryTable(name = "review")
-public class Ranking {
-    @Id
+public class RankingVO {
     private int ticketid;
     private int cateid;
     private String placeid;
@@ -20,13 +15,12 @@ public class Ranking {
     private String cast;
     private String content;
     private String img_fname;
-    private String img_fname_main;
     private String vid_url;
     private String loc;
-    private String lat;
-    private String lng;
+    private double lat;
+    private double lng;
     private int reviewid;
     private String custid;
-    private int score;
+    private double score;
     private String review_content;
 }
