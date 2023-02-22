@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="user-scalable=yes, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="/css/main.css">
+<link rel="stylesheet" type="text/css" href="/ticket/main.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -244,7 +244,7 @@ $(function(){
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+	    	 var url = "category?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 		
@@ -260,7 +260,7 @@ $(function(){
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+	    	 var url = "category?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 		
@@ -276,7 +276,7 @@ $(function(){
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+	    	 var url = "category?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 	}
@@ -287,7 +287,7 @@ $(function(){
 			if(e.which == 13){
 				var keyword = $("#search_txt").val();
 				sessionStorage.setItem("keyword", keyword);
-				var url = "searchPage.html?keyword="+keyword;
+				var url = "search?keyword="+keyword;
 				location.replace(url);
 				}
 		});
@@ -295,7 +295,7 @@ $(function(){
 		$("#search_btn").click(function(){ // 버튼 누르면 검색됨
 			var keyword = $("#search_txt").val();
 			sessionStorage.setItem("keyword", keyword);
-			var url = "searchPage.html?keyword="+keyword;
+			var url = "search?keyword="+keyword;
 			location.replace(url);
 		});
 	}// 검색 end

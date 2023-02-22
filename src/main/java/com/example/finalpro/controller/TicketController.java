@@ -1,7 +1,6 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
-import com.example.finalpro.dao.RankingDAO;
 import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
@@ -24,12 +23,22 @@ public class TicketController {
     private ReviewDAO reviewDAO;
     @Autowired
     private TicketDAO ticketDAO;
-    @Autowired
-    private RankingDAO rankingDAO;
 
     @GetMapping("/main")
     public ModelAndView main(){
         ModelAndView mav = new ModelAndView("/ticket/main");
+        return mav;
+    }
+
+    @GetMapping("/search")
+    public ModelAndView search(){
+        ModelAndView mav = new ModelAndView("/ticket/search");
+        return mav;
+    }
+
+    @GetMapping("/category")
+    public ModelAndView category(){
+        ModelAndView mav = new ModelAndView("/ticket/category");
         return mav;
     }
 
@@ -42,7 +51,7 @@ public class TicketController {
     }
 
 
-   // 시간, 장르 별로 출력하기
+   // 시간, 장르 별로 Ajax 출력하기
     @RequestMapping("/SelectTicketMain")
     @ResponseBody
     public List<TicketVO> selectTicket(int cateid, int time){
@@ -52,7 +61,15 @@ public class TicketController {
         return DBManager.findAllTicketByCategory(time,cateid);
     }
 
+    // 검색 결과 ticket들 Ajax 출력하기
+    @RequestMapping("/SearchTicket")
+    @ResponseBody
+    public List<TicketVO> selectSearchTicket(String keyword){
+        System.out.println("keyword :"+keyword);
 
+        return DBManager.findSearchTicket(keyword);
+    }
+    
 //    @RequestMapping("/RankingTicket")
 //    @ResponseBody
 //    public List<Ranking> main(@RequestParam("cateid")int cateid){

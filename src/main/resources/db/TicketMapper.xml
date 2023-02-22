@@ -15,6 +15,10 @@
             <if test="time==2">
                 ticket_date &gt; to_char(sysdate+7, 'yyyy/mm/dd')
             </if>
-
         </select>
+
+    <!--keyword' 를 매개변수로 ticket 리스트 검색 결과를 출력하기-->
+    <select id="findSearchTicket" resultType="ticketVO">
+        select * from ticket where ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%'
+    </select>
 </mapper>

@@ -55,7 +55,16 @@ public class DBManager {
 		List<RankingVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("ranking.findAllRankingOrderByScore", cateid);
-		System.out.println("list 출력 "+list );
+
+		session.close();
+
+		return list;
+	}
+
+	public static List<TicketVO> findSearchTicket(String keyword){
+		List<TicketVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("ticket.findSearchTicket", keyword);
 		session.close();
 
 		return list;
