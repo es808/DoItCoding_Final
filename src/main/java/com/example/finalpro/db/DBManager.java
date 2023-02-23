@@ -15,12 +15,11 @@ import java.util.Objects;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
+
 	static {
 		try {
-			System.out.println("ok1");
 			String resource = "db/sqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
-			System.out.println("ok2");
 			sqlSessionFactory =
 			  new SqlSessionFactoryBuilder().build(inputStream);
 		}catch (Exception e) {
