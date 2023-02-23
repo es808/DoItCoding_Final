@@ -18,8 +18,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
                 .requestMatchers("/","/login","/signUp","/list","/service1").permitAll()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers("/static/css/**","/images/**","/image/**").permitAll()
+//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .requestMatchers("/css/**","/images/**","/image/**").permitAll()
                 //.requestMatchers("/admin/**").hasRole("admin")
                 .anyRequest().authenticated();
 
