@@ -1,9 +1,11 @@
 package com.example.finalpro;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -16,6 +18,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
                 .requestMatchers("/","/login","/join","/list","/service1","/loginTest").permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .requestMatchers("/static/css/**","/images/**","/image/**").permitAll()
                 //.requestMatchers("/admin/**").hasRole("admin")
                 .anyRequest().authenticated();
 
@@ -33,4 +37,9 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer(){
+//        return (web -> web.ignoring().requestMatchers("/static/images/**", "/static/image/**","/js/**","/static/css/**"));
+//    }
 }
