@@ -87,9 +87,8 @@ public class TestController {
         m.setEmail("Test123");
         m.setPhone("0101234");
         m.setGender("a");
-        Date d = new Date();
-
         m.setBirth("19961225");
+        m.setAddr("seoul");
         try {
             System.out.println(m);
             customerDAO.save(m);
