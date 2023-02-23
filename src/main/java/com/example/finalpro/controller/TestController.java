@@ -76,22 +76,22 @@ public class TestController {
     @GetMapping("/join")
     public void join(){
     }
+    @GetMapping("/signUp")
+    public void signUp(){
+    }
 
-    @PostMapping("/join")
-    public ModelAndView joinSubmit(Customer m) {
+    @PostMapping("/signUp")
+    public ModelAndView signUpSubmit(Customer c) {
 //		String encPwd = passwordEncoder.encode(m.getPwd());
 //		m.setPwd(encPwd);
         ModelAndView mav = new ModelAndView("redirect:/login");
-        m.setPwd(passwordEncoder.encode(m.getPwd()));
-        m.setCateid(1);
-        m.setEmail("Test123");
-        m.setPhone("0101234");
-        m.setGender("a");
-        m.setBirth("19961225");
-        m.setAddr("seoul");
+        System.out.println(c.getPwd());
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("customer = "+c);
+        c.setRole("customer");
         try {
-            System.out.println(m);
-            customerDAO.save(m);
+            System.out.println(c);
+            customerDAO.save(c);
         }catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
             mav.setViewName("error");
@@ -153,8 +153,8 @@ public class TestController {
 //    }
 
     @GetMapping("loginTest")
-    public void loginTest(){
-
-    }
+    public void loginTest(){ }
+//    @GetMapping("signUp")
+//    public void signUp(){ }
 
 }
