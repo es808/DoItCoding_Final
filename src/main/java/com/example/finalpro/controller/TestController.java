@@ -108,6 +108,7 @@ public class TestController {
         return mav ;
     }
 
+
     @GetMapping("/service1")
     public void service1(HttpSession session, Model m) {
         //인증된(로그인한) 회원의 정보를 가져오기 위하여
@@ -151,5 +152,10 @@ public class TestController {
 //        }
 //        return mav;
 //    }
+
+    @GetMapping("loginTest")
+    public void loginTest(){
+
+    }
 
 }
