@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Controller
 @Setter
@@ -85,9 +84,11 @@ public class TestController {
         ModelAndView mav = new ModelAndView("redirect:/login");
         m.setPwd(passwordEncoder.encode(m.getPwd()));
         m.setCateid(1);
-        m.setEmail("Test123");
-        m.setPhone("0101234");
+        m.setEmail("Test1234@gmail.com");
+        m.setPhone("010123456");
         m.setGender("a");
+        m.setAddr("add");
+        m.setRole("customer");
         Date d = new Date();
 
         m.setBirth("19961225");

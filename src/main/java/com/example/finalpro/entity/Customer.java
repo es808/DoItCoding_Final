@@ -24,6 +24,7 @@ public class Customer {
     private String gender;
     private String role;
     private int cateid;
+    private String addr;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Qna> qnaList;
 }

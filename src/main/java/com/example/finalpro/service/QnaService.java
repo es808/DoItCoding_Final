@@ -19,4 +19,5 @@ public class QnaService {
     public List<Qna> findAll(){return dao.findAll();}
 
     public Optional<Qna> findById(int qna_no) {return dao.findById(qna_no);}
+    
 }

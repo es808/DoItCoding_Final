@@ -16,7 +16,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests()
                 .requestMatchers("/","/login","/join","/list","/service1").permitAll()
-                //.requestMatchers("/admin/**").hasRole("admin")
+                .requestMatchers("/admin/**").hasRole("admin")
                 .anyRequest().authenticated();
 
         http.formLogin().loginPage("/login").permitAll()

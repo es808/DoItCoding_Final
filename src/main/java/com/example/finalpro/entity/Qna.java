@@ -24,5 +24,5 @@ public class Qna {
     private String qna_category;
     private String qna_fname;
     private String qna_answer;
-    private char qna_open;
+    private String qna_open;
 }

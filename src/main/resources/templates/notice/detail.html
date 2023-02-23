@@ -12,10 +12,11 @@
     <div th:text="${n.notice_hit}"></div>
     <div th:text="${n.notice_date}"></div>
     <div th:if="${n.notice_fname}!=null">
-        <div th:if="${#strings.endsWith(b.fname,'.jpg')} or ${#strings.endsWith(b.fname,'.png')} or ${#strings.endsWith(b.fname,'.gif')}">
-            <img th:src="@{'/images/'+${n.notice_fname}}">
+        <div th:text="${n.notice_fname}"></div>
+        <div th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
+            <img th:src="@{'/notice_files/'+${n.notice_fname}}">
         </div>
-        <div th:unless="${#strings.endsWith(b.fname,'.jpg')} or ${#strings.endsWith(b.fname,'.png')} or ${#strings.endsWith(b.fname,'.gif')}">
+        <div th:unless="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
             <div th:text="${n.notice_fname}"></div>
         </div>
     </div>
