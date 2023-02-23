@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/loginTest.css">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
         $(function(){
@@ -36,7 +36,7 @@
 <body>
 <div id="background">
     <a class="main" href="mainTest.html">
-        <img src="/static/image/homeicon.png" width="40" height="40"></a>
+        <img th:src="@{/static/image/homeicon.png}" width="40" height="40"></a>
 </div>
 <div>
     <form id="form_login">
