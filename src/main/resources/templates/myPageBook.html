@@ -2,12 +2,15 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="/css/myPage/myPage.css">
+    <link rel="stylesheet" type="text/css" href="/css/myPage/myPageBook.css">
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
+            // custid 받아오기
+            var custid = sessionStorage.getItem("custid");
 
             if(custid != null){
                 $("#login").css('display', 'none');
@@ -27,82 +30,138 @@
                 }
             })
 
+            /*$("#addBtn").click(function(){
+                var arr = ($("#myform").serializeArray());
+                var score = arr[0].value;						//별점 스코어 변환
+                var review_content = $("#content").val();		//리뷰 내용
 
-            $("#get_customer").ready(function(){
-                var custid = sessionStorage.getItem("custid");
+                console.log(score,review_content)
 
-                $.ajax({
-                    url: "GetCustomerAction",
-                    data: {custid: sessionStorage.getItem("custid")},
-                    success: function(c,item){
-                        console.log("c아이디"+c.custid);
-                        console.log("c비번"+c.pwd);
-                        console.log("c이름"+c.name);
-                        console.log("c생일"+c.birth);
-                        console.log("c이메일"+c.email);
-                        console.log("c번호"+c.phone);
-                        console.log("c성별"+c.gender);
-                        console.log("c선호"+c.cateid);
-                        console.log("아이디:"+item.custid);		//아이디:undefined
-                        $("#custid").val(c.custid);
-                        $("#pwd").val(c.pwd);
-                        $("#name").val(c.name);
-                        $("#birth").val(c.birth);
-                        $("#email").val(c.email);
-                        $("#phone").val(c.phone);
-                        $('.gender[value='+c.gender+']').attr('checked','checked');
-                        $('.favor[value='+c.cateid+']').attr('checked','checked');
-                    }
-                });
-            });	//#get_customer 수정하기 위해 회원정보 가져오기
-
-
-            $("#btn_cancel").click(function(){
-                if (confirm('회원정보 수정을 취소하시겠습니까?')){
-                    location.href = "mainTest.html";	//clicked '확인'
-                }else{
-                    location.href = "mypage_Info.html";	//clicked '취소'
-                }
-            });	//#btn_cancel 이벤트
-
-
-            //수정된 내용 db에 반영하는 이벤트
-            $("#form_updateCustomer").submit(function(e){	//수정된 회원정보를 form이 제출
-                var url = "UpdateCustomerAction"
-
-                var custid = $("#custid").val();
-                var pwd = $("#pwd").val();
-                var name = $("#name").val();
-                var birth = $("#birth").val();
-                var phone = $("#phone").val();
-                var email = $("#email").val();
-                var gender = $("input:radio[name=gender]:checked").val();
-                var cateid = $("input:radio[name=favor]:checked").val();
+                var custid = "ym1234";
+                var ticketid = 28;
+                var reviewid = 3;
 
                 var data = {
+                    reviewid:reviewid,
                     custid:custid,
-                    pwd:pwd,
-                    name:name,
-                    email:email,
-                    birth:birth,
-                    phone:phone,
-                    gender:gender,
-                    cateid:cateid
-                };
-
-                console.log(data);
-
+                    ticketid:ticketid,
+                    score:score,
+                    review_content:review_content
+                }
                 $.ajax({
-                    url:url,
+                    url:"InsertReview",
                     data:data,
-                    success:function(re){
-                        $("#btn_update").click(function(){
-                            alert("회원 정보가 성공적으로 수정되었습니다.");
+                    success:function(data){
+                        if(data==1){
+                            alert("리뷰등록완료")
+                        }else{
+                            alert("리뷰등록실패")
+                        }
+                    }
+                })
+
+
+            })*/
+
+
+
+            // 예매내역 출력
+            $.ajax("BookByCustid", {
+                data:{custid:custid},
+                success:function(arr){
+                    for(var i =0; i<arr.length; i++){
+                        var div = $("<div></div>").addClass("booklist");
+                        var a = $("<a></a>").attr({
+                            ticketid: arr[i].ticketid,
+                            id: "preview"+i,
+                            href:"detailPageTest.html?ticketid="+arr[i].ticketid
+                        });
+                        var img = $("<img>").attr({
+                            src: "images/"+arr[i].img_fname,
+                            width : 200,
+                            height: 251,
+                        });
+                        var title = $("<h2></h2>").html(arr[i].ticket_name);
+                        var ul = $("<ul></ul>");
+                        var bookid = $("<li></li>").html("예매번호 :"+arr[i].bookid);
+                        var ticket_date = $("<li></li>").html("관람일 :"+arr[i].ticket_date);
+                        var loc = $("<li></li>").html("상영관 :"+arr[i].loc);
+                        var seatnum = $("<li></li>").html("관람인원 :"+arr[i].seatnum+"명");
+                        var seatname = $("<li></li>").html("관람좌석 :"+arr[i].seatname);
+
+                        var button = $("<button>후기작성</button>").attr({
+                            type:"button",
+                            id : "btn_toReview"+i,
+                            custid:custid,
+                            ticketid: arr[i].ticketid
+                        })
+
+                        var checkbox = $("<input>").attr({
+                            type:"checkbox",
+                            id:"check2_"+i,
+                            bookid:arr[i].bookid
+                        })
+                        var label = $("<label></label>").attr("for", "check2_"+i);
+
+                        $(ul).append(bookid, ticket_date, loc, seatnum, seatname);
+                        $(a).append(img);
+                        $(div).append(a,title,ul,button,checkbox,label);
+                        $("#book_all").append(div);
+
+                        // 이미지 클릭하면 detail 페이지로
+
+                        var preview_id = '#preview'+i;
+
+                        $(document).on('click', preview_id, function(e){
+                            var target = this.id;
+                            var ticketid = $("#"+target).attr("ticketid");
+                            sessionStorage.setItem("ticketid", '');
+                            sessionStorage.setItem("ticketid", ticketid);
+                        });
+
+                        // 후기작성 버튼 누르면 mypage_Review로
+
+                        var btn_toReview = '#btn_toReview'+i;
+
+                        $(document).on('click', btn_toReview, function(e){
+                            var target = this.id;
+                            var custid_btn = $("#"+target).attr("custid");
+                            var ticketid = $("#"+target).attr("ticketid");
+
+                            sessionStorage.setItem("custid", '');
+                            sessionStorage.setItem("custid", custid_btn);
+                            sessionStorage.setItem("ticketid", '');
+                            sessionStorage.setItem("ticketid", ticketid);
+
+                            var url = "review_test.html?custid="+custid+"?ticketid="+ticketid;
+                            location.replace(url);
+                        });
+
+                        // 예매내역 삭제
+                        var checkbox_delete = "#check2_"+i;
+
+
+                        var delete_book = function(bookid_delete){ // 예매내역 삭제 버튼 이벤트
+                            $(document).on('click', '#book_cancel', function(){
+                                $.ajax("DeleteBook", {
+                                    data:{bookid:bookid_delete},
+                                    success:function(){
+                                        alert("삭제완료");
+                                    }
+                                })
+                            });
+                        }
+
+                        $(document).on('click', checkbox_delete, function(){ // 체크박스 체크하면 bookid 가져옴
+                            var target = this.id;
+                            if($("#"+target).attr('checked', true)){
+                                var bookid_delete = $("#"+target).attr("bookid");
+                                delete_book(bookid_delete);
+                            }
                         });
                     }
-                });
-                e.preventDefault();
-            });	//#form_updateCustomer가 제출됨
+                }
+            });
 
             // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
             var time = 1;
@@ -165,7 +224,7 @@
                 });
             }
 
-// 검색하면 결과가 나오도록
+            // 검색하면 결과가 나오도록
             var searchKeyword = function(f){
                 $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
                     if(e.which == 13){
@@ -185,10 +244,12 @@
             }// 검색 end
 
             searchKeyword();
+            $("#logout").click(function(){
+                sessionStorage.removeItem("custid");
+            });
 
+        })
 
-
-        });	//전체 $funtion
     </script>
 </head>
 <body class="mypage_layout">
@@ -239,81 +300,21 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li id="myinfo"><a href="mypage_Info.html">내 정보</a></li>
-        <li><a href="mypage_Book.html">예매내역</a></li>
+        <li><a href="mypage_Info.html">내 정보</a></li>
+        <li id="mybook"><a href="mypage_Book.html">예매내역</a></li>
         <li><a href="mypage_Draw.html">드로우내역</a></li>
         <li><a href="mypage_Review.html">내 후기</a></li>
     </ul>
 </div>
-<div id="background">
-    <h2>회원정보 수정</h2>
-    <hr>
-</div>
-<form method="post" id="form_updateCustomer">
-    <table id="get_customer">
-        <tr>
-            <td>아이디</td>
-            <td><input type="text" name="custid" id="custid" class="box" readonly/></td>
-        </tr>
-        <tr>
-            <td>비밀번호</td>
-            <td><input type="password" name="pwd" id="pwd" class="box"></td>
-        </tr>
-        <tr>
-            <td colspan="2" class="info">* 최소 6자 이상 영문, 숫자로만 입력</td>
-        </tr>
-        <tr>
-            <td>비밀번호 확인</td>
-            <td><input type="password" class="box"></td>
-        </tr>
-        <tr>
-            <td>이름</td>
-            <td><input type="text" name="name" id="name" class="box" size="10"></td>
-        </tr>
-        <tr>
-            <td>이메일주소</td>
-            <td>
-                <input type="text" name="email" id="email" size="30" class="box">
-
-            </td>
-        </tr>
-        <tr>
-            <td>생년월일</td>
-            <td><input type="text" name="birth" id="birth" class="box"></td>
-        </tr>
-        <tr>
-            <td>전화번호</td>
-            <td>
-                <input type="text" name="phone" id="phone" maxlength="13" size="15" class="box">
-                <button>중복확인</button>
-            </td>
-        </tr>
-        <tr>
-            <td>성별</td>
-            <td class="td1" id="gender">
-                남성<input type="radio" id="male" name="gender" value="남자" class="gender">&nbsp;&nbsp;&nbsp;&nbsp;
-                여성<input type="radio" name="gender" value="여자" class="gender">
-            </td>
-        </tr>
-        <tr>
-            <td>관심사</td>
-            <td class="td1" id="cateid">
-                시사회<input type="radio"  name="favor" value="1" class="favor" >
-                뮤지컬<input type="radio"  name="favor" value="2" class="favor">
-                연극<input type="radio"  name="favor" value="3" class="favor">
-                콘서트<input type="radio"  name="favor" value="4" class="favor">
-            </td>
-        </tr>
-    </table>
-    <div class="caption">
-        <button id="btn_cancel">취소</button>&nbsp;&nbsp;
-        <input type="submit" id="btn_update" value="수정하기">
+<form action="" method="post" id="form">
+    <div id="book_all">
     </div>
+    <button id="book_cancel">예매취소</button>
 </form>
-
 <div id="main-footer">
     <footer>
-        <div>Footer</div>
+        <div>ⓒ CodingDoit corp.
+        </div>
     </footer>
 </div>
 </body>

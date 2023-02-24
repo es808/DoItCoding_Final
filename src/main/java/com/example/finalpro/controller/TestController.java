@@ -92,6 +92,14 @@ public class TestController {
     public void myPage() {
     }
 
+    @GetMapping("/myPageBook")
+    public void myPageBook() {
+    }
+
+    @GetMapping("/myPageReview")
+    public void myPageReview() {
+    }
+
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
 //		String encPwd = passwordEncoder.encode(m.getPwd());
