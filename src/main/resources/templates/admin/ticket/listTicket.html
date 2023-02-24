@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>관리자 페이지</h2>
+    <br><hr>
+    <h3>티켓 리스트</h3>
+  <table border="1">
+   <thead>
+    <tr>
+      <td>ticketid</td>
+      <td>ticket_name</td>
+      <td>cateid</td>
+      <td>placeid</td>
+      <td>ticket_date</td>
+        <td></td>
+    </tr>
+   </thead>
+   <tbody>
+    <tr th:each="t : ${list}" id="ticket">
+        <td th:text="${t.ticketid}"></td>
+        <td>
+            <a th:text="${t.ticket_name}" th:href="@{'/admin/updateTicket'+${t.ticketid}}"></a>
+        </td>
+        <td th:text="${t.cateid}"></td>
+        <td th:text="${t.placeid}"></td>
+        <td th:text="${t.ticket_date}"></td>
+        <td>
+            <a th:href="@{'/admin/deleteTicket'+${t.ticketid}}">삭제하기</a>
+        </td>
+    </tr>
+   </tbody>
+  </table>
+    <br><br>
+    <a href="/admin/insertTicket">추가하기</a>
+</body>
+</html>
