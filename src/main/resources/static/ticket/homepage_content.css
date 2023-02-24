@@ -1,0 +1,875 @@
+/* 메인페이지 - 포스터 부분 */
+.poster{
+    display : block;
+    position : absolute;
+    max-width: 100%;
+    width: 1380px;
+    height: 600px;
+    margin : auto;
+}
+#left_button, #right_button{
+    z-index : 99;
+    position : absolute;
+    display : inline-block;
+    cursor : pointer;
+    font-size:100px;
+    color: #F2AE30;
+    top: 380px;
+}
+#right_button{
+    position : absolute;
+    left : 1340px;
+}
+.slider{
+    float : left;
+    overflow : hidden;
+}
+/* 메인페이지 - 본문 구성하기 */
+.main_rank{
+    position : absolute;
+    margin : auto;
+    margin-left : 15px;
+}
+#main-content h2{
+    padding-left : 10px;
+    color : #F2AE30;
+    padding : 10px;
+    margin-top : 70px;
+}
+#main-content p{
+    margin-top : 30px;
+    text-align : center;
+    font-size : 16px;
+    font-weight : 600;
+    color : #08428C;
+}
+#main-content ul{
+    text-align : center;
+}
+#main-content ul>li{
+    float : left;
+    border : 1.5px solid #dcdcdc;
+    border-radius : 25px 25px 25px 25px;
+    width : 80px;
+    height : 25px;
+    line-height : 25px;
+    padding : 5px;
+    margin-right : 15px;
+}
+#main-content li a{
+    font-size : 14px;
+    color : #091140;
+    height: 100px;
+    text-decoration: none;
+}
+#main-content li:hover{
+    transition-duration: 0.5s;
+    background: #08428C;
+}
+#main-content li:hover a{
+    color : white;
+}
+#main-content div{
+    margin-bottom : 20px;
+}
+.img{
+    display: inline-block;
+    margin-top : 30px;
+    margin-left : 120px;
+    cursor : pointer;
+}
+#main-content:hover img{
+    background-color:rgba(255, 255, 255, 0.7);
+}
+.img:hover img{
+    transform : scale(1.05);
+    transition-duration: 0.5s;
+    z-index: 0;
+}
+
+
+
+/* 마이페이지(myinfo) - menu-bar */
+#menu-bar{
+    position : sticky;
+    top: 0;
+    margin-top : 100px;
+}
+#menu-bar li:not(#title){
+    color : #08428C;
+    width : 200px; height : 25px;
+    padding : 15px;
+    cursor : pointer;
+    margin : -1.5px;
+    border : 2px solid grey;
+    border-radius : 10px 0 0 10px;
+    line-height : 25px;
+}
+#menu-bar li:hover:not(#title){
+    font-weight : bolder;
+    color : #08428C;
+    background-color : #dcdcdc;
+    transition-duration: 0.5s;
+}
+#menu-bar li a:not(#title){
+    color : #08428C;
+}
+#menu-bar #myinfo{
+    font-weight : bolder;
+    color : #08428C;
+    background-color : #dcdcdc;
+}
+#title{
+    display : inline-block;
+    width : 199px; height : 70px;
+    padding : 15px;
+    font-size : 20px;
+    font-weight : bold;
+    text-align : center;
+    border : 1.5px solid #08428C;
+    border-radius : 10px 0 0 10px;
+    background-color : #08428C;
+    color : #F2AE30;
+    line-height: 70px;
+}
+/* 마이페이지(myinfo) - background */
+#background{
+    position : absolute;
+    width : 1000px;
+    height : 850px;
+    border : 2px solid grey;
+    background-color : #f7f7f7;
+    margin-left : 270px;
+    margin-top : -400px;
+    border-radius : 10px;
+}
+#background h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 50px;
+}
+/* 마이페이지(myinfo) - 회원정보 수정 */
+#form_updateCustomer{
+    position : relative;
+    margin-left : 270px;
+    width : 700px;
+    padding-bottom : 130px;
+    margin-bottom : 100px;
+}
+td{
+    font-size : 15px;
+    font-weight : 600;
+    color : #08348C;
+    padding : 10px;
+}
+#custid{
+    background-color : #dcdcdc;
+}
+.box{
+    font-size : 14px;
+    height : 25px;
+    border : 1.5px solid #08348C;
+}
+.cbox{
+    font-size : 14px;
+    height : 30px;
+    border : 1.5px solid #08348C;
+}
+.info{
+    line-height : 0;
+    font-size : 11px;
+    font-weight : 600;
+    color : #D10505;
+}
+option{
+    font-size : 14px;
+}
+button,[type="submit"]{
+    width : 100px;  height : 32px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    border : none;
+    color : white;
+    margin-left : 10px;
+    border-radius : 5px;
+}
+[type="radio"]{
+    width : 16px;  height : 16px;
+    margin-right : 15px;
+    vertical-align: -3px;
+}
+#btn_cancel{
+    color : #091140;
+    background-color : #dcdcdc;
+    width : 100px;	height : 32px;
+}
+.caption{
+    position : relative;
+    margin : 10px;
+    left : 350px;
+    top : 325px;
+    font-weight : 600;
+}
+
+
+
+/* 마이페이지(book) - 예매 내역 */
+.booklist{
+    position : relative;
+    left : 23%;
+    margin-bottom : 100px;
+    width : 800px;
+    height : 250px;
+    border : 2px solid #dcdcdc;
+    border-radius : 40px;
+    margin : 60px;
+}
+.booklist img{
+    position : relative;
+    border-radius : 40px;
+    right : 8px;
+    bottom : 2px;
+    border : 1px solid #dcdcdc;
+}
+.booklist li{
+    position : relative;
+    margin : 15px;
+    left : 170px;
+    bottom : 265px;
+    color : #091140;
+}
+.booklist h2{
+    position : relative;
+    left : 222px;
+    bottom : 265px;
+    color : #08348C;
+}
+.booklist button{
+    position : relative;
+    width : 100px;  height : 32px;
+    left : 670px;
+    bottom : 430px;
+    background-color : #08348C;
+    border : none;
+    color : white;
+    border-radius : 5px;
+}
+.booklist button:hover{
+    background-color : #F2AE30;
+    color : #08348C;
+    transition-duration: 0.5s;
+}
+input[type="checkbox"]+label{
+    display: inline-block;
+    position : relative;
+    width : 50px; height : 50px;
+    left : 720px;
+    bottom : 410px;
+    border : 2px solid #dcdcdc;
+    border-radius : 40px;
+    cursor : pointer;
+}
+input[type="checkbox"]:checked+label:after {
+    position: absolute;
+    border : 3px solid #F2AE30;
+    border-radius : 40px;
+    width : 50px; height : 50px;
+    font-size : 40px;
+    color : #F2AE30;
+    text-align : center;
+    line-height : 50px;
+    content: '✔';
+    right : -3px; bottom : -3px;
+}
+input[type="checkbox"]{
+    display: none;
+}
+#book_cancel {
+    position: relative;
+    width: 100px;
+    height: 32px;
+    margin-left: 750px;
+    margin-top: 20px;
+    background-color: #dcdcdc;
+    border: none;
+    color: #08348C;
+    border-radius: 5px;
+}
+
+
+
+/* 마이페이지(draw) - 예매 내역 */
+.drawlist{
+    position : relative;
+    left : 23%;
+    margin-bottom : 100px;
+    width : 800px;
+    height : 250px;
+    border : 2px solid #dcdcdc;
+    border-radius : 40px;
+    margin : 60px;
+}
+.drawlist img{
+    position : relative;
+    border-radius : 40px;
+    right : 8px;
+    bottom : 2px;
+    border : 1px solid #dcdcdc;
+}
+.drawlist li{
+    position : relative;
+    margin : 18px;
+    left : 170px;
+    bottom : 260px;
+    color : #091140;
+}
+.drawlist h2{
+    position : relative;
+    left : 222px;
+    bottom : 265px;
+    color : #08348C;
+}
+.drawlist button{
+    position : relative;
+    width : 100px;  height : 32px;
+    left : 670px;
+    bottom : 410px;
+    background-color : #08348C;
+    border : none;
+    color : white;
+    border-radius : 5px;
+}
+.drawlist button:hover{
+    background-color : #F2AE30;
+    color : #08348C;
+    transition-duration: 0.5s;
+}
+input[type="checkbox"]+label{
+    display: inline-block;
+    position : relative;
+    width : 50px; height : 50px;
+    left : 720px;
+    bottom : 390px;
+    border : 2px solid #dcdcdc;
+    border-radius : 40px;
+    cursor : pointer;
+}
+input[type="checkbox"]:checked+label:after {
+    position: absolute;
+    border : 3px solid #F2AE30;
+    border-radius : 40px;
+    width : 50px; height : 50px;
+    font-size : 40px;
+    color : #F2AE30;
+    text-align : center;
+    line-height : 50px;
+    content: '✔';
+    right : -3px; bottom : -3px;
+}
+input[type="checkbox"]{
+    display: none;
+}
+#draw_cancel{
+    position : relative;
+    width : 100px;  height : 32px;
+    margin-left : 750px;
+    margin-top : 20px;
+    background-color : #dcdcdc;
+    border : none;
+    color : #08348C;
+    border-radius : 5px;
+}
+
+
+
+/* 마이페이지(review) - background */
+#background{
+    position : absolute;
+    width : 1000px;
+    height : 850px;
+    border : 2px solid grey;
+    background-color : #f7f7f7;
+    margin-left : 270px;
+    margin-top : -400px;
+    border-radius : 10px;
+}
+/* 마이페이지(review) - 후기 내역 */
+#form{
+    width : 1000px;
+    border : 2px solid grey;
+    background-color : #f7f7f7;
+    margin-left : 270px;
+    margin-top : -400px;
+    border-radius : 10px;
+}
+.reviewlist{
+    position : relative;
+    left : 3%;
+    margin-bottom : 100px;
+    width :	800px;
+    height : 250px;
+    border : 2px solid #08428C;
+    border-radius : 20px;
+    margin : 60px;
+}
+.reviewlist span{
+    display : inline-block;
+    margin-left : 25px;
+    margin-top : 15px;
+    color : #08348C;
+    font-weight: 600;
+}
+#info{
+    margin-left : 200px;
+}
+#review_text{
+    font-size : 15px;
+    margin-top : 20px;
+    margin-left : 20px;
+    resize : none;
+    border : none;
+    width : 600px;	height : 70px;
+    border : 2px solid #dcdcdc;
+    border-radius : 10px;
+}
+.updateBtn,.deleteBtn{
+    position : relative;
+    width : 100px;  height : 32px;
+    margin-bottom : 15px;
+    margin-left : 670px;
+    bottom : 140px;
+    background-color : #08428C;
+    border : none;
+    color : white;
+    border-radius : 5px;
+    cursor : pointer;
+}
+.deleteBtn{
+    background-color : #D10505;
+}
+/* 마이페이지(review) - 후기 수정 */
+#review_score{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    border:2px solid #08428C;
+    border-radius:15px;
+    width : 690px; height : 250px;
+    background-color : white;
+}
+.text-bold{
+    margin-left : 40px;
+    font-weight : 600;
+    color : #08428C;
+}
+#myform fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+#myform fieldset legend{
+    text-align: right;
+}
+#myform input[type=radio]{
+    display: none;
+}
+#myform label{
+    position:relative;
+    left : 15px; top : 5px;
+    font-size: 2em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+    /*font : "Arial";*/
+}
+#myform label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#myform label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#myform input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#content {
+    width: 600px; height: 150px;
+    padding: 10px;
+    margin-top : 15px;
+    margin-left : 40px;
+    box-sizing: border-box;
+    border: solid 1.5px #dcdcdc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+#score {
+    width: 15px; height: 15px;
+    padding: 10px;
+    margin-top : 15px;
+    margin-left : 40px;
+    box-sizing: border-box;
+    border: solid 1.5px #dcdcdc;
+    border-radius: 5px;
+    font-size: 10px;
+    resize: none;
+}
+
+button{
+    margin : 8px;
+}
+#cancelBtn{
+    position : relative;
+    width : 110px; height : 40px;
+    font-size : 14px;
+    border : none; cursor: pointer;
+    border-radius : 10px;
+    background-color : #dcdcdc;
+    margin-left : 50px;
+}
+#addBtn{
+    position : relative;
+    width : 110px; height : 40px;
+    font-size : 14px;
+    border : none; cursor: pointer;
+    border-radius : 10px;
+    background-color : #08428C;
+    color : #F2AE30;
+}
+
+
+
+/* 검색결과 글꼴 */
+#search_title{
+    height : 50px;
+    margin-left : 20px;
+}
+#search_title p{
+    font-size : 20px;
+    color : #08348C;
+    font-weight: 500;
+}
+#search_title span{
+    font-size : 30px;
+    color : #F2AE30;
+    font-weight : 600;
+}
+/* 검색결과 내용 */
+.search_result{
+    position : relative;
+    margin-bottom : 100px;
+    width : 1100px;
+    height : 250px;
+    border : 2px solid #dddddd;
+    border-radius : 20px;
+    margin : 60px;
+}
+.search_result img{
+    position : relative;
+    border-radius : 20px;
+    right : 8px;
+    bottom : 3px;
+    border : 2px solid #dddddd;
+}
+.search_result li{
+    position : relative;
+    margin : 18px;
+    left : 170px;
+    bottom : 258px;
+    color : #091140;
+}
+.search_result h2{
+    position : relative;
+    left : 222px;
+    bottom : 260px;
+    color : #08348C;
+}
+
+
+
+/* 상세페이지 - 티켓정보 구성하기 */
+#ticket_info{
+    max-width : 100%; height : 450px;
+    background-color : #f1f1f1;
+}
+
+#img_fname{
+    width : 340px; height : 450px;
+    border-radius : 15px;
+}
+
+#ticket_info img{
+    border-radius : 15px;
+}
+#ticket_info ul{
+    position : relative;
+    margin-left : 310px;
+    bottom : 460px;
+}
+#ticket_info ul>li{
+    margin : 20px;
+    font-size : 17px;
+    font-weight : 600;
+    color : #091140;
+}
+/*
+h2{
+    position : relative;
+    margin-left : 370px;
+    bottom : 470px;
+    font-size : 35px;
+    color : #091140;
+}
+ */
+#line{
+    position : relative;
+    height : 1.5px;
+    background-color : gray;
+    width : 600px;
+    right : 20px; bottom : 480px;
+}
+/* 상세페이지 - DatePicker */
+#datepicker{
+    position : absolute;
+    margin-left : 1030px;
+    margin-top : -440px;
+}
+/* 상세페이지 - 탭, 상세정보 구성하기 */
+#detail_tab{
+    position : absolute;
+    width : 800px; height : 200px;
+    margin-top : -25px;
+    margin-left : 380px;
+}
+#detail_tab li{
+    float : left;
+    margin : 10px;
+    margin-right : 90px;
+    margin-top : 30px;
+    font-size : 16px;
+    cursor : pointer;
+}
+#detail_tab li:hover{
+    transition-duration: 0.4s;
+    border-bottom: 5px solid #F2AE30;
+    border-top: 5px solid #F2AE30;
+    padding-bottom : 9px;
+    padding-top : 9px;
+    font-weight: 600;
+}
+#detail_tab ul > li{
+    display: inline-block;
+    text-align: center;
+    padding: 5px 30px;
+    color : #08348C;
+}
+#bookbox{
+    position : absolute;
+    width : 306px; height : 135px;
+    background-color : #eeeeee;
+    border : 1px solid #cccccc;
+    border-radius : 5px;
+    margin-left : 1030px;
+    margin-top : -180px;
+}
+#detail_content{
+    position : relative;
+    height : auto;
+}
+
+#vid_url{
+    position : relative;
+    width : 900px; height : 500px;
+    margin-top : 100px;
+    margin-left : 240px;
+    border : none;
+}
+#detail_content ul{
+    height : 150px;
+}
+#detail_content ul li{
+    position : absolute;
+    width : 600px; height : 200px;
+    margin-top : 10px;
+    margin-left : 360px;
+    text-align : center;
+    font-weight : 600;
+    font-size: 18px;
+    color : #091140;
+    text-align : center;
+}
+#detail_content p{
+    position : relative;
+    text-align : center;
+    top : -100px;
+    margin: 0px;
+    margin-left : 20px;
+    font-size : 14px;
+}
+#seat{
+    width : 150px; height : 43px;
+    border : 1px solid #eb8f00;
+    background-color : #f6a828;
+    color : white; font-weight : 600;
+    text-align : center;
+    line-height : 43px;
+    font-size : 14px;
+    border-radius : 5px;
+    margin-left : 3px; margin-top : 3px;
+}
+#btnbook{
+    position : relative;
+    width : 140px; height : 46px;
+    border : 1px solid #cccccc;
+    background-color : #cccccc;
+    color : white; font-weight : 600;
+    text-align : center;
+    line-height : 43px;
+    font-size : 14px;
+    border-radius : 5px;
+    margin-left : 163px; bottom : 45px;
+}
+#btndraw{
+    position : relative;
+    width : 140px; height : 46px;
+    border : 1px solid #D10505;
+    background-color : #D10505;
+    color : white; font-weight : 600;
+    text-align : center;
+    line-height : 43px;
+    font-size : 14px;
+    border-radius : 5px;
+    margin-left : 163px; bottom : 45px;
+    display : none;
+}
+#localtime{
+    position : relative;
+    font-size: 45px; font-weight : 650;
+    color : #08348C;
+    margin-left : 68px; bottom : 35px;
+}
+.detail_title{
+    width : 100px; height : 20px;
+    margin-top : 37%;
+    left : 310px;
+    font-size : 25px;
+}
+#art_img{
+    position: relative;
+    top : 80px;
+    width : 700px;
+    margin-left : 350px;
+}
+#location_box{
+    position : relative;
+    width : 800px; height : 500px;
+    left : 300px; bottom : 430px;
+}
+#detail_location{
+    height : 200px;
+}
+#mapicon{
+    position : absolute;
+    margin-left : 630px;
+    margin-top : -478px;
+    line-height : 50px;
+}
+.form{
+    top : -100%;
+    bottom : 100px;
+}
+.review_list{
+    position : relative;
+    top : 150px;
+    width : 780px; height : 240px;
+    border : 2px solid #08428C;
+    border-radius : 20px;
+    margin-bottom : 20px;
+}
+#detail_review{
+    height : 2000px;
+}
+.review_list span{
+    display : inline-block;
+    margin-left : 25px;
+    margin-top : 15px;
+    color : #08348C;
+    font-weight: 600;
+}
+#info{
+    margin-left : 200px;
+}
+#review_text{
+    position : absolute;
+    font-size : 15px;
+    margin-top : 15px;
+    margin-left : 20px;
+    resize : none;
+    border : none;
+    width : 730px;	height : 120px;
+    border : 2px solid #dcdcdc;
+    border-radius : 10px;
+}
+/* 상세페이지 - 통계 */
+#detail_review{
+    position: relative;
+    height: 800px;
+
+}
+.statistics{
+    position : absolute;
+    width : 830px; height : 290px;
+    margin-left : 270px;
+    margin-top : -430px;
+    border : 2px solid #eeeeee;
+    background-color : #eeeeee;
+    border-radius : 20px;
+}
+.statistics img{
+    margin-top : 30px;
+    margin-left : 80px;
+}
+.statistics label{
+    position : relative;
+    font-size : 20px;
+    color : #eb8f00;
+    left : 70px; bottom : 24px;
+}
+#gender li{
+    float : left;
+    font-size : 17px;
+    margin : 0 35px;
+    font-weight: 600;
+}
+#woman{
+    position:relative;
+    left : 70px;
+}
+.generation{
+    position : absolute;
+    margin-left : 430px;
+    margin-top : -110px;
+}
+.generation li{
+    padding : 10px;
+    font-size : 17px;
+    font-weight : 600;
+}
+#divide{
+    position : absolute;
+    width : 2px; height : 250px;
+    background-color : gray;
+    margin-left : 430px;
+    bottom : 20px;
+}
+#ulavgScore{
+    position : absolute;
+    margin-top : 70px;
+    font-weight : 600;
+}
+#reviewOrder{
+    z-index:600;
+}

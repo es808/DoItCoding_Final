@@ -9,7 +9,7 @@ public class CustomerVO {
     private String custid;
     private String pwd;
     private String name;
-    private Date birth;
+    private String birth;
     private String email;
     private String phone;
     private String gender;
