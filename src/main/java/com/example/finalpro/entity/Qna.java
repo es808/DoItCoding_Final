@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 @Table(name = "qna")
 public class Qna {
+    //JPA는 테이블 속성명과 엔티티의 변수명을 똑같이해야 인식함.
     @Id
     private int qna_no;
     @ManyToOne
