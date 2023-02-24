@@ -3,16 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="/css/login.css" >
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function(){
+            $("#form_login").submit(function(e){
+                var url = "LoginCustomer";
+                var data = $(this).serialize();
+                var custid = $("#custid").val();
+                $.ajax(url, {
+                    data:data,
+                    success:function(login_Flag){
+                        alert("로그인 되었습니다.");
+
+                        if(login_Flag=='true'){
+                            sessionStorage.setItem("custid", custid);
+                            var url = "mainTest.html?custid="+custid;
+                            location.replace(url);
+                        }
+                    }
+                });
+                e.preventDefault();
+            }); // form_login이 제출되었을 때
+
+
+        }) // 전체 $(function)
+
+    </script>
 </head>
 <body>
-<h2>로그인</h2>
-<a href="/join">회원가입</a><br>
-<form action="/login" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    아이디 : <input type="text" name="username"><br>
-    암호 : <input type="password" name="password"><br>
-    <input type="submit" value="로그인">
-    <input type="reset" value="취소">
-</form>
+<div id="background">
+    <a class="main" href="mainTest.html">
+        <img th:src="@{/image/homeicon.png}" width="40" height="40"></a>
+</div>
+<div>
+    <form action="/login" method="post">
+        <img src="/image/logo.png" id="logo">
+        <h2>Login</h2>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <ul>
+            <li class="user">ID<input type="text" name="username"></li>
+            <li class="user">PW<input type="password" name="password"></li>
+        </ul>
+        <input type="submit" id="btn_login" value="Login" name="btn_login"><br>
+        <div class="caption">
+            <a href="signupTest.html">회원가입</a> <a href="findCustid.html">ID</a><a href="findPW.html">PW</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Insert title here</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>로그인</h2>-->
+<!--<a href="/join">회원가입</a><br>-->
+<!--<form action="/login" method="post">-->
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+<!--    아이디 : <input type="text" name="username"><br>-->
+<!--    암호 : <input type="password" name="password"><br>-->
+<!--    <input type="submit" value="로그인">-->
+<!--    <input type="reset" value="취소">-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
