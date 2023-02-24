@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/ticket/category.css">
+<link rel="stylesheet" type="text/css" href="/css/ticket/category.css">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
@@ -43,7 +43,7 @@
 							href:"detailPageTest.html?ticketid="+arr[i].ticketid
 						});				
 							var img = $("<img>").attr({
-								src: "images/"+arr[i].img_fname,
+								src: "images/ticket/"+arr[i].img_fname,
 								width : 200,
 								height: 251,
 							});
@@ -163,20 +163,20 @@
 </script>
 </head>
 <body class="mypage_layout">
- 		<a href="mainTest.html"><img src="./image/logo.png" id="logo"></a>
+ 		<a href="mainTest.html"><img src="/image/logo.png" id="logo"></a>
  		<div class="main_user">
- 				<a href="loginTest.html" id="login"><img src="./image/loginicon.png">로그인</a>
- 				<a href="mainTest.html" id="logout"><img src="./image/logouticon.png">로그아웃</a>
- 				<a href="signupTest.html" id="regist"><img src="./image/signupicon.png">회원가입</a>
- 				<a href="mypage_Info.html" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
+ 				<a href="loginTest.html" id="login"><img src="/image/loginicon.png">로그인</a>
+ 				<a href="mainTest.html" id="logout"><img src="/image/logouticon.png">로그아웃</a>
+ 				<a href="signupTest.html" id="regist"><img src="/image/signupicon.png">회원가입</a>
+ 				<a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>
  		</div>
  	    <nav id="navigation">
               <div class="search" id="search" name="search">
 				   <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-				   <a class="search_btn" type="button" id="search_btn"><img  src="./image/searchicon.png" width="35" height="35"></a>
+				   <a class="search_btn" type="button" id="search_btn"><img  src="/image/searchicon.png" width="35" height="35"></a>
 			  </div>
               <ul>
-                  <li class="home"><a href="mainTest.html">홈</a></li>
+                  <li class="home"><a href="/main">홈</a></li>
                   <li><a href="#">시사회</a>
                   	<ul>
                   		<li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>

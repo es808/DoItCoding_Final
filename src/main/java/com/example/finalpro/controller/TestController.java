@@ -73,6 +73,13 @@ public class TestController {
     @GetMapping("/login")
     public void login(){
     }
+
+    @GetMapping("/loginTest")
+    public ModelAndView loginTest(){
+        ModelAndView mav = new ModelAndView("/customer/loginTest");
+        return mav;
+    }
+
     @GetMapping("/join")
     public void join(){
     }

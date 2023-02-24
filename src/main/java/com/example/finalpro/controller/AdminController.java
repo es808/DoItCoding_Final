@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.FileOutputStream;
 
 @Controller
 @Setter
@@ -42,16 +45,19 @@ public class AdminController {
         return mav;
     }
 
-    @PostMapping("/admin/insertTicket")
-    public ModelAndView adminInsertTicketSubmit(Ticket ticket, HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("redirect:/admin/ticket/listTicket");
+    @PostMapping(value = {"/admin/insertTicket"})
+    public ModelAndView adminInsertTicketSubmit(Ticket ticket){
+        ModelAndView mav = new ModelAndView("redirect:/admin/listTicket");
 
-        ticketService.insertTicket(ticket, request);
+        System.out.println("여기 도착!!!!!");
+        System.out.println("등록하는 ticket "+ticket);
+
+        ticketService.insertTicket(ticket);
 
         return mav;
     }
 
-    // admin에서 updateTicket 페이지 열기
+    // admin에서 updateTicket 기능하기
     @GetMapping("/admin/updateTicket/{ticketid}")
     public ModelAndView adminUpdateTicket(@PathVariable int ticketid, Model model){
         ModelAndView mav = new ModelAndView("/admin/ticket/updateTicket");
@@ -59,11 +65,23 @@ public class AdminController {
         return mav;
     }
 
+    @PostMapping(value = {"/admin/updateTicket"})
+    public ModelAndView adminUpdateTicketSubmit(Ticket ticket){
+        ModelAndView mav = new ModelAndView("redirect:/admin/listTicket");
+
+        System.out.println("여기 도착!!!!!");
+        System.out.println("등록하는 ticket "+ticket);
+
+        ticketService.insertTicket(ticket);
+
+        return mav;
+    }
+
     // ticket 삭제하기
     @RequestMapping("/admin/deleteTicket/{ticketid}")
     @ResponseBody
     public ModelAndView adminDeleteTicket(@PathVariable int ticketid){
-        ModelAndView mav = new ModelAndView("redirect:/admin/ticket/listTicket");
+        ModelAndView mav = new ModelAndView("redirect:/admin/listTicket");
         ticketDAO.deleteById(ticketid);
         
         return mav;
