@@ -16,4 +16,6 @@ public class TicketService {
     private TicketDAO dao;
 
     public List<Ticket> findAll(){return dao.findAll();}
+
+    public Optional<Ticket> findByTicketid(int ticketid){return dao.findById(ticketid);}
 }

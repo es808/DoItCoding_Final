@@ -20,4 +20,9 @@
     <update id="deleteAnswer" parameterType="java.lang.Integer">
         update qna set qna_answer='' where qna_no=#{qna_no}
     </update>
+
+    <update id="update" parameterType="qnaVO">
+        update qna set qna_category=#{qna_category}, qna_title=#{qna_title}, qna_content=#{qna_content},
+        qna_fname=#{qna_fname}, qna_open=#{qna_open}, qna_ticketid=#{qna_ticketid}
+    </update>
 </mapper>

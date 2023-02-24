@@ -23,6 +23,9 @@
   <input type="radio" id="n" name="qna_open" value="n">
   <label for="n">비공개</label><br>
   <input name="ticketid" placeholder="ticketid"><br>
+  <select th:each="ticketVO:${ticketVOList}">
+    <option th:text="ticketVO.ticket_name"></option>
+  </select>
   <input type="submit" value="등록">
 </form>
 </body>

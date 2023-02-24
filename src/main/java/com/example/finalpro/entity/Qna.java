@@ -2,6 +2,7 @@ package com.example.finalpro.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -25,4 +26,6 @@ public class Qna {
     private String qna_fname;
     private String qna_answer;
     private String qna_open;
+    @Transient
+    private MultipartFile uploadFile;
 }

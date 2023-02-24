@@ -61,6 +61,7 @@
     </div>
   </div>
 
+  <!-- 답글 작성 (admin만 가능) -->
   <div th:if="${session.id}=='admin'">
     <div>답글 작성/수정(원래 답글 있으면 새로운 내용으로 수정됨)</div>
     <div th:if="${q.qna_answer}==null">
@@ -73,6 +74,11 @@
     <div th:if="${q.qna_answer}!=null">
       <button id="answer_delete">삭제</button>
     </div>
+  </div>
+
+  <!--  수정 (작성자만 가능) -->
+  <div th:if="${session.id}==${q.customer.custid}">
+    <a th:href="@{'/qna/update/'+${q.qna_no}}">수정</a>
   </div>
 </body>
 </html>

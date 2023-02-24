@@ -76,4 +76,13 @@ public class DBManager {
 //		session.close();
 //		return re;
 //	}
+
+	//QNA 목록에서 사용자가
+	public static List<Integer> findTicketidByCustid(String custid){
+		List<Integer> list=null;
+		SqlSession session=sqlSessionFactory.openSession();
+		list=session.selectList("book.findTicketidByCuistid", custid);
+		session.close();
+		return list;
+	}
 }
