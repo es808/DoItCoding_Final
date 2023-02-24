@@ -89,19 +89,17 @@ public class TestController {
     }
 
     @GetMapping("/myPage")
-    public void myPage() {
-    }
+    public String myPage() { return "myPage/myPage";}
 
     @GetMapping("/myPageBook")
-    public void myPageBook() {
-    }
+    public String myPageBook() { return "myPage/myPageBook";}
 
     @GetMapping("/myPageReview")
-    public void myPageReview() {
-    }
+    public String myPageReview() { return "myPage/myPageReview";}
 
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
+        System.out.println("customer:"+c);
 //		String encPwd = passwordEncoder.encode(m.getPwd());
 //		m.setPwd(encPwd);
         ModelAndView mav = new ModelAndView("redirect:/login");
@@ -125,6 +123,30 @@ public class TestController {
 			mav.setViewName("error");
 		}*/
         return mav;
+    }
+
+    //아이디 중복 확인 메소
+    @GetMapping("/ConfirmCustomerId")
+    @ResponseBody
+    public int confirmCustomerId(String custid){
+        int answer = 0;
+        if(customerDAO.findById(custid).isPresent()){
+            answer=1;
+        }
+        return answer;
+    }
+
+    //비밀번호 중복 확인 메소드
+    @GetMapping("/ConfirmCustomerPhone")
+    @ResponseBody
+    public int confirmCustomerPhone(String phone){
+        int answer = 0;
+
+        System.out.println(phone);
+        if(customerDAO.findByPhone(phone) != null){
+            answer=1;
+        }
+        return answer;
     }
 
 
