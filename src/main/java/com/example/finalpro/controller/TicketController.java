@@ -23,7 +23,6 @@ import java.util.List;
 public class TicketController {
     @Autowired
     private TicketService ticketService;
-
     @Autowired
     private CustomerDAO customerDAO;
     @Autowired
@@ -127,7 +126,7 @@ public class TicketController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         // 포맷 적용하기
         String formatedNow = now.format(formatter);
-        System.out.println("현재:"+formatedNow);
+
         return formatedNow;
     }
 

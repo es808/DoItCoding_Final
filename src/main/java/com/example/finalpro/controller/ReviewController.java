@@ -52,6 +52,7 @@ public class ReviewController {
     @RequestMapping("/CheckReview")
     @ResponseBody
     public List<MyReviewVO> findCheckReview(int ticketid){
+
         return DBManager.checkReviewByTicketid(ticketid);
     }
 
@@ -59,6 +60,7 @@ public class ReviewController {
     @RequestMapping("/AvgScore")
     @ResponseBody
     public int findAvgScore(int ticketid){
+
         return DBManager.findAvgScore(ticketid);
     }
 }

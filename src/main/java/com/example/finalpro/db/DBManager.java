@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -198,6 +199,26 @@ public class DBManager {
 		avg = session.selectOne("review.findAvgScore",ticketid);
 		session.close();
 		return avg;
+	}
+
+	// 성별별로 예약자수 구하기
+	public static List<CountGenderVO> countGender(int ticketid){
+		List<CountGenderVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("book.countGender",ticketid);
+		System.out.println("countGender:"+list);
+		session.close();
+		return list;
+	}
+
+	// 세대별로 예약자수 구하기
+	public static List<CountGenerationVO> countGeneration(int ticketid){
+		List<CountGenerationVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("book.countGeneration",ticketid);
+		System.out.println("countGeneration:"+list);
+		session.close();
+		return list;
 	}
 
 //	public static List<CustomerVO> findAll() {

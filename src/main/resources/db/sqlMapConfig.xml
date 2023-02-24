@@ -17,6 +17,8 @@
 		<typeAlias type="com.example.finalpro.vo.SeatVO" alias="seatVO"/>
 		<typeAlias type="com.example.finalpro.vo.TicketVO" alias="ticketVO"/>
 		<typeAlias type="com.example.finalpro.vo.RankingVO" alias="rankingVO"/>
+		<typeAlias type="com.example.finalpro.vo.CountGenderVO" alias="countGenderVO"/>
+		<typeAlias type="com.example.finalpro.vo.CountGenerationVO" alias="countGenerationVO"/>
 	</typeAliases>
   <environments default="development">
     <environment id="development">
