@@ -6,28 +6,6 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css" >
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
-        $(function(){
-            $("#form_login").submit(function(e){
-                var url = "LoginCustomer";
-                var data = $(this).serialize();
-                var custid = $("#custid").val();
-                $.ajax(url, {
-                    data:data,
-                    success:function(login_Flag){
-                        alert("로그인 되었습니다.");
-
-                        if(login_Flag=='true'){
-                            sessionStorage.setItem("custid", custid);
-                            var url = "mainTest.html?custid="+custid;
-                            location.replace(url);
-                        }
-                    }
-                });
-                e.preventDefault();
-            }); // form_login이 제출되었을 때
-
-
-        }) // 전체 $(function)
 
     </script>
 </head>

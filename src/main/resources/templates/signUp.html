@@ -5,141 +5,161 @@
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css">
-<!--    <script>-->
-<!--        $(function(){-->
-<!--            $("#form_signup").submit(function(e){ // form이 제출 (회원가입 기능)-->
+    <script>
+        $(function(){
+            var confirm_phone;
+            var confirm_custid;
+            $("#form_signup").submit(function(e){ // form이 제출 (회원가입 기능)
 
-<!--                var url = "SignupCustomer";-->
+                var url = "SignupCustomer";
 
-<!--                var custid = $("#custid").val();-->
-<!--                var pwd = $("#pwd").val();-->
-<!--                var name = $("#name").val();-->
-<!--                var birth = $("#birth").val();-->
-<!--                var phone = $("#phone1").val() + "-" + $("#phone2").val()+ "-" + $("#phone3").val();-->
-<!--                var email = $("#email").val() + $("#email_com").val();-->
-<!--                var gender = $("input:radio[name=gender]:checked").val();-->
-<!--                var cateid = $("input:radio[name=cateid]:checked").val();-->
-
-
-<!--                // phone하고 email 부분 텍스트 입력 칸이 나누어져 있어서 그걸 합치느라-->
-<!--                // serialize를 하지 않고 phone, email 객체를 따로 만들어 합쳐 data 전송을 했습니다.-->
-
-<!--                var data = {-->
-<!--                    custid:custid,-->
-<!--                    pwd:pwd,-->
-<!--                    name:name,-->
-<!--                    email:email,-->
-<!--                    birth:birth,-->
-<!--                    phone:phone,-->
-<!--                    gender:gender,-->
-<!--                    cateid:cateid-->
-<!--                };-->
-
-<!--                if(checkIdPwd(custid, pwd) == false){ // 아이디, 비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료-->
-<!--                    return false;-->
-<!--                }-->
-
-<!--                if(confirmPwd() == false){ // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료-->
-<!--                    return false;-->
-<!--                }-->
-
-<!--                console.log("confirmPwd " +confirmPwd());-->
-
-<!--                $.ajax(url, {-->
-<!--                    data:data,-->
-<!--                    success:function(re){-->
-<!--                        if(re==1){-->
-<!--                            $(location).attr('href',"loginTest.html");-->
-<!--                        }-->
-<!--                    }-->
-<!--                }); // Ajax 통신 시작-->
-<!--                e.preventDefault();-->
-<!--            }); // 회원가입 end-->
-
-<!--            var checkIdPwd = function(custid, pwd){-->
-<!--                var check_Flag = true;-->
-
-<!--                var reg_id = /^(?=.*?[a-z])(?=.*?[0-9]).{6,12}$/; // 아이디를 영문하고 숫자 필수 입력-->
-<!--                var reg_pwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/; // 비번을 대소문자 영어, 숫자, 특수문자까지 필수 입력-->
-
-<!--                if(!reg_id.test(custid)){-->
-<!--                    alert("아이디는 6-12자 영문, 숫자로만 입력하세요");-->
-<!--                    check_Flag = false;-->
-<!--                }-->
-
-<!--                if(!reg_pwd.test(pwd)){-->
-<!--                    alert("비밀번호는 대소문자를 포함한 영어, 숫자, 특수문자를 6글자 이상 입력하세요");-->
-<!--                    check_Flag = false;-->
-<!--                }-->
-
-<!--                return check_Flag;-->
-<!--            } // check 아이디 비밀번호 적합성 end-->
-
-<!--            $(document).ready(function() { // 아이디 비밀번호 영어, 숫자로만-->
-<!--                $("#custid").keyup(function(){$(this).val( $(this).val().replace(/[^a-z0-9]/g,"") );} );-->
-<!--                $("#pwd").keyup(function(){$(this).val( $(this).val().replace(/[^A-Za-z0-9#?!@$%^&*-]/g,"") );} );-->
-<!--            });-->
-
-<!--            var confirmPwd = function(){ // pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드-->
-<!--                var confirm_Flag = true;-->
-
-<!--                if($("#pwd").val() != $("#pwd_confirm").val()){-->
-<!--                    alert("비밀번호가 일치하지 않습니다");-->
-<!--                    confirm_Flag = false;-->
-<!--                }-->
-
-<!--                return confirm_Flag;-->
-
-<!--            }; // confirm 패스워드 end-->
+                var custid = $("#custid").val();
+                var pwd = $("#pwd").val();
+                var name = $("#name").val();
+                var birth = $("#birth").val();
+                var phone = $("#phone1").val() + $("#phone2").val()+ $("#phone3").val();
+                var email = $("#email").val() + $("#email_com").val();
+                var gender = $("input:radio[name=gender]:checked").val();
+                var cateid = $("input:radio[name=cateid]:checked").val();
 
 
-<!--            $(document).on('click', '#btn_idconfirm', function(){ // 아이디 중복검사-->
-<!--                var custid = $("#custid").val();-->
-<!--                var url = "ConfirmCustomerId";-->
-<!--                var data = {custid:custid};-->
+                // phone하고 email 부분 텍스트 입력 칸이 나누어져 있어서 그걸 합치느라
+                // serialize를 하지 않고 phone, email 객체를 따로 만들어 합쳐 data 전송을 했습니다.
 
-<!--                $.ajax(url,{-->
-<!--                    data:data,-->
-<!--                    success:function(confirm_custid){-->
+                var data = {
+                    custid:custid,
+                    pwd:pwd,
+                    name:name,
+                    email:email,
+                    birth:birth,
+                    phone:phone,
+                    gender:gender,
+                    cateid:cateid
+                };
 
-<!--                        console.log(confirm_custid);-->
+                if(checkIdPwd(custid, pwd) == false){ // 아이디, 비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료
+                    return false;
+                }
 
-<!--                        if(confirm_custid == 1){-->
-<!--                            alert("중복된 아이디입니다");-->
-<!--                        }-->
-<!--                        else {-->
-<!--                            alert("사용가능한 아이디입니다");-->
-<!--                        }-->
-<!--                    }-->
-<!--                });-->
-<!--            }); // 아이디 중복 end-->
+                if(confirmPwd() == false){ // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료
+                    return false;
+                }
+
+                if(confirm_custid == false){
+                    alert("아이디 중복 확인이 되지 않았습니다.")
+                    return false;
+                }
+
+                if(confirm_phone == false){
+                    alert("전화번호 중복 확인이 되지 않았습니다.")
+                    return false;
+                }
+                console.log("confirmPwd " +confirmPwd());
+                console.log(data)
+                let f = document.createElement('form');
+                f.setAttribute('method', 'post');
+                f.setAttribute('action', 'singUp');
+                f.appendChild(data)
+                document.body.appendChild(f);
+                f.submit();
+
+                // $.ajax(url, {
+                //     data:data,
+                //     success:function(re){
+                //         if(re==1){
+                //             $(location).attr('href',"loginTest.html");
+                //         }
+                //     }
+                // }); // Ajax 통신 시작
+
+            }); // 회원가입 end
+
+            var checkIdPwd = function(custid, pwd){
+                var check_Flag = true;
+
+                var reg_id = /^(?=.*?[a-z])(?=.*?[0-9]).{6,12}$/; // 아이디를 영문하고 숫자 필수 입력
+                var reg_pwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/; // 비번을 대소문자 영어, 숫자, 특수문자까지 필수 입력
+
+                if(!reg_id.test(custid)){
+                    alert("아이디는 6-12자 영문, 숫자로만 입력하세요");
+                    check_Flag = false;
+                }
+
+                if(!reg_pwd.test(pwd)){
+                    alert("비밀번호는 대소문자를 포함한 영어, 숫자, 특수문자를 6글자 이상 입력하세요");
+                    check_Flag = false;
+                }
+
+                return check_Flag;
+            } // check 아이디 비밀번호 적합성 end
+
+            $(document).ready(function() { // 아이디 비밀번호 영어, 숫자로만
+                $("#custid").keyup(function(){$(this).val( $(this).val().replace(/[^a-z0-9]/g,"") );} );
+                $("#pwd").keyup(function(){$(this).val( $(this).val().replace(/[^A-Za-z0-9#?!@$%^&*-]/g,"") );} );
+            });
+            var confirmPwd = function(){ // pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
+                var confirm_Flag = true;
+
+                if($("#pwd").val() != $("#pwd_confirm").val()){
+                    alert("비밀번호가 일치하지 않습니다");
+                    confirm_Flag = false;
+                }
+
+                return confirm_Flag;
+
+            }; // confirm 패스워드 end
 
 
-<!--            $(document).on('click', '#btn_phoneconfirm', function(){ // 전화번호 중복-->
-<!--                var phone = $("#phone1").val() + "-" + $("#phone2").val()+ "-" + $("#phone3").val();-->
-<!--                var url = "ConfirmCustomerPhone";-->
-<!--                var data = {phone:phone};-->
+            $(document).on('click', '#btn_idconfirm', function(){ // 아이디 중복검사
+                var custid = $("#custid").val();
+                var url = "ConfirmCustomerId";
+                var data = {custid:custid};
 
-<!--                $.ajax(url, {-->
-<!--                    data:data,-->
-<!--                    success:function(confirm_phone){-->
-<!--                        if(confirm_phone == 1){-->
-<!--                            alert("중복된 번호입니다");-->
-<!--                        }-->
-<!--                        else {-->
-<!--                            alert("사용가능한 번호입니다");-->
-<!--                        }-->
-<!--                    }-->
-<!--                });-->
-<!--            }); // 전화번호 중복 end-->
+                $.ajax(url,{
+                    data:data,
+                    success:function(answer){
 
+                        console.log(answer);
+
+                        if(answer == 1){
+                            alert("중복된 아이디입니다");
+                            confirm_custid = false;
+                        }
+                        else {
+                            alert("사용가능한 아이디입니다");
+                            confirm_custid = true;
+                        }
+                    }
+                });
+            }); // 아이디 중복 end
+
+
+            $(document).on('click', '#btn_phoneconfirm', function(){ // 전화번호 중복
+                var phone = $("#phone1").val() +$("#phone2").val()+ $("#phone3").val();
+                var url = "ConfirmCustomerPhone";
+                var data = {phone:phone};
+
+                $.ajax(url, {
+                    data:data,
+                    success:function(answer){
+                        if(answer == 1){
+                            alert("중복된 번호입니다");
+                            confirm_phone = false;
+                        }
+                        else {
+                            alert("사용가능한 번호입니다");
+                            confirm_phone = true;
+                        }
+                    }
+                });
+            }); // 전화번호 중복 end
 
 <!--        }) // $(function)-->
 <!--    </script>-->
 </head>
 <body>
-<div id="background_signup">
-    <a class="main" href="main.html">
+<div id="background">
+    <a class="main" href="mainTest.html">
         <img  src="/image/homeicon.png" width="40" height="40"></a>
 </div>
 <form id="form_signup" action="/signUp" method="post">
@@ -199,10 +219,7 @@
         </tr>
         <tr>
             <td>주소</td>
-            <td>
-                <input type="text" name="addr" class="box" size="30" id="addr">
-                <input type="button" id="btn_addrconfirm" value="주소 찾기">
-            </td>
+            <td><input type="text" name="addr" class="box" size="30" id="addr"></td>
         </tr>
         <tr>
             <td>성별</td>
@@ -221,7 +238,7 @@
             </td>
         </tr>
     </table>
-    <div class="signup_caption">
+    <div class="caption">
         <button id="btn_cancel">취소</button>&nbsp;&nbsp;
         <button id="btn_join" type="submit">가입하기</button>
     </div>
