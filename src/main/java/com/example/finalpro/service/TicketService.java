@@ -2,10 +2,13 @@ package com.example.finalpro.service;
 
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.entity.Ticket;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
 import java.util.List;
 
 @Service
@@ -15,8 +18,6 @@ public class TicketService {
     private TicketDAO dao;
 
     public List<Ticket> findAll(){return dao.findAll();}
-
-    //public Ticket findByTicketid(int ticketid){return dao.findByTicketid(ticketid);}
 
     public void insertTicket(Ticket ticket, HttpServletRequest request){
 

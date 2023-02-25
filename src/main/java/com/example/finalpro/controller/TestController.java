@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Date;
-
 @Controller
 @Setter
 public class TestController {
@@ -78,6 +76,11 @@ public class TestController {
     }
     @GetMapping("/signUp")
     public void signUp(){
+    }
+
+    @GetMapping("/")
+    public String main() {
+        return "main";
     }
 
     @PostMapping("/signUp")

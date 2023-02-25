@@ -4,7 +4,6 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
-import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.RankingVO;
 import com.example.finalpro.vo.TicketVO;

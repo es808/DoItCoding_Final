@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="/css/login.css" >
+    <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css" >
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
         $(function(){
@@ -32,7 +32,7 @@
     </script>
 </head>
 <body>
-<div id="background">
+<div id="background_login">
     <a class="main" href="mainTest.html">
         <img th:src="@{/image/homeicon.png}" width="40" height="40"></a>
 </div>
@@ -47,7 +47,7 @@
         </ul>
         <input type="submit" id="btn_login" value="Login" name="btn_login"><br>
         <div class="caption">
-            <a href="signupTest.html">회원가입</a> <a href="findCustid.html">ID</a><a href="findPW.html">PW</a>
+            <a href="signUp.html">회원가입</a><a href="findCustid.html">ID찾기</a><a href="findPW.html">PW찾기</a>
         </div>
     </form>
 </div>

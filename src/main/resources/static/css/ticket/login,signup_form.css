@@ -8,21 +8,13 @@ a{
 li{
     list-style: none;
 }
-div{
+div,table{
     position: absolute;
     top:50%;
     left: 50%;
     transform: translate(-50% , -50%)
 }
 /* Background */
-#background{
-    width : 500px;
-    height : 550px;
-    background-color : #f5f5f5;
-    border : 1px solid #dcdcdc;
-    border-radius : 10px 10px 10px 10px;
-    box-shadow : 10px 10px #dedede;
-}
 .main{
     position : relative;
     padding : 20px 10px;
@@ -39,13 +31,23 @@ div{
 
 
 /* 로그인화면 */
+#background_login{
+    width : 500px;
+    height : 520px;
+    background-color : #f5f5f5;
+    border : 1px solid #dcdcdc;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow : 10px 10px #dedede;
+}
 #logo{
     width: 370px;
     height: 110px;
+    margin-bottom : 330px;
 }
 h2{
     text-align : center;
     color : #08348C;
+    margin-top : -330px;
 }
 .user{
     font-weight: 500;
@@ -54,8 +56,20 @@ h2{
     margin : 10px;
     border : 2px solid #08348C;
     width : 250px;
-    height :	30px;
+    height : 30px;
     padding-left : 10px;
+}
+.user [type="text"]{
+    margin-left : 24px;
+    margin-top : 4px;
+    border : none;
+    background-color : #f5f5f5;
+}
+.user [type="password"]{
+    margin-left : 15px;
+    margin-top : 6px;
+    border : none;
+    background-color : #f5f5f5;
 }
 div ul{
     position: relative;
@@ -98,15 +112,25 @@ ul li #pwd{
 .caption{
     width : 350px;
     margin-top : 140px;
+    margin-left : -25px;
     text-decoration: none;
 }
 .caption a{
     font-size : 14px;
-    margin-left : 70px;
+    margin : -15px;
     color : #08348C;
 }
 
 /* 회원가입화면 */
+#background_signup{
+    width : 500px;
+    height : 700px;
+    background-color : #f5f5f5;
+    border : 1px solid #dcdcdc;
+    border : none;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow : 10px 10px #dedede;
+}
 table{
     display: inline-block;
     padding-bottom : 20px;
@@ -159,26 +183,41 @@ button{
     background-color : #dcdcdc;
     width : 100px;
     height : 32px;
+    left : -150px;
 }
-.caption button{
-    position : relative;
-    margin : 10px;
-    top : 280px;
+#btn_join{
+    color : white;
+    background-color : #08348C;
+    width : 100px;
+    height : 32px;
+    left : -15px;
+
+}
+.signup_caption button{
+    position : absolute;
     font-weight : 600;
+    margin-left : 50px;
+    margin-top : 300px;
+}
+#btn_idconfirm,#btn_phoneconfirm,#btn_addrconfirm{
+    color : #dcdcdc;
+    background-color : #08348C;
+    width : 80px;
+    height : 31px;
+    border-radius : 5px;
+    border : none;
+    font-size : 12px;
 }
 
 
 
 /* 비밀번호 찾기화면 */
-#logo{
-    width: 370px;
-    height: 110px;
-}
 h2{
     text-align : center;
     color : #08348C;
     font-size : 20px;
 }
+/*
 .user{
     font-weight: 500;
     position: relative;
@@ -189,6 +228,7 @@ h2{
     height :	30px;
     padding-left : 10px;
 }
+ */
 div ul{
     position: relative;
 }

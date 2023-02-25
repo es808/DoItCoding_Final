@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/signUp.css">
+    <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css">
 <!--    <script>-->
 <!--        $(function(){-->
 <!--            $("#form_signup").submit(function(e){ // form이 제출 (회원가입 기능)-->
@@ -138,8 +138,8 @@
 <!--    </script>-->
 </head>
 <body>
-<div id="background">
-    <a class="main" href="mainTest.html">
+<div id="background_signup">
+    <a class="main" href="main.html">
         <img  src="/image/homeicon.png" width="40" height="40"></a>
 </div>
 <form id="form_signup" action="/signUp" method="post">
@@ -199,7 +199,10 @@
         </tr>
         <tr>
             <td>주소</td>
-            <td><input type="text" name="addr" class="box" size="30" id="addr"></td>
+            <td>
+                <input type="text" name="addr" class="box" size="30" id="addr">
+                <input type="button" id="btn_addrconfirm" value="주소 찾기">
+            </td>
         </tr>
         <tr>
             <td>성별</td>
@@ -218,7 +221,7 @@
             </td>
         </tr>
     </table>
-    <div class="caption">
+    <div class="signup_caption">
         <button id="btn_cancel">취소</button>&nbsp;&nbsp;
         <button id="btn_join" type="submit">가입하기</button>
     </div>

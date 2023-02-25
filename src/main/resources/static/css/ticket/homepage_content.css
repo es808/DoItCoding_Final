@@ -17,8 +17,8 @@
     top: 380px;
 }
 #right_button{
-    position : absolute;
-    left : 1340px;
+    z-index : 200;
+    margin : 200px;
 }
 .slider{
     float : left;
