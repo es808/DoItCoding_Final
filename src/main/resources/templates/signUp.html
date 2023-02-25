@@ -154,12 +154,13 @@
                 });
             }); // 전화번호 중복 end
 
-<!--        }) // $(function)-->
-<!--    </script>-->
+
+        }) // $(function)
+    </script>
 </head>
 <body>
-<div id="background">
-    <a class="main" href="mainTest.html">
+<div id="background_signup">
+    <a class="main" href="main.html">
         <img  src="/image/homeicon.png" width="40" height="40"></a>
 </div>
 <form id="form_signup" action="/signUp" method="post">
@@ -211,15 +212,18 @@
             <td>전화번호</td>
             <td>
                 <input type ="text" name="phone" maxlength="11" size = "12" class="box">
-<!--                <input type="text" name="phone1" id="phone1" maxlength="3" size="4" class="box"> - -->
-<!--                <input type="text" name="phone2"  id="phone2" maxlength="4" size="4" class="box"> - -->
-<!--                <input type="text" name="phone3" id="phone3" maxlength="4" size="4" class="box">-->
+                <!--                <input type="text" name="phone1" id="phone1" maxlength="3" size="4" class="box"> - -->
+                <!--                <input type="text" name="phone2"  id="phone2" maxlength="4" size="4" class="box"> - -->
+                <!--                <input type="text" name="phone3" id="phone3" maxlength="4" size="4" class="box">-->
                 <input type="button" id="btn_phoneconfirm" value="중복확인">
             </td>
         </tr>
         <tr>
             <td>주소</td>
-            <td><input type="text" name="addr" class="box" size="30" id="addr"></td>
+            <td>
+                <input type="text" name="addr" class="box" size="30" id="addr">
+                <input type="button" id="btn_addrconfirm" value="주소 찾기">
+            </td>
         </tr>
         <tr>
             <td>성별</td>
@@ -238,7 +242,7 @@
             </td>
         </tr>
     </table>
-    <div class="caption">
+    <div class="signup_caption">
         <button id="btn_cancel">취소</button>&nbsp;&nbsp;
         <button id="btn_join" type="submit">가입하기</button>
     </div>
