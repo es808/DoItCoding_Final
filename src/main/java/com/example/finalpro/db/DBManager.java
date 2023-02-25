@@ -33,6 +33,7 @@ public class DBManager {
 		return list;
 	}
 
+	// ******** Notice ********
 	// 공지 등록
 	public static int insertNotice(NoticeVO n){
 		int re=-1;
@@ -43,6 +44,7 @@ public class DBManager {
 		return re;
 	}
 
+	// ******** QNA ********
 	// QNA 등록
     public static int insertQna(QnaVO q) {
 		int re=-1;
@@ -51,6 +53,15 @@ public class DBManager {
 		session.close();
 		return re;
     }
+
+	// QNA update
+	public static int updateQna(QnaVO qnaVO) {
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.update("qna.update",qnaVO);
+		session.close();
+		return re;
+	}
 
 	// QNA 답변 작성 및 수정
 	public static int updateAnswer(QnaVO q){
@@ -61,6 +72,7 @@ public class DBManager {
 		return re;
 	}
 
+	// QNA 답변 삭제
 	public static int deleteAnswer(int qna_no){
 		int re=-1;
 		SqlSession session=sqlSessionFactory.openSession(true);
@@ -77,7 +89,7 @@ public class DBManager {
 //		return re;
 //	}
 
-	//QNA 목록에서 사용자가
+	// 해당 사용자가 예매한 티켓 아이디 목록 가져오기 (for QNA)
 	public static List<Integer> findTicketidByCustid(String custid){
 		List<Integer> list=null;
 		SqlSession session=sqlSessionFactory.openSession();
@@ -85,4 +97,6 @@ public class DBManager {
 		session.close();
 		return list;
 	}
+
+
 }

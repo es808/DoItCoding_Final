@@ -56,9 +56,6 @@
     <div th:if="${#strings.endsWith(q.qna_fname,'.jpg')} or ${#strings.endsWith(q.qna_fname,'.png')} or ${#strings.endsWith(q.qna_fname,'.gif')}">
       <img th:src="@{'/qna_files/'+${q.qna_fname}}">
     </div>
-    <div th:unless="${#strings.endsWith(q.qna_fname,'.jpg')} or ${#strings.endsWith(q.qna_fname,'.png')} or ${#strings.endsWith(q.qna_fname,'.gif')}">
-      <div th:text="${q.qna_fname}"></div>
-    </div>
   </div>
 
   <!-- 답글 작성 (admin만 가능) -->

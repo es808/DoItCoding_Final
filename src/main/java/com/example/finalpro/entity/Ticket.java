@@ -27,6 +27,4 @@ public class Ticket {
     private String loc;
     private String lat;
     private String lng;
-    @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER)
-    private List<Qna> qnaList;
 }

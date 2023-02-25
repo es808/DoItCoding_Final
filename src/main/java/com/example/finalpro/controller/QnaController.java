@@ -6,6 +6,7 @@ import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.service.QnaService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.QnaVO;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Setter
@@ -44,18 +46,24 @@ public class QnaController {
     @GetMapping("/qna/detail/{qna_no}")
     public ModelAndView detail(@PathVariable int qna_no, HttpSession session){
         ModelAndView mav=new ModelAndView("/qna/detail");
-
-        Qna q =qs.findById(qna_no).get();
-        String custidByQna_no=q.getCustomer().getCustid();
-        String custidInSession=(String)session.getAttribute("id");
-        if(!custidInSession.equals(custidByQna_no) && !custidInSession.equals("admin") && q.getQna_open().equals("n")){
-            mav.addObject("msg","비공개 글입니다.");
+        Optional<Qna> optionalQna=qs.findById(qna_no);
+        if(optionalQna.isPresent()){
+            Qna q =optionalQna.get();
+            String custidByQna_no=q.getCustomer().getCustid();
+            String custidInSession=(String)session.getAttribute("id");
+            if(!custidInSession.equals(custidByQna_no) && !custidInSession.equals("admin") && q.getQna_open().equals("n")){
+                mav.addObject("msg","비공개 글입니다.");
+                mav.setViewName("/error");
+            }else {
+                mav.addObject("q",q);
+            }
+        }else{
+            mav.addObject("msg","삭제된 글이거나 잘못된 접근입니다.");
             mav.setViewName("/error");
-        }else {
-            mav.addObject("q",qs.findById(qna_no).get());
         }
 
 
+//          다른 방법 (이게 더 복잡한 듯)
 //        //비공개 글일 경우
 //        if(qna_open.equals("n")){
 //            //작성자가 맞는지 확인
@@ -84,9 +92,12 @@ public class QnaController {
         // 세션에 저장된 아이디로 유저가 예매한 티켓 VO 목록 가져오기
         String loginId=(String)session.getAttribute("id");
         List<Integer> ticketidList=DBManager.findTicketidByCustid(loginId);
-        List<Ticket> ticketVOList=null;
+        List<Ticket> ticketVOList=new ArrayList<Ticket>();
         for(int ticketid:ticketidList){
-            ticketVOList.add(ts.findByTicketid(ticketid).get());
+            Optional<Ticket> optionalTicket=ts.findByTicketid(ticketid);
+            if(optionalTicket.isPresent()) {
+                ticketVOList.add(optionalTicket.get());
+            }
         }
         mav.addObject("ticketVOList",ticketVOList);
         return mav;
@@ -128,27 +139,48 @@ public class QnaController {
     }
 
     @GetMapping("/qna/update/{qna_no}")
-    public ModelAndView updateForm(@PathVariable int qna_no){
+    public ModelAndView updateForm(@PathVariable int qna_no, HttpSession session){
         ModelAndView mav=new ModelAndView("/qna/update");
-        mav.addObject("q", qs.findById(qna_no).get());
+        Optional<Qna> optionalQna=qs.findById(qna_no);
+        if(optionalQna.isPresent()) {
+            mav.addObject("q",optionalQna.get());
+
+            // 세션에 저장된 아이디로 유저가 예매한 티켓 VO 목록 가져오기
+            String loginId = (String) session.getAttribute("id");
+            List<Integer> ticketidList = DBManager.findTicketidByCustid(loginId);
+            List<Ticket> ticketVOList = new ArrayList<Ticket>();
+            for (int ticketid : ticketidList) {
+                Optional<Ticket> optionalTicket=ts.findByTicketid(ticketid);
+                if(optionalTicket.isPresent()) {
+                    ticketVOList.add(optionalTicket.get());
+                }
+            }
+            mav.addObject("ticketVOList", ticketVOList);
+        }else{
+            mav.addObject("msg","잘못된 접근입니다.");
+            mav.setViewName("/error");
+        }
         return mav;
     }
 
     @PostMapping("/qna/update")
-    public ModelAndView updateSubmit(Qna q, HttpServletRequest request){
-        ModelAndView mav=new ModelAndView("redirect:/qna/detail/"+q.getQna_no());
+    public ModelAndView updateSubmit(QnaVO qnaVO, HttpServletRequest request){
+        ModelAndView mav=new ModelAndView("redirect:/qna/detail/"+qnaVO.getQna_no());
 
-        if(q.getQna_answer()==null){
-            q.setQna_answer("");
+        if(qnaVO.getQna_answer()==null){
+            qnaVO.setQna_answer("");
         }
 
         //파일 업로드
         String path=request.getServletContext().getRealPath("qna_files");
-        MultipartFile uploadFile=q.getUploadFile();
-        String oldFname=q.getQna_fname();
+        MultipartFile uploadFile=qnaVO.getUploadFile();
+        String oldFname=qnaVO.getQna_fname();
         String newFname=uploadFile.getOriginalFilename();
 
-        qs.save(q);
+        //          Fname 처리:
+        //         새로운 파일이 있으면 fname을 set
+        //         새로운 파일 없고 예전 파일 있으면 그대로
+        //         새로운 파일 없고 예전 파일 없으면 ""을 set
 
         //새로운 파일이 있으면 저장한다. 이 때 예전 파일이 있으면 지운다.
         //새로운 파일이 있으면
@@ -161,14 +193,21 @@ public class QnaController {
             }catch (Exception e) {
                 System.out.println("예외발생:"+e.getMessage());
             }
-            q.setQna_fname(newFname);
+            //새로운 파일 이름을 set
+            qnaVO.setQna_fname(newFname);
             //예전 파일이 있으면
             if(oldFname!=null && !oldFname.equals("")){
                 //예전 파일을 지운다.
                 File file=new File(path+"/"+oldFname);
                 file.delete();
             }
+        }else{
+            if(oldFname==null){
+                qnaVO.setQna_fname("");
+            }
         }
+
+        DBManager.updateQna(qnaVO);
         return mav;
     }
 
