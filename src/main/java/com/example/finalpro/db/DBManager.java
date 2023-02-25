@@ -69,6 +69,24 @@ public class DBManager {
 		return list;
 	}
 
+	public static int insertTicket(TicketVO ticket){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.insert("ticket.insertTicket", ticket);
+		session.commit();
+		session.close();
+		return re;
+	}
+
+	public static int updateTicket(TicketVO ticket){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.insert("ticket.updateTicket", ticket);
+		session.commit();
+		session.close();
+		return re;
+	}
+
 //	public static List<CustomerVO> findAll() {
 //		List<CustomerVO> list = null;
 //		SqlSession session = sqlSessionFactory.openSession();

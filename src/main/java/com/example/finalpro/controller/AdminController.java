@@ -3,8 +3,10 @@ package com.example.finalpro.controller;
 import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
+import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.FileOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Setter
@@ -46,11 +53,17 @@ public class AdminController {
     }
 
     @PostMapping(value = {"/admin/insertTicket"})
-    public ModelAndView adminInsertTicketSubmit(Ticket ticket){
+    public ModelAndView adminInsertTicketSubmit(TicketVO ticket, String ticket_date2) throws ParseException {
         ModelAndView mav = new ModelAndView("redirect:/admin/listTicket");
 
         System.out.println("여기 도착!!!!!");
         System.out.println("등록하는 ticket "+ticket);
+        
+        // html에서 받은 날짜 + 시간을 합치고 Date 형태로 변환하여 db에 넣기
+        String ticket_date = ticket.getTicket_date();
+        ticket_date = ticket_date + ticket_date2;
+       ticket.setTicket_date(ticket_date);
+        System.out.println(ticket_date);
 
         ticketService.insertTicket(ticket);
 
@@ -59,20 +72,43 @@ public class AdminController {
 
     // admin에서 updateTicket 기능하기
     @GetMapping("/admin/updateTicket/{ticketid}")
-    public ModelAndView adminUpdateTicket(@PathVariable int ticketid, Model model){
+    public ModelAndView adminUpdateTicket(@PathVariable int ticketid){
         ModelAndView mav = new ModelAndView("/admin/ticket/updateTicket");
-        model.addAttribute("ticket", ticketDAO.findById(ticketid));
+
+    if(ticketDAO.findById(ticketid).isPresent()){
+        Ticket ticket = ticketDAO.findById(ticketid).get();
+        mav.addObject("ticket", ticket);
+        
+        // view에서 ticket_date를 날짜와 시간값을 한번에 보낼 수 없으므로 두 개를 잘라서 따로따로 보내기 위한 작업
+        // ticket_date1 2023-03-04
+        // ticket_date2 13:15:00
+        // 형태로 각각 보내서 수정할 때 일일히 값을 입력하지 않아도 날짜 데이터가 자동으로 나오게 상태유지한다
+        String ticket_date = ticket.getTicket_date();
+        String[] list_ticket_date = ticket_date.split("\\s");
+        String ticket_date1 = list_ticket_date[0];
+        String ticket_date2 = list_ticket_date[1];
+
+        mav.addObject("ticket_date1", ticket_date1);
+        mav.addObject("ticket_date2", ticket_date2);
+
+    }
         return mav;
     }
 
     @PostMapping(value = {"/admin/updateTicket"})
-    public ModelAndView adminUpdateTicketSubmit(Ticket ticket){
+    public ModelAndView adminUpdateTicketSubmit(TicketVO ticket, String ticket_date2){
         ModelAndView mav = new ModelAndView("redirect:/admin/listTicket");
 
         System.out.println("여기 도착!!!!!");
         System.out.println("등록하는 ticket "+ticket);
 
-        ticketService.insertTicket(ticket);
+        // html에서 받은 날짜 + 시간을 합치고 Date 형태로 변환하여 db에 넣기
+        String ticket_date = ticket.getTicket_date();
+        ticket_date = ticket_date + ticket_date2;
+        ticket.setTicket_date(ticket_date);
+        System.out.println(ticket_date);
+
+        ticketService.updateTicket(ticket);
 
         return mav;
     }
@@ -86,5 +122,4 @@ public class AdminController {
         
         return mav;
     }
-
 }

@@ -1,7 +1,9 @@
 package com.example.finalpro.service;
 
 import com.example.finalpro.dao.TicketDAO;
+import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Ticket;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class TicketService {
     public List<Ticket> findAll(){return dao.findAll();}
 
     // 관리자 페이지에서 ticket을 넣기
-    public void insertTicket(Ticket ticket){
+    public void insertTicket(TicketVO ticket){
         // 파일 업로드하기
         // System.getPropery("user.dir") 을 쓰면 프로젝트 경로를 지정해줍니다 (본 프로젝트의 경우 "DoitCoding_Final" 이 기본값)
         String path = System.getProperty("user.dir") + "/src/main/resources/static/images/ticket";
@@ -63,11 +65,11 @@ public class TicketService {
         ticket.setImg_fname(fname);
         ticket.setImg_fname_main(fname_main);
 
-        dao.save(ticket);
+        DBManager.insertTicket(ticket);
     }
 
     // 관리자 페이지에서 ticket update 하는 기능
-    public void updateTicket(Ticket ticket){
+    public void updateTicket(TicketVO ticket){
         // 파일 수정하면 적용되게 하기 (수정 안하면 그대로 가게)
         String path = System.getProperty("user.dir") + "/src/main/resources/static/images/ticket";
         String path_main = System.getProperty("user.dir") + "/src/main/resources/static/images/ticket_main";
@@ -80,6 +82,7 @@ public class TicketService {
         MultipartFile uploadFile_main = ticket.getUploadFile_main();
         fname = uploadFile.getOriginalFilename();
         fname_main = uploadFile_main.getOriginalFilename();
+
 
         if(fname != null && !fname.equals("")){
             try{
@@ -97,7 +100,7 @@ public class TicketService {
                 System.out.println("에러"+e.getMessage());
             }
         }else{
-
+            ticket.setImg_fname(oldfname);
         }
 
         if(fname_main != null && !fname_main.equals("")){
@@ -115,10 +118,10 @@ public class TicketService {
                 System.out.println("에러"+e.getMessage());
             }
         }else{
-
+            ticket.setImg_fname_main(oldfname_main);
         }
 
-        dao.save(ticket);
+        DBManager.updateTicket(ticket);
     }
 
 }

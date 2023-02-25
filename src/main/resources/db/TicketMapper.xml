@@ -21,4 +21,15 @@
     <select id="findSearchTicket" resultType="ticketVO">
         select * from ticket where ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%'
     </select>
+
+    <!--admin 사이트에서 ticket을 insert -->
+    <insert id="insertTicket" parameterType="ticketVO">
+        insert into ticket(ticketid,cateid,placeid,ticket_name,price,ticket_date,content,img_fname,img_fname_main,vid_url,min_age,runtime,cast,loc,lat,lng)
+        values(#{ticketid},#{cateid},#{placeid},#{ticket_name},#{price},to_date(#{ticket_date},'yyyy/mm/dd hh24:mi:ss'),#{content},#{img_fname},#{img_fname_main},#{vid_url},#{min_age},#{runtime},#{cast},#{loc},#{lat},#{lng})
+    </insert>
+    <!--admin 사이트에서 ticket을 update-->
+    <update id="updateTicket" parameterType="ticketVO">
+        update ticket set cateid=#{cateid}, placeid=#{placeid}, ticket_name=#{ticket_name}, price=#{price}, ticket_date=to_date(#{ticket_date},'yyyy/mm/dd hh24:mi:ss'), content=#{content}, img_fname=#{img_fname}, img_fname_main=#{img_fname_main}, vid_url=#{vid_url}, min_age=#{min_age}, runtime=#{runtime}, cast=#{cast}, loc=#{loc}, lat=#{lat}, lng=#{lng}
+        where ticketid=#{ticketid}
+    </update>
 </mapper>
