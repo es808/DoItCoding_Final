@@ -6,4 +6,14 @@
   <select id="findAll" resultType="bookVO">
     select * from book
   </select>
+
+  <select id="countGender" resultType="countGenderVO">
+    select gender,count(*) cnt from customer c, book b where c.custid = b.custid and b.ticketid=#{ticketid} group by gender
+  </select>
+
+  <select id="countGeneration" resultType="countGenerationVO">
+    select generation, count(*) num
+    from (select custid,trunc((to_char(sysdate,'yyyy')-substr(birth,0,4)+1)/10)*10 generation from customer) c, book b
+    where c.custid=b.custid and b.ticketid=#{ticketid} group by generation
+  </select>
 </mapper>
