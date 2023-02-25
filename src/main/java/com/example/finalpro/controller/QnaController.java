@@ -55,6 +55,8 @@ public class QnaController {
                 mav.addObject("msg","비공개 글입니다.");
                 mav.setViewName("/error");
             }else {
+                DBManager.updateQNAHit(qna_no);
+                q.setQna_hit(q.getQna_hit()+1);
                 mav.addObject("q",q);
             }
         }else{
@@ -143,11 +145,13 @@ public class QnaController {
         ModelAndView mav=new ModelAndView("/qna/update");
         Optional<Qna> optionalQna=qs.findById(qna_no);
         if(optionalQna.isPresent()) {
-            mav.addObject("q",optionalQna.get());
+            Qna q=optionalQna.get();
+            mav.addObject("q",q);
 
-            // 세션에 저장된 아이디로 유저가 예매한 티켓 VO 목록 가져오기
-            String loginId = (String) session.getAttribute("id");
-            List<Integer> ticketidList = DBManager.findTicketidByCustid(loginId);
+            // 작성자가 예매한 티켓 VO 목록 가져오기
+            // 작성자 아이디
+            String writer=q.getCustomer().getCustid();
+            List<Integer> ticketidList = DBManager.findTicketidByCustid(writer);
             List<Ticket> ticketVOList = new ArrayList<Ticket>();
             for (int ticketid : ticketidList) {
                 Optional<Ticket> optionalTicket=ts.findByTicketid(ticketid);
@@ -208,6 +212,13 @@ public class QnaController {
         }
 
         DBManager.updateQna(qnaVO);
+        return mav;
+    }
+
+    @GetMapping("/qna/delete/{qna_no}")
+    public ModelAndView delete(@PathVariable int qna_no, HttpSession session){
+        ModelAndView mav=new ModelAndView("redirect:/qna/list");
+        qs.delete(qna_no);
         return mav;
     }
 

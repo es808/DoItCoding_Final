@@ -4,23 +4,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-  <script>
-    $(function (){
-      // 저장된 카테고리가 자동으로 selected 되게 처리
-      // $('#select_category').val($('#selected_category').text()).change()
-      let selected_category=$('#selected_category').html()
-      $('#select_category option[value="'+selected_category+'"]').prop('selected',true)
-
-      // 저장된 티켓 정보가 자동으로 selected 되게 처리
-      let selected_ticketid=$('#selected_ticketid').text()
-      $('#select_ticket option[value="'+selected_ticketid+'"]').prop('selected',true)
-
-      // 저장된 공개/비공개 여부가 자동으로 라디오 버튼 찍히게 처리
-      let selected_open=$('#selected_open').text()
-      console.log(selected_open)
-      $('input[name="qna_open"][value="'+selected_open+'"]').prop('checked',true)
-    })
-  </script>
+  <script th:src="@{/js/qna/update.js}"></script>
 </head>
 <body>
 <!-- JS로 가져가기 위한 카테고리 값 출력 -->
@@ -43,7 +27,8 @@
   </select>
   <br>
   <input name="qna_title" placeholder="제목" th:value="${q.qna_title}" required><br>
-  <input name="qna_content" placeholder="내용" th:value="${q.qna_content}" required><br>
+  <textarea name="qna_content" placeholder="내용" th:text="${q.qna_content}" rows="5" cols="50" required></textarea>
+  <br>
   <input type="file" name="uploadFile"><br>
   <input type="radio" id="y" name="qna_open" value="y" required>
   <label for="y">공개</label>

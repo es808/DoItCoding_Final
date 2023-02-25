@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/admin/notice/update.js}"></script>
+</head>
+<body>
+  <div hidden="hidden" id="notice_category" th:text="${n.notice_category}"></div>
+  <form action="/admin/notice/update" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <input type="hidden" th:name="notice_no" th:value="${n.notice_no}">
+    <input type="hidden" name="notice_fname" th:value="${n.notice_fname}">
+
+    <select name="notice_category" id="select_category">
+      <option value="예매/드로우">예매/드로우</option>
+      <option value="결제/환불">결제/환불</option>
+      <option value="기타">기타</option>
+    </select>
+    <br>
+    <input th:name="notice_title" placeholder="제목" th:value="${n.notice_title}"><br>
+    <textarea name="notice_content" placeholder="내용" th:text="${n.notice_content}" rows="5" cols="30"></textarea>
+    <br>
+    <input type="file" name="uploadFile"><br>
+    <input type="submit" value="등록">
+  </form>
+</body>
+</html>

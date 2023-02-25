@@ -25,4 +25,9 @@
         update qna set qna_category=#{qna_category}, qna_title=#{qna_title}, qna_content=#{qna_content},
         qna_fname=#{qna_fname}, qna_open=#{qna_open}, ticketid=#{ticketid} where qna_no=#{qna_no}
     </update>
+
+    <!--    조회수 증가  -->
+    <update id="updateHit" parameterType="java.lang.Integer">
+        update qna set qna_hit=qna_hit+1 where qna_no=#{qna_no}
+    </update>
 </mapper>

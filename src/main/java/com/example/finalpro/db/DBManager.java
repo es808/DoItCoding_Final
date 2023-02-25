@@ -44,6 +44,23 @@ public class DBManager {
 		return re;
 	}
 
+	// 조회수 증가
+	public static int updateNoticeHit(int notice_no){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.update("notice.updateHit",notice_no);
+		session.close();
+		return re;
+	}
+
+	public static int updateNotice(NoticeVO n){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.update("notice.update",n);
+		session.close();
+		return re;
+	}
+
 	// ******** QNA ********
 	// QNA 등록
     public static int insertQna(QnaVO q) {
@@ -98,5 +115,13 @@ public class DBManager {
 		return list;
 	}
 
+	// 조회수 증가
+	public static int updateQNAHit(int qna_no){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.update("qna.updateHit",qna_no);
+		session.close();
+		return re;
+	}
 
 }

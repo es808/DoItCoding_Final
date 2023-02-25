@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+    <div th:if="${session.id}=='admin'">
+        <a th:href="@{/admin/notice/insert}">등록</a>
+    </div>
     <table border="1">
         <tr>
             <td>글번호</td>

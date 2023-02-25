@@ -7,4 +7,13 @@
         insert into notice(notice_no, notice_category, notice_title, notice_content, notice_fname) values(seq_notice_no.nextval,
         #{notice_category},#{notice_title},#{notice_content},#{notice_fname})
     </insert>
+
+    <update id="updateHit" parameterType="java.lang.Integer">
+        update notice set notice_hit=notice_hit+1 where notice_no=#{notice_no}
+    </update>
+
+    <update id="update" parameterType="noticeVO">
+        update notice set notice_category=#{notice_category}, notice_title=#{notice_title},
+        notice_content=#{notice_content}, notice_fname=#{notice_fname} where notice_no=#{notice_no}
+    </update>
 </mapper>
