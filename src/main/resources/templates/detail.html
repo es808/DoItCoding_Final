@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.css">
-    <!--<link rel="stylesheet" type="text/css" href="/ticket/detail.css">-->
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css">
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -131,11 +130,9 @@
                 data: {ticketid: sessionStorage.getItem("ticketid")},
                 success: function(data){
                     var closeDate = new Date(data['ticket_date']);
-
                     var today = new Date();
                     console.log("close:"+closeDate);
                     console.log("today:"+today);
-
                     if(today < closeDate){
                         console.log("OK");
                         $("#btnbook").attr("disabled").css({
@@ -149,7 +146,6 @@
                             location.replace(url);
                         });
                     }
-
                 }
             });
             */

@@ -543,6 +543,13 @@ button{
 
 
 /* 검색결과 글꼴 */
+table{
+    position : absolute;
+    left : 70%; top : 40%;
+    margin-left : -240px;
+    margin-top : -400px;
+    width : 500px; height : 500px;
+}
 #search_title{
     height : 50px;
     margin-left : 20px;

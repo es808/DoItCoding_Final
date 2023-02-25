@@ -37,7 +37,7 @@ public class TicketController {
 
     @GetMapping("/search")
     public ModelAndView search(){
-        ModelAndView mav = new ModelAndView("/ticket/search");
+        ModelAndView mav = new ModelAndView("/search");
         return mav;
     }
 
@@ -50,7 +50,7 @@ public class TicketController {
     // 티켓 상세페이지
     @GetMapping("/detail")
     public ModelAndView detail(){
-        ModelAndView mav = new ModelAndView("/ticket/detail");
+        ModelAndView mav = new ModelAndView("/detail");
         return mav;
     }
 
