@@ -84,7 +84,7 @@ public class TicketService {
         fname = uploadFile.getOriginalFilename();
         fname_main = uploadFile_main.getOriginalFilename();
 
-
+        // uploadFile이 있다면
         if(fname != null && !fname.equals("")){
             try{
                 byte []data = uploadFile.getBytes();

@@ -25,4 +25,9 @@
         update qna set qna_category=#{qna_category}, qna_title=#{qna_title}, qna_content=#{qna_content},
         qna_fname=#{qna_fname}, qna_open=#{qna_open}, ticketid=#{ticketid} where qna_no=#{qna_no}
     </update>
+
+    <!--custid 고객 아이디에 따라 작성한 qna 목록 출력하기-->
+    <select id="selectQnaByCustid" resultType="qnaVO">
+        select * from qna where custid=#{custid}
+    </select>
 </mapper>

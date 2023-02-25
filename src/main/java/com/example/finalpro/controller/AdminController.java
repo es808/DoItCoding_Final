@@ -4,12 +4,17 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.entity.Customer;
 import com.example.finalpro.entity.Ticket;
+import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.QnaVO;
 import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +41,9 @@ public class AdminController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private CustomerService customerService;
 
     // admin에서 listTicket 페이지를 열기
     @GetMapping("/admin/listTicket")
@@ -99,10 +108,9 @@ public class AdminController {
     public ModelAndView adminUpdateTicketSubmit(TicketVO ticket, String ticket_date2){
         ModelAndView mav = new ModelAndView("redirect:/admin/listTicket");
 
-        System.out.println("여기 도착!!!!!");
         System.out.println("등록하는 ticket "+ticket);
 
-        // html에서 받은 날짜 + 시간을 합치고 Date 형태로 변환하여 db에 넣기
+        // html에서 받은 날짜 + 시간을 합쳐서 db에 넣기
         String ticket_date = ticket.getTicket_date();
         ticket_date = ticket_date + ticket_date2;
         ticket.setTicket_date(ticket_date);
@@ -122,4 +130,75 @@ public class AdminController {
         
         return mav;
     }
+
+    // 관리자 페이지에서 customer의 list 출력
+    @GetMapping("/admin/listCustomer")
+    public ModelAndView adminListCustomer(){
+        ModelAndView mav = new ModelAndView("/admin/customer/list");
+        mav.addObject("customerList", customerService.findAll());
+        return mav;
+    }
+
+    // 관리자 페이지 listCustomer에서 회원 아이디를 누르면 정보 수정 페이지로
+    @GetMapping("/admin/updateCustomer/{custid}")
+    public ModelAndView adminUpdateCustomer(@PathVariable String custid){
+        ModelAndView mav = new ModelAndView("/admin/customer/update");
+        if(customerService.findCustomerByCustid(custid).isPresent()){
+            Customer customer = customerService.findCustomerByCustid(custid).get();
+
+            // 생년월일을 yyyy-mm-dd 형태로만 나타내기 (공백을 기준으로 문자열을 잘라서 뒤에 00:00:00 없애기)
+            String birth = customer.getBirth();
+            String[] list_birth = birth.split("\\s");
+            birth = list_birth[0];
+            mav.addObject("customer", customer);
+            mav.addObject("birth", birth);
+        }
+        return mav;
+    }
+
+    // customer 정보 수정
+    @PostMapping("/admin/updateCustomer")
+    public ModelAndView adminUpdateCustomerSubmit(CustomerVO customer){
+        ModelAndView mav = new ModelAndView("redirect:/admin/listCustomer");
+        System.out.println("등록하는 customer "+customer);
+        customerService.updateCustomer(customer);
+        return mav;
+    }
+    
+    // customer 삭제
+    @RequestMapping("/admin/deleteCustomer/{custid}")
+    @ResponseBody
+    public ModelAndView adminDeleteCustomer(@PathVariable String custid){
+        ModelAndView mav = new ModelAndView("redirect:/admin/listCustomer");
+        customerService.deleteCustomer(custid);
+        return mav;
+    }
+
+    // custid 별로 작성한 qna 목록 출력하기
+    @GetMapping("/admin/listQnaByCustid/{custid}")
+    public ModelAndView adminListQnaByCustid(@PathVariable String custid){
+        ModelAndView mav = new ModelAndView("/admin/customer/listQna");
+        List<QnaVO> list = DBManager.listQnaByCustid(custid);
+        mav.addObject("listQna", list);
+        return mav;
+    }
+
+    // custid 별로 예매한 ticket 내역 출력하기
+    @GetMapping("/admin/listTicketByCustid/{custid}")
+    public ModelAndView adminListTicketByCustid(@PathVariable String custid){
+        ModelAndView mav = new ModelAndView("/admin/customer/listTicket");
+        // 아이디로 유저가 예매한 티켓 VO 목록 가져오기
+        List<Integer> ticketidList=DBManager.findTicketidByCustid(custid);
+        List<Ticket> ticketVOList=new ArrayList<Ticket>();
+        for(int ticketid:ticketidList){
+            Optional<Ticket> optionalTicket=ticketService.findByTicketid(ticketid);
+            if(optionalTicket.isPresent()) {
+                ticketVOList.add(optionalTicket.get());
+            }
+        }
+        mav.addObject("ticketVOList",ticketVOList);
+
+        return mav;
+    }
+
 }

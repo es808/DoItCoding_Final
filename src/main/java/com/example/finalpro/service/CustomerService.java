@@ -1,7 +1,9 @@
 package com.example.finalpro.service;
 
 import com.example.finalpro.dao.CustomerDAO;
+import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Customer;
+import com.example.finalpro.vo.CustomerVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +23,26 @@ public class CustomerService implements UserDetailsService {
     private CustomerDAO dao;
 
     public List<Customer> findAll(){return dao.findAll();}
+
+    public Optional<Customer> findCustomerByCustid(String custid){
+        return dao.findById(custid);
+    }
+
+    // 고객 정보 수정
+    public int updateCustomer(CustomerVO customer){
+        String birth = customer.getBirth();
+        String[] list_birth = birth.split("\\s");
+        birth = list_birth[0];
+        System.out.println(birth);
+        customer.setBirth(birth);
+
+        return DBManager.updateCustomer(customer);
+    }
+
+    // 고객 삭제
+    public void deleteCustomer(String custid){
+        dao.deleteById(custid);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

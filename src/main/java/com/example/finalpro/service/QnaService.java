@@ -20,5 +20,7 @@ public class QnaService {
 
     public Optional<Qna> findById(int qna_no) {return dao.findById(qna_no);}
 
+
+
 //    public void save(Qna q){dao.save(q);}
 }

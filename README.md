@@ -55,7 +55,7 @@ Spring으로 main, search, category 구현 완료. 모두 복잡한 sql문이 �
 - mypage 작업만 하면 된다.
 
 
------ 23.02.23-25
+----- 23.02.23-24
 관리자 페이지를 작성했다.
 - 관리자 페이지에서는 작품과 고객 정보를 관리할 수 있다. 작품을 등록, 수정, 삭제하거나 고객 정보를 수정, 삭제, 내역 확인 등을 할 수 있다.
 - 23,24일 + 25일 오전은 관리자 페이지의 insertTicket, updateTicket, listTicket 작업의 대부분을 완료하였다. 남은 건 페이징 처리 + 주소값 검색하면 자동으로 위도, 경도 불러오기.
@@ -67,3 +67,14 @@ Spring으로 main, search, category 구현 완료. 모두 복잡한 sql문이 �
   - 회원이 예매한 내역
   - 회원 정보 수정
   - 회원 삭제
+
+------ 23.02.25
+고객 정보 페이지를 만들었다. 일부 기능은 아직 구현하지 않았지만 대다수는 만들었다.
+이제 페이징 처리랑 검색만 하면 어느 정도 된다.
+- 회원 목록 출력 admin/customer/list
+- 회원 정보 출력 (수정이랑 같이) admin/customer/update
+- 회원 검색 X
+- 회원이 작성한 qna admin/customer/listQna
+- 회원이 예매한 내역 admin/customer/listTicket
+- 회원 정보 수정 admin/customer/update
+- 회원 삭제 admin/customer/delete
