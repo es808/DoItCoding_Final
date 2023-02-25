@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Setter
@@ -92,7 +93,7 @@ public class TicketService {
                 fos.close();
 
                 ticket.setImg_fname(fname);
-                
+
                 // 수정한 게 있으면 기존 파일 삭제하기
                 File file = new File(path + "/" + oldfname);
                 file.delete();
@@ -124,4 +125,6 @@ public class TicketService {
         DBManager.updateTicket(ticket);
     }
 
+
+    public Optional<Ticket> findByTicketid(int ticketid){return dao.findById(ticketid);}
 }

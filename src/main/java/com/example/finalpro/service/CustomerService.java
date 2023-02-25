@@ -25,14 +25,14 @@ public class CustomerService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("사용자 로그인 처리");
-        System.out.println("username:"+username);
+        System.out.println("username:" + username);
         Optional<Customer> obj = dao.findById(username);
         UserDetails user = null;
-        if(obj.isPresent()) {
+        if (obj.isPresent()) {
             Customer c = obj.get();
             user = User.builder().username(username).password(c.getPwd()).roles(c.getRole()).build();
             System.out.println(user);
-        }else {
+        } else {
             throw new UsernameNotFoundException(username);
         }
 
