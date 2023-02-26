@@ -28,3 +28,4 @@
  - 2/25 qna update & delete, notice update & delete 기능 완성
         조회수 증가 기능 추가
         JS 파일 모듈화
+ - 2/26 notice 페이징, 제목/내용 검색 기능, 카테고리별 보기 기능 추가

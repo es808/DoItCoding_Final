@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 public class DBManager {
@@ -59,6 +60,23 @@ public class DBManager {
 		re=session.update("notice.update",n);
 		session.close();
 		return re;
+	}
+
+	// Notice Paging
+	public static int getTotalRecord(HashMap<String, Object> hashMap){
+		int totalRecord=-1;
+		SqlSession session=sqlSessionFactory.openSession();
+		totalRecord=session.selectOne("notice.getTotalRecord",hashMap);
+		session.close();
+		return totalRecord;
+	}
+
+	public static Object findAllNotice(HashMap<String, Object> hashMap) {
+		List<NoticeVO> list=null;
+		SqlSession session=sqlSessionFactory.openSession();
+		list=session.selectList("notice.findAll", hashMap);
+		session.close();
+		return list;
 	}
 
 	// ******** QNA ********
@@ -123,5 +141,6 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
 
 }
