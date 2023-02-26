@@ -79,3 +79,18 @@ Spring으로 main, search, category 구현 완료. 모두 복잡한 sql문이 �
 - 회원이 예매한 내역 admin/customer/listTicket
 - 회원 정보 수정 admin/customer/update
 - 회원 삭제 admin/customer/delete
+
+
+------ 23.02.26
+고객 정보 페이지의 ticket, customer들 목록을 출력하는 list 페이지에서 페이징과 검색 기능을 완료했다.
+일단 보이는 기능은 모두 잘 되는데 혹시 안되는 게 있을 수 있다는 걸 염두하자.
+이를 위해 paging 클래스를 만들었다. 혹시 또 페이징을 한다면 유용하게 쓸 수 있을듯.
+
+따로 controller에서 페이징 처리 작업을 열심히 하지 않더라도 thymeleaf로도 만들 수 있을 것이란 생각도 들었다.
+#number나 Stat을 활용하면 list의 번호들을 출력할 수 있으니까.
+근데 일단 배운대로 + 구글링해서 검색한 걸 응용해서 만들었다.
+
+이제 admin 페이지에서 남은 기능을 다음과 같다.
+- ticket, customer 에서 버튼 누르면 분류가 바뀌는 작업
+- ticket 목록 페이지에서 cateid에 따라 출력하기
+- ticket, customer에서 주소를 검색하는 api 적용하기 (위도, 경도도 자동으로 입력되도록)

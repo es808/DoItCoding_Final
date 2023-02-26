@@ -6,12 +6,14 @@ import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.entity.Ticket;
+import com.example.finalpro.function.page.Paging;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.vo.QnaVO;
 import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -45,11 +47,45 @@ public class AdminController {
     @Autowired
     private CustomerService customerService;
 
-    // admin에서 listTicket 페이지를 열기
+
+    // 페이징 처리를 위한 변수 선언 (ticket)
+    int totalTicketRecord = 0; // ticket의 총 레코드 숫자
+    int pageSizeTicket =2; // ticket 목록에서 한 페이지에서 몇개의 record를 출력할지
+    int totalPageTicket = 0; // ticket 목록에서 페이지의 총 숫자
+    
+
+    // 관리자 페이지에서 listTicket 페이지를 열기
     @GetMapping("/admin/listTicket")
-    public ModelAndView adminListTicket(Model model){
+    public ModelAndView adminListTicket(Model model, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String keyword){
         ModelAndView mav = new ModelAndView("/admin/ticket/listTicket");
-        model.addAttribute("list", ticketService.findAll());
+        
+        // 페이징 처리
+            // int page : 현재 페이지
+            // int totalRecord : 총 ticket 숫자
+            // int startRecord : 현재 page에서 출력되는 record의 시작 rownum
+            // int endRecord : 현재 page에서 출력되는 record의 끝 rownum
+            // int startPage : '이전'을 누르기 전에 출력되는 가장 작은 페이지 버튼 숫자
+            // int endPage : '다음'을 누르기 전에 출력되는 가장 큰 페이지 버튼 숫자
+            int totalRecord = DBManager.getTotalRecord(keyword);
+            Paging paging = new Paging(totalRecord, page);
+            int startRecord = paging.getStartRecord();
+            int endRecord = paging.getEndRecord();
+            int startPage = paging.getStartPage();
+            int endPage = paging.getEndPage();
+
+        // 검색기능
+        System.out.println("keyword :"+keyword);
+
+            //상태유지하기
+        session.setAttribute("keyword", keyword);
+        if(session.getAttribute("keyword") == null){
+            session.setAttribute("keyword", "");
+        }
+        String keyword_session = (String) session.getAttribute("keyword");
+        
+        mav.addObject("paging", paging);
+        mav.addObject("keyword", keyword_session);
+        mav.addObject("list", DBManager.findTicketPagingSearch(startRecord, endRecord, keyword_session));
 
         return mav;
     }
@@ -133,9 +169,35 @@ public class AdminController {
 
     // 관리자 페이지에서 customer의 list 출력
     @GetMapping("/admin/listCustomer")
-    public ModelAndView adminListCustomer(){
+    public ModelAndView adminListCustomer(@RequestParam(defaultValue = "1") int page, HttpSession session, @RequestParam(required = false) String keyword){
         ModelAndView mav = new ModelAndView("/admin/customer/list");
-        mav.addObject("customerList", customerService.findAll());
+
+        // 페이징 처리
+        // int page : 현재 페이지
+        // int totalRecord : 총 ticket 숫자
+        // int startRecord : 현재 page에서 출력되는 record의 시작 rownum
+        // int endRecord : 현재 page에서 출력되는 record의 끝 rownum
+        // int startPage : '이전'을 누르기 전에 출력되는 가장 작은 페이지 버튼 숫자
+        // int endPage : '다음'을 누르기 전에 출력되는 가장 큰 페이지 버튼 숫자
+        int totalRecord = DBManager.getTotalCustomerRecord(keyword);
+        Paging paging = new Paging(totalRecord, page);
+        int startRecord = paging.getStartRecord();
+        int endRecord = paging.getEndRecord();
+        int startPage = paging.getStartPage();
+        int endPage = paging.getEndPage();
+
+        // 검색기능
+            System.out.println("keyword :"+keyword);
+        //상태유지하기
+        session.setAttribute("keyword", keyword);
+        if(session.getAttribute("keyword") == null){
+            session.setAttribute("keyword", "");
+        }
+        String keyword_session = (String) session.getAttribute("keyword");
+
+        mav.addObject("customerList", DBManager.findCustomerPagingSearch(startRecord, endRecord, keyword_session));
+        mav.addObject("keyword", keyword_session);
+        mav.addObject("paging", paging);
         return mav;
     }
 

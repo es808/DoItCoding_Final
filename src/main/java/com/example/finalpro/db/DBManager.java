@@ -53,6 +53,48 @@ public class DBManager {
 
 		return list;
 	}
+	// admin의 ticketList
+	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
+	public static List<TicketVO> findTicketPaging(int startRecord, int endRecord){
+		List<TicketVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("ticket.findTicketPaging", map);
+		session.close();
+
+		return list;
+	}
+
+	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
+	// +search 기능
+	public static List<TicketVO> findTicketPagingSearch(int startRecord, int endRecord, String keyword){
+		List<TicketVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+		map.put("keyword", keyword);
+
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("ticket.findTicketPagingSearch", map);
+		session.close();
+
+		return list;
+	}
+
+	// ticket의 totalRecord를 구하기
+	public static int getTotalRecord(String keyword){
+		int totalRecord = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		totalRecord = session.selectOne("ticket.getTotalRecord", keyword);
+		session.close();
+		if(totalRecord==0){
+			totalRecord = 1;
+		}
+		return totalRecord;
+	}
 
 	public static List<RankingVO> findAllRankingOrderByScore(int cateid){
 		List<RankingVO> list = null;
@@ -64,6 +106,7 @@ public class DBManager {
 		return list;
 	}
 
+	// ticket을 검색
 	public static List<TicketVO> findSearchTicket(String keyword){
 		List<TicketVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
@@ -73,6 +116,7 @@ public class DBManager {
 		return list;
 	}
 
+	// admin에서 ticket을 insert
 	public static int insertTicket(TicketVO ticket){
 		int re = -1;
 		SqlSession session = sqlSessionFactory.openSession();
@@ -81,7 +125,7 @@ public class DBManager {
 		session.close();
 		return re;
 	}
-
+	// admin에서 ticket을 update
 	public static int updateTicket(TicketVO ticket){
 		int re = -1;
 		SqlSession session = sqlSessionFactory.openSession();
@@ -103,12 +147,39 @@ public class DBManager {
 		return re;
 	}
 
+	// custid에 따른 qna 작성 리스트
 	public static List<QnaVO> listQnaByCustid(String custid){
 		List<QnaVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("qna.selectQnaByCustid", custid);
 		session.close();
 		return list;
+	}
+
+	public static List<CustomerVO> findCustomerPagingSearch(int startRecord, int endRecord, String keyword){
+		List<CustomerVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+		map.put("keyword", keyword);
+
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("customer.findCustomerPagingSearch", map);
+		session.close();
+
+		return list;
+	}
+
+	public static int getTotalCustomerRecord(String keyword){
+		int totalRecord = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		totalRecord = session.selectOne("customer.getTotalRecord", keyword);
+		session.close();
+		if(totalRecord==0){
+			totalRecord = 1;
+		}
+
+		return totalRecord;
 	}
 
 //	public static List<CustomerVO> findAll() {

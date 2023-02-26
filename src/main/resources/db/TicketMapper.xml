@@ -17,6 +17,27 @@
             </if>
         </select>
 
+    <!--page에 따라 startRecord와 endRecord 구해서 출력하기-->
+    <select id="findTicketPaging" resultType="ticketVO">
+        select * from
+        (select rownum n, a.* from
+        (select * from ticket order by ticketid) a)
+        where n between #{startRecord} and #{endRecord}
+    </select>
+
+    <!--page에 따라 startRecord와 endRecord 구해서 출력하기-->
+    <!--search에 따라 출력하기-->
+    <select id="findTicketPagingSearch" resultType="ticketVO">
+        select * from
+        (select rownum n, a.* from
+        (select * from ticket
+            <if test="keyword != null and keyword != ''">
+                where (ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%' )
+            </if>
+        order by ticketid) a)
+        where n between #{startRecord} and #{endRecord}
+    </select>
+
     <!--keyword' 를 매개변수로 ticket 리스트 검색 결과를 출력하기-->
     <select id="findSearchTicket" resultType="ticketVO">
         select * from ticket where ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%'
@@ -32,4 +53,13 @@
         update ticket set cateid=#{cateid}, placeid=#{placeid}, ticket_name=#{ticket_name}, price=#{price}, ticket_date=to_date(#{ticket_date},'yyyy/mm/dd hh24:mi:ss'), content=#{content}, img_fname=#{img_fname}, img_fname_main=#{img_fname_main}, vid_url=#{vid_url}, min_age=#{min_age}, runtime=#{runtime}, cast=#{cast}, loc=#{loc}, lat=#{lat}, lng=#{lng}
         where ticketid=#{ticketid}
     </update>
+
+    <!--admin에서 ticket의 목록을 페이징 처리하기 위해 ticket의 totalRecord 숫자 구하기-->
+    <select id="getTotalRecord" resultType="java.lang.Integer">
+        select count(*) from ticket
+        <if test="keyword != null and keyword != ''">
+            where (ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%' )
+        </if>
+    </select>
+
 </mapper>
