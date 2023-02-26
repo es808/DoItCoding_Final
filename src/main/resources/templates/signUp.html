@@ -2,16 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <!--       csrf token 전송을 위한 _csrf.token, _csrf.headerName 설정-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Insert title here</title>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/signUp.css">
     <script>
         $(function(){
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone;
             var confirm_custid;
             $("#form_signup").submit(function(e){ // form이 제출 (회원가입 기능)
 
-                var url = "SignupCustomer";
+                var url = "signUp";
 
                 var custid = $("#custid").val();
                 var pwd = $("#pwd").val();
@@ -19,6 +24,7 @@
                 var birth = $("#birth").val();
                 var phone = $("#phone1").val() + $("#phone2").val()+ $("#phone3").val();
                 var email = $("#email").val() + $("#email_com").val();
+                var addr = $("#addr").val();
                 var gender = $("input:radio[name=gender]:checked").val();
                 var cateid = $("input:radio[name=cateid]:checked").val();
 
@@ -34,6 +40,7 @@
                     birth:birth,
                     phone:phone,
                     gender:gender,
+                    addr:addr,
                     cateid:cateid
                 };
 
@@ -56,21 +63,26 @@
                 }
                 console.log("confirmPwd " +confirmPwd());
                 console.log(data)
-                let f = document.createElement('form');
-                f.setAttribute('method', 'post');
-                f.setAttribute('action', 'singUp');
-                f.appendChild(data)
-                document.body.appendChild(f);
-                f.submit();
+                // let f = document.createElement('form');
+                // f.setAttribute('method', 'post');
+                // f.setAttribute('action', 'singUp');
+                // f.appendChild(data)
+                // document.body.appendChild(f);
+                // f.submit();
 
-                // $.ajax(url, {
-                //     data:data,
-                //     success:function(re){
-                //         if(re==1){
-                //             $(location).attr('href',"loginTest.html");
-                //         }
-                //     }
-                // }); // Ajax 통신 시작
+                $.ajax({
+                    url,
+                    type:'POST',
+                    data:data,
+                    beforeSend : function(xhr)
+                    {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success:function(){
+                        $(location).attr("href","/login");
+                    }
+                }); // Ajax 통신 시작
+                e.preventDefault();
 
             }); // 회원가입 end
 

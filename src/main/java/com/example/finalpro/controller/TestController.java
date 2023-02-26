@@ -110,6 +110,7 @@ public class TestController {
         try {
             System.out.println(c);
             customerDAO.save(c);
+            mav.setViewName("/login");
         } catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
             mav.setViewName("error");
