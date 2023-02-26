@@ -63,7 +63,7 @@ public class DBManager {
 	}
 
 	// Notice Paging
-	public static int getTotalRecord(HashMap<String, Object> hashMap){
+	public static int getTotalNoticeRecord(HashMap<String, Object> hashMap){
 		int totalRecord=-1;
 		SqlSession session=sqlSessionFactory.openSession();
 		totalRecord=session.selectOne("notice.getTotalRecord",hashMap);
@@ -142,5 +142,21 @@ public class DBManager {
 		return re;
 	}
 
+//	페이징 처리를 위한 총 레코드 수 계산
+	public static int getTotalQnaRecord(HashMap<String, Object> hashMap){
+		int totalRecord=-1;
+		SqlSession session=sqlSessionFactory.openSession();
+		totalRecord=session.selectOne("qna.getTotalRecord",hashMap);
+		session.close();
+		return totalRecord;
+	}
+
+	public static Object findAllQna(HashMap<String, Object> hashMap) {
+		List<NoticeVO> list=null;
+		SqlSession session=sqlSessionFactory.openSession();
+		list=session.selectList("qna.findAll", hashMap);
+		session.close();
+		return list;
+	}
 
 }

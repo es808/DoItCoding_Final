@@ -22,10 +22,16 @@
         select count(notice_no) from notice
         <if test="category!=null">
             where notice_category=#{category}
+            <if test="keyword!=null">
+                and ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
         </if>
-        <if test="keyword!=null">
-            where ${searchColumn} like '%' || #{keyword} || '%'
+        <if test="category==null">
+            <if test="keyword!=null">
+                where ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
         </if>
+
     </select>
 
     <select id="findAll" resultType="noticeVO" parameterType="java.util.HashMap">
@@ -33,9 +39,14 @@
         notice_fname from (select rownum r, a.* from (select * from notice
         <if test="category!=null">
             where notice_category=#{category}
+            <if test="keyword!=null">
+                and ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
         </if>
-        <if test="keyword!=null">
-            where ${searchColumn} like '%' || #{keyword} || '%'
+        <if test="category==null">
+            <if test="keyword!=null">
+                where ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
         </if>
         order by NOTICE_DATE desc) a)
         where r between #{startNo} and #{endNo}

@@ -3,6 +3,7 @@ package com.example.finalpro.controller;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Notice;
 import com.example.finalpro.service.NoticeService;
+import com.example.finalpro.service.SearchService;
 import com.example.finalpro.vo.NoticeVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +29,17 @@ public class NoticeController {
     @Autowired
     private NoticeService ns;
 
-    @RequestMapping(value={"/notice/list/{pageNum}", "/notice/list", "/notice/list/1/{category}"})
+    @Autowired
+    private SearchService searchService;
+
+    @GetMapping("/notice/resetSearch")
+    public ModelAndView resetSearch(HttpSession session){
+        ModelAndView mav=new ModelAndView("redirect:/notice/list");
+        session.removeAttribute("noticeKeyword");
+        session.removeAttribute("noticeSearchColumn");
+        return mav;
+    }
+    @RequestMapping(value={"/notice/list", "/notice/list/{pageNum}", "/notice/list/1/{category}"})
     public ModelAndView list(@PathVariable(required = false) Integer pageNum,
                              @PathVariable(required = false) String category,
                              String keyword, String searchColumn,
@@ -36,75 +47,15 @@ public class NoticeController {
         ModelAndView mav=new ModelAndView("/notice/list");
 
         //쿼리문에 넣을 변수들을 담을 맵 생성
-        HashMap<String, Object> hashMap=new HashMap<String,Object>();
-
-        // 카테고리별로 보기
-        if(category!=null){
-            // 카테고리 클릭했으면  all이든 아니든 검색어 지우기
-            session.removeAttribute("keyword");
-            session.removeAttribute("searchColumn");
-            keyword = null;
-            searchColumn = null;
-
-            // 카테고리가 all이면 세션에 저장된 카테고리 지우기
-            if(category.equals("all")) {
-                if(session.getAttribute("category")!=null) {
-                    session.removeAttribute("category");
-                }
-                category = null;
-            }else{  // all이 아니라 특정 카테고리를 선택했을 경우
-                //카테고리를 세션에 저장한다.
-                session.setAttribute("category",category);
-                //세션에 원래 있던 카테는 필요없음.
-            }
-        // 카테고리를 클릭 안했을 경우
-        }else{
-            // 그 전에 클릭했던 게 있다면 (=세션에 저장되어 있다면)
-            if(session.getAttribute("category")!=null) {
-                //세션에 저장되어 있는 카테를 가져온다.
-                category = (String) session.getAttribute("category");
-
-                //둘다 없다면 => 카테고리별로 보기 x => null => 처리 필요 없음.
-            }
-        }
-        if(category!=null) {
-            switch (category) {
-                case "book":
-                    category = "예매/드로우";
-                    break;
-                case "transaction":
-                    category = "결제/환불";
-                    break;
-                case "etc":
-                    category = "기타";
-            }
-            hashMap.put("category", category);
-        }
-
-        //검색
-        if(keyword!=null) {
-            session.removeAttribute("category");
-            category=null;
-
-            session.setAttribute("keyword",keyword);
-            session.setAttribute("searchColumn", searchColumn);
-            hashMap.put("searchColumn", searchColumn);
-            hashMap.put("keyword", keyword);
-        }else{
-            if(session.getAttribute("keyword")!=null){
-                keyword= (String) session.getAttribute("keyword");
-                searchColumn= (String) session.getAttribute("searchColumn");
-                hashMap.put("searchColumn", searchColumn);
-                hashMap.put("keyword", keyword);
-            }
-        }
+        HashMap<String, Object> hashMap= searchService.searchProcess(category, session, keyword,
+                searchColumn, "notice");
         
         // 페이징
         if (pageNum==null){
             pageNum=1;
         }
-        int totalRecord=DBManager.getTotalRecord(hashMap);
-        int pageSize=3;
+        int totalRecord=DBManager.getTotalNoticeRecord(hashMap);
+        int pageSize=10;
         int totalPage=(int)Math.ceil((double)totalRecord/pageSize);
         mav.addObject("totalPage",totalPage);
         

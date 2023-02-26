@@ -4,6 +4,7 @@ import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Qna;
 import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.service.QnaService;
+import com.example.finalpro.service.SearchService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.QnaVO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,16 +13,14 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,10 +33,54 @@ public class QnaController {
     @Autowired
     private TicketService ts;
 
-    @GetMapping("/qna/list")
-    public ModelAndView list(){
-        ModelAndView mav=new ModelAndView();
-        mav.addObject("list", qs.findAll());
+    @Autowired
+    private SearchService ss;
+
+    @GetMapping("/qna/resetSearch")
+    public ModelAndView resetSearch(HttpSession session){
+        ModelAndView mav=new ModelAndView("redirect:/qna/list");
+        session.removeAttribute("qnaKeyword");
+        session.removeAttribute("qnaSearchColumn");
+        return mav;
+    }
+
+    @RequestMapping({"/qna/list","/qna/list/{pageNum}", "/qna/list/1/{category}"})
+    public ModelAndView list(@PathVariable(required = false) Integer pageNum,
+                             @PathVariable(required = false) String category,
+                             String keyword, String searchColumn,
+                             HttpSession session){
+        ModelAndView mav=new ModelAndView("/qna/list");
+        //쿼리문에 넣을 변수들을 담을 맵 생성
+        HashMap<String, Object> hashMap=ss.searchProcess(category, session, keyword,
+                searchColumn, "qna");
+
+        // 페이징
+        if (pageNum==null){
+            pageNum=1;
+        }
+        int totalRecord=DBManager.getTotalQnaRecord(hashMap);
+        int pageSize=10;
+        int totalPage=(int)Math.ceil((double)totalRecord/pageSize);
+        mav.addObject("totalPage",totalPage);
+
+        // 해당 페이지의 시작 글번호, 끝 글번호
+        int startNo=(pageNum-1)*pageSize+1;
+        int endNo=pageNum*pageSize;
+        hashMap.put("startNo",startNo);
+        hashMap.put("endNo",endNo);
+
+        // 페이지를 페이징
+        int pageGroupSize=5;   // 한 페이지 당 페이지 번호 몇 개씩 출력할지
+
+        int firstPage=((pageNum-1)/pageGroupSize)*pageGroupSize+1;
+        int lastPage=firstPage+pageGroupSize-1;
+        if(lastPage>totalPage){
+            lastPage=totalPage;
+        }
+        mav.addObject("firstPage",firstPage);
+        mav.addObject("lastPage",lastPage);
+
+        mav.addObject("list",DBManager.findAllQna(hashMap));
         return mav;
     }
 
