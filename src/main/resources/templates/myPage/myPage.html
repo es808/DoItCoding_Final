@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="/css/myPage/myPage.css">
+    <!--<link rel="stylesheet" type="text/css" href="/css/myPage/myPage.css">-->
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript">
@@ -191,7 +193,7 @@
         });	//전체 $funtion
     </script>
 </head>
-<body class="mypage_layout">
+<body class="main_layout">
 <a href="mainTest.html"><img src="./image/logo.png" id="logo"></a>
 <div class="main_user">
     <a href="loginTest.html" id="login"><img src="./image/loginicon.png">로그인</a>
@@ -239,15 +241,15 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li id="myinfo"><a href="mypage_Info.html">내 정보</a></li>
-        <li><a href="mypage_Book.html">예매내역</a></li>
+        <li id="myinfo"><a href="myPage.html">내 정보</a></li>
+        <li><a href="myPageBook.html">예매내역</a></li>
         <li><a href="mypage_Draw.html">드로우내역</a></li>
-        <li><a href="mypage_Review.html">내 후기</a></li>
+        <li><a href="myPageReview.html">내 후기</a></li>
     </ul>
 </div>
 <div id="background">
     <h2>회원정보 수정</h2>
-    <hr>
+    <hr id="mypage_hr">
 </div>
 <form method="post" id="form_updateCustomer">
     <table id="get_customer">
@@ -289,6 +291,13 @@
             </td>
         </tr>
         <tr>
+            <td>주소</td>
+            <td>
+                <input type="text" name="addr" class="box" size="30" id="addr">
+                <input type="button" id="btn_addrconfirm" value="주소 찾기">
+            </td>
+        </tr>
+        <tr>
             <td>성별</td>
             <td class="td1" id="gender">
                 남성<input type="radio" id="male" name="gender" value="남자" class="gender">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -313,7 +322,7 @@
 
 <div id="main-footer">
     <footer>
-        <div>Footer</div>
+        <div>ⓒ CodingDoit corp.</div>
     </footer>
 </div>
 </body>

@@ -154,10 +154,11 @@ hr{
 #main-footer{
     padding-top: 100px;
 }
-footer{
+.footer{
     line-height: 100px;
     background: #08428C;
     color: white;
     font-size: 14px;
     text-align: center;
+    position : relative;
 }

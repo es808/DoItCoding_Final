@@ -1,6 +1,6 @@
 /* 초기화하기 */
-.mypage_layout{
-    max-width : 98%;
+.main_layout{
+    max-width : 1380px;
     margin : auto;
 }
 *{
