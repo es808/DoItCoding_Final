@@ -7,13 +7,19 @@
     select * from book
   </select>
 
+  <!-- 성별통계 -->
   <select id="countGender" resultType="countGenderVO">
     select gender,count(*) cnt from customer c, book b where c.custid = b.custid and b.ticketid=#{ticketid} group by gender
   </select>
 
+  <!-- 세대통계 -->
   <select id="countGeneration" resultType="countGenerationVO">
     select generation, count(*) num
     from (select custid,trunc((to_char(sysdate,'yyyy')-substr(birth,0,4)+1)/10)*10 generation from customer) c, book b
     where c.custid=b.custid and b.ticketid=#{ticketid} group by generation
   </select>
+
+  <insert id="bookTicket" parameterType="bookVO">
+    insert into book(bookid,custid,ticketid,seatid) values(seq_bookid.nextval,#{custid},#{ticketid},#{seatid})
+  </insert>
 </mapper>
