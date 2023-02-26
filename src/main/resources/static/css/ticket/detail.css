@@ -6,7 +6,7 @@
 *{
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-a{
+a, #detail_tab a{
     text-decoration: none;
 }
 li{
