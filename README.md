@@ -16,5 +16,6 @@
  - Framework : SpringBoot(3.0)
 
 
- test
-asdfadsf
+2/26
+신윤경 : main, login, signup, mypage, detail css 정리완료
+(오류 -> main 우측 화살표 위치 조정, detail 테스트 필요, id,pw찾기 html 요청)
