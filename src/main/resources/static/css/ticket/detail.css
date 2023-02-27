@@ -342,11 +342,18 @@ h2{
 }
 .review_list{
     position : relative;
-    top : 150px;
-    width : 780px; height : 240px;
+    top : 200px;
+    width : 700px; height : 240px;
     border : 2px solid #08428C;
     border-radius : 20px;
     margin-bottom : 20px;
+}
+.review_list div{
+    position : relative;
+    margin-top : 10px;
+    margin-left : 20px;
+    color : #08428C;
+    font-weight: 600;
 }
 #detail_review{
     height : 2000px;
@@ -369,7 +376,7 @@ h2{
     margin-left : 20px;
     resize : none;
     border : none;
-    width : 730px;	height : 120px;
+    width : 650px;	height : 120px;
     border : 2px solid #dcdcdc;
     border-radius : 10px;
 }
@@ -381,8 +388,8 @@ h2{
 }
 .statistics{
     position : absolute;
-    width : 830px; height : 290px;
-    margin-left : 270px;
+    width : 700px; height : 290px;
+    margin-left : 350px;
     margin-top : -430px;
     border : 2px solid #eeeeee;
     background-color : #eeeeee;
@@ -406,7 +413,13 @@ h2{
 }
 #woman{
     position:relative;
-    left : 70px;
+    left : 240px;
+    bottom : 5px;
+}
+#man{
+    position : relative;
+    bottom : 25px;
+    left : 60px;
 }
 .generation{
     position : absolute;
@@ -427,13 +440,21 @@ h2{
 }
 #ulavgScore{
     position : absolute;
-    margin-top : 70px;
+    margin-top : 10px;
     font-weight : 600;
 }
 #reviewOrder{
     position : absolute;
-    margin-top : -150px;
+    margin-top : 150px;
     z-index:600;
+}
+.review_all{
+    position : absolute;
+    left : 350px;
+    margin-top : -260px;
+}
+#star{
+    margin-left : 15px;
 }
 /* footer 구성하기 */
 #main-footer{

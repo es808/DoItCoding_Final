@@ -12,7 +12,7 @@
 
         // 상세페이지
         $(function(){
-            sessionStorage.setItem("ticketid",1);
+            sessionStorage.setItem("ticketid",25);
             //sessionStorage.setItem("custid","mj1234");
 
             var custid = sessionStorage.getItem("custid");
@@ -259,7 +259,10 @@
                             $(li1).html("여자: "+b.cnt+"명");
                         }
                         if(b.gender == '남자'){
-                            var li2 = $("<li></li>").html("남자: "+b.cnt+"명");
+                            var li2 = $("<li></li>").attr({
+                                id: 'man'
+                            });
+                            $(li2).html("남자: "+b.cnt+"명");
                         }
 
                         $(".gender").append(li1,li2);
@@ -347,12 +350,13 @@
                                     url: "AvgScore",
                                     data: {ticketid: sessionStorage.getItem("ticketid")},
                                     success: function (data) {
+                                        $("#score_num").empty();
                                         if (data == 0) {
                                             $("#ulavgScore").append("아직 작성된 후기가 없습니다.");
                                             $("#avgScore").hide();
                                             $("#reviewOrder").hide();
                                         } else {
-                                            $("#avgScore").append(data);
+                                            $("#score_num").append(data);
                                         }
                                     }
                                 });
@@ -360,7 +364,7 @@
                         });
                     } else {
                         //후기가 없으면 후기틀 자체가 없어지는 css 넣기!!
-                        $("#review_list").css('display','none');
+                        $("#reviewOrder").css('display','none');
                     }
                 }
             })
@@ -499,13 +503,15 @@
                 <ul class="gender"></ul>
                 <div id="divide"></div>
                 <ul id="ulavgScore">
-                    <li id="avgScore">평균별점: </li><label>⭐</label>
+                    <li id="avgScore">평균별점: </li><label id="score_num"></label><label id="star">⭐</label>
                 </ul>
                 <ul class="generation"></ul>
             </div>
         </div>
+    </div>
         <!-- 후기 ==> 후기 위치로 이동 https://webisfree.com/2021-08-19/%ED%8A%B9%EC%A0%95-%EC%97%98%EB%A6%AC%EB%A8%BC%ED%8A%B8%EB%A1%9C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%9D%84-%EC%B2%9C%EC%B2%9C%ED%9E%88-%EC%9D%B4%EB%8F%99%EC%8B%9C%ED%82%A4%EB%8A%94-%EB%B0%A9%EB%B2%95-scrollintoview-smooth -->
         <!-- 후기 정렬 ==>평점 높은순/평점 낮은순 -->
+    <div class="review_all">
         <select id="reviewOrder">
             <option>스포일러성 후기가 있을 수 있습니다. 그래도 후기 보기</option>
             <option id="desc">평점 높은순</option>
