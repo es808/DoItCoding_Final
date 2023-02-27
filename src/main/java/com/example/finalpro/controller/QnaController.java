@@ -6,6 +6,7 @@ import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.service.QnaService;
 import com.example.finalpro.service.SearchService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.NotificationVO;
 import com.example.finalpro.vo.QnaVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -266,10 +267,17 @@ public class QnaController {
     //답글 등록 Ajax
     @ResponseBody
     @GetMapping("/qna/answer/update")
-    public int updateAnswer(int qna_no, String qna_answer){
+    public int updateAnswer(int qna_no, String qna_answer, String insertOrUpdate){
         QnaVO q=new QnaVO();
         q.setQna_no(qna_no);
         q.setQna_answer(qna_answer);
+
+        // insert일 경우 notification 추가
+        if(insertOrUpdate.equals("insert")) {
+            String qnaWriter = qs.findById(qna_no).get().getCustomer().getCustid();
+            NotificationVO notificationVO = new NotificationVO(0, qnaWriter, qna_no, null);
+            int re=DBManager.insertNotification(notificationVO);
+        }
         return DBManager.updateAnswer(q);
     }
 

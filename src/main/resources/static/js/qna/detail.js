@@ -2,11 +2,19 @@ $(function(){
     //답글 등록 클릭 시 처리
     $('#answer_submit').click(function (){
         let answer_input=$('.textarea_qna_answer').val()
+
+        // null이면 insert, null 아니면 update
+        let div_qna_answer=$('#div_qna_answer').html()
+        console.log('div_qna_answer',div_qna_answer)
+        let insertOrUpdate='insert'
+        if(div_qna_answer!=""){
+            insertOrUpdate='update'
+        }
         //입력 내용 길이가 0보다 커야 ajax 실행
         if(answer_input.length>0) {
             $.ajax({
                 url: "/qna/answer/update",
-                data: {qna_no: $('#qna_no').text(), qna_answer: answer_input},
+                data: {qna_no: $('#qna_no').text(), qna_answer: answer_input, insertOrUpdate: insertOrUpdate},
                 success: function (re) {
                     if(re==1){
                         alert('등록했습니다.')

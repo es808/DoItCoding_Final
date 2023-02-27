@@ -42,6 +42,7 @@
     </div>
     <button id="answer_submit">등록</button>
     <button id="answer_delete">삭제</button>
+    <a th:href="@{'/qna_notification_email/'+${q.customer.custid}}">알림 메일 보내기</a>
   </div>
 
 </body>

@@ -9,6 +9,7 @@
         <typeAlias type="com.example.finalpro.vo.NoticeVO" alias="noticeVO"/>
         <typeAlias type="com.example.finalpro.vo.QnaVO" alias="qnaVO"/>
         <typeAlias type="com.example.finalpro.vo.BookVO" alias="bookVO"/>
+        <typeAlias type="com.example.finalpro.vo.NotificationVO" alias="notificationVO"/>
 	</typeAliases>
   <environments default="development">
     <environment id="development">
@@ -26,5 +27,6 @@
     <mapper resource="db/NoticeMapper.xml"/>
     <mapper resource="db/QnaMapper.xml"/>
     <mapper resource="db/BookMapper.xml"/>
+    <mapper resource="db/NotificationMapper.xml"/>
   </mappers>
 </configuration>

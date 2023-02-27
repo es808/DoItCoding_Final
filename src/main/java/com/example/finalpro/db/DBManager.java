@@ -2,6 +2,7 @@ package com.example.finalpro.db;
 
 import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.vo.NoticeVO;
+import com.example.finalpro.vo.NotificationVO;
 import com.example.finalpro.vo.QnaVO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -142,7 +143,7 @@ public class DBManager {
 		return re;
 	}
 
-//	페이징 처리를 위한 총 레코드 수 계산
+	//	페이징 처리를 위한 총 레코드 수 계산
 	public static int getTotalQnaRecord(HashMap<String, Object> hashMap){
 		int totalRecord=-1;
 		SqlSession session=sqlSessionFactory.openSession();
@@ -151,7 +152,7 @@ public class DBManager {
 		return totalRecord;
 	}
 
-	public static Object findAllQna(HashMap<String, Object> hashMap) {
+	public static List<NoticeVO> findAllQna(HashMap<String, Object> hashMap) {
 		List<NoticeVO> list=null;
 		SqlSession session=sqlSessionFactory.openSession();
 		list=session.selectList("qna.findAll", hashMap);
@@ -159,4 +160,12 @@ public class DBManager {
 		return list;
 	}
 
+	// 알림 생성
+	public static int insertNotification(NotificationVO notificationVO){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.insert("notification.insert", notificationVO);
+		session.close();
+		return re;
+	}
 }
