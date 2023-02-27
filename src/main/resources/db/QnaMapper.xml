@@ -26,6 +26,11 @@
         qna_fname=#{qna_fname}, qna_open=#{qna_open}, ticketid=#{ticketid} where qna_no=#{qna_no}
     </update>
 
+    <!--custid 고객 아이디에 따라 작성한 qna 목록 출력하기-->
+    <select id="selectQnaByCustid" resultType="qnaVO">
+        select * from qna where custid=#{custid}
+    </select>
+
     <!--    조회수 증가  -->
     <update id="updateHit" parameterType="java.lang.Integer">
         update qna set qna_hit=qna_hit+1 where qna_no=#{qna_no}

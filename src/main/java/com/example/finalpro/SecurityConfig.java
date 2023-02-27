@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -15,8 +17,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests()
-                .requestMatchers("/","/login","/join","/list","/service1").permitAll()
-                .requestMatchers("/admin/**").hasRole("admin")
+                .requestMatchers("/", "/login", "/join", "/list", "/service1", "/loginTest", "/main").permitAll()
+                .requestMatchers("/admin/**", "/admin/insertTicket").hasRole("admin")
                 .anyRequest().authenticated();
 
         http.formLogin().loginPage("/login").permitAll()
