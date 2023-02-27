@@ -23,3 +23,6 @@
 
 2/17
 - 은선: 전체 테이블 컬럼 정리, 생성한 테이블에 맞게 VO 및 Entity 내용 수정
+2/26
+신윤경 : main, login, signup, mypage, detail css 정리완료
+(오류 -> main 우측 화살표 위치 조정, detail 테스트 필요, id,pw찾기 html 요청)

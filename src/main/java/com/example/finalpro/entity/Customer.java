@@ -22,8 +22,8 @@ public class Customer {
     private String pwd;
     private String name;
     private String birth;
-    private String phone;
     private String email;
+    private String phone;
     private String addr;
     private String gender;
     private String role;
