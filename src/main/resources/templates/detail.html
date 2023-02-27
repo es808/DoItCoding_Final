@@ -57,14 +57,21 @@
                     var lng = data['lng'];
 
                     //console.log(img_fname);
-
+                    if(vid_url == null || vid_url == "") {
+                        $("#vid_url").css('display', 'none');
+                    }
                     $("#ticket_name").append(ticket_name);
                     $("#ticket_date").append(ticket_date);
                     $("#loc").append(loc);
-                    $("#min_age").append(min_age);
-                    $("#runtime").append(runtime);
+                    if (min_age==0){
+                        $("#min_age").append("전체관람가");
+                    }else{
+                        $("#min_age").append(min_age+"세 이상");
+                    }
+
+                    $("#runtime").append(runtime+"분");
                     if(price==0){
-                        $("#price").append("전석 초대");
+                        $("#price").append("0원(전석 초대)");
                     }else{
                         $("#price").append(price);
                     }
@@ -415,22 +422,20 @@
 <div id="detail_content">
     <div id="art_img"></div>
     <div id="vid_url"></div>
-    <ul>
-        <li>[ 캐스트 ]</li>
-    </ul>
-    <p id="cast"></p>
-    <ul>
-        <li>[ Content ]</li>
-    </ul>
-    <p id="content"></p>
-    <hr>
+        <ul>
+            <li>[ 캐스트 ]</li>
+        </ul>
+        <p id="cast"></p>
+        <ul>
+            <li>[ Content ]</li>
+        </ul>
+        <p id="content"></p>
 </div>
 <div id="detail_location">
     <img src="/image/mapicon.png" width="60" height="50" id="mapicon">
     <h2 class="detail_title" id="a">위치</h2>
     <div id="location_box"><div id="map" style="width:100%;height:500px"></div></div>
 </div>
-<hr>
 <div id="detail_review">
     <h2 class="detail_title" id="b">후기</h2>
     <div class="statistics">

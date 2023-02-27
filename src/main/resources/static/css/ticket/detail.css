@@ -233,6 +233,7 @@ h2{
 #detail_content{
     position : relative;
     height : auto;
+    margin-top : 100px;
 }
 
 #vid_url{
@@ -241,6 +242,9 @@ h2{
     margin-top : 100px;
     margin-left : 240px;
     border : none;
+}
+#cast{
+    top : 50px;
 }
 #detail_content ul{
     height : 150px;
