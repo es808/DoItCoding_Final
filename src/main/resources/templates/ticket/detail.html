@@ -226,7 +226,10 @@
                             $(li1).html("여자: "+b.cnt+"명");
                         }
                         if(b.gender == '남자'){
-                            var li2 = $("<li></li>").html("남자: "+b.cnt+"명");
+                            var li2 = $("<li></li>").attr({
+                                id: 'man'
+                            });
+                            $(li2).html("남자: "+b.cnt+"명");
                         }
 
                         $(".gender").append(li1,li2);

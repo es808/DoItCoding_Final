@@ -399,7 +399,11 @@ h2{
 }
 #woman{
     position:relative;
-    left : 70px;
+    left : 150px;
+}
+#man{
+    position : relative;
+    left : 80px;
 }
 .generation{
     position : absolute;
@@ -408,7 +412,7 @@ h2{
 }
 .generation li{
     padding : 10px;
-    font-size : 17px;
+    font-size : 20px;
     font-weight : 600;
 }
 #divide{
