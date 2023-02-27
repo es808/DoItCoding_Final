@@ -31,10 +31,6 @@ public class TicketController {
     @GetMapping("/main")
     public ModelAndView main(HttpSession session){
         ModelAndView mav = new ModelAndView("/ticket/main");
-        String sessionId=(String) session.getAttribute("id");
-        List<NotificationByCustidVO> notificationList=DBManager.findNotificationByCustid(sessionId);
-        mav.addObject("notifList",notificationList);
-        mav.addObject("totalNotif", notificationList.size());
         return mav;
     }
 

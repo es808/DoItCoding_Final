@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class NotificationByCustidVO {
     private int notif_no;
+    private int qna_no;
     private String qna_title;
     private Date notif_date;
 }

@@ -6,6 +6,7 @@ import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.service.QnaService;
 import com.example.finalpro.service.SearchService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.NotificationByCustidVO;
 import com.example.finalpro.vo.NotificationVO;
 import com.example.finalpro.vo.QnaVO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -286,6 +287,47 @@ public class QnaController {
     @GetMapping("/qna/answer/delete")
     public int deleteAnswer(int qna_no){
         return DBManager.deleteAnswer(qna_no);
+    }
+
+    // 답글 알림 list Ajax
+    @ResponseBody
+    @GetMapping("/listNotification")
+    public List<NotificationByCustidVO> listNotification(HttpSession session){
+        String sessionId=(String) session.getAttribute("id");
+        List<NotificationByCustidVO> notificationList=DBManager.findNotificationByCustid(sessionId);
+        return notificationList;
+    }
+
+    // 답글 알림 갯수 계산 Ajax
+    @ResponseBody
+    @GetMapping("/countNChecked")
+    public int countNChecked(){
+        int cnt=DBManager.countNChecked();
+        return cnt;
+    }
+
+    // DB 'checked' 칼럼 업데이트 n->y
+    @ResponseBody
+    @GetMapping("/updateCheckedToY")
+    public int updateCheckedToY(){
+        int re=-1;
+        re=DBManager.updateCheckedToY();
+        return re;
+    }
+
+    // 알림 지우기
+    @ResponseBody
+    @GetMapping("/deleteNotification")
+    public int deleteNotification(int notif_no){
+        int re=-1;
+        re=DBManager.deleteNotification(notif_no);
+        return re;
+    }
+
+    // 답글 알림 뷰 (임시)
+    @GetMapping("/qna/notification")
+    public void notif_view(){
+
     }
 
 

@@ -329,4 +329,31 @@ public class DBManager {
 		session.close();
 		return list;
 	}
+
+	// 체크 안 한 알림 갯수
+	public static int countNChecked(){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession();
+		re=session.selectOne("notification.countNChecked");
+		session.close();
+		return re;
+	}
+
+	// 알림 checked : n->y\
+	public static int updateCheckedToY(){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.update("notification.updateCheckedToY");
+		session.close();
+		return re;
+	}
+
+	// 알림 삭제
+	public static int deleteNotification(int notif_no){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.delete("notification.delete",notif_no);
+		session.close();
+		return re;
+	}
 }
