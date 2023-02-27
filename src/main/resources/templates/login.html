@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <!--       csrf token 전송을 위한 _csrf.token, _csrf.headerName 설정-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Insert title here</title>
     <link rel="stylesheet" type="text/css" href="/css/login.css" >
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

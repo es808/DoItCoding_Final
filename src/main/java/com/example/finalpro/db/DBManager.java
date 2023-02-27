@@ -1,5 +1,6 @@
 package com.example.finalpro.db;
 
+import com.example.finalpro.entity.Customer;
 import com.example.finalpro.vo.CustomerVO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -13,10 +14,8 @@ public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
 	static {
 		try {
-			System.out.println("ok1");
 			String resource = "db/sqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
-			System.out.println("ok2");
 			sqlSessionFactory =
 			  new SqlSessionFactoryBuilder().build(inputStream);
 		}catch (Exception e) {
@@ -30,6 +29,18 @@ public class DBManager {
 		list = session.selectList("customer.findAll");
 		session.close();
 		return list;
+	}
+
+	public static int updateCustomer(CustomerVO customer){
+		int i = -1;
+		System.out.println("DB가동");
+		System.out.println(customer);
+		SqlSession session = sqlSessionFactory.openSession();
+		session.update("customer.updateCustomer", customer);
+		System.out.println(i);
+		session.commit();
+		session.close();
+		return i;
 	}
 
 //	public static List<CustomerVO> findAll() {

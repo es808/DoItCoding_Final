@@ -1,10 +1,12 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
+import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.CustomerVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 @Setter
@@ -43,6 +43,7 @@ public class TestController {
 
     @Autowired
     private TicketService ticketService;
+
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
 
@@ -89,7 +90,34 @@ public class TestController {
     }
 
     @GetMapping("/myPage")
-    public String myPage() { return "myPage/myPage";}
+    public String myPage(HttpSession session, Model m) {
+        String id = (String) session.getAttribute("id");
+        Optional<Customer> c = customerDAO.findById(id);
+        System.out.println(c.get());
+        m.addAttribute("id",c.get());
+        return "myPage/myPage";
+    }
+
+    @PostMapping("/updateCustomer")
+    public ModelAndView updateCustomer(CustomerVO c){
+        System.out.println("업데이트 컨트롤러 가동:"+c);
+        ModelAndView mav = new ModelAndView();
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("암호화 : "+c);
+        c.setRole("customer");
+        try{
+            DBManager.updateCustomer(c);
+        }catch (Exception e){
+            mav.setViewName("error");
+        }
+        return mav;
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "list";
+    }
+
 
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}

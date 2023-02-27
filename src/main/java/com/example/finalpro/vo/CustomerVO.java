@@ -1,10 +1,12 @@
 package com.example.finalpro.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerVO {
     private String custid;
     private String pwd;
@@ -13,5 +15,7 @@ public class CustomerVO {
     private String email;
     private String phone;
     private String gender;
+    private String addr;
+    private String role;
     private int cateid;
 }
