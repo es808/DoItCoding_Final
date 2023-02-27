@@ -18,5 +18,4 @@ public class CustomerVO {
     private String addr;
     private String role;
     private int cateid;
-    private String role;
 }

@@ -51,11 +51,6 @@ public class CustomerController {
         model.addAttribute("list", dao.findAll());
     }
 
-    @RequestMapping("/listJpa")
-    public void list_jpa(Model model) {
-        model.addAttribute("list", DBManager.findAll());
-        System.out.println("D매니저가능:"+DBManager.findAll());
-    }
 
     @RequestMapping("/list_jpa_id")
     public void list_jpa_id(Model model) {
