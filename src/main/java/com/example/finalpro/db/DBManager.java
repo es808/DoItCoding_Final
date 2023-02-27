@@ -1,17 +1,13 @@
 package com.example.finalpro.db;
 
-import com.example.finalpro.vo.CustomerVO;
-import com.example.finalpro.vo.RankingVO;
-import com.example.finalpro.vo.TicketVO;
-import com.example.finalpro.vo.NoticeVO;
-import com.example.finalpro.vo.NotificationVO;
-import com.example.finalpro.vo.QnaVO;
+import com.example.finalpro.vo.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -323,5 +319,14 @@ public class DBManager {
 		re=session.insert("notification.insert", notificationVO);
 		session.close();
 		return re;
+	}
+
+	// 알림 불러오기
+	public static List<NotificationByCustidVO> findNotificationByCustid(String custid){
+		List<NotificationByCustidVO> list=null;
+		SqlSession session=sqlSessionFactory.openSession();
+		list=session.selectList("notification.findByCustid",custid);
+		session.close();
+		return list;
 	}
 }

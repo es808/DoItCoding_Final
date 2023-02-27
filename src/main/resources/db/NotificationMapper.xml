@@ -7,4 +7,8 @@
         insert into notification(notif_no, custid, qna_no) values(seq_notif_no.nextval,
         #{custid}, #{qna_no})
     </insert>
+    <select id="findByCustid" parameterType="java.lang.String" resultType="notificationByCustidVO">
+        select notif_no, qna_title from notification n, qna q where n.QNA_NO=q.QNA_NO and
+        n.custid=q.custid and n.custid=#{custid} order by notif_date desc
+    </select>
 </mapper>

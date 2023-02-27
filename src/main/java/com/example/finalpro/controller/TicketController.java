@@ -4,14 +4,18 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.vo.NotificationByCustidVO;
+import com.example.finalpro.vo.NotificationVO;
 import com.example.finalpro.vo.RankingVO;
 import com.example.finalpro.vo.TicketVO;
+import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,8 +29,12 @@ public class TicketController {
     private TicketDAO ticketDAO;
 
     @GetMapping("/main")
-    public ModelAndView main(){
+    public ModelAndView main(HttpSession session){
         ModelAndView mav = new ModelAndView("/ticket/main");
+        String sessionId=(String) session.getAttribute("id");
+        List<NotificationByCustidVO> notificationList=DBManager.findNotificationByCustid(sessionId);
+        mav.addObject("notifList",notificationList);
+        mav.addObject("totalNotif", notificationList.size());
         return mav;
     }
 

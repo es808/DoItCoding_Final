@@ -331,6 +331,12 @@ $(function(){
 <body class="main_layout">
  		<img src="/ticket/main.css" id="logo">
  		<div class="main_user">
+				<div th:text="${session.id}" id="session_id" hidden="hidden"></div>
+				<div th:text="${totalNotif}"></div> <!-- 알림 갯수 -->
+				<div th:each="n:${notifList}">
+					<div th:text="${n.notif_no}"></div>
+					<div th:text="|'${n.qna_title}'에 답글이 달렸습니다.|"></div>
+				</div>
  				<a href="loginTest.html" id="login"><img src="/image/loginicon.png">로그인</a>
  				<a href="main.html" id="logout"><img src="/image/logouticon.png">로그아웃</a>
  				<a href="signupTest.html" id="regist"><img src="/image/signupicon.png">회원가입</a>
