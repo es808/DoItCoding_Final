@@ -192,7 +192,39 @@
                     $("#seat").append(num);
 
                     if(num ==0){
+                        //매진되거나 전석 추첨인 시사회 카테고리일 때 드로우 버튼 활성화.
                         //드로우 버튼 활성화
+
+                        $("#btnbook").attr("disabled").css({
+                            "border":"1px solid #cccccc",
+                            "background-color":"#cccccc"
+                        });
+
+                        $.ajax({
+                            url: "DrawButtonOpen",
+                            data: {ticketid: sessionStorage.getItem("ticketid")},
+                            success: function(data){
+                                var close = new Date(data['ticket_date']);
+                                var open = close.setDate(close.getDate()-14);
+                                var today = new Date();
+                                console.log("close:"+close);
+                                console.log("today:"+today);
+
+                                if(open <= today < close){
+                                    console.log("OK");
+                                    $("#btndraw").removeAttr("disabled").css({
+                                        "border":"1px solid #ff7f00",
+                                        "background-color":"#ff7f00"
+                                    });
+                                    $(document).on("click","#btndraw",function(){
+                                        console.log("btndraw 클릭");
+                                        var url = "/draw";
+                                        location.replace(url);
+                                    });
+                                }
+
+                            }
+                        });
                     }
                 }
             });
@@ -426,7 +458,7 @@
         <div id="seat">잔여좌석 : </div>
         <button id="btnbook" disabled="disabled" type="button">예매하기</button>
 
-        <button id="btndraw">드로우</button>
+        <button id="btndraw" disabled="disabled" type="button">드로우</button>
         <div id="localtime"></div>
     </div>
 </form>
@@ -455,6 +487,7 @@
     <h2 class="detail_title" id="a">위치</h2>
     <div id="location_box"><div id="map" style="width:100%;height:500px"></div></div>
 </div>
+<hr>
 <div id="detail_review">
     <h2 class="detail_title" id="b">후기</h2>
     <div class="statistics">
@@ -482,7 +515,9 @@
         <div id="review_list"></div>
     </div>
 </div>
+
 <div id="main-footer">
+
 </div>
 </body>
 <footer>
