@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Insert title here</title>
@@ -9,6 +9,11 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
   <script type="text/javascript">
     $(function(){
+      // sessionStorage.setItem("custid", $("#sessionId").val());
+      console.log(sessionStorage.getItem("custid"));
+      var custid = sessionStorage.getItem("custid");
+      console.log("custid"+custid);
+
       var width = $("[data-role='slider']").attr("data-width");
       var height = $("[data-role='slider']").attr("data-height");
       var count = $("[data-role='slider'] div.item").length;
@@ -153,9 +158,9 @@
 
       var cateid = 2; // review 테이블에 카테고리가 연극인 것 외에는 인스턴스가 없으므로 기본값을 2로 설정함
       // 사용자가 가입 시 입력한 선호 카테고리가 기본값으로 되게하기
-      if(sessionStorage.getItem("custid") != null){
+      if(custid != null){
         $.ajax("GetCustomerAction", {
-          data:{custid:sessionStorage.getItem("custid")},
+          data:{custid:custid},
           async:false,
           success:function(key, value){
             console.log("ajax 안 " +key.cateid);
@@ -305,7 +310,9 @@
 
       // 로그인한 정보 불러오기
 
-      var custid = sessionStorage.getItem("custid");
+      // var custid = sessionStorage.getItem("custid");
+      // var custid = $("#sessionId").val();
+      console.log(custid);
 
       if(custid != null){
         $("#login").css('display', 'none');
@@ -316,12 +323,10 @@
 
       $("#logout").click(function(e){
         if(confirm("로그아웃 하시겠습니까?")){
-          $("#login").css('display', 'inline-block');
-          $("#regist").css('display', 'inline-block');
-          $("#logout").css('display','none');
-          $("#mypage").css('display','none');
           sessionStorage.removeItem("custid");
-          e.preventDefault();
+          custid = null;
+        }else{
+          return false;
         }
       })
 
@@ -330,9 +335,10 @@
   </script>
 </head>
 <body class="main_layout">
+<input type = "hidden" id = "sessionId" th:value="${id}"/>
 <img src="/image/logo.png" id="logo">
 <div class="main_user">
-  <a href="/loginogin" id="login"><img src="/image/loginicon.png">로그인</a>
+  <a href="/login" id="login"><img src="/image/loginicon.png">로그인</a>
   <a href="/logout" id="logout"><img src="/image/logouticon.png">로그아웃</a>
   <a href="signUp" id="regist"><img src="/image/signupicon.png">회원가입</a>
   <a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>

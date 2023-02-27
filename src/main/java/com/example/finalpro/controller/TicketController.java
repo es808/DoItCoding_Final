@@ -29,12 +29,6 @@ public class TicketController {
     @Autowired
     private TicketDAO ticketDAO;
 
-    @GetMapping("/main")
-    public ModelAndView main(){
-        ModelAndView mav = new ModelAndView("/ticket/main");
-        return mav;
-    }
-
     @GetMapping("/search")
     public ModelAndView search(){
         ModelAndView mav = new ModelAndView("/search");

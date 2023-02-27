@@ -78,7 +78,30 @@ public class CustomerController {
 
     @GetMapping("/")
     public String home() {
-        return "list";
+        return "main";
+    }
+
+    @GetMapping("/main")
+    public ModelAndView main(HttpSession session, Model m){
+        ModelAndView mav = new ModelAndView("/main");
+//        //인증된(로그인한) 회원의 정보를 가져오기 위하여
+//        //시큐리티의 인증객체가 필요.
+//        Authentication authentication =
+//                SecurityContextHolder.getContext().getAuthentication();
+//
+//        //이 인증객체를 통해서 인증된(로그인된) User객체를 받아 온다.
+//        User user = (User) authentication.getPrincipal();
+//
+//        //이 인증된 User를 통해서 로그인된 회원의 아이디를 가져온다.
+//
+//        String id = user.getUsername();
+//        //아이디 정보를 세션에 상태유지 한다.
+//        //만약, id뿐 아니라 로그인한 회원의 다른정보도 필요하다면 dao를 통해 회원 정보를 가져와서 상태유지
+//
+//        session.setAttribute("id", id);
+//        System.out.println("session id = " + session.getAttribute("id"));
+//        m.addAttribute("id", id);
+        return mav;
     }
 
     @GetMapping("/myPage")
