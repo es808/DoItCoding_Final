@@ -12,6 +12,7 @@
         $(function(){
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
+            var confirm_phone = false;
 
             if(custid != null){
                 $("#login").css('display', 'none');
@@ -22,47 +23,10 @@
 
             $("#logout").click(function(e){
                 if(confirm("로그아웃 하시겠습니까?")){
-                    $("#login").css('display', 'inline-block');
-                    $("#regist").css('display', 'inline-block');
-                    $("#logout").css('display','none');
-                    $("#mypage").css('display','none');
-                    sessionStorage.removeItem("custid");
-                    e.preventDefault();
+                }else{
+                    return false;
                 }
-            })
-
-
-            // $("#get_customer").ready(function(){
-            //     var custid = sessionStorage.getItem("custid");
-            //
-            //     $.ajax({
-            //         url: "GetCustomerAction",
-            //         data: {custid: sessionStorage.getItem("custid")},
-            //         beforeSend : function(xhr)
-            //         {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-            //             xhr.setRequestHeader(header, token);
-            //         },
-            //         success: function(c,item){
-            //             console.log("c아이디"+c.custid);
-            //             console.log("c비번"+c.pwd);
-            //             console.log("c이름"+c.name);
-            //             console.log("c생일"+c.birth);
-            //             console.log("c이메일"+c.email);
-            //             console.log("c번호"+c.phone);
-            //             console.log("c성별"+c.gender);
-            //             console.log("c선호"+c.cateid);
-            //             console.log("아이디:"+item.custid);		//아이디:undefined
-            //             $("#custid").val(c.custid);
-            //             $("#pwd").val(c.pwd);
-            //             $("#name").val(c.name);
-            //             $("#birth").val(c.birth);
-            //             $("#email").val(c.email);
-            //             $("#phone").val(c.phone);
-            //             $('.gender[value='+c.gender+']').attr('checked','checked');
-            //             $('.favor[value='+c.cateid+']').attr('checked','checked');
-            //         }
-            //     });
-            // });	//#get_customer 수정하기 위해 회원정보 가져오기
+            });
 
 
             $("#btn_cancel").click(function(){
@@ -76,7 +40,12 @@
 
             //수정된 내용 db에 반영하는 이벤트
             $("#form_updateCustomer").submit(function(e){	//수정된 회원정보를 form이 제출
-                var url = "updateCustomer"
+                if(confirm_phone == false){
+                    alert("전화번호 중복 확인이 되지 않았습니다.")
+                    return false;
+                }
+
+                var url = "myPage"
 
                 var custid = $("#custid").val();
                 var pwd = $("#pwd").val();
@@ -111,9 +80,8 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success:function(){
-                        $("#btn_update").click(function(){
-                            alert("회원 정보가 성공적으로 수정되었습니다.");
-                        });
+                        alert("회원 정보가 성공적으로 수정되었습니다.");
+                        $(location).attr("href","/myPage");
                     }
                 });
                 e.preventDefault();
@@ -200,7 +168,25 @@
             }// 검색 end
 
             searchKeyword();
+            $(document).on('click', '#btn_phoneconfirm', function(){ // 전화번호 중복
+                var phone = $("#phone").val();
+                var url = "ConfirmCustomerPhone";
+                var data = {phone:phone};
 
+                $.ajax(url, {
+                    data:data,
+                    success:function(answer){
+                        if(answer == 1){
+                            alert("중복된 번호입니다");
+                            confirm_phone = false;
+                        }
+                        else {
+                            alert("사용가능한 번호입니다");
+                            confirm_phone = true;
+                        }
+                    }
+                });
+            }); // 전화번호 중복 end
 
 
         });	//전체 $funtion
@@ -300,7 +286,7 @@
             <td>전화번호</td>
             <td>
                 <input type="text" name="phone" id="phone" maxlength="13" size="15" class="box" th:value="${id.phone}">
-                <button>중복확인</button>
+                <button type="button" id="btn_phoneconfirm">중복확인</button>
             </td>
         </tr>
         <tr>
@@ -326,7 +312,7 @@
     </table>
     <div class="caption">
         <button id="btn_cancel">취소</button>&nbsp;&nbsp;
-        <input type="submit" id="btn_update" value="수정하기">
+        <input type="submit" value="수정하기">
     </div>
 </form>
 

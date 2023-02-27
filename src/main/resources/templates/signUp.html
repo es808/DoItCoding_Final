@@ -57,18 +57,9 @@
                     return false;
                 }
 
-                if(confirm_phone == false){
-                    alert("전화번호 중복 확인이 되지 않았습니다.")
-                    return false;
-                }
+
                 console.log("confirmPwd " +confirmPwd());
                 console.log(data)
-                // let f = document.createElement('form');
-                // f.setAttribute('method', 'post');
-                // f.setAttribute('action', 'singUp');
-                // f.appendChild(data)
-                // document.body.appendChild(f);
-                // f.submit();
 
                 $.ajax({
                     url,

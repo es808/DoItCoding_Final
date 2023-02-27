@@ -27,6 +27,7 @@ public class DBManager {
 		List<CustomerVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("customer.findAll");
+		System.out.println(list);
 		session.close();
 		return list;
 	}
@@ -36,7 +37,7 @@ public class DBManager {
 		System.out.println("DB가동");
 		System.out.println(customer);
 		SqlSession session = sqlSessionFactory.openSession();
-		session.update("customer.updateCustomer", customer);
+		i = session.update("customer.updateCustomer", customer);
 		System.out.println(i);
 		session.commit();
 		session.close();

@@ -7,7 +7,8 @@
     select * from customer
   </select>
   <update id="updateCustomer" parameterType="customerVO">
-    update customer set cateid=#{cateid}, pwd=#{pwd}, name=#{name}, birth=#{birth}, phone=#{phone}, email=#{email}, addr=#{addr}, gender=#{gender}, role=#{role}
+    update customer set cateid=#{cateid}, pwd=#{pwd}, name=#{name}, birth=#{birth},
+    phone=#{phone}, email=#{email}, addr=#{addr}, gender=#{gender}, role=#{role}
     where custid=#{custid}
   </update>
 </mapper>
