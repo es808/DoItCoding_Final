@@ -121,35 +121,6 @@
                 }
             });
 
-            /*
-            //매진되거나 전석 추첨인 시사회 카테고리일 때 드로우 버튼 활성화. 미완성
-            $.ajax({
-                url: "DrawButtonOpen",
-                data: {ticketid: sessionStorage.getItem("ticketid")},
-                success: function(data){
-                    var closeDate = new Date(data['ticket_date']);
-
-                    var today = new Date();
-                    console.log("close:"+closeDate);
-                    console.log("today:"+today);
-
-                    if(today < closeDate){
-                        console.log("OK");
-                        $("#btnbook").attr("disabled").css({
-                            "border":"1px solid #cccccc",
-                            "background-color":"#cccccc"
-                        });
-                        $(document).on("click","#btnbook",function(){
-                            //location.href="detailPageTest.html";
-                            console.log("btnbook 클릭");
-                            var url = "detail";
-                            location.replace(url);
-                        });
-                    }
-
-                }
-            });
-            */
 
             //오픈일이 되면 예매 버튼 활성화
             $.ajax({
@@ -188,7 +159,39 @@
                     $("#seat").append(num);
 
                     if(num ==0){
+                        //매진되거나 전석 추첨인 시사회 카테고리일 때 드로우 버튼 활성화.
                         //드로우 버튼 활성화
+
+                        $("#btnbook").attr("disabled").css({
+                            "border":"1px solid #cccccc",
+                            "background-color":"#cccccc"
+                        });
+
+                        $.ajax({
+                            url: "DrawButtonOpen",
+                            data: {ticketid: sessionStorage.getItem("ticketid")},
+                            success: function(data){
+                                var close = new Date(data['ticket_date']);
+                                var open = close.setDate(close.getDate()-14);
+                                var today = new Date();
+                                console.log("close:"+close);
+                                console.log("today:"+today);
+
+                                if(open <= today < close){
+                                    console.log("OK");
+                                    $("#btndraw").removeAttr("disabled").css({
+                                        "border":"1px solid #ff7f00",
+                                        "background-color":"#ff7f00"
+                                    });
+                                    $(document).on("click","#btndraw",function(){
+                                        console.log("btndraw 클릭");
+                                        var url = "/draw";
+                                        location.replace(url);
+                                    });
+                                }
+
+                            }
+                        });
                     }
                 }
             });
@@ -421,7 +424,7 @@
         <div id="seat">잔여좌석 : </div>
         <button id="btnbook" disabled="disabled" type="button">예매하기</button>
 
-        <button id="btndraw">드로우</button>
+        <button id="btndraw" disabled="disabled" type="button">드로우</button>
         <div id="localtime"></div>
     </div>
 </form>

@@ -100,13 +100,6 @@ public class TicketController {
         return DBManager.findByTicketid(ticketid);
     }
 
-    // 드로우 버튼 활성화 구현
-    @RequestMapping("/DrawButtonOpen")
-    @ResponseBody
-    public TicketVO openDrawButton(int ticketid) {
-        System.out.println("ticket번호:"+ticketid);
-        return DBManager.findByTicketid(ticketid);
-    }
 
     // 남은 좌석수 ajax 구현
     @RequestMapping("/LeftSeat")

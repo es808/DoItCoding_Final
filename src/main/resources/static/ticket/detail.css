@@ -287,8 +287,8 @@ h2{
 #btndraw{
     position : relative;
     width : 140px; height : 46px;
-    border : 1px solid #D10505;
-    background-color : #D10505;
+    border : 1px solid #cccccc;
+    background-color : #cccccc;
     color : white; font-weight : 600;
     text-align : center;
     line-height : 43px;
