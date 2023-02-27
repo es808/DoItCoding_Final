@@ -19,6 +19,7 @@
     where c.custid=b.custid and b.ticketid=#{ticketid} group by generation
   </select>
 
+  <!-- 예약하기 -->
   <insert id="bookTicket" parameterType="bookVO">
     insert into book(bookid,custid,ticketid,seatid) values(seq_bookid.nextval,#{custid},#{ticketid},#{seatid})
   </insert>
