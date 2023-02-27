@@ -24,6 +24,7 @@ import java.util.Optional;
 @Controller
 @Setter
 public class CustomerController {
+    static String code;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -187,11 +188,15 @@ public class CustomerController {
     @ResponseBody
     public int confirmCustomerPhone(String phone, HttpSession session){
         int answer = 0;
-        String id = (String)session.getAttribute("id");
-        String myPhone = customerDAO.findById(id).get().getPhone();
+        String myPhone = "none";
+        if(session.getAttribute("id")!=null){
+            String id = (String)session.getAttribute("id");
+            myPhone = customerDAO.findById(id).get().getPhone();
+        }
+
         System.out.println("myPhone:"+myPhone);
 
-        System.out.println(!!myPhone.equals(phone));
+        System.out.println(!myPhone.equals(phone));
         System.out.println(phone);
         if(customerDAO.findByPhone(phone) != null ){
             answer=1;
@@ -199,8 +204,30 @@ public class CustomerController {
         if(myPhone.equals(phone)){
             answer = 0;
         }
-
         return answer;
+    }
+
+    @GetMapping("/CustomerPhoneAuthentication")
+    @ResponseBody
+    public int customerPhoneAuthentication(String phoneCode){
+        System.out.println(this.code);
+        System.out.println("code:"+phoneCode);
+        int answer = 0;
+        if(!this.code.equals(phoneCode)){
+            answer = 1;
+        }
+        System.out.println(answer);
+        return answer;
+    }
+
+    @GetMapping("/sendMessage")
+    @ResponseBody
+    public String sendMessage(String phone){
+        System.out.println(phone);
+        MessageController messageController = new MessageController();
+        code = messageController.sendCodePhone(phone);
+        System.out.println(code);
+        return code;
     }
 
 
@@ -223,28 +250,9 @@ public class CustomerController {
         session.setAttribute("id", id);
         System.out.println("session id = " + session.getAttribute("id"));
         m.addAttribute("id", id);
+
+
     }
 
 
-//    @PostMapping("/login")
-//    public ModelAndView loginSubmit(String id, String pwd, HttpSession session){
-//        System.out.println("login실행");
-//        System.out.println(id + "\n" + pwd);
-//        ModelAndView mav = new ModelAndView("redirect:/");
-//
-//        Optional<Customer> option = customerDAO.findById(id);
-//        if(option.isPresent()){
-//            String dbPwd = option.get().getPwd();
-//            System.out.println(dbPwd);
-//            if(pwd.equals(dbPwd)){
-//                session.setAttribute("id", id);
-//            }else{
-//                mav.setViewName("redirect:/login");
-//            }
-//        }else{
-//            mav.addObject("msg", "로그인실패.");
-//            mav.setViewName("error");
-//        }
-//        return mav;
-//    }
 }
