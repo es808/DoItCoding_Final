@@ -12,4 +12,19 @@
     select count(*) from seat where ticketid=#{ticketid} and check_seat='n'
   </select>
 
+  <!-- Tikcetid의 전체 좌석 목록 출력 -->
+  <select id="listSeatByTicketid" resultType="seatVO">
+    select * from seat where ticketid=#{ticketid}
+  </select>
+  
+  <!-- 예매를 위해 ticketid와 seatname으로 좌석 아이디 찾기 -->
+  <select id="findSeatId" resultType="int">
+    select seatid from seat where ticketid=#{ticketid} and seatname=#{seatname}
+  </select>
+
+  <!-- 좌석예매 -->
+  <update id="registSeat" parameterType="int">
+    update seat set check_seat='y' where seatid=#{seatid}
+  </update>
+
 </mapper>

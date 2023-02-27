@@ -221,6 +221,52 @@ public class DBManager {
 		return list;
 	}
 
+    // Tikcetid의 전체 좌석 목록 출력
+    public static List<SeatVO> listSeatByTicketid(int ticketid){
+        List<SeatVO> list = null;
+        SqlSession session = sqlSessionFactory.openSession();
+        list = session.selectList("seat.listSeatByTicketid",ticketid);
+        System.out.println("listSeatByTicketid:"+list);
+        session.close();
+        return list;
+    }
+
+	// 예매를 위해 ticketid와 seatname으로 좌석 아이디 찾기
+	public static int findSeatId(int ticketid, String seatname){
+		int seatid = -1;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ticketid", ticketid);
+		map.put("seatname", seatname);
+		SqlSession session = sqlSessionFactory.openSession();
+		seatid = session.selectOne("seat.findSeatId",map);
+		System.out.println("seatid:"+seatid);
+		return seatid;
+	}
+
+	// 좌석예매
+	public static int registSeat(int seatid){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("seat.registSeat",seatid);
+		System.out.println("registSeat_re:"+re);
+		session.close();
+		return re;
+	}
+
+	// 티켓예매
+	public static int bookTicket(String custid, int ticketid, int seatid){
+		int re = -1;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("ticketid", ticketid);
+		map.put("seatid", seatid);
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("book.bookTicket",map);
+		System.out.println("registSeat_re:"+re);
+		session.close();
+		return re;
+	}
+
 //	public static List<CustomerVO> findAll() {
 //		List<CustomerVO> list = null;
 //		SqlSession session = sqlSessionFactory.openSession();

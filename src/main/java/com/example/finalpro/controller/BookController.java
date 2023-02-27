@@ -42,7 +42,14 @@ public class BookController {
     //세대별로 예약자 수 구하기
     @RequestMapping("/CountGeneration")
     @ResponseBody
-    public  List<CountGenerationVO> countGeneration(int ticketid){
+    public List<CountGenerationVO> countGeneration(int ticketid){
         return DBManager.countGeneration(ticketid);
+    }
+
+    // 예매하기
+    @RequestMapping("/BookTicket")
+    @ResponseBody
+    public int bookTicket(String custid, int ticketid, int seatid){
+        return DBManager.bookTicket(custid,ticketid,seatid);
     }
 }
