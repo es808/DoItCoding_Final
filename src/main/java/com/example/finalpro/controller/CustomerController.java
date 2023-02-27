@@ -167,13 +167,21 @@ public class CustomerController {
     //비밀번호 중복 확인 메소드
     @GetMapping("/ConfirmCustomerPhone")
     @ResponseBody
-    public int confirmCustomerPhone(String phone){
+    public int confirmCustomerPhone(String phone, HttpSession session){
         int answer = 0;
+        String id = (String)session.getAttribute("id");
+        String myPhone = customerDAO.findById(id).get().getPhone();
+        System.out.println("myPhone:"+myPhone);
 
+        System.out.println(!!myPhone.equals(phone));
         System.out.println(phone);
-        if(customerDAO.findByPhone(phone) != null){
+        if(customerDAO.findByPhone(phone) != null ){
             answer=1;
         }
+        if(myPhone.equals(phone)){
+            answer = 0;
+        }
+
         return answer;
     }
 
