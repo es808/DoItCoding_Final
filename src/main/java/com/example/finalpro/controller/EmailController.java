@@ -25,7 +25,7 @@
 //    public String sendMailHtml() {
 //        mailSender.send(new MimeMessagePreparator() {
 //            @Override
-//            public void prepare(jakarta.mail.internet.MimeMessage mimeMessage) throws Exception {
+//            public void prepare(javax.mail.internet.MimeMessage mimeMessage) throws Exception {
 //                String str="<h2>회원가입 성공</h2>";
 //                MimeMessageHelper helper=new MimeMessageHelper(mimeMessage, true, "UTF-8");
 //                helper.setFrom("kgukgu33@gmail.com");
