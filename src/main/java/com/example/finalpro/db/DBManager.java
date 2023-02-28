@@ -160,9 +160,7 @@ public class DBManager {
 		List<RankingVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("ranking.findAllRankingOrderByScore", cateid);
-
 		session.close();
-
 		return list;
 	}
 
