@@ -52,13 +52,11 @@ public class AdminController {
     int totalTicketRecord = 0; // ticket의 총 레코드 숫자
     int pageSizeTicket =2; // ticket 목록에서 한 페이지에서 몇개의 record를 출력할지
     int totalPageTicket = 0; // ticket 목록에서 페이지의 총 숫자
-    
 
     // 관리자 페이지에서 listTicket 페이지를 열기
     @GetMapping("/admin/listTicket")
     public ModelAndView adminListTicket(Model model, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String keyword){
         ModelAndView mav = new ModelAndView("/admin/ticket/listTicket");
-        
         // 페이징 처리
             // int page : 현재 페이지
             // int totalRecord : 총 ticket 숫자
@@ -82,9 +80,24 @@ public class AdminController {
             session.setAttribute("keyword", "");
         }
         String keyword_session = (String) session.getAttribute("keyword");
-        
+
+        // 정렬하기
+//        String order_1 = "cateid";
+//        String order_2 = "price";
+//        String order_3 = "ticket_date";
+//
+//        System.out.println("order :"+order);
+//        session.setAttribute("order", order);
+//        if(session.getAttribute("order") == null){
+//            session.setAttribute("order", "");
+//        }
+//        String order_session = (String)session.getAttribute("order");
+//
+//        System.out.println("order :" + order);
+//        System.out.println("order_session :" + order_session);
         mav.addObject("paging", paging);
         mav.addObject("keyword", keyword_session);
+
         mav.addObject("list", DBManager.findTicketPagingSearch(startRecord, endRecord, keyword_session));
 
         return mav;
@@ -220,9 +233,10 @@ public class AdminController {
 
     // customer 정보 수정
     @PostMapping("/admin/updateCustomer")
-    public ModelAndView adminUpdateCustomerSubmit(CustomerVO customer){
+    public ModelAndView adminUpdateCustomerSubmit(CustomerVO customer, String addr_postcode, String addr_address, String addr_detail, String addr_extra){
         ModelAndView mav = new ModelAndView("redirect:/admin/listCustomer");
         System.out.println("등록하는 customer "+customer);
+
         customerService.updateCustomer(customer);
         return mav;
     }

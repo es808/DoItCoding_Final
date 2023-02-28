@@ -11,9 +11,12 @@ public class CustomerVO {
     private String pwd;
     private String name;
     private String birth;
-    private String email;
     private String phone;
+    private String email;
+    private String addr_postcode;
+    private String addr_address;
+    private String addr_detail;
+    private String addr_extra;
     private String gender;
-    private String addr;
     private String role;
 }

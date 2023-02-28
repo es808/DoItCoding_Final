@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -47,70 +46,63 @@ public class TestController {
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
 
     @RequestMapping("/list")
-    public void list(Model model) {
+    public void list(Model model){
         model.addAttribute("list", dao.findAll());
     }
 
     @RequestMapping("/list_jpa")
-    public void list_jpa(Model model) {
+    public void list_jpa(Model model){
         model.addAttribute("list", ts.findAll());
     }
 
     @RequestMapping("/list_jpa_id")
-    public void list_jpa_id(Model model) {
+    public void list_jpa_id(Model model){
         model.addAttribute("list", ts.findById());
     }
 
     @RequestMapping("/list_customer")
-    public void list_customer(Model model) {
+    public void list_customer(Model model){
         model.addAttribute("list", cs.findAll());
     }
 
     @RequestMapping("/list_ticket")
-    public void list_ticket(Model model) {
+    public void list_ticket(Model model){
         model.addAttribute("list", ticketService.findAll());
     }
 
     @GetMapping("/login")
-    public void login() {
+    public void login(){
+    }
+
+    @GetMapping("/loginTest")
+    public ModelAndView loginTest(){
+        ModelAndView mav = new ModelAndView("/customer/loginTest");
+        return mav;
     }
 
     @GetMapping("/join")
-    public void join() {
+    public void join(){
     }
 
-    @GetMapping("/signUp")
-    public void signUp() {
-    }
-
-    @GetMapping("/")
-    public String home() {
-        return "list";
-    }
-
-    @GetMapping("/myPage")
-    public String myPage() { return "myPage/myPage";}
-
-    @GetMapping("/myPageBook")
-    public String myPageBook() { return "myPage/myPageBook";}
-
-    @GetMapping("/myPageReview")
-    public String myPageReview() { return "myPage/myPageReview";}
-
-    @PostMapping("/signUp")
-    public ModelAndView signUpSubmit(Customer c) {
-        System.out.println("customer:"+c);
+    @PostMapping("/join")
+    public ModelAndView joinSubmit(Customer m) {
 //		String encPwd = passwordEncoder.encode(m.getPwd());
 //		m.setPwd(encPwd);
         ModelAndView mav = new ModelAndView("redirect:/login");
-        System.out.println(c.getPwd());
-        c.setPwd(passwordEncoder.encode(c.getPwd()));
-        System.out.println("customer = " + c);
-        c.setRole("customer");
+        m.setPwd(passwordEncoder.encode(m.getPwd()));
+        m.setCateid(1);
+        m.setEmail("Test1234@gmail.com");
+        m.setPhone("010123456");
+        m.setGender("a");
+        m.setAddr_postcode("add");
+        m.setRole("customer");
+        Date d = new Date();
+
+        m.setBirth("19961225");
         try {
-            System.out.println(c);
-            customerDAO.save(c);
-        } catch (Exception e) {
+            System.out.println(m);
+            customerDAO.save(m);
+        }catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
             mav.setViewName("error");
         }
@@ -122,33 +114,8 @@ public class TestController {
 			mav.addObject("msg", "회원가입에 실패하였습니다.");
 			mav.setViewName("error");
 		}*/
-        return mav;
+        return mav ;
     }
-
-    //아이디 중복 확인 메소
-    @GetMapping("/ConfirmCustomerId")
-    @ResponseBody
-    public int confirmCustomerId(String custid){
-        int answer = 0;
-        if(customerDAO.findById(custid).isPresent()){
-            answer=1;
-        }
-        return answer;
-    }
-
-    //비밀번호 중복 확인 메소드
-    @GetMapping("/ConfirmCustomerPhone")
-    @ResponseBody
-    public int confirmCustomerPhone(String phone){
-        int answer = 0;
-
-        System.out.println(phone);
-        if(customerDAO.findByPhone(phone) != null){
-            answer=1;
-        }
-        return answer;
-    }
-
 
     @GetMapping("/service1")
     public void service1(HttpSession session, Model m) {
@@ -158,7 +125,7 @@ public class TestController {
                 SecurityContextHolder.getContext().getAuthentication();
 
         //이 인증객체를 통해서 인증된(로그인된) User객체를 받아 온다.
-        User user = (User) authentication.getPrincipal();
+        User user = (User)authentication.getPrincipal();
 
         //이 인증된 User를 통해서 로그인된 회원의 아이디를 가져온다.
 
@@ -167,7 +134,7 @@ public class TestController {
         //만약, id뿐 아니라 로그인한 회원의 다른정보도 필요하다면 dao를 통해 회원 정보를 가져와서 상태유지
 
         session.setAttribute("id", id);
-        System.out.println("session id = " + session.getAttribute("id"));
+        System.out.println("session id = "+session.getAttribute("id"));
         m.addAttribute("id", id);
     }
 
@@ -193,10 +160,5 @@ public class TestController {
 //        }
 //        return mav;
 //    }
-
-    @GetMapping("loginTest")
-    public void loginTest(){ }
-//    @GetMapping("signUp")
-//    public void signUp(){ }
 
 }
