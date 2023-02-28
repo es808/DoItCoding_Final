@@ -142,10 +142,6 @@
 
       // 미래상영작 출력
       var selectFutureBycategory = function(){
-        if(custid == "none"){
-          return false;
-        }
-
         $.ajax("SelectTicketMain", {
           data:{time:2, cateid:cateid},
           success:function(arr){
@@ -358,12 +354,12 @@
 </head>
 <body class="main_layout">
 
-<img src="/image/logo.png" id="logo">
+<img src="/image/icon/logo.png" id="logo">
 <div class="main_user">
-  <a href="/login" id="login"><img src="/image/loginicon.png">로그인</a>
-  <a href="/logout" id="logout"><img src="/image/logouticon.png">로그아웃</a>
-  <a href="signUp" id="regist"><img src="/image/signupicon.png">회원가입</a>
-  <a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>
+  <a href="/login" id="login"><img src="/image/icon/loginicon.png">로그인</a>
+  <a href="/logout" id="logout"><img src="/image/icon/logouticon.png">로그아웃</a>
+  <a href="signUp" id="regist"><img src="/image/icon/signupicon.png">회원가입</a>
+  <a href="mypage_Info.html" id="mypage"><img src="/image/icon/mypageicon.png">마이페이지</a>
 </div>
 
 <nav id="navigation">
@@ -434,11 +430,11 @@
     </ul>
     <br>
   </div>
-  <img class="main_rank" src="/image/firsticon.jpg" width="80" height="80">
+  <img class="main_rank" src="/image/icon/firsticon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview0"></a>
-  <img class="main_rank" src="/image/secondicon.jpg" width="80" height="80">
+  <img class="main_rank" src="/image/icon/secondicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview1"></a>
-  <img class="main_rank" src="/image/thirdicon.jpg" width="80" height="80">
+  <img class="main_rank" src="/image/icon/thirdicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview2"></a>
   <br>
   <div>

@@ -6,9 +6,11 @@
   <select id="findAll" resultType="customerVO">
     select * from customer
   </select>
+
+  <!--updateCustomer 고객 정보 수정하기-->
   <update id="updateCustomer" parameterType="customerVO">
     update customer set cateid=#{cateid}, pwd=#{pwd}, name=#{name}, birth=#{birth},
-    phone=#{phone}, email=#{email}, addr=#{addr}, gender=#{gender}, role=#{role}
+    phone=#{phone}, email=#{email}, addr_postcode=#{addr_postcode},addr_address=#{addr_address},addr_detail=#{addr_detail}, addr_extra=#{addr_extra}, gender=#{gender}, role=#{role}
     where custid=#{custid}
   </update>
 
@@ -61,10 +63,4 @@
       where (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
     </if>
   </select>
-
-  <!--updateCustomer 고객 정보 수정하기-->
-  <update id="updateCustomer" parameterType="customerVO">
-    update customer set cateid=#{cateid}, pwd=#{pwd}, name=#{name}, birth=#{birth}, phone=#{phone}, email=#{email}, addr_postcode=#{addr_postcode},addr_address=#{addr_address},addr_detail=#{addr_detail}, addr_extra=#{addr_extra}, gender=#{gender}, role=#{role}
-    where custid=#{custid}
-  </update>
 </mapper>

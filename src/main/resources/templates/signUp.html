@@ -23,9 +23,9 @@
                 var pwd = $("#pwd").val();
                 var name = $("#name").val();
                 var birth = $("#birth").val();
-                var phone = $("#phone1").val() + $("#phone2").val() + $("#phone3").val();
+                var phone = $("#phone").val();
                 var email = $("#email").val() + $("#email_com").val();
-                var addr = $("#addr").val();
+                var addr_postcode = $("#addr_postcode").val();
                 var gender = $("input:radio[name=gender]:checked").val();
                 var cateid = $("input:radio[name=cateid]:checked").val();
 
@@ -41,7 +41,7 @@
                     birth: birth,
                     phone: phone,
                     gender: gender,
-                    addr: addr,
+                    addr_postcode: addr_postcode,
                     cateid: cateid
                 };
 
@@ -213,7 +213,7 @@
     <a class="main" href="main">
         <img  src="/image/homeicon.png" width="40" height="40"></a>
 </div>
-<form id="form_signup" action="/signUp" method="post">
+<form id="form_signup" >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <div>
         <h2>SignUp</h2>
@@ -279,7 +279,7 @@
         <tr>
             <td>주소</td>
             <td>
-                <input type="text" name="addr" class="box" size="30" id="addr">
+                <input type="text" name="addr_postcode" id="addr_postcode" class="box" size="30">
                 <input type="button" id="btn_addrconfirm" value="주소 찾기">
             </td>
         </tr>

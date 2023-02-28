@@ -44,7 +44,6 @@
     <mapper resource="db/DrawMapper.xml"/>
     <mapper resource="db/NoticeMapper.xml"/>
     <mapper resource="db/PlaceMapper.xml"/>
-    <mapper resource="db/QnaMapper.xml"/>
     <mapper resource="db/ReviewMapper.xml"/>
     <mapper resource="db/SeatMapper.xml"/>
   </mappers>

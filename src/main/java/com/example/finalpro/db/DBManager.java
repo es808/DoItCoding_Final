@@ -36,18 +36,6 @@ public class DBManager {
 		return list;
 	}
 
-	public static int updateCustomer(CustomerVO customer){
-		int i = -1;
-		System.out.println("DB가동");
-		System.out.println(customer);
-		SqlSession session = sqlSessionFactory.openSession();
-		i = session.update("customer.updateCustomer", customer);
-		System.out.println(i);
-		session.commit();
-		session.close();
-		return i;
-	}
-
 	public static List<TicketVO> findAllTicket(){
 		List<TicketVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
