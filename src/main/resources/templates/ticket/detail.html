@@ -41,7 +41,7 @@
                 url: "DetailTicket",
                 data: {ticketid: ticketid},
                 success: function(data){
-
+                    var cateid=data['cateid'];
                     var img_fname = data['img_fname'];
                     var ticket_name = data['ticket_name'];
                     var ticket_date = data['ticket_date'];
@@ -96,6 +96,41 @@
                         });
                         console.log(img1);
                         $("#art_img").append(img1);
+                    }
+
+                    if(cateid==2){
+                        $("#btnbook").attr("disabled",true).css({
+                            "border":"1px solid #cccccc",
+                            "background-color":"#cccccc",
+                            "display":"none"
+                        });
+
+                        $.ajax({
+                            url: "DrawButtonOpen",
+                            data: {ticketid: sessionStorage.getItem("ticketid")},
+                            success: function(data){
+                                var close = new Date(data['ticket_date']);
+                                var open = close.setDate(close.getDate()-14);
+                                var today = new Date();
+                                console.log("close:"+close);
+                                console.log("today:"+today);
+
+                                if(open <= today < close){
+                                    console.log("OK");
+                                    $("#btndraw").css({
+                                        "border":"1px solid #ff7f00",
+                                        "background-color":"#ff7f00",
+                                        "display":"inline"
+                                    });
+                                    $(document).on("click","#btndraw",function(){
+                                        console.log("btndraw 클릭");
+                                        var url = "/draw";
+                                        location.replace(url);
+                                    });
+                                }
+
+                            }
+                        });
                     }
 
 
