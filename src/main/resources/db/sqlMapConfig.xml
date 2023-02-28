@@ -5,12 +5,20 @@
 <configuration>
 	<properties resource="db/db.properties"/>
 	<typeAliases>
+		<typeAlias type="com.example.finalpro.vo.BookVO" alias="bookVO"/>
+		<typeAlias type="com.example.finalpro.vo.CategoryVO" alias="categoryVO"/>
 		<typeAlias type="com.example.finalpro.vo.CustomerVO" alias="customerVO"/>
-        <typeAlias type="com.example.finalpro.vo.TicketVO" alias="ticketVO"/>
-        <typeAlias type="com.example.finalpro.vo.RankingVO" alias="rankingVO"/>
-        <typeAlias type="com.example.finalpro.vo.NoticeVO" alias="noticeVO"/>
+		<typeAlias type="com.example.finalpro.vo.DrawVO" alias="drawVO"/>
+		<typeAlias type="com.example.finalpro.vo.NoticeVO" alias="noticeVO"/>
+		<typeAlias type="com.example.finalpro.vo.PlaceVO" alias="placeVO"/>
+		<typeAlias type="com.example.finalpro.vo.ReviewVO" alias="reviewVO"/>
+		<typeAlias type="com.example.finalpro.vo.MyReviewVO" alias="myReviewVO"/>
+		<typeAlias type="com.example.finalpro.vo.SeatVO" alias="seatVO"/>
+		<typeAlias type="com.example.finalpro.vo.TicketVO" alias="ticketVO"/>
+		<typeAlias type="com.example.finalpro.vo.RankingVO" alias="rankingVO"/>
+		<typeAlias type="com.example.finalpro.vo.CountGenderVO" alias="countGenderVO"/>
+		<typeAlias type="com.example.finalpro.vo.CountGenerationVO" alias="countGenerationVO"/>
         <typeAlias type="com.example.finalpro.vo.QnaVO" alias="qnaVO"/>
-        <typeAlias type="com.example.finalpro.vo.BookVO" alias="bookVO"/>
         <typeAlias type="com.example.finalpro.vo.NotificationVO" alias="notificationVO"/>
         <typeAlias type="com.example.finalpro.vo.NotificationByCustidVO" alias="notificationByCustidVO"/>
 	</typeAliases>
@@ -26,12 +34,18 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="db/CustomerMapper.xml"/>
-      <mapper resource="db/TicketMapper.xml"/>
-      <mapper resource="db/RankingMapper.xml"/>
-    <mapper resource="db/NoticeMapper.xml"/>
-    <mapper resource="db/QnaMapper.xml"/>
     <mapper resource="db/BookMapper.xml"/>
+    <mapper resource="db/CategoryMapper.xml"/>
+    <mapper resource="db/CustomerMapper.xml"/>
+    <mapper resource="db/TicketMapper.xml"/>
+    <mapper resource="db/RankingMapper.xml"/>
+    <mapper resource="db/QnaMapper.xml"/>
     <mapper resource="db/NotificationMapper.xml"/>
+    <mapper resource="db/DrawMapper.xml"/>
+    <mapper resource="db/NoticeMapper.xml"/>
+    <mapper resource="db/PlaceMapper.xml"/>
+    <mapper resource="db/QnaMapper.xml"/>
+    <mapper resource="db/ReviewMapper.xml"/>
+    <mapper resource="db/SeatMapper.xml"/>
   </mappers>
 </configuration>

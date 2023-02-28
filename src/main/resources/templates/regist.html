@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            sessionStorage.setItem("custid","mj1234");
+
+            var ticketid = Number(sessionStorage.getItem("ticketid"));
+            var custid = sessionStorage.getItem("custid");
+            var seatname;
+            $(document).on("click", ".hover", function () {
+                seatname = $(this).html();
+                console.log("자리번호:" + seatname)
+                $("button").removeClass("active");
+                $(this).addClass("active");
+            })
+
+            //seat테이블에서 좌석정보를 가져오기
+
+            $.ajax({
+                url: "ListSeat",
+                data: {ticketid: ticketid},
+                success: function (data) {
+                    var count = 0;
+                    $.each(data, function () {
+
+                        var btn = $("<button></button>").html(this.seatname);
+                        if (this.check_seat == "y")
+                            btn.addClass("x");
+                        else {
+                            btn.addClass("hover");
+                        }
+                        $("#seatList").append(btn);
+                        count++;
+                        if (count % 6 == 0) {
+                            $("#seatList").append($("<br></br>"));
+                        }
+                    })
+                }
+            })
+
+            $("#insertBtn").click(function () {
+                var data = {
+                    ticketid: ticketid,
+                    custid: custid,
+                    seatname: seatname
+                }
+                $.ajax({
+                    url: "FindSeatid",
+                    data: data,
+                    success: function (as) {
+                        console.log("FindSeatid성공")
+                        console.log("좌석번호:"+as);
+                        $.ajax({
+                            url:"RegistBook",
+                            data:{seatid:as},
+                            success: function (result){
+                                console.log("RegistBook성공")
+                                console.log("이거 뭐지?:"+result);
+                                if(result>0){
+                                    $.ajax({
+                                        url:"BookTicket",
+                                        data: {custid:custid,
+                                                ticketid: ticketid,
+                                                seatid: as},
+                                        success:function(final){
+                                            console.log("BookTicket성공");
+                                            console.log("결과맞나?:"+final);
+
+                                                $(document).ready(function(){
+                                                    if (final > 0) {
+                                                        alert("예약 성공!");
+                                                        $(location).attr('href',"/detail?ticketid"+ticketid);
+                                                    }else{
+                                                        alert("예약에 실패하였습니다. 다시 시도해주세요.");
+                                                    }
+                                                })
+
+
+                                        }
+                                    })
+                                }
+                            }
+                        })
+
+
+                        // if (as == 2) {
+                        //     $(location).attr('href',"/main");
+                        // }
+                        //console.log(as);
+
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="background">
+
+        <div id="screen">S c r e e n</div>
+        <button id = "insertBtn">예매하기</button>
+        <div class="seat_status">
+            <div id="possible"></div><p>선택가능</p>
+            <div id="check"></div><p>선택</p>
+            <div id="soldout"></div><p>예매완료</p>
+        </div>
+    </div>
+
+    <div id="seatList"></div>
+</body>
+</html>
