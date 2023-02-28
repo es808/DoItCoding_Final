@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notification">
+    <insert id="insert" parameterType="notificationVO">
+        insert into notification(notif_no, custid, qna_no) values(seq_notif_no.nextval,
+        #{custid}, #{qna_no})
+    </insert>
+    <select id="findByCustid" parameterType="java.lang.String" resultType="notificationByCustidVO">
+        select notif_no, q.qna_no, qna_title from notification n, qna q where n.QNA_NO=q.QNA_NO and
+        n.custid=q.custid and n.custid=#{custid} order by notif_date desc
+    </select>
+    <!-- 체크 안 된 알림 갯수 세기 -->
+    <select id="countNChecked" resultType="java.lang.Integer">
+        select count(notif_no) from notification where checked='n'
+    </select>
+
+<!--    'checked' 칼럼 업데이트 n->y-->
+    <update id="updateCheckedToY">
+        update notification set checked='y' where checked='n'
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete notification where notif_no=#{notif_no}
+    </delete>
+</mapper>

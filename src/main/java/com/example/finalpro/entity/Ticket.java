@@ -7,6 +7,8 @@ import jakarta.persistence.Transient;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Table(name = "ticket")

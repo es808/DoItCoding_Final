@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class CustomerVO {
     private String custid;
+    private int cateid;
     private String pwd;
     private String name;
     private String birth;
@@ -14,6 +15,5 @@ public class CustomerVO {
     private String phone;
     private String gender;
     private String addr;
-    private int cateid;
     private String role;
 }
