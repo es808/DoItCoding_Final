@@ -7,6 +7,28 @@
   <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
   <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+          integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+  <script>
+    Kakao.init('b2e1975d2187199e889d30007c46dd02'); // 사용하려는 앱의 JavaScript 키 입력
+  </script>
+
+  <script>
+    function chatChannel() {
+      Kakao.Channel.chat({
+        channelPublicId: '_Bsxlxmxj',
+      });
+    }
+    Kakao.Channel.createAddChannelButton({
+      container: '#kakao-add-channel-button',
+      channelPublicId: '_ZeUTxl' // 카카오톡 채널 홈 URL에 명시된 id로 설정합니다.
+    });
+  </script>
+
+  <a id="chat-channel-button" href="javascript:chatChannel()">
+    <img src="/image/consult_small_yellow_pc.png"/>
+  </a>
+
   <script type="text/javascript">
     $(function(){
       // sessionStorage.setItem("custid", $("#sessionId").val());
@@ -121,6 +143,7 @@
           }
         });
       }//현재 상영작 출력 end
+
 
       // 미래상영작 출력
       var selectFutureBycategory = function(){
@@ -343,6 +366,7 @@
   <a href="signUp" id="regist"><img src="/image/signupicon.png">회원가입</a>
   <a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>
 </div>
+
 <nav id="navigation">
   <div class="search" id="search" name="search">
     <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
