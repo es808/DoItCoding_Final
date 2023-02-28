@@ -80,7 +80,6 @@ Spring으로 main, search, category 구현 완료. 모두 복잡한 sql문이 �
 - 회원 정보 수정 admin/customer/update
 - 회원 삭제 admin/customer/delete
 
-
 ------ 23.02.26
 고객 정보 페이지의 ticket, customer들 목록을 출력하는 list 페이지에서 페이징과 검색 기능을 완료했다.
 일단 보이는 기능은 모두 잘 되는데 혹시 안되는 게 있을 수 있다는 걸 염두하자.
@@ -94,3 +93,9 @@ Spring으로 main, search, category 구현 완료. 모두 복잡한 sql문이 �
 - ticket, customer 에서 버튼 누르면 분류가 바뀌는 작업
 - ticket 목록 페이지에서 cateid에 따라 출력하기
 - ticket, customer에서 주소를 검색하는 api 적용하기 (위도, 경도도 자동으로 입력되도록)
+
+------ 23.02.27-28
+1. admin 페이지에서 ticket과 customer 정보를 입력, 수정할 때 지도가 나오도록 했다.
+- 위도와 경도도 자동으로 나타나도록 설정하였다.
+- 대신 주소 입력창이랑 주소 검색창이 달라서 이름은 수동으로 설정해야함.
+

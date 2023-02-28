@@ -14,9 +14,15 @@
     <tr>
       <td>ticketid</td>
       <td>ticket_name</td>
-      <td>cateid</td>
-      <td>placeid</td>
-      <td>ticket_date</td>
+        <td>
+            <a th:text="cateid"></a>
+        </td>
+      <td>
+          <a th:text="price"></a>
+      </td>
+      <td>
+          <a th:text="ticket_date"></a>
+      </td>
         <td>삭제</td>
     </tr>
    </thead>
@@ -26,8 +32,13 @@
         <td>
             <a th:text="${t.ticket_name}" th:href="@{'/admin/updateTicket/'+${t.ticketid}}"></a>
         </td>
-        <td th:text="${t.cateid}"></td>
-        <td th:text="${t.placeid}"></td>
+        <th:block>
+            <td th:if="${t.cateid==1}" th:text="시사회"></td>
+            <td th:if="${t.cateid==2}" th:text="뮤지컬"></td>
+            <td th:if="${t.cateid==3}" th:text="연극"></td>
+            <td th:if="${t.cateid==4}" th:text="콘서트"></td>
+        </th:block>
+        <td th:text="${t.price}"></td>
         <td th:text="${t.ticket_date}"></td>
         <td>
             <a th:href="@{'/admin/deleteTicket/'+${t.ticketid}}">삭제하기</a>

@@ -77,8 +77,27 @@ public class DBManager {
 		map.put("endRecord", endRecord);
 		map.put("keyword", keyword);
 
+
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("ticket.findTicketPagingSearch", map);
+		session.close();
+
+		return list;
+	}
+
+	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
+	// +search 기능
+	// +정렬 기능
+	public static List<TicketVO> findTicketPagingSearchOrderBy(int startRecord, int endRecord, String keyword, String order){
+		List<TicketVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+		map.put("keyword", keyword);
+		map.put("order", order);
+
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("ticket.findTicketPagingSearchOrderBy", map);
 		session.close();
 
 		return list;
