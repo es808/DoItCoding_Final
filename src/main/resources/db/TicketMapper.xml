@@ -38,6 +38,27 @@
         where n between #{startRecord} and #{endRecord}
     </select>
 
+    <!--page에 따라 startRecord와 endRecord 구해서 출력하기-->
+    <!--search에 따라 출력하기-->
+    <!--order 기능 추가-->
+    <select id="findTicketPagingSearchOrderBy" resultType="ticketVO">
+        select * from
+        (select rownum n, a.* from
+        (select * from ticket
+        <if test="keyword != null and keyword != ''">
+            where (ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%' )
+        </if>
+        <choose>
+            <when test="order != null and order != ''">
+                order by #{order}) a)
+            </when>
+            <otherwise>
+                order by ticketid) a)
+            </otherwise>
+        </choose>
+        where n between #{startRecord} and #{endRecord}
+    </select>
+
     <!--keyword' 를 매개변수로 ticket 리스트 검색 결과를 출력하기-->
     <select id="findSearchTicket" resultType="ticketVO">
         select * from ticket where ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%'

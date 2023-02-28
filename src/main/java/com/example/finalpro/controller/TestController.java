@@ -94,7 +94,7 @@ public class TestController {
         m.setEmail("Test1234@gmail.com");
         m.setPhone("010123456");
         m.setGender("a");
-        m.setAddr("add");
+        m.setAddr_postcode("add");
         m.setRole("customer");
         Date d = new Date();
 
