@@ -5,16 +5,20 @@ $(function(){
 
         // null이면 insert, null 아니면 update
         let div_qna_answer=$('#div_qna_answer').html()
-        console.log('div_qna_answer',div_qna_answer)
         let insertOrUpdate='insert'
         if(div_qna_answer!=""){
             insertOrUpdate='update'
         }
+
+        let custid=$('#div_custid').text()
         //입력 내용 길이가 0보다 커야 ajax 실행
         if(answer_input.length>0) {
             $.ajax({
                 url: "/qna/answer/update",
-                data: {qna_no: $('#qna_no').text(), qna_answer: answer_input, insertOrUpdate: insertOrUpdate},
+                data: {qna_no: $('#qna_no').text(),
+                    qna_answer: answer_input,
+                    insertOrUpdate: insertOrUpdate,
+                    custid: custid},
                 success: function (re) {
                     if(re==1){
                         alert('등록했습니다.')

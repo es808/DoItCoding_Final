@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +40,9 @@ public class QnaController {
 
     @Autowired
     private SearchService ss;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @GetMapping("/qna/resetSearch")
     public ModelAndView resetSearch(HttpSession session){
@@ -279,6 +285,21 @@ public class QnaController {
             NotificationVO notificationVO = new NotificationVO(0, qnaWriter, qna_no, null);
             int re=DBManager.insertNotification(notificationVO);
         }
+
+        // 알림 이메일 보내기
+//        mailSender.send(new MimeMessagePreparator() {
+//            @Override
+//            public void prepare(jakarta.mail.internet.MimeMessage mimeMessage) throws Exception {
+//                String str="<h2>문의에 답변이 달렸습니다</h2>";
+//                str+="<div>"+qs.findById(qna_no).get().getQna_title()+"에 답변이 달렸습니다."+"</div>";
+//                MimeMessageHelper helper=new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//                helper.setFrom("kgukgu33@gmail.com");
+//                helper.setTo("kgukgu33@gmail.com");
+//                helper.setSubject("[T-catch]문의 답변");
+//                helper.setText(str,true);
+//            }
+//        });
+
         return DBManager.updateAnswer(q);
     }
 

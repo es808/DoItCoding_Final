@@ -14,7 +14,7 @@
   </div>
   <div th:text="${q.qna_no}" id="qna_no"></div>
   <div th:text="${q.customer.name}"></div>
-  <div th:text="${q.customer.custid}"></div>
+  <div th:text="${q.customer.custid}" id="div_custid"></div>
   <div th:text="${q.qna_category}"></div>
   <div th:text="${q.qna_title}"></div>
   <div th:text="${q.qna_content}"></div>
@@ -42,7 +42,7 @@
     </div>
     <button id="answer_submit">등록</button>
     <button id="answer_delete">삭제</button>
-    <a th:href="@{'/qna_notification_email/'+${q.customer.custid}}">알림 메일 보내기</a>
+<!--    <a th:href="@{'/qna_notification_email/'+${q.customer.custid}}">알림 메일 보내기</a>-->
   </div>
 
 </body>
