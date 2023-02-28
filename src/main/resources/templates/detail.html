@@ -12,7 +12,7 @@
 
         // 상세페이지
         $(function(){
-            sessionStorage.setItem("ticketid",25);
+            sessionStorage.setItem("ticketid",36);
             //sessionStorage.setItem("custid","mj1234");
 
             var custid = sessionStorage.getItem("custid");
@@ -72,10 +72,15 @@
                     if(price==0){
                         $("#price").append("0원(전석 초대)");
                     }else{
-                        $("#price").append(price);
+                        $("#price").append(price+"원");
                     }
                     $("#cast").append(cast);
-                    $("#content").append(content);
+                    if(content.endsWith(".jpg")||content.endsWith(".png")||content.endsWith(".gif")){
+                        var tag = $("<img/>").attr("src","images/"+content);
+                        $("#content").html(tag);
+                    }else{
+                        $("#content").append(content);
+                    }
 
                     var img = $("<img>").attr({
                         src: "images/"+img_fname,

@@ -10,7 +10,6 @@
 #left_button, #right_button{
     z-index : 99;
     position : absolute;
-    display : inline-block;
     cursor : pointer;
     font-size:100px;
     color: #F2AE30;
@@ -18,7 +17,7 @@
 }
 #right_button{
     z-index : 200;
-    margin : 200px;
+    margin : 1310px;
 }
 .slider{
     float : left;
