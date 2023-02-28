@@ -11,6 +11,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
+
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
@@ -286,8 +287,8 @@
         <tr>
             <td>전화번호</td>
             <td>
-                <input type="text" name="phone" id="phone" maxlength="13" size="15" class="box">
-                <button>중복확인</button>
+                <input type="text" name="phone" id="phone" maxlength="13" size="15" class="box" th:value="${id.phone}">
+                <input type="button" id="btn_phoneconfirm" value="중복확인">
             </td>
         </tr>
         <tr>
@@ -296,18 +297,18 @@
         </tr>
         <tr>
             <td>성별</td>
-            <td class="td1" id="gender">
-                남성<input type="radio" id="male" name="gender" value="남자" class="gender" >&nbsp;&nbsp;&nbsp;&nbsp;
-                여성<input type="radio" name="gender" value="여자" class="gender">
+            <td class="td1" id="gender" >
+                남성<input type="radio" id="male" name="gender" value="남자" class="gender" th:attr="checked=${id.gender == '남자' ? 'true' : 'false'}">&nbsp;&nbsp;&nbsp;&nbsp;
+                여성<input type="radio" name="gender" value="여자" class="gender" th:attr="checked=${id.gender == '여자' ? 'true' : 'false'}">
             </td>
         </tr>
-        <tr>
+        <tr>자
             <td>관심사</td>
             <td class="td1" id="cateid">
-                시사회<input type="radio"  name="favor" value="1" class="favor" >
-                뮤지컬<input type="radio"  name="favor" value="2" class="favor">
-                연극<input type="radio"  name="favor" value="3" class="favor">
-                콘서트<input type="radio"  name="favor" value="4" class="favor">
+                시사회<input type="radio"  name="favor" value="1" class="favor" th:attr="checked=${id.cateid == 1 ? 'true' : 'false'}">
+                뮤지컬<input type="radio"  name="favor" value="2" class="favor" th:attr="checked=${id.cateid == 2 ? 'true' : 'false'}">
+                연극<input type="radio"  name="favor" value="3" class="favor" th:attr="checked=${id.cateid == 3 ? 'true' : 'false'}">
+                콘서트<input type="radio"  name="favor" value="4" class="favor" th:attr="checked=${id.cateid == 4 ? 'true' : 'false'}">
             </td>
         </tr>
     </table>
