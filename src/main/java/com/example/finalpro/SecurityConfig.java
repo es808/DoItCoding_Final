@@ -25,7 +25,7 @@ public class SecurityConfig {
 
         http.formLogin().loginPage("/login").permitAll()
                 .failureUrl("/error")
-                .defaultSuccessUrl("/service1",true);        //로그인 성공 후 이동 페이지 true를 붙여서 붙여서 절대경로 설정
+                .defaultSuccessUrl("/main",true);        //로그인 성공 후 이동 페이지 true를 붙여서 붙여서 절대경로 설정
 
 
         http.logout()

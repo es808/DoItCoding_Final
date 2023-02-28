@@ -19,15 +19,14 @@
         channelPublicId: '_Bsxlxmxj',
       });
     }
-    Kakao.Channel.createAddChannelButton({
-      container: '#kakao-add-channel-button',
-      channelPublicId: '_ZeUTxl' // 카카오톡 채널 홈 URL에 명시된 id로 설정합니다.
-    });
   </script>
 
   <script type="text/javascript">
     $(function(){
-      // sessionStorage.setItem("custid", $("#sessionId").val());
+
+      sessionStorage.setItem("custid", $("#sessionId").val())
+
+
       console.log(sessionStorage.getItem("custid"));
       var custid = sessionStorage.getItem("custid");
       console.log("custid"+custid);
@@ -143,6 +142,10 @@
 
       // 미래상영작 출력
       var selectFutureBycategory = function(){
+        if(custid == "none"){
+          return false;
+        }
+
         $.ajax("SelectTicketMain", {
           data:{time:2, cateid:cateid},
           success:function(arr){
@@ -177,16 +180,16 @@
 
       var cateid = 2; // review 테이블에 카테고리가 연극인 것 외에는 인스턴스가 없으므로 기본값을 2로 설정함
       // 사용자가 가입 시 입력한 선호 카테고리가 기본값으로 되게하기
-      if(custid != null){
-        $.ajax("GetCustomerAction", {
-          data:{custid:custid},
-          async:false,
-          success:function(key, value){
-            console.log("ajax 안 " +key.cateid);
-            cateid = key.cateid;
-          }
-        });
-      }
+      // if(custid != "none"){
+      //   $.ajax("GetCustomerAction", {
+      //     data:{custid:custid},
+      //     async:false,
+      //     success:function(key, value){
+      //       console.log("ajax 안 " +key.cateid);
+      //       cateid = key.cateid;
+      //     }
+      //   });
+      // }
       selectRankingBycategory();
       selectCurrentBycategory();
       selectFutureBycategory();
@@ -333,7 +336,7 @@
       // var custid = $("#sessionId").val();
       console.log(custid);
 
-      if(custid != null){
+      if(custid != "none"){
         $("#login").css('display', 'none');
         $("#regist").css('display', 'none');
         $("#logout").css('display','inline-block');
@@ -343,7 +346,7 @@
       $("#logout").click(function(e){
         if(confirm("로그아웃 하시겠습니까?")){
           sessionStorage.removeItem("custid");
-          custid = null;
+          custid = "none";
         }else{
           return false;
         }
@@ -354,7 +357,7 @@
   </script>
 </head>
 <body class="main_layout">
-<input type = "hidden" id = "sessionId" th:value="${id}"/>
+
 <img src="/image/logo.png" id="logo">
 <div class="main_user">
   <a href="/login" id="login"><img src="/image/loginicon.png">로그인</a>
@@ -468,6 +471,7 @@
   <a class="img" id="future_preview1"></a>
   <a class="img" id="future_preview2"></a>
 </div>
+<input type = "hidden" th:value="${id}" id = "sessionId" />
 <div id="main-footer">
   <footer class = "footer">
     <div>ⓒ CodingDoit corp.

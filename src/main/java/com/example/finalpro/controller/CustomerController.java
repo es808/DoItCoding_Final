@@ -108,9 +108,10 @@ public class CustomerController {
             session.setAttribute("id", id);
             System.out.println("session id = " + session.getAttribute("id"));
             m.addAttribute("id", id);
+        }else{
+            session.removeAttribute("id");
+            m.addAttribute("id","none");
         }
-
-
         return mav;
     }
 
@@ -238,5 +239,5 @@ public class CustomerController {
         System.out.println(code);
         return code;
     }
-    
+
 }
