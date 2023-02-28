@@ -41,8 +41,8 @@ public class QnaController {
     @Autowired
     private SearchService ss;
 
-    @Autowired
-    private JavaMailSender mailSender;
+//    @Autowired
+//    private JavaMailSender mailSender;
 
     @GetMapping("/qna/resetSearch")
     public ModelAndView resetSearch(HttpSession session){

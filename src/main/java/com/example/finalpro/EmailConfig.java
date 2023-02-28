@@ -13,8 +13,8 @@
 //        JavaMailSenderImpl r = new JavaMailSenderImpl();
 //        r.setHost("smtp.gmail.com");
 //        r.setPort(587);
-//        r.setUsername("kgukgu33@gmail.com");	// gmail계정을 설정합니다.
-//        r.setPassword("mkmptvkvqpwpyxtj");  // <--- 발행된 암호를 여기에 넣어 주세요.
+//        r.setUsername("");	// gmail계정을 설정합니다.
+//        r.setPassword("");  // <--- 발행된 암호를 여기에 넣어 주세요.
 //        r.setDefaultEncoding("UTF-8");
 //
 //        Properties prop = new Properties();
