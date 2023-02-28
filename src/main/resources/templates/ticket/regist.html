@@ -5,8 +5,12 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/ticket/regist.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script type="text/javascript">
         $(function() {
+            IMP.init("imp70652743");  //결제 모듈
+
             sessionStorage.setItem("custid","mj1234");
 
             var ticketid = Number(sessionStorage.getItem("ticketid"));
@@ -49,50 +53,35 @@
                     custid: custid,
                     seatname: seatname
                 }
+
                 $.ajax({
                     url: "FindSeatid",
                     data: data,
                     success: function (as) {
                         console.log("FindSeatid성공")
                         console.log("좌석번호:"+as);
+
+                        //티켓정보 출력
                         $.ajax({
-                            url:"RegistBook",
-                            data:{seatid:as},
-                            success: function (result){
-                                console.log("RegistBook성공")
-                                console.log("이거 뭐지?:"+result);
-                                if(result>0){
-                                    $.ajax({
-                                        url:"BookTicket",
-                                        data: {custid:custid,
-                                                ticketid: ticketid,
-                                                seatid: as},
-                                        success:function(final){
-                                            console.log("BookTicket성공");
-                                            console.log("결과맞나?:"+final);
+                            url: "DetailTicket",
+                            data: {ticketid: ticketid},
+                            success: function (ticket){
+                                var ticket_name = ticket['ticket_name'];
+                                var price = ticket['price'];
 
-                                                $(document).ready(function(){
-                                                    if (final > 0) {
-                                                        alert("예약 성공!");
-                                                        $(location).attr('href',"/detail?ticketid"+ticketid);
-                                                    }else{
-                                                        alert("예약에 실패하였습니다. 다시 시도해주세요.");
-                                                    }
-                                                })
-
-
-                                        }
-                                    })
-                                }
+                                $.ajax({
+                                    url:"FindCustomer",
+                                    data:{custid: custid},
+                                    success: function(cust){
+                                        var email = cust['email'];
+                                        var name = cust['name'];
+                                        var phone = cust['phone'];
+                                        var addr = cust['addr'];
+                                        window.open();
+                                    }
+                                })
                             }
                         })
-
-
-                        // if (as == 2) {
-                        //     $(location).attr('href',"/main");
-                        // }
-                        //console.log(as);
-
                     }
                 })
             })
@@ -112,5 +101,12 @@
     </div>
 
     <div id="seatList"></div>
+
+    <form action="/payok" method="post" id="pay">
+        <input type="hidden" name="imp_uid" id="imp_uid">
+        <input type="hidden" name="merchant_uid" id="merchant_uid">
+        <input type="hidden" name="paid_amount" id="paid_amount">
+        <input type="hidden" name="apply_num" id="apply_num">
+    </form>
 </body>
 </html>

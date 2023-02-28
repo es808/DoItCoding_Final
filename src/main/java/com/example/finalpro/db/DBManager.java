@@ -106,6 +106,15 @@ public class DBManager {
 		return list;
 	}
 
+	// 회원정보 조회
+	public static CustomerVO findByCustid(String custid){
+		CustomerVO c = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		c = session.selectOne("customer.findByCustid", custid);
+		session.close();
+		return c;
+	}
+
 	// 특정 좌석의 잔여좌석 조회
 	public static int findLeftSeatByTicketid(int ticketid){
 		int num = 0;

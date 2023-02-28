@@ -6,4 +6,8 @@
   <select id="findAll" resultType="customerVO">
     select * from customer
   </select>
+
+  <select id="findByCustid" resultType="customerVO">
+    select * from customer where custid=#{custid}
+  </select>
 </mapper>
