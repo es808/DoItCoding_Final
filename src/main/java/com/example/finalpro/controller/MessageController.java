@@ -22,6 +22,7 @@ public class MessageController {
 
     @GetMapping("/sendCodePhone")
     public String sendCodePhone(String phone) {
+        String msg = "티캣치 인증번호 발신\n";
         String code = "";
         Random r = new Random();
         code += r.nextInt(10);
@@ -32,7 +33,7 @@ public class MessageController {
         code += r.nextInt(10);
 
         BitSms sms = new BitSms();
-        sms.sendMsg("01025598279",phone, code);
+        sms.sendMsg("01025598279",phone, msg+code);
         return code;
     }
 }
