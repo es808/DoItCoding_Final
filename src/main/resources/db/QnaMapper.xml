@@ -30,4 +30,43 @@
     <select id="selectQnaByCustid" resultType="qnaVO">
         select * from qna where custid=#{custid}
     </select>
+
+    <!--    조회수 증가  -->
+    <update id="updateHit" parameterType="java.lang.Integer">
+        update qna set qna_hit=qna_hit+1 where qna_no=#{qna_no}
+    </update>
+
+    <!--    페이징을 위한 전체 레코드 카운트-->
+    <select id="getTotalRecord" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(qna_no) from qna
+        <if test="category!=null">
+            where qna_category=#{category}
+            <if test="keyword!=null">
+                and ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
+        </if>
+        <if test="category==null">
+            <if test="keyword!=null">
+                where ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
+        </if>
+    </select>
+
+    <select id="findAll" resultType="qnaVO" parameterType="java.util.HashMap">
+        select qna_no, custid, qna_category, qna_title, qna_content, qna_hit, qna_date,
+        qna_fname, qna_open, qna_answer, ticketid from (select rownum r, a.* from (select * from qna
+        <if test="category!=null">
+            where qna_category=#{category}
+            <if test="keyword!=null">
+                and ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
+        </if>
+        <if test="category==null">
+            <if test="keyword!=null">
+                where ${searchColumn} like '%' || #{keyword} || '%'
+            </if>
+        </if>
+        order by QNA_DATE desc) a)
+        where r between #{startNo} and #{endNo}
+    </select>
 </mapper>

@@ -4,26 +4,25 @@ import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Qna;
 import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.service.QnaService;
+import com.example.finalpro.service.SearchService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.NotificationByCustidVO;
+import com.example.finalpro.vo.NotificationVO;
 import com.example.finalpro.vo.QnaVO;
-import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,10 +35,57 @@ public class QnaController {
     @Autowired
     private TicketService ts;
 
-    @GetMapping("/qna/list")
-    public ModelAndView list(){
-        ModelAndView mav=new ModelAndView();
-        mav.addObject("list", qs.findAll());
+    @Autowired
+    private SearchService ss;
+
+//    @Autowired
+//    private JavaMailSender mailSender;
+
+    @GetMapping("/qna/resetSearch")
+    public ModelAndView resetSearch(HttpSession session){
+        ModelAndView mav=new ModelAndView("redirect:/qna/list");
+        session.removeAttribute("qnaKeyword");
+        session.removeAttribute("qnaSearchColumn");
+        return mav;
+    }
+
+    @RequestMapping({"/qna/list","/qna/list/{pageNum}", "/qna/list/1/{category}"})
+    public ModelAndView list(@PathVariable(required = false) Integer pageNum,
+                             @PathVariable(required = false) String category,
+                             String keyword, String searchColumn,
+                             HttpSession session){
+        ModelAndView mav=new ModelAndView("/qna/list");
+        //쿼리문에 넣을 변수들을 담을 맵 생성
+        HashMap<String, Object> hashMap=ss.searchProcess(category, session, keyword,
+                searchColumn, "qna");
+
+        // 페이징
+        if (pageNum==null){
+            pageNum=1;
+        }
+        int totalRecord=DBManager.getTotalQnaRecord(hashMap);
+        int pageSize=10;
+        int totalPage=(int)Math.ceil((double)totalRecord/pageSize);
+        mav.addObject("totalPage",totalPage);
+
+        // 해당 페이지의 시작 글번호, 끝 글번호
+        int startNo=(pageNum-1)*pageSize+1;
+        int endNo=pageNum*pageSize;
+        hashMap.put("startNo",startNo);
+        hashMap.put("endNo",endNo);
+
+        // 페이지를 페이징
+        int pageGroupSize=5;   // 한 페이지 당 페이지 번호 몇 개씩 출력할지
+
+        int firstPage=((pageNum-1)/pageGroupSize)*pageGroupSize+1;
+        int lastPage=firstPage+pageGroupSize-1;
+        if(lastPage>totalPage){
+            lastPage=totalPage;
+        }
+        mav.addObject("firstPage",firstPage);
+        mav.addObject("lastPage",lastPage);
+
+        mav.addObject("list",DBManager.findAllQna(hashMap));
         return mav;
     }
 
@@ -55,6 +101,8 @@ public class QnaController {
                 mav.addObject("msg","비공개 글입니다.");
                 mav.setViewName("/error");
             }else {
+                DBManager.updateQNAHit(qna_no);
+                q.setQna_hit(q.getQna_hit()+1);
                 mav.addObject("q",q);
             }
         }else{
@@ -143,11 +191,13 @@ public class QnaController {
         ModelAndView mav=new ModelAndView("/qna/update");
         Optional<Qna> optionalQna=qs.findById(qna_no);
         if(optionalQna.isPresent()) {
-            mav.addObject("q",optionalQna.get());
+            Qna q=optionalQna.get();
+            mav.addObject("q",q);
 
-            // 세션에 저장된 아이디로 유저가 예매한 티켓 VO 목록 가져오기
-            String loginId = (String) session.getAttribute("id");
-            List<Integer> ticketidList = DBManager.findTicketidByCustid(loginId);
+            // 작성자가 예매한 티켓 VO 목록 가져오기
+            // 작성자 아이디
+            String writer=q.getCustomer().getCustid();
+            List<Integer> ticketidList = DBManager.findTicketidByCustid(writer);
             List<Ticket> ticketVOList = new ArrayList<Ticket>();
             for (int ticketid : ticketidList) {
                 Optional<Ticket> optionalTicket=ts.findByTicketid(ticketid);
@@ -211,13 +261,42 @@ public class QnaController {
         return mav;
     }
 
+    @GetMapping("/qna/delete/{qna_no}")
+    public ModelAndView delete(@PathVariable int qna_no, HttpSession session){
+        ModelAndView mav=new ModelAndView("redirect:/qna/list");
+        qs.delete(qna_no);
+        return mav;
+    }
+
     //답글 등록 Ajax
     @ResponseBody
     @GetMapping("/qna/answer/update")
-    public int updateAnswer(int qna_no, String qna_answer){
+    public int updateAnswer(int qna_no, String qna_answer, String insertOrUpdate){
         QnaVO q=new QnaVO();
         q.setQna_no(qna_no);
         q.setQna_answer(qna_answer);
+
+        // insert일 경우 notification 추가
+        if(insertOrUpdate.equals("insert")) {
+            String qnaWriter = qs.findById(qna_no).get().getCustomer().getCustid();
+            NotificationVO notificationVO = new NotificationVO(0, qnaWriter, qna_no, null);
+            int re=DBManager.insertNotification(notificationVO);
+        }
+
+        // 알림 이메일 보내기
+//        mailSender.send(new MimeMessagePreparator() {
+//            @Override
+//            public void prepare(jakarta.mail.internet.MimeMessage mimeMessage) throws Exception {
+//                String str="<h2>문의에 답변이 달렸습니다</h2>";
+//                str+="<div>"+qs.findById(qna_no).get().getQna_title()+"에 답변이 달렸습니다."+"</div>";
+//                MimeMessageHelper helper=new MimeMessageHelper(mimeMessage, true, "UTF-8");
+//                helper.setFrom("kgukgu33@gmail.com");
+//                helper.setTo("kgukgu33@gmail.com");
+//                helper.setSubject("[T-catch]문의 답변");
+//                helper.setText(str,true);
+//            }
+//        });
+
         return DBManager.updateAnswer(q);
     }
 
@@ -226,6 +305,47 @@ public class QnaController {
     @GetMapping("/qna/answer/delete")
     public int deleteAnswer(int qna_no){
         return DBManager.deleteAnswer(qna_no);
+    }
+
+    // 답글 알림 list Ajax
+    @ResponseBody
+    @GetMapping("/listNotification")
+    public List<NotificationByCustidVO> listNotification(HttpSession session){
+        String sessionId=(String) session.getAttribute("id");
+        List<NotificationByCustidVO> notificationList=DBManager.findNotificationByCustid(sessionId);
+        return notificationList;
+    }
+
+    // 답글 알림 갯수 계산 Ajax
+    @ResponseBody
+    @GetMapping("/countNChecked")
+    public int countNChecked(){
+        int cnt=DBManager.countNChecked();
+        return cnt;
+    }
+
+    // DB 'checked' 칼럼 업데이트 n->y
+    @ResponseBody
+    @GetMapping("/updateCheckedToY")
+    public int updateCheckedToY(){
+        int re=-1;
+        re=DBManager.updateCheckedToY();
+        return re;
+    }
+
+    // 알림 지우기
+    @ResponseBody
+    @GetMapping("/deleteNotification")
+    public int deleteNotification(int notif_no){
+        int re=-1;
+        re=DBManager.deleteNotification(notif_no);
+        return re;
+    }
+
+    // 답글 알림 뷰 (임시)
+    @GetMapping("/qna/notification")
+    public void notif_view(){
+
     }
 
 
