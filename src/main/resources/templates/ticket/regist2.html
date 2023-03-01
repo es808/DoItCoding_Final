@@ -3,180 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="/ticket/regist.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script type="text/javascript">
         $(function() {
-            IMP.init("imp70652743");  //결제 모듈
-
-            sessionStorage.setItem("custid","mj1234");
+            var IMP = window.IMP; // 생략 가능
+            IMP.init("imp70652743"); // 예: imp00000000
 
             var ticketid = Number(sessionStorage.getItem("ticketid"));
             var custid = sessionStorage.getItem("custid");
-            var seatname;
-            $(document).on("click", ".hover", function () {
-                seatname = $(this).html();
-                console.log("자리번호:" + seatname)
-                $("button").removeClass("active");
-                $(this).addClass("active");
-            })
-
-            //seat테이블에서 좌석정보를 가져오기
-
+            //티켓정보 출력
             $.ajax({
-                url: "ListSeat",
+                url: "DetailTicket",
                 data: {ticketid: ticketid},
-                success: function (data) {
-                    var count = 0;
-                    $.each(data, function () {
+                success: function (ticket){
+                    var ticket_name = ticket['ticket_name'];
+                    var price = ticket['price'];
 
-                        var btn = $("<button></button>").html(this.seatname);
-                        if (this.check_seat == "y")
-                            btn.addClass("x");
-                        else {
-                            btn.addClass("hover");
-                        }
-                        $("#seatList").append(btn);
-                        count++;
-                        if (count % 6 == 0) {
-                            $("#seatList").append($("<br></br>"));
+                    $.ajax({
+                        url:"FindCustomer",
+                        data:{custid: custid},
+                        success: function(cust){
+                            var email = cust['email'];
+                            var name = cust['name'];
+                            var phone = cust['phone'];
+                            var addr = cust['addr'];
+
+                            IMP.request_pay({ // param
+                                pg: "kcp",
+                                pay_method: "card",
+                                merchant_uid: "ORD"+new Date().getTime(),
+                                name: ticket_name,
+                                amount: price,
+                                buyer_email: email,
+                                buyer_name: name,
+                                buyer_tel: phone,
+                                buyer_addr: addr,
+                                buyer_postcode: "01181",
+                                //m_redirect_url: 'https://localhost:8080/payok.html'
+                            }, function (res) { // callback
+                                if (res.success) {
+                                    console.log("결재완료");
+                                    console.log("고유ID:"+res.imp_uid);
+                                    console.log("상점거래 ID:"+res.merchant_uid);
+                                    console.log("결재금액:"+res.paid_amount);
+                                    console.log("카드 승인번호:"+res.apply_num);
+                                    $("#imp_uid").val(res.imp_uid);
+                                    $("#merchant_uid").val(res.merchant_uid);
+                                    $("#paid_amount").val(res.paid_amount);
+                                    $("#apply_num").val(res.apply_num);
+
+                                    //$("#pay").submit();
+                                    //location.href="payok.html";
+
+                                    // 결제창으로 넘어가기
+                                    $.ajax({
+                                        url:"payok",
+                                        data: {imp_uid:res.imp_uid,
+                                            merchant_uid:res.merchant_uid,
+                                            paid_amount:res.paid_amount,
+                                            apply_num:res.apply_num},
+                                        success:function (payre){
+                                            //$(".imp-dialog customizable payment-kcp pc").css();
+                                            console.log("payre:"+payre);
+                                            //if(payre == "OK"){}
+                                            $.ajax({
+                                                url:"RegistBook",
+                                                data:{seatid:sessionStorage.getItem("as")},
+                                                success: function (result){
+                                                    console.log("RegistBook성공")
+
+                                                    if(result>0){
+                                                        $.ajax({
+                                                            url:"BookTicket",
+                                                            data: {custid:custid,
+                                                                ticketid: ticketid,
+                                                                seatid: as},
+                                                            success:function(final){
+                                                                console.log("BookTicket성공");
+
+                                                                $(document).ready(function(){
+                                                                    if (final > 0) {
+                                                                        // 예약완료 문자 발송 여기!
+                                                                        alert("예약 성공!");
+                                                                        $(location).attr('href',"/detail?ticketid"+ticketid);
+                                                                    }else{
+                                                                        alert("예약에 실패하였습니다. 다시 시도해주세요.");
+                                                                    }
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    })
+                                } else {
+                                    console.log("결재실패");
+                                    console.log('에러내용'+res.error_msg);
+                                }
+                            });
                         }
                     })
                 }
             })
 
-            $("#insertBtn").click(function () {
-                var data = {
-                    ticketid: ticketid,
-                    custid: custid,
-                    seatname: seatname
-                }
-
-                $.ajax({
-                    url: "FindSeatid",
-                    data: data,
-                    success: function (as) {
-                        console.log("FindSeatid성공")
-                        console.log("좌석번호:"+as);
-
-                        //티켓정보 출력
-                        $.ajax({
-                            url: "DetailTicket",
-                            data: {ticketid: ticketid},
-                            success: function (ticket){
-                                var ticket_name = ticket['ticket_name'];
-                                var price = ticket['price'];
-
-                                $.ajax({
-                                    url:"FindCustomer",
-                                    data:{custid: custid},
-                                    success: function(cust){
-                                        var email = cust['email'];
-                                        var name = cust['name'];
-                                        var phone = cust['phone'];
-                                        var addr = cust['addr'];
-
-                                        
-                                        IMP.request_pay({ // param
-                                            pg: "kcp",
-                                            pay_method: "card",
-                                            merchant_uid: "ORD"+new Date().getTime(),
-                                            name: ticket_name,
-                                            amount: price,
-                                            buyer_email: email,
-                                            buyer_name: name,
-                                            buyer_tel: phone,
-                                            buyer_addr: addr,
-                                            buyer_postcode: "01181",
-                                            //m_redirect_url: 'https://localhost:8080/payok.html'
-                                        }, function (res) { // callback
-                                            if (res.success) {
-                                                console.log("결재완료");
-                                                console.log("고유ID:"+res.imp_uid);
-                                                console.log("상점거래 ID:"+res.merchant_uid);
-                                                console.log("결재금액:"+res.paid_amount);
-                                                console.log("카드 승인번호:"+res.apply_num);
-                                                $("#imp_uid").val(res.imp_uid);
-                                                $("#merchant_uid").val(res.merchant_uid);
-                                                $("#paid_amount").val(res.paid_amount);
-                                                $("#apply_num").val(res.apply_num);
-
-                                                //$("#pay").submit();
-                                                //location.href="payok.html";
-
-                                                // 결제창으로 넘어가기
-                                                $.ajax({
-                                                    url:"payok",
-                                                    data: {imp_uid:res.imp_uid,
-                                                        merchant_uid:res.merchant_uid,
-                                                        paid_amount:res.paid_amount,
-                                                        apply_num:res.apply_num},
-                                                    success:function (payre){
-                                                        //$(".imp-dialog customizable payment-kcp pc").css();
-                                                        console.log("payre:"+payre);
-                                                        //if(payre == "OK"){}
-                                                        $.ajax({
-                                                            url:"RegistBook",
-                                                            data:{seatid:as},
-                                                            success: function (result){
-                                                                console.log("RegistBook성공")
-
-                                                                if(result>0){
-                                                                    $.ajax({
-                                                                        url:"BookTicket",
-                                                                        data: {custid:custid,
-                                                                            ticketid: ticketid,
-                                                                            seatid: as},
-                                                                        success:function(final){
-                                                                            console.log("BookTicket성공");
-
-                                                                            $(document).ready(function(){
-                                                                                if (final > 0) {
-                                                                                    // 예약완료 문자 발송 여기!
-                                                                                    alert("예약 성공!");
-                                                                                    $(location).attr('href',"/detail?ticketid"+ticketid);
-                                                                                }else{
-                                                                                    alert("예약에 실패하였습니다. 다시 시도해주세요.");
-                                                                                }
-                                                                            })
-                                                                        }
-                                                                    })
-                                                                }
-                                                            }
-                                                        })
-                                                    }
-                                                })
-                                            } else {
-                                                console.log("결재실패");
-                                                console.log('에러내용'+res.error_msg);
-                                            }
-                                        });
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
-            })
         });
     </script>
 </head>
 <body>
-    <div id="background">
-
-        <div id="screen">S c r e e n</div>
-        <button id = "insertBtn">예매하기</button>
-        <div class="seat_status">
-            <div id="possible"></div><p>선택가능</p>
-            <div id="check"></div><p>선택</p>
-            <div id="soldout"></div><p>예매완료</p>
-        </div>
-    </div>
-
-    <div id="seatList"></div>
-
     <form action="/payok" method="post" id="pay">
         <input type="hidden" name="imp_uid" id="imp_uid">
         <input type="hidden" name="merchant_uid" id="merchant_uid">

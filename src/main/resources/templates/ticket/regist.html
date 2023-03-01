@@ -5,11 +5,9 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/ticket/regist.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <!-- iamport.payment.js -->
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
     <script type="text/javascript">
         $(function() {
-            IMP.init("imp70652743");  //결제 모듈
 
             sessionStorage.setItem("custid","mj1234");
 
@@ -60,28 +58,8 @@
                     success: function (as) {
                         console.log("FindSeatid성공")
                         console.log("좌석번호:"+as);
-
-                        //티켓정보 출력
-                        $.ajax({
-                            url: "DetailTicket",
-                            data: {ticketid: ticketid},
-                            success: function (ticket){
-                                var ticket_name = ticket['ticket_name'];
-                                var price = ticket['price'];
-
-                                $.ajax({
-                                    url:"FindCustomer",
-                                    data:{custid: custid},
-                                    success: function(cust){
-                                        var email = cust['email'];
-                                        var name = cust['name'];
-                                        var phone = cust['phone'];
-                                        var addr = cust['addr'];
-                                        window.open();
-                                    }
-                                })
-                            }
-                        })
+                        sessionStorage.setItem("as",as);
+                        window.open('/regist2');
                     }
                 })
             })
