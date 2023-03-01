@@ -163,8 +163,6 @@ public class CustomerController {
         c.setPwd(passwordEncoder.encode(c.getPwd()));
         System.out.println("customer = " + c);
         c.setRole("customer");
-//        c.setAddr_postcode("11111");
-//        c.setPhone("010-2039-4356");
         try {
             System.out.println(c);
             customerDAO.save(c);
