@@ -9,6 +9,7 @@ import java.util.Date;
 public class QnaVO {
     private int qna_no;
     private String custid;
+    private int ticketid;
     private String qna_title;
     private String qna_content;
     private int qna_hit;
@@ -18,5 +19,4 @@ public class QnaVO {
     private String qna_answer;
     private String qna_open;
     private MultipartFile uploadFile;
-    private int ticketid;
 }

@@ -28,7 +28,7 @@
                 <a th:text="${c.custid}" th:href="@{'/admin/updateCustomer/'+${c.custid}}"></a>
                 </td>
                 <td th:text="${c.name}"></td>
-                <td th:text="${c.birth.substring(0,10)}"></td>
+                <td th:text="${c.birth}"></td>
                 <td th:text="${c.phone}"></td>
                 <td th:text="${c.gender}"></td>
                 <td>예매내역

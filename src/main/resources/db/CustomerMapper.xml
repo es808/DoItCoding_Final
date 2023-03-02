@@ -11,6 +11,13 @@
     select * from customer where custid=#{custid}
   </select>
 
+  <!--updateCustomer 고객 정보 수정하기-->
+  <update id="updateCustomer" parameterType="customerVO">
+    update customer set cateid=#{cateid}, pwd=#{pwd}, name=#{name}, birth=#{birth},
+    phone=#{phone}, email=#{email}, addr_postcode=#{addr_postcode},addr_address=#{addr_address},addr_detail=#{addr_detail}, addr_extra=#{addr_extra}, gender=#{gender}, role=#{role}
+    where custid=#{custid}
+  </update>
+
   <!--page에 따라 startRecord와 endRecord 구해서 출력하기-->
   <select id="findCustomerPaging" resultType="customerVO">
     select * from

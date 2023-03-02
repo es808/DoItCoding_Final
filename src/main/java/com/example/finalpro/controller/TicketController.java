@@ -6,20 +6,19 @@ import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.vo.NotificationByCustidVO;
 import com.example.finalpro.vo.NotificationVO;
+import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.RankingVO;
 import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
-import com.example.finalpro.entity.Ticket;
-import com.example.finalpro.service.TicketService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -68,7 +67,7 @@ public class TicketController {
     }
 
 
-   // 시간, 장르 별로 Ajax 출력하기
+    // 시간, 장르 별로 Ajax 출력하기
     @RequestMapping("/SelectTicketMain")
     @ResponseBody
     public List<TicketVO> selectTicket(int cateid, int time){
