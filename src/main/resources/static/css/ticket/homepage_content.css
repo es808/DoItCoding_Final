@@ -17,7 +17,7 @@
 }
 #right_button{
     z-index : 200;
-    margin : 1310px;
+    margin-left : 1310px;
 }
 .slider{
     float : left;
@@ -1018,4 +1018,7 @@ h2{
     line-height : 34px;
     color : #08428C;
     text-decoration: none;
+}
+.qna{
+    margin-top : -45px;
 }

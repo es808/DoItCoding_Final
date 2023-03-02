@@ -17,7 +17,6 @@ import java.util.Objects;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
-
 	static {
 		try {
 			String resource = "db/sqlMapConfig.xml";
@@ -210,9 +209,7 @@ public class DBManager {
 		List<RankingVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("ranking.findAllRankingOrderByScore", cateid);
-
 		session.close();
-
 		return list;
 	}
 
@@ -225,7 +222,6 @@ public class DBManager {
 		return list;
 	}
 
-<<<<<<<<< Temporary merge branch 1
 	// 티켓의 리뷰 출력, 정렬
 	public static List<ReviewVO> findReviewByTicketid(int ticketid, int re){
 		List<ReviewVO> list = null;
@@ -354,15 +350,15 @@ public class DBManager {
 		return totalRecord;
 	}
 
-    // Tikcetid의 전체 좌석 목록 출력
-    public static List<SeatVO> listSeatByTicketid(int ticketid){
-        List<SeatVO> list = null;
-        SqlSession session = sqlSessionFactory.openSession();
-        list = session.selectList("seat.listSeatByTicketid",ticketid);
-        System.out.println("listSeatByTicketid:"+list);
-        session.close();
-        return list;
-    }
+	// Tikcetid의 전체 좌석 목록 출력
+	public static List<SeatVO> listSeatByTicketid(int ticketid){
+		List<SeatVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("seat.listSeatByTicketid",ticketid);
+		System.out.println("listSeatByTicketid:"+list);
+		session.close();
+		return list;
+	}
 
 	// 예매를 위해 ticketid와 seatname으로 좌석 아이디 찾기
 	public static int findSeatId(int ticketid, String seatname){
@@ -455,13 +451,13 @@ public class DBManager {
 
 	// ******** QNA ********
 	// QNA 등록
-    public static int insertQna(QnaVO q) {
+	public static int insertQna(QnaVO q) {
 		int re=-1;
 		SqlSession session=sqlSessionFactory.openSession(true);
 		re=session.insert("qna.insert",q);
 		session.close();
 		return re;
-    }
+	}
 
 	// QNA update
 	public static int updateQna(QnaVO qnaVO) {
