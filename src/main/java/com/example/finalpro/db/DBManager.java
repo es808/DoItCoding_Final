@@ -280,6 +280,24 @@ public class DBManager {
 		return re;
 	}
 
+	public static List drawTest(int ticketid){
+		List<DrawVO> draw = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		draw = session.selectList("draw.drawTest",ticketid);
+		session.close();
+		return draw;
+	}
+
+	public static int drawTest2(int ticketid) {
+		int count = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		count = session.selectOne("seat.seatTest");
+		System.out.println(count);
+		session.close();
+		return count;
+	}
+
+
 //	public static List<CustomerVO> findAll() {
 //		List<CustomerVO> list = null;
 //		SqlSession session = sqlSessionFactory.openSession();

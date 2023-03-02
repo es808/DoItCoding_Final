@@ -6,4 +6,8 @@
   <select id="findAll" resultType="drawVO">
     select * from draw
   </select>
+
+  <select id="drawTest" resultType="drawVO">
+    select * from draw where ticketid = #{ticketid}
+  </select>
 </mapper>

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/jquery-ui-1.13.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/css/ticket/detail.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script type="text/javascript" src="/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+    <script type="text/javascript" src="/js /jquery-ui-1.13.1.custom/jquery-ui.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4cce9cc8666a0ddc40cb3ff5eee6295b"></script>
     <script type="text/javascript">
 
@@ -33,6 +33,7 @@
                     e.preventDefault();
                 }
             })
+
             $( "#datepicker" ).datepicker();
 
             $.ajax({
@@ -102,7 +103,6 @@
                         console.log(img1);
                         $("#art_img").append(img1);
                     }
-
 
                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                         mapOption = {

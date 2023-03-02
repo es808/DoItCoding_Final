@@ -27,4 +27,5 @@
     update seat set check_seat='y' where seatid=#{seatid}
   </update>
 
+
 </mapper>
