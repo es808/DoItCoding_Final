@@ -2,7 +2,6 @@ package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.db.DBManager;
-import com.example.finalpro.entity.Draw;
 import com.example.finalpro.service.DrawService;
 import com.example.finalpro.vo.DrawVO;
 import com.example.finalpro.vo.TicketVO;
@@ -17,12 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 @Controller
 @Setter
 public class DrawController {
+
+    private static String lucker[];
 
     @Autowired
     private DrawService drawService;
@@ -54,13 +54,14 @@ public class DrawController {
     }
 
     //드로우 가동
-    @GetMapping("/drawTest2")
+    @GetMapping("/drawExec")
     @ResponseBody
-    public String[] drawTest2(){
+    public String drawTest2(){
         int count = DBManager.findLeftSeatByTicketid(1);
         List<DrawVO> draw = drawList(1);
         System.out.println("드로우 사이즈:"+draw.size());
         String arr[] = new String[count];           //드로우에 당첨된 회원아이디 저장
+        lucker = new String[count];                 //전역변수에 저장하여 드로우 된 회원들을 저장
 
         LinkedList<DrawVO> list = new LinkedList<>();
 
@@ -73,19 +74,15 @@ public class DrawController {
             Random r = new Random();
             int number = r.nextInt(list.size());        //랜덤함수를 드로우를 신청한 회원 수 만큼의 크기로 설정
             arr[i] = list.get(number).getCustid();      //랜덤함수에 배정된 회원아이디를 배열에 저장
-            list.remove(number);                        //당첨된 회원은 linkedList에서 제거하고 다시 반복문 가동
-            System.out.println(list.size());
+            lucker[i] = arr[i];
+            list.remove(number);                        //당첨된 회원은 linkedList에서 제거하고 반복문 가동
         }
-        return arr;
+        return "success";
     }
 
     @GetMapping("/drawTest")
     public String drawTest(Model m){
-        String arr[] = drawTest2();
-        m.addAttribute("list", arr);
-        System.out.println(arr[1]);
+        m.addAttribute("list", lucker);
         return "drawTest/drawTest";
     }
-
-
 }
