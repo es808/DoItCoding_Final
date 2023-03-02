@@ -136,6 +136,7 @@ public class DBManager {
 		return t;
 	}
 
+
 	// ******** admin.ticket ********
 
 	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
@@ -152,6 +153,7 @@ public class DBManager {
 
 		return list;
 	}
+
 	// admin의 ticketList
 	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
 	public static List<TicketVO> findTicketPaging(int startRecord, int endRecord){
@@ -293,149 +295,11 @@ public class DBManager {
 		return list;
 	}
 
-    // Tikcetid의 전체 좌석 목록 출력
-    public static List<SeatVO> listSeatByTicketid(int ticketid){
-        List<SeatVO> list = null;
-        SqlSession session = sqlSessionFactory.openSession();
-        list = session.selectList("seat.listSeatByTicketid",ticketid);
-        System.out.println("listSeatByTicketid:"+list);
-        session.close();
-        return list;
-    }
-
-	// 예매를 위해 ticketid와 seatname으로 좌석 아이디 찾기
-	public static int findSeatId(int ticketid, String seatname){
-		int seatid = -1;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("ticketid", ticketid);
-		map.put("seatname", seatname);
-		SqlSession session = sqlSessionFactory.openSession();
-		seatid = session.selectOne("seat.findSeatId",map);
-		System.out.println("seatid:"+seatid);
-		return seatid;
-	}
-
-	// 좌석예매
-	public static int registSeat(int seatid){
-		int re = -1;
-		SqlSession session = sqlSessionFactory.openSession(true);
-		re = session.update("seat.registSeat",seatid);
-		System.out.println("registSeat_re:"+re);
-		session.close();
-		return re;
-	}
-
-	// 티켓예매
-	public static int bookTicket(String custid, int ticketid, int seatid){
-		int re = -1;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("custid", custid);
-		map.put("ticketid", ticketid);
-		map.put("seatid", seatid);
-		SqlSession session = sqlSessionFactory.openSession(true);
-		re = session.insert("book.bookTicket",map);
-		System.out.println("registSeat_re:"+re);
-		session.close();
-		return re;
-	}
-
-	// ******** admin.ticket ********
-
-	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
-	// time=0은 과거, time=1은 현재, time=2는 미래
-	public static List<TicketVO> findAllTicketByCategory(int time, int cateid){
-		List<TicketVO> list = null;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("time", time);
-		map.put("cateid", cateid);
-
-		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findAllTicketByCategory", map);
-		session.close();
-
-		return list;
-	}
-
-	// admin의 ticketList
-	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
-	public static List<TicketVO> findTicketPaging(int startRecord, int endRecord){
-		List<TicketVO> list = null;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startRecord", startRecord);
-		map.put("endRecord", endRecord);
-
-		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findTicketPaging", map);
-		session.close();
-
-		return list;
-	}
-
-	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
-	// +search 기능
-	public static List<TicketVO> findTicketPagingSearch(int startRecord, int endRecord, String keyword){
-		List<TicketVO> list = null;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startRecord", startRecord);
-		map.put("endRecord", endRecord);
-		map.put("keyword", keyword);
 
 
-		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findTicketPagingSearch", map);
-		session.close();
 
-		return list;
-	}
 
-	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
-	// +search 기능
-	// +정렬 기능
-	public static List<TicketVO> findTicketPagingSearchOrderBy(int startRecord, int endRecord, String keyword, String order){
-		List<TicketVO> list = null;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startRecord", startRecord);
-		map.put("endRecord", endRecord);
-		map.put("keyword", keyword);
-		map.put("order", order);
 
-		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findTicketPagingSearchOrderBy", map);
-		session.close();
-
-		return list;
-	}
-
-	// ticket의 totalRecord를 구하기
-	public static int getTotalRecord(String keyword){
-		int totalRecord = 0;
-		SqlSession session = sqlSessionFactory.openSession();
-		totalRecord = session.selectOne("ticket.getTotalRecord", keyword);
-		session.close();
-		if(totalRecord==0){
-			totalRecord = 1;
-		}
-		return totalRecord;
-	}
-
-	public static List<RankingVO> findAllRankingOrderByScore(int cateid){
-		List<RankingVO> list = null;
-		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ranking.findAllRankingOrderByScore", cateid);
-
-		session.close();
-
-		return list;
-	}
-
-	// ticket을 검색
-	public static List<TicketVO> findSearchTicket(String keyword){
-		List<TicketVO> list = null;
-		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findSearchTicket", keyword);
-		session.close();
-		return list;
-	}
 
 	// admin에서 ticket을 insert
 	public static int insertTicket(TicketVO ticket){
@@ -456,16 +320,6 @@ public class DBManager {
 		return re;
 	}
 
-	// 티켓예매
-	public static int bookTicket(String custid, int ticketid, int seatid){
-		int re = -1;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("custid", custid);
-		map.put("ticketid", ticketid);
-		map.put("seatid", seatid);
-		SqlSession session = sqlSessionFactory.openSession(true);
-		re = session.insert("book.bookTicket",map);
-		System.out.println("registSeat_re:"+re);
 
 	// ******** admin.customer ********
 
@@ -559,6 +413,7 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
 
 //	public static List<CustomerVO> findAll() {
 //		List<CustomerVO> list = null;

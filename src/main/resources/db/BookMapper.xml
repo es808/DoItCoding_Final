@@ -3,8 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="book">
+
+  <!--    QNA insert화면에 티켓 목록 출력을 위한 sql-->
   <select id="findTicketidByCuistid" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select ticketid from book where custid=#{custid}
+    select ticketid from book where custid=#{custid}
   </select>
 
   <select id="findAll" resultType="bookVO">
@@ -28,8 +30,4 @@
     insert into book(bookid,custid,ticketid,seatid) values(seq_bookid.nextval,#{custid},#{ticketid},#{seatid})
   </insert>
 
-<!--    QNA insert화면에 티켓 목록 출력을 위한 sql-->
-    <select id="findTicketidByCuistid" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select ticketid from book where custid=#{custid}
-    </select>
 </mapper>
