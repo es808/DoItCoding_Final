@@ -298,10 +298,10 @@ h2{
     display : none;
 }
 #localtime{
-    position : relative;
+    position : absolute;
     font-size: 45px; font-weight : 650;
     color : #08348C;
-    margin-left : 68px; bottom : 35px;
+    margin-left : 68px; bottom : 15px;
 }
 .detail_title{
     width : 100px; height : 20px;

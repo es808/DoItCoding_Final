@@ -35,7 +35,7 @@
                                 pay_method: "card",
                                 merchant_uid: "ORD"+new Date().getTime(),
                                 name: ticket_name,
-                                amount: price,
+                                amount: 100,
                                 buyer_email: email,
                                 buyer_name: name,
                                 buyer_tel: phone,
@@ -79,7 +79,7 @@
                                                             url:"BookTicket",
                                                             data: {custid:custid,
                                                                 ticketid: ticketid,
-                                                                seatid: as},
+                                                                seatid: sessionStorage.getItem("as")},
                                                             success:function(final){
                                                                 console.log("BookTicket성공");
 
