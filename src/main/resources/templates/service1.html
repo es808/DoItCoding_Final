@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function (){
+            sessionStorage.setItem("custid", $("#sessionId").val())
+            console.log(sessionStorage.getItem("custid"));
+        })
+
+    </script>
+</head>
+<body>
+서비스1
+<h2 th:text ="${id}"></h2>
+<input type="hidden" th:value="${id}" id = "sessionId">
+환영합니다
+</body>
+</html>

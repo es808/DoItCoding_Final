@@ -23,4 +23,9 @@
   <insert id="bookTicket" parameterType="bookVO">
     insert into book(bookid,custid,ticketid,seatid) values(seq_bookid.nextval,#{custid},#{ticketid},#{seatid})
   </insert>
+
+<!--    QNA insert화면에 티켓 목록 출력을 위한 sql-->
+    <select id="findTicketidByCuistid" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select ticketid from book where custid=#{custid}
+    </select>
 </mapper>
