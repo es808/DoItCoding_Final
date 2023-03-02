@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Insert title here</title>
@@ -7,8 +7,30 @@
   <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
   <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+          integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+  <script>
+    Kakao.init('b2e1975d2187199e889d30007c46dd02'); // 사용하려는 앱의 JavaScript 키 입력
+  </script>
+
+  <script>
+    function chatChannel() {
+      Kakao.Channel.chat({
+        channelPublicId: '_Bsxlxmxj',
+      });
+    }
+  </script>
+
   <script type="text/javascript">
     $(function(){
+
+      sessionStorage.setItem("custid", $("#sessionId").val())
+
+
+      console.log(sessionStorage.getItem("custid"));
+      var custid = sessionStorage.getItem("custid");
+      console.log("custid"+custid);
+
       var width = $("[data-role='slider']").attr("data-width");
       var height = $("[data-role='slider']").attr("data-height");
       var count = $("[data-role='slider'] div.item").length;
@@ -117,6 +139,7 @@
         });
       }//현재 상영작 출력 end
 
+
       // 미래상영작 출력
       var selectFutureBycategory = function(){
         $.ajax("SelectTicketMain", {
@@ -153,16 +176,16 @@
 
       var cateid = 2; // review 테이블에 카테고리가 연극인 것 외에는 인스턴스가 없으므로 기본값을 2로 설정함
       // 사용자가 가입 시 입력한 선호 카테고리가 기본값으로 되게하기
-      if(sessionStorage.getItem("custid") != null){
-        $.ajax("GetCustomerAction", {
-          data:{custid:sessionStorage.getItem("custid")},
-          async:false,
-          success:function(key, value){
-            console.log("ajax 안 " +key.cateid);
-            cateid = key.cateid;
-          }
-        });
-      }
+      // if(custid != "none"){
+      //   $.ajax("GetCustomerAction", {
+      //     data:{custid:custid},
+      //     async:false,
+      //     success:function(key, value){
+      //       console.log("ajax 안 " +key.cateid);
+      //       cateid = key.cateid;
+      //     }
+      //   });
+      // }
       selectRankingBycategory();
       selectCurrentBycategory();
       selectFutureBycategory();
@@ -305,9 +328,11 @@
 
       // 로그인한 정보 불러오기
 
-      var custid = sessionStorage.getItem("custid");
+      // var custid = sessionStorage.getItem("custid");
+      // var custid = $("#sessionId").val();
+      console.log(custid);
 
-      if(custid != null){
+      if(custid != "none"){
         $("#login").css('display', 'none');
         $("#regist").css('display', 'none');
         $("#logout").css('display','inline-block');
@@ -316,12 +341,10 @@
 
       $("#logout").click(function(e){
         if(confirm("로그아웃 하시겠습니까?")){
-          $("#login").css('display', 'inline-block');
-          $("#regist").css('display', 'inline-block');
-          $("#logout").css('display','none');
-          $("#mypage").css('display','none');
           sessionStorage.removeItem("custid");
-          e.preventDefault();
+          custid = "none";
+        }else{
+          return false;
         }
       })
 
@@ -330,13 +353,15 @@
   </script>
 </head>
 <body class="main_layout">
-<img src="/image/logo.png" id="logo">
+
+<img src="/image/icon/logo.png" id="logo">
 <div class="main_user">
-  <a href="loginTest.html" id="login"><img src="/image/loginicon.png">로그인</a>
-  <a href="/main" id="logout"><img src="/image/logouticon.png">로그아웃</a>
-  <a href="signupTest.html" id="regist"><img src="/image/signupicon.png">회원가입</a>
-  <a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>
+  <a href="/login" id="login"><img src="/image/icon/loginicon.png">로그인</a>
+  <a href="/logout" id="logout"><img src="/image/icon/logouticon.png">로그아웃</a>
+  <a href="signUp" id="regist"><img src="/image/icon/signupicon.png">회원가입</a>
+  <a href="mypage_Info.html" id="mypage"><img src="/image/icon/mypageicon.png">마이페이지</a>
 </div>
+
 <nav id="navigation">
   <div class="search" id="search" name="search">
     <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
@@ -372,6 +397,7 @@
         <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
       </ul>
     </li>
+    <li><a id="chat-channel-button" href="javascript:chatChannel()"><img src="/image/consult_small_yellow_pc.png"/></a></li>
   </ul>
 </nav>
 <div id="main-header">
@@ -404,11 +430,11 @@
     </ul>
     <br>
   </div>
-  <img class="main_rank" src="/image/firsticon.jpg" width="80" height="80">
+  <img class="main_rank" src="/image/icon/firsticon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview0"></a>
-  <img class="main_rank" src="/image/secondicon.jpg" width="80" height="80">
+  <img class="main_rank" src="/image/icon/secondicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview1"></a>
-  <img class="main_rank" src="/image/thirdicon.jpg" width="80" height="80">
+  <img class="main_rank" src="/image/icon/thirdicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview2"></a>
   <br>
   <div>
@@ -441,8 +467,9 @@
   <a class="img" id="future_preview1"></a>
   <a class="img" id="future_preview2"></a>
 </div>
+<input type = "hidden" th:value="${id}" id = "sessionId" />
 <div id="main-footer">
-  <footer>
+  <footer class = "footer">
     <div>ⓒ CodingDoit corp.
     </div>
   </footer>

@@ -19,19 +19,19 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/","/login","/signUp","/list","/service1","/main","/detail","/search").permitAll()
 //                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers("/css/**","/images/**","/image/**","/**").permitAll()
+                .requestMatchers("/css/**","/images/**","/image/**","/**", "/db/**").permitAll()
                 //.requestMatchers("/admin/**").hasRole("admin")
                 .anyRequest().authenticated();
 
         http.formLogin().loginPage("/login").permitAll()
                 .failureUrl("/error")
-                .defaultSuccessUrl("/service1",true);        //로그인 성공 후 이동 페이지 true를 붙여서 붙여서 절대경로 설정
+                .defaultSuccessUrl("/main",true);        //로그인 성공 후 이동 페이지 true를 붙여서 붙여서 절대경로 설정
 
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/main");
 
         http.httpBasic();
 
