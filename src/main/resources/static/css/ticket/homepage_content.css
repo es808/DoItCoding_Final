@@ -905,3 +905,117 @@ h2{
 #reviewOrder{
     z-index:600;
 }
+
+
+
+/* 공지사항,QnA list */
+#notice_background{
+    position : relative;
+    width : 1000px;
+    height : 850px;
+    border : 2px solid grey;
+    background-color : #f7f7f7;
+    margin-left : 270px;
+    margin-top : -400px;
+    border-radius : 10px;
+}
+#notice_background h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 50px;
+}
+.notice_table{
+    position : absolute;
+    background-color : #08428C;
+    z-index : 10;
+    width : 800px;
+    height : 40px;
+    margin-top : -160px;
+    margin-left : -600px;
+    border: 2px solid #444444;
+    border : none;
+    border-radius : 10px 10px 0 0;
+}
+.notice_table th{
+    color : #dcdcdc;
+    font-weight : 500;
+    font-size : 15px;
+}
+.notice_table th,td{
+    padding : 13px;
+    text-align : center;
+}
+#btnWrite{
+    z-index : 100;
+    width : 100px;  height : 35px;
+    font-size : 13px;
+    font-weight : 500;
+    background-color : #08428C;
+    border : none;
+    margin-left : 800px;
+    margin-top : 30px;
+    border-radius : 5px;
+    text-align : center;
+}
+#btnWrite a{
+    line-height : 34px;
+    color : white;
+}
+#btnWrite:hover{
+    background-color : #F2AE30;
+    transition-duration: 0.5s;
+}
+#btnWrite a:hover{
+    color : #08348C;
+    transition-duration: 0.5s;
+}
+#select_column {
+    position: relative;
+    margin-left: 290px;
+    margin-top: 630px;
+    border : 2px solid #08428C;
+    width : 70px; height : 30px;
+}
+#keyword{
+    width : 200px; height : 30px;
+    border : 2px solid #08428C;
+    margin-left : 5px;
+}
+#paging{
+    margin-left : 480px;
+    margin-top : 20px;
+    font-weight: 500;
+}
+#paging a{
+    color : #08428C;
+    text-decoration: none;
+}
+#search_list{
+    width : 80px;  height : 32px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    border : none;
+    color : white;
+    margin-left : 10px;
+    border-radius : 5px;
+}
+#reset_list{
+    width : 100px;
+    height : 32px;
+    font-size : 13px;
+    background-color : #cccccc;
+    border : none;
+    margin-left : 670px;
+    margin-top : -32px;
+    border-radius : 5px;
+    text-align : center;
+}
+#reset_list a{
+    line-height : 34px;
+    color : #08428C;
+    text-decoration: none;
+}

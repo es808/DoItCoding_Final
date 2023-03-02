@@ -452,13 +452,13 @@ public class DBManager {
 
 	// ******** QNA ********
 	// QNA 등록
-    public static int insertQna(QnaVO q) {
+	public static int insertQna(QnaVO q) {
 		int re=-1;
 		SqlSession session=sqlSessionFactory.openSession(true);
 		re=session.insert("qna.insert",q);
 		session.close();
 		return re;
-    }
+	}
 
 	// QNA update
 	public static int updateQna(QnaVO qnaVO) {
