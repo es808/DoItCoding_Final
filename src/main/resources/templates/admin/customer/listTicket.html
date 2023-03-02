@@ -25,7 +25,9 @@
             <td th:case="4">콘서트</td>
         </div>
         <td th:text="${t.placeid}"></td>
-        <td th:text="${t.ticket_name}"></td>
+        <td>
+            <a th:text="${t.ticket_name}" th:href="@{'detail/'+${t.ticketid}}"></a>
+        </td>
         <td th:text="${t.price}"></td>
         <td th:text="${t.ticket_date}"></td>
     </tr>

@@ -9,9 +9,9 @@
     <script>
         $(function(){
 
-            var time = sessionStorage.getItem("time"); // time 받아오기
-            var cateid = sessionStorage.getItem("cateid"); // cateid 받아오기
-            var custid = sessionStorage.getItem("custid");
+            let time = sessionStorage.getItem("time"); // time 받아오기
+            let cateid = sessionStorage.getItem("cateid"); // cateid 받아오기
+            let custid = sessionStorage.getItem("custid");
 
             if(custid != null){
                 $("#login").css('display', 'none');
@@ -30,11 +30,40 @@
                     e.preventDefault();
                 }
             })
+
+            // 무한 스크롤 처리
+
+            let scrollPage;
+
+            if(scrollPage == undefined){
+                scrollPage = 1;
+            }
+
+
+            let loading = false;
+            $(document).ready(function(){
+                selectTicket(scrollPage);
+
+                // Scroll
+                $(window).scroll(function(){
+                    let scrollNow = $(window).scrollTop();
+                    if (scrollNow + $(window).height() + 100 >= $('#search_all').height()){
+                        scrollPage += 1;
+                        selectTicket(scrollPage);
+                    }
+                })
+            })
+
             // 카테고리+시간에 해당하는 목록 출력
-            var selectTicket = function(){
+            var selectTicket = function(scrollPage){
+                loading = true;
                 $.ajax("SelectTicketMain", {
-                    data:{time:time, cateid:cateid},
+                    data:{time:time, cateid:cateid, page:scrollPage},
                     success:function(arr){
+                        console.log("ajax 통신!")
+                        console.log("scrollPage :",scrollPage);
+                        loading = false;
+
                         for (var i = 0; i < arr.length; i++) {
                             var div = $("<div></div>").addClass("search_result");
                             var a = $("<a></a>").attr({
@@ -74,10 +103,53 @@
                     }
                 }); // ajax 끝
             }// selectTIcket end
-            selectTicket();
+
+            // // 카테고리+시간에 해당하는 목록 출력
+            // var selectTicket = function(){
+            //     $.ajax("SelectTicketMain", {
+            //         data:{time:time, cateid:cateid},
+            //         success:function(arr){
+            //             for (var i = 0; i < arr.length; i++) {
+            //                 var div = $("<div></div>").addClass("search_result");
+            //                 var a = $("<a></a>").attr({
+            //                     ticketid: arr[i].ticketid,
+            //                     id: "preview"+i,
+            //                     href:"detail?ticketid="+arr[i].ticketid
+            //                 });
+            //                 var img = $("<img>").attr({
+            //                     src: "images/"+arr[i].img_fname,
+            //                     width : 200,
+            //                     height: 251,
+            //                 });
+            //                 var title = $("<h2></h2>").html(arr[i].ticket_name);
+            //
+            //                 var ul = $("<ul></ul>");
+            //                 var cast = $("<li></li>").html(arr[i].cast);
+            //                 var ticket_date = $("<li></li>").html(arr[i].ticket_date);
+            //                 var runtime = $("<li></li>").html(arr[i].runtime);
+            //                 var loc = $("<li></li>").html(arr[i].loc);
+            //
+            //                 $(ul).append(cast, ticket_date, runtime, loc);
+            //                 $(a).append(img);
+            //                 $(div).append(a,title,ul);
+            //                 $("#search_all").append(div);
+            //
+            //                 // 이미지 클릭하면 detail 페이지로
+            //
+            //                 var preview_id = '#preview'+i
+            //
+            //                 $(document).on('click', preview_id, function(e){
+            //                     var target = this.id;
+            //                     var ticketid = $("#"+target).attr("ticketid");
+            //                     sessionStorage.setItem("ticketid", '');
+            //                     sessionStorage.setItem("ticketid", ticketid);
+            //                 });
+            //             }
+            //         }
+            //     }); // ajax 끝
+            // }// selectTIcket end
 
             // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
-            var time = 1;
 
             var cate_current = "";
             var cate_future = "";
@@ -163,17 +235,17 @@
     </script>
 </head>
 <body class="mypage_layout">
-<a href="/main"><img src="/image/logo.png" id="logo"></a>
+<a href="/main"><img src="/images/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="loginTest.html" id="login"><img src="/image/loginicon.png">로그인</a>
-    <a href="/main" id="logout"><img src="/image/logouticon.png">로그아웃</a>
-    <a href="signupTest.html" id="regist"><img src="/image/signupicon.png">회원가입</a>
-    <a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>
+    <a href="/login" id="login"><img src="/images/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/logouticon.png">로그아웃</a>
+    <a href="/signup" id="regist"><img src="/images/signupicon.png">회원가입</a>
+    <a href="/mypage" id="mypage"><img src="/images/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="/image/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="/images/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
         <li class="home"><a href="/main">홈</a></li>

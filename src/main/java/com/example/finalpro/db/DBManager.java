@@ -131,14 +131,16 @@ public class DBManager {
 
 	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
 	// time=0은 과거, time=1은 현재, time=2는 미래
-	public static List<TicketVO> findAllTicketByCategory(int time, int cateid){
+	public static List<TicketVO> findAllTicketByCategory(int time, int cateid, int startRecord, int endRecord){
 		List<TicketVO> list = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("time", time);
 		map.put("cateid", cateid);
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
 
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findAllTicketByCategory", map);
+		list = session.selectList("ticket.findAllTicketByCategoryPaging", map);
 		session.close();
 
 		return list;
@@ -160,16 +162,16 @@ public class DBManager {
 
 	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
 	// +search 기능
-	public static List<TicketVO> findTicketPagingSearch(int startRecord, int endRecord, String keyword){
+	public static List<TicketVO> findTicketPagingSearch(int startRecord, int endRecord, String keyword, String order){
 		List<TicketVO> list = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRecord", startRecord);
 		map.put("endRecord", endRecord);
 		map.put("keyword", keyword);
-
+		map.put("order", order);
 
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findTicketPagingSearch", map);
+		list = session.selectList("ticket.findTicketPagingSearchOrderBy", map);
 		session.close();
 
 		return list;
@@ -324,15 +326,18 @@ public class DBManager {
 		return list;
 	}
 
-	public static List<CustomerVO> findCustomerPagingSearch(int startRecord, int endRecord, String keyword){
+	public static List<CustomerVO> findCustomerPagingSearch(int startRecord, int endRecord, String keyword, String order){
 		List<CustomerVO> list = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRecord", startRecord);
 		map.put("endRecord", endRecord);
 		map.put("keyword", keyword);
+		map.put("order", order);
+
+		System.out.println("order DBManager에서 : " + order);
 
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("customer.findCustomerPagingSearch", map);
+		list = session.selectList("customer.findCustomerPagingSearchOrderBy", map);
 		session.close();
 
 		return list;

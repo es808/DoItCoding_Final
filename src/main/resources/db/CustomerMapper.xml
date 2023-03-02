@@ -27,9 +27,9 @@
   <select id="findCustomerPagingSearch" resultType="customerVO">
     select * from
     (select rownum n, a.* from
-    (select * from customer
+    (select * from customer where role='customer'
     <if test="keyword != null and keyword != ''">
-      where (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
+      and (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
     </if>
     order by custid) a)
     where n between #{startRecord} and #{endRecord}
@@ -38,21 +38,14 @@
   <!--page에 따라 startRecord와 endRecord 구해서 출력하기-->
   <!--search에 따라 출력하기-->
   <!--order 기능 추가-->
-  <select id="findCustomerPagingSearchOrderBy" resultType="customerVO">
+  <select id="findCustomerPagingSearchOrderBy" resultType="customerVO" parameterType="java.util.HashMap">
     select * from
     (select rownum n, a.* from
     (select * from customer
     <if test="keyword != null and keyword != ''">
       where (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
     </if>
-    <choose>
-      <when test="order != null and order != ''">
-        order by #{order}) a)
-      </when>
-      <otherwise>
-        order by custid) a)
-      </otherwise>
-    </choose>
+    order by ${order}) a)
     where n between #{startRecord} and #{endRecord}
   </select>
 
