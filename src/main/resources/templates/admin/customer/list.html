@@ -25,17 +25,17 @@
         <tbody th:each="c : ${customerList}">
             <tr th:if="${c.role} != 'admin'">
                 <td>
-                <a th:text="${c.custid}" th:href="@{'/admin/updateCustomer/'+${c.custid}}"></a>
+                <a th:text="${c.custid}" th:href="@{'/admin/customer/update/'+${c.custid}}"></a>
                 </td>
                 <td th:text="${c.name}"></td>
                 <td th:text="${c.birth}"></td>
                 <td th:text="${c.phone}"></td>
                 <td th:text="${c.gender}"></td>
                 <td>예매내역
-                    <a th:href="@{'/admin/listTicketByCustid/'+${c.custid}}">예매내역 보기</a>
+                    <a th:href="@{'/admin/ticket/listTicket/'+${c.custid}}">예매내역 보기</a>
                 </td>
                 <td >
-                    <a th:href="@{'/admin/listQnaByCustid/'+${c.custid}}">qna 내역보기</a>
+                    <a th:href="@{'/admin/customer/listQna/'+${c.custid}}">qna 내역보기</a>
                 </td>
                 <td>
                     <a th:text="삭제하기" th:href="@{'/admin/deleteCustomer/'+${c.custid}}"></a>
@@ -44,20 +44,20 @@
         </tbody>
     </table>
 <br><br>
-    <a th:text="처음" th:href="@{'/admin/listCustomer?page=1&keyword='+${keyword}}"></a>
+    <a th:text="처음" th:href="@{'/admin/customer/list?page=1&keyword='+${keyword}}"></a>
     <th:block th:if="${paging.getStartPage() > 1}">
-        <a th:text="이전" th:href="@{'/admin/listCustomer?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
+        <a th:text="이전" th:href="@{'/admin/customer/list?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
     </th:block>
     <th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
-        <a th:text="${page}" th:href="@{'/admin/listCustomer?page='+${page}+'&keyword='+${keyword}}"></a>
+        <a th:text="${page}" th:href="@{'/admin/customer/list?page='+${page}+'&keyword='+${keyword}}"></a>
     </th:block>
     <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
-        <a th:text="다음" th:href="@{'/admin/listCustomer?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
+        <a th:text="다음" th:href="@{'/admin/customer/list?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
     </th:block>
-    <a th:text="끝" th:href="@{'/admin/listCustomer?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
+    <a th:text="끝" th:href="@{'/admin/customer/list?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
     <!-- 검색 기능-->
     <div>
-        <form name="search-form" th:action="@{/admin/listCustomer}" method="get">
+        <form name="search-form" th:action="@{/admin/customer/list}" method="get">
             <input type="text" name="keyword" value="">
             <input type="submit" value="검색">
         </form>

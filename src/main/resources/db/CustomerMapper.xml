@@ -67,4 +67,9 @@
       where (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
     </if>
   </select>
+
+  <!-- findCustid 아이디 찾기 -->
+  <select id="findCustid" resultType="customerVO">
+    select custid from customer where name=#{name} and phone=#{phone}
+  </select>
 </mapper>

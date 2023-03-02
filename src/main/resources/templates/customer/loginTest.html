@@ -19,7 +19,7 @@
 					
 					if(login_Flag=='true'){
 						sessionStorage.setItem("custid", custid);
-						var url = "mainTest.html?custid="+custid;
+						var url = "/main?custid="+custid;
 						location.replace(url);
 					}
 					
@@ -36,12 +36,12 @@
 </head>
 <body>
 	<div id="background">
-		<a class="main" href="mainTest.html">
-		<img  src="/image/homeicon.png" width="40" height="40"></a>
+		<a class="main" href="/main">
+		<img  src="/images/icon/homeicon.png" width="40" height="40"></a>
 	</div>
 	<div>
 		<form id="form_login">
-			<img src="/image/logo.png" id="logo">
+			<img src="/images/icon/logo.png" id="logo">
 			<h2>Login</h2>
 			<ul>
 				<li class="user">ID<input id="custid" type="text" name="custid"></li>
@@ -49,7 +49,7 @@
 			</ul>
 				<input type="submit" id="btn_login" value="Login" name="btn_login"><br>
 		<div class="caption">
-				<a href="signupTest.html">회원가입</a> <a href="findCustid.html">ID</a><a href="findPW.html">PW</a>
+				<a href="/signUp">회원가입</a> <a href="/findCustidForm">ID</a><a href="/findPW">PW</a>
 		</div>					
 		</form>
 	</div>	

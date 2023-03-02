@@ -323,6 +323,18 @@ public class DBManager {
 
 	// ******** admin.customer ********
 
+	//Customer 아이디 찾기
+	public static CustomerVO findCustid(String name, String phone){
+		CustomerVO vo = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("phone", phone);
+		SqlSession session = sqlSessionFactory.openSession();
+		vo= session.selectOne("customer.findCustid", map);
+		session.close();
+		return vo;
+	}
+
 	// 고객정보 수정
 	public static int updateCustomer(CustomerVO customer){
 		int re = -1;

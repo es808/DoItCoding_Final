@@ -76,10 +76,10 @@
                         var a = $("<a></a>").attr({
                             ticketid: arr[i].ticketid,
                             id: "preview"+i,
-                            href:"detailPageTest.html?ticketid="+arr[i].ticketid
+                            href:"/detail?ticketid="+arr[i].ticketid
                         });
                         var img = $("<img>").attr({
-                            src: "images/"+arr[i].img_fname,
+                            src: "/images/"+arr[i].img_fname,
                             width : 200,
                             height: 251,
                         });
@@ -189,7 +189,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -205,7 +205,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -221,7 +221,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -232,7 +232,7 @@
                     if(e.which == 13){
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "searchPage.html?keyword="+keyword;
+                        var url = "/search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -240,7 +240,7 @@
                 $("#search_btn").click(function(){ // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "searchPage.html?keyword="+keyword;
+                    var url = "/search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
@@ -255,20 +255,20 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="mainTest.html"><img src="./image/logo.png" id="logo"></a>
+<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="loginTest.html" id="login"><img src="./image/loginicon.png">로그인</a>
-    <a href="mainTest.html" id="logout"><img src="./image/logouticon.png">로그아웃</a>
-    <a href="signupTest.html" id="regist"><img src="./image/signupicon.png">회원가입</a>
-    <a href="mypage_Info.html" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="./image/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
-        <li class="home"><a href="mainTest.html">홈</a></li>
+        <li class="home"><a href="/main">홈</a></li>
         <li><a href="#">시사회</a>
             <ul>
                 <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
@@ -302,10 +302,10 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li><a href="mypage_Info.html">내 정보</a></li>
-        <li id="mybook"><a href="mypage_Book.html">예매내역</a></li>
-        <li><a href="mypage_Draw.html">드로우내역</a></li>
-        <li><a href="mypage_Review.html">내 후기</a></li>
+        <li><a href="/myPage">내 정보</a></li>
+        <li id="mybook"><a href="/myPageBook">예매내역</a></li>
+        <li><a href="/myPageDraw">드로우내역</a></li>
+        <li><a href="/myPageReview">내 후기</a></li>
     </ul>
 </div>
 <div id="review_background">

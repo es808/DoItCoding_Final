@@ -6,6 +6,7 @@ import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
@@ -79,7 +80,7 @@ public class CustomerController {
 
     @GetMapping("/")
     public String home() {
-        return "main";
+        return "/main";
     }
 
     @GetMapping("/main")
@@ -169,7 +170,7 @@ public class CustomerController {
             mav.setViewName("/login");
         } catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
-            mav.setViewName("error");
+            mav.setViewName("/error");
         }
 
 		/*
@@ -233,11 +234,29 @@ public class CustomerController {
     @GetMapping("/sendMessage")
     @ResponseBody
     public String sendMessage(String phone){
-        System.out.println(phone);
-        MessageController messageController = new MessageController();
-        code = messageController.sendCodePhone(phone);
-        System.out.println(code);
+        System.out.println("phone:"+phone);
+        code = SendMessage.sendCodePhone(phone);
+        System.out.println("code:"+code);
+
+//        MessageController ms = new MessageController();
+//        code = ms.sendCodePhone(phone);
         return code;
+    }
+
+    //아이디 찾기
+    @RequestMapping("/findCustidForm")
+    public String findCustidForm(){
+        return "/customer/findCustid.html";
+    }
+
+    @RequestMapping("/findCustid")
+    @ResponseBody
+    public CustomerVO findCustid(String name, String phone){
+        System.out.println("이름"+name);
+        System.out.println("전화"+phone);
+        CustomerVO c = DBManager.findCustid(name, phone);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
     }
 
 }
