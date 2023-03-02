@@ -3,8 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ranking">
-    <!--ranking 을 출력하는 코드-->
+    <!--ranking을 출력하는 코드-->
+    <select id="findAllRankingOrderByScore" resultType="rankingVO">
+        select t.ticketid, avg(score), (select img_fname from ticket a where a.ticketid=t.ticketid) as img_fname from review r, ticket t
+        where t.ticketid=r.ticketid and cateid=#{cateid} group by t.ticketid having avg(score)>0 order by avg(score) desc
+    </select>
+
+    <!--ranking 을 출력하는 코드
     <select id="findAllRankingOrderByScore" resultType="rankingVO">
         select t.ticketid, ticket_name, img_fname, score from ticket t, review r where t.ticketid = r.ticketid and cateid = #{cateid} order by score desc
-    </select>
+    </select>-->
 </mapper>

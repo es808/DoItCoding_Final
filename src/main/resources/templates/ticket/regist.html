@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/ticket/regist.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+
+            sessionStorage.setItem("custid","mj1234");
+
+            var ticketid = Number(sessionStorage.getItem("ticketid"));
+            var custid = sessionStorage.getItem("custid");
+            var seatname;
+            $(document).on("click", ".hover", function () {
+                seatname = $(this).html();
+                console.log("자리번호:" + seatname)
+                $("button").removeClass("active");
+                $(this).addClass("active");
+            })
+
+            //seat테이블에서 좌석정보를 가져오기
+
+            $.ajax({
+                url: "ListSeat",
+                data: {ticketid: ticketid},
+                success: function (data) {
+                    var count = 0;
+                    $.each(data, function () {
+
+                        var btn = $("<button></button>").html(this.seatname);
+                        if (this.check_seat == "y")
+                            btn.addClass("x");
+                        else {
+                            btn.addClass("hover");
+                        }
+                        $("#seatList").append(btn);
+                        count++;
+                        if (count % 6 == 0) {
+                            $("#seatList").append($("<br></br>"));
+                        }
+                    })
+                }
+            })
+
+            $("#insertBtn").click(function () {
+                var data = {
+                    ticketid: ticketid,
+                    custid: custid,
+                    seatname: seatname
+                }
+
+                $.ajax({
+                    url: "FindSeatid",
+                    data: data,
+                    success: function (as) {
+                        console.log("FindSeatid성공")
+                        console.log("좌석번호:"+as);
+                        sessionStorage.setItem("as",as);
+                        window.open('/regist2');
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="background">
+
+        <div id="screen">S c r e e n</div>
+        <button id = "insertBtn">예매하기</button>
+        <div class="seat_status">
+            <div id="possible"></div><p>선택가능</p>
+            <div id="check"></div><p>선택</p>
+            <div id="soldout"></div><p>예매완료</p>
+        </div>
+    </div>
+
+    <div id="seatList"></div>
+
+    <form action="/payok" method="post" id="pay">
+        <input type="hidden" name="imp_uid" id="imp_uid">
+        <input type="hidden" name="merchant_uid" id="merchant_uid">
+        <input type="hidden" name="paid_amount" id="paid_amount">
+        <input type="hidden" name="apply_num" id="apply_num">
+    </form>
+</body>
+</html>

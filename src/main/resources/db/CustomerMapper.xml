@@ -7,6 +7,10 @@
     select * from customer
   </select>
 
+  <select id="findByCustid" resultType="customerVO">
+    select * from customer where custid=#{custid}
+  </select>
+
   <!--page에 따라 startRecord와 endRecord 구해서 출력하기-->
   <select id="findCustomerPaging" resultType="customerVO">
     select * from
