@@ -30,4 +30,8 @@
     insert into book(bookid,custid,ticketid,seatid) values(seq_bookid.nextval,#{custid},#{ticketid},#{seatid})
   </insert>
 
+  <select id="findBookidByOthers" parameterType="bookVO" resultType="java.lang.Integer">
+    select bookid from book where custid=#{custid} and ticketid=#{ticketid} and seatid=#{seatid}
+  </select>
+
 </mapper>

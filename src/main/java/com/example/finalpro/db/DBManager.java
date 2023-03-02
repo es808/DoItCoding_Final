@@ -414,6 +414,15 @@ public class DBManager {
 		return re;
 	}
 
+	// 티켓 예매 확인 문자 발송을 위한 bookid 찾기
+	public static int findBookidByOthers(BookVO b){
+		int bookid=-1;
+		SqlSession session = sqlSessionFactory.openSession();
+		bookid=session.selectOne("book.findBookidByOthers",b);
+		session.close();
+		return bookid;
+	}
+
 
 //	public static List<CustomerVO> findAll() {
 //		List<CustomerVO> list = null;

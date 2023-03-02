@@ -79,17 +79,31 @@ Spring으로 main, search, category 구현 완료. 모두 복잡한 sql문이 �
 
 
 고운
-- 2/19-2/20 Notice와 QNA의 list/detail 조회 기능 완성
-- 2/21 Spring Security 오류 해결
-- 2/22 QNA insert, Notice insert 기능 완성
-- 2/23 qna/detail 페이지에 관리자가 답글 작성/수정/삭제하는 기능 추가
-  QNA 글 공개 선택 여부/해당 작성자인지 여부에 따라 접근 제어
-- 2/24 qna/insert 페이지에 사용자가 예매한 티켓 정보 출력
-- 2/25 qna update & delete, notice update & delete 기능 완성
-  조회수 증가 기능 추가
-  JS 파일 모듈화
-- 2/26 notice 페이징, 제목/내용 검색 기능, 카테고리별 보기 기능 추가
-    - 2/27 답변 알림 기능 추가 (새 테이블 notification 추가)
-      -클릭하면 숫자 없어지기
-      -알림 클릭하면 qna 상세페이지로 연결
-      -x 누르면 삭제 (->ajax로) (화면에서 없어지기)
+- 2/19-2/20
+  - Notice와 QNA의 list/detail 조회 기능 완성
+- 2/21 
+  - Spring Security 오류 해결
+- 2/22 
+  - QNA insert, Notice insert 기능 완성
+- 2/23 
+  - qna/detail 페이지에 관리자가 답글 작성/수정/삭제하는 기능 추가
+  - QNA 글 공개 선택 여부/해당 작성자인지 여부에 따라 접근 제어
+- 2/24 
+  - qna/insert 페이지에 사용자가 예매한 티켓 정보 출력
+- 2/25 
+  - qna update & delete, notice update & delete 기능 완성
+  - 조회수 증가 기능 추가
+  - JS 파일 모듈화
+- 2/26 
+  - notice 페이징, 제목/내용 검색 기능, 카테고리별 보기 기능 추가
+- 2/27 
+  - 답변 알림 기능 추가 (새 테이블 notification 추가)
+    -클릭하면 숫자 없어지기
+    -알림 클릭하면 qna 상세페이지로 연결
+    -x 누르면 삭제 (->ajax로) (화면에서 없어지기)
+- 2/28
+  - 전체 팀원 코드 merge 및 오류 수정
+- 3/1
+  - 회원가입, 회원정보 수정 페이지에서 카카오 주소 API를 적용해 사용자 주소를 입력받는 기능 추가
+- 3/2
+  - 예매 완료시 확인 문자메시지 전송 기능 추가

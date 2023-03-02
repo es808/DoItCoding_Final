@@ -47,6 +47,12 @@ public class CustomerController {
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
 
+    @RequestMapping("/FindCustomer")
+    @ResponseBody
+    public CustomerVO findCustomer(String custid){
+        return DBManager.findByCustid(custid);
+    }
+
     @RequestMapping("/list")
     public void list(Model model) {
         model.addAttribute("list", dao.findAll());
