@@ -4,24 +4,85 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <script th:src="@{/js/notice/detail.js}"></script>
 </head>
-<body>
+<body class="main_layout">
+<img src="/images/icon/logo.png" id="logo">
+<div class="main_user">
+    <a href="loginTest.html" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="signupTest.html" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="mypage_Info.html" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+</div>
+<nav id="navigation">
+    <div class="search" id="search" name="search">
+        <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
+        <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
+    </div>
+    <ul>
+        <li class="home"><a href="/main">홈</a></li>
+        <li><a href="#">시사회</a>
+            <ul>
+                <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+                <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+                <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">뮤지컬</a>
+            <ul>
+                <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+                <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+                <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">연극</a>
+            <ul>
+                <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+                <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+                <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">콘서트</a>
+            <ul>
+                <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+                <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+                <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="background_detail">
+    <h2>공지사항</h2>
+    <hr>
     <div th:if="${session.id=='admin'}">
         <a th:href="@{'/admin/notice/update/'+${n.notice_no}}">수정</a>
         <a th:href="@{'/admin/notice/delete/'+${n.notice_no}}" id="delete">삭제</a>
     </div>
-    <div th:text="${n.notice_no}"></div>
-    <div th:text="${n.notice_category}"></div>
-    <div th:text="${n.notice_title}"></div>
-    <div th:text="${n.notice_content}"></div>
-    <div th:text="${n.notice_hit}"></div>
-    <div th:text="${n.notice_date}"></div>
-    <div th:if="${n.notice_fname}!=null">
-        <div th:text="${n.notice_fname}"></div>
-        <div th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
+    <div id="content_detail">
+    <span class="title_detail">글번호&nbsp;&nbsp;&nbsp;<span th:text="${n.notice_no}"></span></span>
+    <span class="title_detail">분류&nbsp;&nbsp;&nbsp;<span th:text="${n.notice_category}"></span></span>
+    <span class="title_detail" id="regdate">등록일&nbsp;&nbsp;&nbsp;<span th:text="${n.notice_date}"></span></span><br>
+        <br>
+    <span class="title_detail">제목&nbsp;&nbsp;&nbsp;<span th:text="${n.notice_title}"></span></span><br>
+        <br>
+        <span class="title_detail">내용&nbsp;&nbsp;&nbsp;<br><div id="notice_content"><span th:text="${n.notice_content}"></span></div></span><br>
+    <span class="title_detail">조회수&nbsp;&nbsp;&nbsp;<span th:text="${n.notice_hit}"></span></span><br>
+        <br>
+    <span class="title_detail">첨부파일&nbsp;&nbsp;&nbsp;<span th:if="${n.notice_fname}!=null">
+        <span th:text="${n.notice_fname}"></span><span th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
             <img th:src="@{'/notice_files/'+${n.notice_fname}}">
+        </span>
+    </span>
+    </span>
+</div>
+</div>
+<div id="main-footer">
+    <footer class="footer">
+        <div>ⓒ CodingDoit corp.
         </div>
-    </div>
+    </footer>
+</div>
 </body>
 </html>

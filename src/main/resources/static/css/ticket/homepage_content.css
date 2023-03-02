@@ -948,6 +948,9 @@ h2{
     padding : 13px;
     text-align : center;
 }
+.notice_table td{
+    background-color : white;
+}
 #btnWrite{
     z-index : 100;
     width : 100px;  height : 35px;
@@ -1021,4 +1024,53 @@ h2{
 }
 .qna{
     margin-top : -45px;
+}
+
+/* 공지사항,QnA detail */
+#background_detail{
+    margin-top : 100px;
+    margin-left : 250px;
+    width : 900px; height : 600px;
+    background-color : #f7f7f7;
+    border-radius : 5px;
+    border : 3px solid #08428C;
+}
+#background_detail h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 20px;
+}
+#background_detail hr{
+    top : 70px;
+}
+.title_detail{
+    font-size : 17px;
+    font-weight : bold;
+    color : #08428C;
+    padding : 40px;
+    margin : 20px;
+}
+.title_detail span{
+    font-weight: 400;
+    font-size : 16px;
+}
+#content_detail{
+    position : relative;
+    margin-top : 100px;
+}
+#regdate{
+    margin-left : 100px;
+}
+#notice_content{
+    width : 800px; height : 200px;
+    border : 3px solid #08428C;
+    margin-left : 45px;
+    margin-top : 20px;
+    background-color : #efefef;
+}
+#notice_content span{
+    margin-left : 10px;
 }
