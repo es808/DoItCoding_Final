@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seat">
   <select id="findAll" resultType="seatVO">
     select * from seat
@@ -12,11 +12,16 @@
     select count(*) from seat where ticketid=#{ticketid} and check_seat='n'
   </select>
 
+  <!-- 드로우 잔여좌석 출력-->
+  <select id="selectDrawLeftSeat" resultType="seatVO">
+    select * from seat where ticketid=#{ticketid} and check_seat='n'
+  </select>
+
   <!-- Tikcetid의 전체 좌석 목록 출력 -->
   <select id="listSeatByTicketid" resultType="seatVO">
     select * from seat where ticketid=#{ticketid}
   </select>
-  
+
   <!-- 예매를 위해 ticketid와 seatname으로 좌석 아이디 찾기 -->
   <select id="findSeatId" resultType="int">
     select seatid from seat where ticketid=#{ticketid} and seatname=#{seatname}
@@ -25,6 +30,11 @@
   <!-- 좌석예매 -->
   <update id="registSeat" parameterType="int">
     update seat set check_seat='y' where seatid=#{seatid}
+  </update>
+
+  <!-- 좌석취소 -->
+  <update id="cancleSeat" parameterType="int">
+    update seat set check_seat='n' where seatid=#{seatid}
   </update>
 
 </mapper>

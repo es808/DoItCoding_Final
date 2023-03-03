@@ -202,7 +202,7 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="main"><img src="./images/logo.png" id="logo"></a>
+<a href="main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
     <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
     <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
@@ -250,11 +250,11 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li id="myinfo"><a href="mypage_Info.html">내 정보</a></li>
-        <li><a href="mypage_Book.html">예매내역</a></li>
-        <li><a href="mypage_Draw.html">드로우내역</a></li>
-        <li><a href="mypage_Review.html">내 후기</a></li>
-        <li><a href="mypage_Review.html">내 문의내역</a></li>
+        <li id="myinfo"><a href="/myPage">내 정보</a></li>
+        <li><a href="/myPageBook">예매내역</a></li>
+        <li><a href="/myPageDraw">드로우내역</a></li>
+        <li><a href="/myPageReview">내 후기</a></li>
+        <li><a href="/myPageQnA">내 문의내역</a></li>
     </ul>
 </div>
 <div id="background">
@@ -312,18 +312,18 @@
         </tr>
         <tr>
             <td>성별</td>
-            <td class="td1" id="gender">
-                남성<input type="radio" id="male" name="gender" value="남자" class="gender" >&nbsp;&nbsp;&nbsp;&nbsp;
-                여성<input type="radio" name="gender" value="여자" class="gender">
+            <td class="td1" id="gender" >
+                남성<input type="radio" id="male" name="gender" value="남자" class="gender" th:attr="checked=${id.gender == '남자' ? 'true' : 'false'}">&nbsp;&nbsp;&nbsp;&nbsp;
+                여성<input type="radio" name="gender" value="여자" class="gender" th:attr="checked=${id.gender == '여자' ? 'true' : 'false'}">
             </td>
         </tr>
         <tr>
             <td>관심사</td>
             <td class="td1" id="cateid">
-                시사회<input type="radio"  name="favor" value="1" class="favor" >
-                뮤지컬<input type="radio"  name="favor" value="2" class="favor">
-                연극<input type="radio"  name="favor" value="3" class="favor">
-                콘서트<input type="radio"  name="favor" value="4" class="favor">
+                시사회<input type="radio"  name="favor" value="1" class="favor" th:attr="checked=${id.cateid == 1 ? 'true' : 'false'}">
+                뮤지컬<input type="radio"  name="favor" value="2" class="favor" th:attr="checked=${id.cateid == 2 ? 'true' : 'false'}">
+                연극<input type="radio"  name="favor" value="3" class="favor" th:attr="checked=${id.cateid == 3 ? 'true' : 'false'}">
+                콘서트<input type="radio"  name="favor" value="4" class="favor" th:attr="checked=${id.cateid == 4 ? 'true' : 'false'}">
             </td>
         </tr>
     </table>
