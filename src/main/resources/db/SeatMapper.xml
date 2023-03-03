@@ -12,6 +12,11 @@
     select count(*) from seat where ticketid=#{ticketid} and check_seat='n'
   </select>
 
+  <!-- 드로우 잔여좌석 출력-->
+  <select id="selectDrawLeftSeat" resultType="seatVO">
+    select * from seat where ticketid=#{ticketid} and check_seat='n'
+  </select>
+
   <!-- Tikcetid의 전체 좌석 목록 출력 -->
   <select id="listSeatByTicketid" resultType="seatVO">
     select * from seat where ticketid=#{ticketid}

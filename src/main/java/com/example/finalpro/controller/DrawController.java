@@ -4,6 +4,7 @@ import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.service.DrawService;
 import com.example.finalpro.vo.DrawVO;
+import com.example.finalpro.vo.SeatVO;
 import com.example.finalpro.vo.TicketVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,16 @@ public class DrawController {
         return draw;
     }
 
+    public int[] leftSeat(int ticketid){
+        List<SeatVO> seat = DBManager.drawLeftSeat(ticketid);      //seatTable에 남은 좌석 정보 가져오기
+        int seatArr[] = new int[seat.size()];
+        for(int i = 0; i < seat.size(); i++){
+            seatArr[i] = seat.get(i).getSeatid();
+            System.out.println(seatArr[i]);
+        }
+        return seatArr;
+    }
+
     //드로우 가동
     @GetMapping("/drawExec")
     @ResponseBody
@@ -60,7 +71,11 @@ public class DrawController {
         int count = DBManager.findLeftSeatByTicketid(1);
         List<DrawVO> draw = drawList(1);
         System.out.println("드로우 사이즈:"+draw.size());
-        String arr[] = new String[count];           //드로우에 당첨된 회원아이디 저장
+        String custidArr[] = new String[count];           //드로우에 당첨된 회원아이디 저장
+
+        int seatArr[] = leftSeat(1);
+
+
         lucker = new String[count];                 //전역변수에 저장하여 드로우 된 회원들을 저장
 
         LinkedList<DrawVO> list = new LinkedList<>();
@@ -68,21 +83,30 @@ public class DrawController {
         for(DrawVO d : draw){
             list.add(d);
         }
-        System.out.println(list);
 
         for (int i = 0; i < count; i++){
             Random r = new Random();
             int number = r.nextInt(list.size());        //랜덤함수를 드로우를 신청한 회원 수 만큼의 크기로 설정
-            arr[i] = list.get(number).getCustid();      //랜덤함수에 배정된 회원아이디를 배열에 저장
-            lucker[i] = arr[i];
-            list.remove(number);                        //당첨된 회원은 linkedList에서 제거하고 반복문 가동
+            custidArr[i] = list.get(number).getCustid();      //랜덤함수에 배정된 회원아이디를 배열에 저장
+            lucker[i] = custidArr[i];
+            list.remove(number);                         //당첨된 회원은 linkedList에서 제거하고 반복문 가동
+        }
+
+
+        DBManager.drawDeleteSeatId(1);              //여러번 드로우 할 경우를 대비해 드로우 전 draw테이블에 당첨여부 초기화
+        for(int i = 0; i < count; i++){
+            DBManager.drawUpdate(lucker[i], seatArr[i]);    //당첨된 회원이름과 남은 좌석을 draw 테이블에 반영
         }
         return "success";
     }
 
-    @GetMapping("/drawTest")
+    @GetMapping("/draw")
     public String drawTest(Model m){
         m.addAttribute("list", lucker);
-        return "drawTest/drawTest";
+        System.out.println(DBManager.drawLeftSeat(1));
+
+        return "draw/draw";
     }
+
+
 }
