@@ -72,4 +72,9 @@
   <select id="findCustid" resultType="customerVO">
     select custid from customer where name=#{name} and phone=#{phone}
   </select>
+
+  <!-- findPwd 비밀번호 재설정 -->
+  <update id="findPwd" parameterType="customerVO">
+    update customer set pwd=#{pwd} where custid=#{custid} and phone=#{phone}
+  </update>
 </mapper>

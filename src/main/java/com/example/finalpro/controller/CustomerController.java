@@ -259,4 +259,39 @@ public class CustomerController {
         return c;
     }
 
+//    //비밀번호 재설정
+//    @RequestMapping("/findPwdForm")
+//    public String findPwdForm(){
+//        return "/customer/findPwd.html";
+//    }
+//
+//    @RequestMapping("/findPwd")
+//    public String findPwd(CustomerVO c, HttpSession session, Model m){
+//        System.out.println("업데이트 컨트롤러 가동:"+c);
+//        c.setPwd(passwordEncoder.encode(c.getPwd()));
+//        System.out.println("암호화:"+c);
+////        c.setRole("customer");
+//
+//        try {
+//            DBManager.
+//        }
+//    }
+
+//    @PostMapping("/myPage")
+//    public String updateCustomer(CustomerVO c, HttpSession session, Model m){
+//        System.out.println("업데이트 컨트롤러 가동:"+c);
+//        c.setPwd(passwordEncoder.encode(c.getPwd()));
+//        System.out.println("암호화 : "+c);
+//        c.setRole("customer");
+//
+//        try{
+//            DBManager.updateCustomer(c);
+//            System.out.println("sessionId = "+session.getAttribute("id"));
+//            myPage(session,m);
+//        }catch (Exception e){
+//
+//        }
+//        return "myPage/myPage";
+//    }
+
 }

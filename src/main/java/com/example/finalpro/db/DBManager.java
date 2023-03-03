@@ -335,6 +335,16 @@ public class DBManager {
 		return vo;
 	}
 
+	//Customer 비밀번호 재설정
+	public static int findPwd(CustomerVO customer){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.update("customer.findPwd", customer);
+		session.commit();
+		session.close();
+		return re;
+	}
+
 	// 고객정보 수정
 	public static int updateCustomer(CustomerVO customer){
 		int re = -1;

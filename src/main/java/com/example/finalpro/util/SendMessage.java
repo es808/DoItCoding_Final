@@ -6,7 +6,7 @@ import java.util.Random;
 public class SendMessage {
     public static String sendCodePhone(String phone) {
         System.out.println("문자 전송!");
-        String msg = "티캣치 인증번호 발신\n";
+        String msg = "[T-CATCH] 인증번호 발신\n";
         String code = "";
         Random r = new Random();
         code += r.nextInt(10);
