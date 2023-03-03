@@ -7,6 +7,19 @@
     select * from draw
   </select>
 
+  <select id="drawTest" resultType="drawVO">
+    select * from draw where ticketid = #{ticketid}
+  </select>
+
+  <update id="updateDraw">
+    update draw set seatid = #{seatid} where custid = #{custid}
+  </update>
+
+  <update id="drawDeleteSeatId">
+    update draw set seatid = null where ticketid = #{ticektid}
+  </update>
+
+
   <!-- 드로우 신청 -->
   <insert id="insertDraw" parameterType="drawVO">
     insert into draw(drawid,custid,ticketid,seatid) values(seq_drawid.nextval,#{custid},#{ticketid},#{seatid})

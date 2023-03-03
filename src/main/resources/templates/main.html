@@ -142,6 +142,7 @@
 
       // 미래상영작 출력
       var selectFutureBycategory = function(){
+
         $.ajax("SelectTicketMain", {
           data:{time:2, cateid:cateid},
           success:function(arr){

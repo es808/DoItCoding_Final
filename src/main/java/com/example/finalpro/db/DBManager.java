@@ -1,6 +1,7 @@
 package com.example.finalpro.db;
 
 import com.example.finalpro.entity.Customer;
+import com.example.finalpro.entity.Seat;
 import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.entity.Qna;
 import com.example.finalpro.vo.*;
@@ -405,6 +406,41 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
+	public static List drawTest(int ticketid){
+		List<DrawVO> draw = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		draw = session.selectList("draw.drawTest",ticketid);
+		session.close();
+		return draw;
+	}
+
+	public static List<SeatVO> drawLeftSeat(int ticketid){
+		//selectDrawLeftSeat
+		List<SeatVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		list = session.selectList("seat.selectDrawLeftSeat",ticketid);
+		session.close();
+		return list;
+	}
+
+	public static int drawUpdate(String custid, int seatid) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("seatid", seatid);
+		re = session.update("draw.updateDraw",map);
+		session.close();
+		return re;
+	}
+
+	public static void drawDeleteSeatId(int ticketid) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		session.update("draw.drawDeleteSeatId",ticketid);
+		session.close();
+	}
+
 
 //	public static List<CustomerVO> findAll() {
 //		List<CustomerVO> list = null;

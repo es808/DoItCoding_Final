@@ -56,6 +56,7 @@ public class CustomerController {
     @Autowired
     private CustomerService cs;
 
+
     @Autowired
     private TicketService ticketService;
 
@@ -166,7 +167,13 @@ public class CustomerController {
     public String myPageBook() { return "myPage/myPageBook";}
 
     @GetMapping("/myPageDraw")
-    public String myPageDraw() { return "myPage/myPageDraw";}
+    public String myPageDraw(Model m) {
+        DrawController drawController = new DrawController();
+        String result[] =  drawController.drawResult();
+        m.addAttribute("list", result);
+        System.out.println(DBManager.drawLeftSeat(1));
+
+        return "myPage/myPageDraw";}
 
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}
