@@ -17,6 +17,7 @@
 
 <hr>
 ### 📝 프로젝트 기록(조영민)
+
 - **2/15**
 
   ```Spring security (login, signup) 설정 완료.```
