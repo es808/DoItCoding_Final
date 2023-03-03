@@ -12,8 +12,8 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/hello")
-    public String hello(){
+    @GetMapping("/sendEmailCode")
+    public String sendEmailCode(){
 
         String code  = "";
         Random r = new Random();

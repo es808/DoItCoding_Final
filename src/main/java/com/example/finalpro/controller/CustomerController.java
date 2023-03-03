@@ -5,6 +5,7 @@ import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
+import com.example.finalpro.service.EmailService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
@@ -231,6 +232,7 @@ public class CustomerController {
         return answer;
     }
 
+    //문자 전송
     @GetMapping("/sendMessage")
     @ResponseBody
     public String sendMessage(String phone){
@@ -277,7 +279,7 @@ public class CustomerController {
 
     //전화번호로 비밀번호 재설정
     @RequestMapping("/updatePwdbyPhone")
-    public String updatePwdbyPhone(CustomerVO c){
+    public void updatePwdbyPhone(CustomerVO c){
         System.out.println("아이디"+c.getCustid());
         System.out.println("전화"+c.getPhone());
         c.setPwd(passwordEncoder.encode(c.getPwd()));
@@ -288,7 +290,6 @@ public class CustomerController {
         }catch(Exception e){
             System.out.println("예외발생:"+e.getMessage());
         }
-        return "/login";
     }
 
     //이메일로 개인정보 확인
@@ -305,5 +306,33 @@ public class CustomerController {
         CustomerVO c = DBManager.checkByPhone(custid, email);
         System.out.println("검색한 회원의 정보"+c);
         return c;
+    }
+
+    @GetMapping("/CustomerEmailAuthentication")
+    @ResponseBody
+    public int customerEmailAuthentication(String emailCode){
+        System.out.println(this.code);
+        System.out.println("code:"+emailCode);
+        int answer = 0;
+        if(!this.code.equals(emailCode)){
+            answer = 1;
+        }
+        System.out.println(answer);
+        return answer;
+    }
+
+    //전화번호로 비밀번호 재설정
+    @RequestMapping("/updatePwdbyEmail")
+    public void updatePwdbyEmail(CustomerVO c){
+        System.out.println("아이디"+c.getCustid());
+        System.out.println("이메일"+c.getEmail());
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("암호화:"+c );
+
+        try{
+            DBManager.updatePwdbyEmail(c);
+        }catch(Exception e){
+            System.out.println("예외발생:"+e.getMessage());
+        }
     }
 }

@@ -15,6 +15,7 @@
     $("#code_validation").css("display","none")
     $("#form_updatePwdbyPhone").css("display","none")
 
+    //개인정보 인증 수단 선택 (전화번호 또는 이메일)
     $('.radio-value').on('click', function() {
       var valueCheck = $('.radio-value:checked').val(); // 체크된 Radio 버튼의 값을 가져옵니다.
 
@@ -27,7 +28,7 @@
       }
     });
 
-    $("#btn_checkByPhone").click(function(e){     //전화번호로 개인정보 확인
+    $("#btn_checkByPhone").click(function(e){ //전화번호로 개인정보 확인
       var url = "checkByPhone";
       var custid = $("#custid").val();
       var phone = $("#phone").val();
@@ -60,10 +61,9 @@
       });
       e.preventDefault();
 
-    });     //form_checkByPhone이 제출되었을 때
+    }); //전화번호로 개인정보 확인(form_checkByPhone)이 제출되었을 때
 
-    // btn_sendPhoneCode
-    $("#btn_sendPhoneCode").click(function(){
+    $("#btn_sendPhoneCode").click(function(){ //인증번호 전송
       var phone = $("#phone").val();
       console.log("전화번호:"+phone);
       var url = "sendMessage";
@@ -73,7 +73,7 @@
         success: function (answer) {
         }
       });
-    });
+    }); //인증번호 전송 end
 
     $(document).on('click', '#btn_phoneCode', function () { // 인증번호 확인
       var phoneCode = $("#phoneCode").val();
@@ -95,8 +95,7 @@
       });
     }); // 인증번호 확인 end
 
-    $("#btn_updatePwd").click(function(e){    //전화번호로 비밀번호 재설정
-      console.log("확인중")
+    $("#btn_updatePwd").click(function(e){  //전화번호로 비밀번호 재설정
       var url = "updatePwdbyPhone";
       var custid = $("#custid").val();
       var phone = $("#phone").val();
@@ -104,11 +103,11 @@
 
       data = {custid:custid, phone:phone, pwd:pwd}
 
-      if (checkPwd(pwd) == false) { // 아이디, 비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료
+      if (checkPwd(pwd) == false) { //비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료
         return false;
       }
 
-      if (confirmPwd() == false) { // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료
+      if (confirmPwd() == false) {  // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료
         return false;
       }
 
@@ -121,7 +120,7 @@
       });
     });
 
-    var checkPwd = function (pwd) {
+    var checkPwd = function (pwd) { //비밀번호 적합성
       var check_Flag = true;
 
       var reg_pwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/; // 비번을 대소문자 영어, 숫자, 특수문자까지 필수 입력
@@ -132,9 +131,9 @@
       }
 
       return check_Flag;
-    } // check 비밀번호 적합성 end
+    } //비밀번호 적합성 end
 
-    var confirmPwd = function () { // pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
+    var confirmPwd = function () {  //pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
       var confirm_Flag = true;
 
       if ($("#pwd").val() != $("#pwd_confirm").val()) {
@@ -144,7 +143,117 @@
 
       return confirm_Flag;
 
-    }; // confirm 패스워드 end
+    };  //비밀번호 일치 end
+
+
+
+
+    $("#code_validation2").css("display","none")
+    $("#form_updatePwdbyEmail").css("display","none")
+
+    $("#btn_checkByEmail").click(function(e){ //전화번호로 개인정보 확인
+      var url = "checkByEmail";
+      var custid = $("#custid2").val();
+      var email = $("#email").val();
+
+      console.log("아이디"+custid)
+      console.log("이메일"+email)
+
+      $.ajax({
+        url:url,
+        data:{custid:custid, email:email},
+        success:function(c){
+          console.log("ok")
+          console.log(c.pwd)
+          pwd = c.pwd;
+          if(pwd==undefined){
+            $("#printPwdbyEmail").html("정보를 잘못 입력하셨습니다. 다시 입력해주세요.");
+          }else{
+            $("#printPwdbyEmail").html("");
+            $("#code_validation2").css("display","block")
+
+            //전화번호 인증 확인
+            var authentication = false;
+            if (authentication == false) {
+              alert("이메일 인증을 확인해주세요.")
+              return false;
+            }
+
+          }
+        }
+      });
+      e.preventDefault();
+
+    }); //이메일로 개인정보 확인(form_checkByEmail)이 제출되었을 때
+
+    $("#btn_sendEmailCode").click(function(){ //인증번호 전송
+      var email = $("#email2").val();
+      console.log("이메일:"+email);
+      var url = "sendEmailCode";
+      var data = {email:email};
+      $.ajax(url, {
+        data:data,
+        success: function (answer) {
+        }
+      });
+    }); //인증번호 전송 end
+
+    $(document).on('click', '#btn_emailCode', function () { // 인증번호 확인
+      var emailCode = $("#emailCode").val();
+      console.log(emailCode);
+      var url = "CustomerEmailAuthentication";
+      var data = {emailCode:emailCode};
+      $.ajax(url, {
+        data:data,
+        success: function (answer) {
+          if (answer == 1) {
+            alert("인증번호 불일치");
+            authentication = false;
+          } else {
+            alert("인증번호 확인완료.");
+            authentication = true;
+            $("#form_updatePwdbyEmail").css("display","block")
+          }
+        }
+      });
+    }); // 인증번호 확인 end
+
+    $("#btn_updatePwd2").click(function(e){  //이메일로 비밀번호 재설정
+      var url = "updatePwdbyEmail";
+      var custid = $("#custid2").val();
+      var email = $("#email").val();
+      var pwd = $("#pwd2").val();
+
+      data = {custid:custid, phone:phone, pwd:pwd}
+
+      if (checkPwd(pwd) == false) { //비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료
+        return false;
+      }
+
+      if (confirmPwd() == false) {  // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료
+        return false;
+      }
+
+      $.ajax({
+        url:url,
+        data:data,
+        success:function(){
+          location.href="/login"
+        }
+      });
+    });
+
+    var confirmPwd = function () {  //pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
+      var confirm_Flag = true;
+
+      if ($("#pwd2").val() != $("#pwd_confirm2").val()) {
+        alert("비밀번호가 일치하지 않습니다");
+        confirm_Flag = false;
+      }
+
+      return confirm_Flag;
+
+    };  //비밀번호 일치 end
 
 
   }) // 전체 $(function)
@@ -214,54 +323,54 @@
 
 
 <!-- 이메일로 비밀번호 재설정 -->
-<div id="byEmail">
-  <form id="form_checkByEmail">    <!-- 아이디와 전화번호 입력 form -->
-    <table>
+<div id="byEmail">    <!-- 이메일 radio -->
+    <form id="form_checkByEmail">    <!-- 아이디와 이메일 입력 form -->
+      <table>
+        <tr>
+          <td>아이디</td>
+          <td><input type="text" name="custid" class="box" size="10" id="custid2"></td>
+        </tr>
+        <tr>
+          <td>이메일</td>
+          <td>
+            <input type ="text" id ="email" name="email" maxlength="30" size = "12" class="box">
+          </td>
+        </tr>
+      </table>
+      <input type="submit" id="btn_checkByEmail" value="개인정보 확인" name="btn_checkByEmail"><br>
+    </form>    <!-- 아이디와 이메일 입력 form end -->
+
+    <table id="code_validation2">
       <tr>
-        <td>아이디</td>
-        <td><input type="text" name="custid" class="box" size="10" id="custid2"></td>
-      </tr>
-      <tr>
-        <td>이메일</td>
+        <td>이메일 인증</td>
         <td>
-          <input type ="text" id ="email" email="phone" maxlength="11" size = "12" class="box">
+          <input type ="text" id ="emailCode" name="emailCode" maxlength="6" size = "6" class="box">
+          <input type="button" id="btn_sendEmailCode" value="인증번호 보내기">
+          <input type="button" id="btn_emailCode" value="인증번호 확인">
         </td>
       </tr>
     </table>
-    <input type="submit" id="btn_checkByEmail" value="개인정보 확인" name="btn_checkByEmail"><br>
-  </form>    <!-- 아이디와 전화번호 입력 form end -->
+    <div><b id="printPwdbyEmail"></b></div>
 
-  <table id="code_validation2">
-    <tr>
-      <td>이메일 인증</td>
-      <td>
-        <input type ="text" id ="emailCode" name="phoneCode" maxlength="6" size = "6" class="box">
-        <input type="button" id="btn_sendEmailCode" value="인증번호 보내기">
-        <input type="button" id="btn_emailCode" value="인증번호 확인">
-      </td>
-    </tr>
-  </table>
-  <div><b id="printPwdbyEmail"></b></div>
-
-  <form id="form_updatePwdbyEmail">
-    <table>
-      <tr>
-        <td>비밀번호</td>
-        <td><input type="password" name="pwd" class="box" id="pwd2" ></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="info">* 최소 6자 이상 소대문자 영문, 숫자, 특수문자로 입력</td>
-      </tr>
-      <tr>
-        <td>비밀번호 확인</td>
-        <td><input type="password" class="box" id="pwd_confirm2" name="pwd_confirm"></td>
-      </tr>
-    </table>
-    <div>
-      <button id="btn_updatePwd2" type="submit">비밀번호 재설정</button>
+    <div id="form_updatePwdbyEmail">
+      <table>
+        <tr>
+          <td>비밀번호</td>
+          <td><input type="password" name="pwd" class="box" id="pwd2" ></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="info">* 최소 6자 이상 소대문자 영문, 숫자, 특수문자로 입력</td>
+        </tr>
+        <tr>
+          <td>비밀번호 확인</td>
+          <td><input type="password" class="box" id="pwd_confirm2" name="pwd_confirm"></td>
+        </tr>
+      </table>
+      <div>
+        <button id="btn_updatePwd2" type="submit">비밀번호 재설정</button>
+      </div>
     </div>
-  </form>
-</div>
+  </div>
 
 </body>
 </html>
