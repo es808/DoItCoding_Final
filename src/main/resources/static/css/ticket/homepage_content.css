@@ -319,6 +319,11 @@ input[type="checkbox"]{
 
 
 /* 마이페이지(draw) - 예매 내역 */
+#menu-bar #mydraw{
+    font-weight : bolder;
+    color : #08428C;
+    background-color : #dcdcdc;
+}
 .drawlist{
     position : relative;
     left : 23%;

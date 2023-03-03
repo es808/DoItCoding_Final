@@ -383,19 +383,16 @@ button.active:not(.x){
 
 
 /* 아이디 찾기 */
-#form_findCustid img{
-    position : absolute;
+#form_find img{
+    position : relative;
     width: 370px;
     height: 110px;
     margin-left : -130px;
     top : -220px;
 }
-#form_findCustid h2{
+#form_find h2{
     width : 200px;
     position : absolute;
     margin-left : -40px;
     margin-top : -100px;
-}
-#form_findCustid td{
-    width : 300px;
 }
