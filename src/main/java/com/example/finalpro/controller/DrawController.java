@@ -9,11 +9,9 @@ import com.example.finalpro.vo.TicketVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,12 +28,6 @@ public class DrawController {
 
     @Autowired
     private DrawDAO drawDAO;
-
-    @GetMapping("/draw")
-    public ModelAndView draw(){
-        ModelAndView mav = new ModelAndView("/ticket/draw");
-        return mav;
-    }
 
     // 잔여좌석이 0이거나 cateid=1일 때 드로우 버튼 활성화
     @RequestMapping("/DrawButtonOpen")
@@ -101,12 +93,7 @@ public class DrawController {
     }
 
     @GetMapping("/draw")
-    public String drawTest(Model m){
-        m.addAttribute("list", lucker);
-        System.out.println(DBManager.drawLeftSeat(1));
-
-        return "draw/draw";
+    public String[] drawResult(){
+        return lucker;
     }
-
-
 }

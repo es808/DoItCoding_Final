@@ -150,6 +150,15 @@ public class CustomerController {
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
 
+    @GetMapping("/myPageDraw")
+    public String myPageDraw(Model m) {
+        DrawController drawController = new DrawController();
+        String result[] =  drawController.drawResult();
+        m.addAttribute("list", result);
+        System.out.println(DBManager.drawLeftSeat(1));
+
+        return "myPage/myPageDraw";}
+
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}
 

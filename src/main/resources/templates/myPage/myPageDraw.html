@@ -29,17 +29,6 @@
                     return false;
                 }
             });
-
-
-            $("#btn_cancel").click(function(){
-                if (confirm('회원정보 수정을 취소하시겠습니까?')){
-                    location.href = "mainTest.html";	//clicked '확인'
-                }else{
-                    location.href = "mypage_Info.html";	//clicked '취소'
-                }
-            });	//#btn_cancel 이벤트
-
-
             //수정된 내용 db에 반영하는 이벤트
             $("#form_updateCustomer").submit(function(e){	//수정된 회원정보를 form이 제출
                 if(confirm_phone == false){
@@ -252,7 +241,20 @@
     <h2>드로우 조회</h2>
     <hr>
 </div>
+<h1>드로우 당첨 회원 목록</h1>
 <form method="post" id="form_updateCustomer">
+    <table border="1" width="th" >
+        <thead>
+        <tr>
+            <th>아이디</th>
+        </tr>
+        </thead>
+        <tbody th:each="d:${list}">
+        <tr>
+            <td th:text="${d}"></td>
+        </tr>
+        </tbody>
+    </table>
 </form>
 
 <div id="main-footer">
