@@ -25,6 +25,6 @@ public class EmailController {
         code += r.nextInt(10);
 
         emailService.sendEmail("haesam92@naver.com", "[T-CATCH] 비밀번호 재설정 인증코드", code+"를 입력해주세요.");
-        return "OK";
+        return code;
     }
 }

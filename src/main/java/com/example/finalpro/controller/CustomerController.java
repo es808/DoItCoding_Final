@@ -279,7 +279,8 @@ public class CustomerController {
 
     //전화번호로 비밀번호 재설정
     @RequestMapping("/updatePwdbyPhone")
-    public void updatePwdbyPhone(CustomerVO c){
+    @ResponseBody
+    public String updatePwdbyPhone(CustomerVO c){
         System.out.println("아이디"+c.getCustid());
         System.out.println("전화"+c.getPhone());
         c.setPwd(passwordEncoder.encode(c.getPwd()));
@@ -290,6 +291,7 @@ public class CustomerController {
         }catch(Exception e){
             System.out.println("예외발생:"+e.getMessage());
         }
+        return "OK";
     }
 
     //이메일로 개인정보 확인
@@ -303,7 +305,7 @@ public class CustomerController {
     public CustomerVO checkByEmail(String custid, String email){
         System.out.println("아이디"+custid);
         System.out.println("전화"+email);
-        CustomerVO c = DBManager.checkByPhone(custid, email);
+        CustomerVO c = DBManager.checkByEmail(custid, email);
         System.out.println("검색한 회원의 정보"+c);
         return c;
     }
@@ -321,9 +323,10 @@ public class CustomerController {
         return answer;
     }
 
-    //전화번호로 비밀번호 재설정
+    //이메일로 비밀번호 재설정
     @RequestMapping("/updatePwdbyEmail")
-    public void updatePwdbyEmail(CustomerVO c){
+    @ResponseBody
+    public String updatePwdbyEmail(CustomerVO c){
         System.out.println("아이디"+c.getCustid());
         System.out.println("이메일"+c.getEmail());
         c.setPwd(passwordEncoder.encode(c.getPwd()));
@@ -334,5 +337,6 @@ public class CustomerController {
         }catch(Exception e){
             System.out.println("예외발생:"+e.getMessage());
         }
+        return "OK";
     }
 }
