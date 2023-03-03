@@ -4,7 +4,8 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
-import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.entity.Draw;
+import com.example.finalpro.vo.*;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,6 @@ import com.example.finalpro.service.EmailService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
-import com.example.finalpro.vo.MyBookVO;
-import com.example.finalpro.vo.MyDrawVO;
-import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,7 +193,7 @@ public class CustomerController {
         List<MyDrawVO> myDraw = new ArrayList<>();
         TicketVO myTicket = null;
 
-        List<DrawVO> list = drawDAO.findByCustid(custid);
+        List<MyDrawVO> list = drawDAO.findByCustid(custid);
 
         for(Draw d : list){
             MyDrawVO md = new MyDrawVO();
