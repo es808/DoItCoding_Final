@@ -58,7 +58,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time=" + time + "?cateid=" + cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -74,7 +74,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time=" + time + "?cateid=" + cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -90,7 +90,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time=" + time + "?cateid=" + cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -101,7 +101,7 @@
                     if (e.which == 13) {
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "searchPage.html?keyword=" + keyword;
+                        var url = "search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -109,7 +109,7 @@
                 $("#search_btn").click(function () { // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "searchPage.html?keyword=" + keyword;
+                    var url = "search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
@@ -119,7 +119,7 @@
     </script>
 </head>
 <body class="mypage_layout">
-<a href="main"><img src="/images/icon/logo.png" id="logo"></a>
+<a href="/main"><img src="images/icon/logo.png" id="logo"></a>
 <div class="main_user">
     <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
     <a href="/myPage"><img src="/images/icon/mypageicon.png">마이페이지</a>
@@ -130,11 +130,35 @@
         <a class="search_btn" href="example.html"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </form>
     <ul>
-        <li class="home"><a href="mainTest.jsp">홈</a></li>
-        <li><a href="#">시사회</a></li>
-        <li><a href="#">뮤지컬</a></li>
-        <li><a href="#">연극</a></li>
-        <li><a href="#">콘서트</a></li>
+        <li class="home"><a href="/main">홈</a></li>
+        <li><a href="#">시사회</a>
+            <ul>
+                <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+                <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+                <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">뮤지컬</a>
+            <ul>
+                <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+                <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+                <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">연극</a>
+            <ul>
+                <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+                <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+                <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">콘서트</a>
+            <ul>
+                <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+                <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+                <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+            </ul>
+        </li>
     </ul>
 </nav>
 <div id="menu-bar">

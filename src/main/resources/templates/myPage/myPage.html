@@ -13,6 +13,9 @@
     <script th:src="@{/js/signUp_address.js}"></script>
     <script type="text/javascript">
         $(function(){
+
+            var custid = sessionStorage.getItem("custid");
+
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
@@ -48,7 +51,7 @@
                     return false;
                 }
 
-                var url = "myPage"
+                var url = "/myPage"
 
                 var custid = $("#custid").val();
                 var pwd = $("#pwd").val();
@@ -120,7 +123,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "/category?time="+time+"?cateid="+cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -136,7 +139,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "/category?time="+time+"?cateid="+cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -152,7 +155,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "/category?time="+time+"?cateid="+cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -163,7 +166,7 @@
                     if(e.which == 13){
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "/search?keyword="+keyword;
+                        var url = "search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -171,7 +174,7 @@
                 $("#search_btn").click(function(){ // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "/search?keyword="+keyword;
+                    var url = "search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
