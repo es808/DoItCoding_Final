@@ -2,6 +2,7 @@ package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.DrawDAO;
+import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.entity.Draw;
@@ -9,6 +10,9 @@ import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.MyBookVO;
+import com.example.finalpro.vo.MyDrawVO;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +64,9 @@ public class CustomerController {
 
     @Autowired
     private DrawDAO drawDAO;
+
+    @Autowired
+    private SeatDAO seatDAO;
 
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
@@ -170,12 +178,30 @@ public class CustomerController {
 
     @GetMapping("/myPageDraw")
     public String myPageDraw(HttpSession session, Model m){
-        ModelAndView mav = new ModelAndView();
         String custid = (String)session.getAttribute("id");
+        List<MyDrawVO> myDraw = new ArrayList<>();
+        TicketVO myTicket = null;
 
         List<Draw> list = drawDAO.findByCustid(custid);
-        System.out.println(list);
-        m.addAttribute("list",list);
+
+        for(Draw d : list){
+            MyDrawVO md = new MyDrawVO();
+            myTicket = DBManager.findByTicketid(d.getTicketid());
+            md.setCustid(d.getCustid());
+            md.setDrawid(d.getDrawid());
+            md.setSeatid(d.getSeatid());
+            md.setTicketid(d.getTicketid());
+            md.setImg_fname(myTicket.getImg_fname());
+            md.setLoc(myTicket.getLoc());
+            md.setTicket_date(myTicket.getTicket_date());
+            md.setTicket_name(myTicket.getTicket_name());
+            md.setSeatname(seatDAO.findById(d.getSeatid()).get().getSeatname());
+            System.out.println(md);
+            myDraw.add(md);
+        }
+
+        m.addAttribute("list",myDraw);
+
         return "myPage/myPageDraw";
     }
 

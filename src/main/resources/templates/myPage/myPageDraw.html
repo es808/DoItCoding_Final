@@ -117,78 +117,47 @@
     </script>
 </head>
 <body class="mypage_layout">
-<a href="main"><img src="./image/logo.png" id="logo"></a>
+<a href="mainTest.jsp"><img src="./image/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/login" id="login"><img src="./image/loginicon.png">로그인</a>
-    <a href="/logout" id="logout"><img src="./image/logouticon.png">로그아웃</a>
-    <a href="signUp" id="regist"><img src="./image/signupicon.png">회원가입</a>
-    <a href="myPage" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
+    <a href="mainTest.jsp" id="logout"><img src="./image/logouticon.png">로그아웃</a>
+    <a href="mypage_Info.html"><img src="./image/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
-    <div class="search" id="search" name="search">
-        <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="./image/searchicon.png" width="35" height="35"></a>
-    </div>
+    <form action="" method="post" class="search">
+        <input class="search_txt" type="search" placeholder="검색어 입력...">
+        <a class="search_btn" href="example.html"><img  src="./image/searchicon.png" width="35" height="35"></a>
+    </form>
     <ul>
-        <li class="home"><a href="mainTest.html">홈</a></li>
-        <li><a href="#">시사회</a>
-            <ul>
-                <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
-                <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
-                <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
-            </ul>
-        </li>
-        <li><a href="#">뮤지컬</a>
-            <ul>
-                <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
-                <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
-                <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
-            </ul>
-        </li>
-        <li><a href="#">연극</a>
-            <ul>
-                <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
-                <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
-                <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
-            </ul>
-        </li>
-        <li><a href="#">콘서트</a>
-            <ul>
-                <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
-                <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
-                <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
-            </ul>
-        </li>
+        <li class="home"><a href="mainTest.jsp">홈</a></li>
+        <li><a href="#">시사회</a></li>
+        <li><a href="#">뮤지컬</a></li>
+        <li><a href="#">연극</a></li>
+        <li><a href="#">콘서트</a></li>
     </ul>
 </nav>
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li id="myinfo"><a href="mypage_Info.html">내 정보</a></li>
-        <li id="mybook"><a href="mypage_Book.html">예매내역</a></li>
-        <li><a href="mypage_Draw.html">드로우내역</a></li>
+        <li><a href="mypage_Info.html">내 정보</a></li>
+        <li><a href="mypage_Book.html">예매내역</a></li>
+        <li id="mydraw"><a href="mypage_Draw.html">드로우내역</a></li>
         <li><a href="mypage_Review.html">내 후기</a></li>
     </ul>
 </div>
-<div id="background">
-    <h2>드로우 조회</h2>
-    <hr>
-</div>
-<form method="post" id="form_updateCustomer">
-    <table border="1" width="th" >
-        <thead>
-        <tr>
-            <th>아이디</th>
-        </tr>
-        </thead>
-        <tbody th:each="d:${list}">
-        <tr>
-            <td th:text="${d}"></td>
-        </tr>
-        </tbody>
-    </table>
-</form>
-
+<form action="" method="post" id="form">
+    <div class="drawlist">
+        <img src="/images/movie_Okja.jpg" width="200" height="252">
+        <ul th:each="d:${list}">
+            <li>드로우번호 :<span th:text ="${d.drawid}"/> </li>
+            <li>제목 : <span th:text="${d.ticket_name}"/></li>
+            <li>관람일 : <span th:text="${d.ticket_date}"/></li>
+            <li>상영관 : <span th:text="${d.loc}"/></li>
+            <li>관람좌석 : <span th:text="${d.seatname}"/></li>
+        </ul>
+        <button>결과확인</button>
+        <input type="checkbox" id="check2">
+        <label for="check2"></label>
+    </div>
 <div id="main-footer">
     <footer>
         <div>Footer</div>
