@@ -12,6 +12,8 @@
     <script type="text/javascript">
         $(function() {
 
+            var custid = sessionStorage.getItem("custid");
+
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
@@ -117,15 +119,15 @@
     </script>
 </head>
 <body class="mypage_layout">
-<a href="mainTest.jsp"><img src="./image/logo.png" id="logo"></a>
+<a href="main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="mainTest.jsp" id="logout"><img src="./image/logouticon.png">로그아웃</a>
-    <a href="mypage_Info.html"><img src="./image/mypageicon.png">마이페이지</a>
+    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/myPage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <form action="" method="post" class="search">
         <input class="search_txt" type="search" placeholder="검색어 입력...">
-        <a class="search_btn" href="example.html"><img  src="./image/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" href="example.html"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </form>
     <ul>
         <li class="home"><a href="mainTest.jsp">홈</a></li>
@@ -138,16 +140,16 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li><a href="mypage_Info.html">내 정보</a></li>
-        <li><a href="mypage_Book.html">예매내역</a></li>
-        <li id="mydraw"><a href="mypage_Draw.html">드로우내역</a></li>
-        <li><a href="mypage_Review.html">내 후기</a></li>
+        <li><a href="myPage">내 정보</a></li>
+        <li><a href="myPageBook">예매내역</a></li>
+        <li id="mydraw"><a href="myPageDraw">드로우내역</a></li>
+        <li><a href="myPageReview">내 후기</a></li>
     </ul>
 </div>
 <form action="" method="post" id="form">
     <div class="drawlist">
-        <img src="/images/movie_Okja.jpg" width="200" height="252">
         <ul th:each="d:${list}">
+            <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
             <li>드로우번호 :<span th:text ="${d.drawid}"/> </li>
             <li>제목 : <span th:text="${d.ticket_name}"/></li>
             <li>관람일 : <span th:text="${d.ticket_date}"/></li>
@@ -158,7 +160,8 @@
         <input type="checkbox" id="check2">
         <label for="check2"></label>
     </div>
-<div id="main-footer">
+</form>
+<div id="main-footer" class = "footer">
     <footer>
         <div>Footer</div>
     </footer>
