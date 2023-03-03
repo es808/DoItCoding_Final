@@ -10,7 +10,6 @@ import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.CustomerVO;
-import com.example.finalpro.vo.MyBookVO;
 import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
