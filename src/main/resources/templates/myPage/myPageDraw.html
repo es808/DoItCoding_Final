@@ -10,73 +10,28 @@
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript">
-        $(function(){
+        $(function() {
 
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
 
-            if(custid != null){
+
+            if (custid != null) {
                 $("#login").css('display', 'none');
                 $("#regist").css('display', 'none');
-                $("#logout").css('display','inline-block');
-                $("#mypage").css('display','inline-block');
+                $("#logout").css('display', 'inline-block');
+                $("#mypage").css('display', 'inline-block');
             }
 
-            $("#logout").click(function(e){
-                if(confirm("로그아웃 하시겠습니까?")){
-                }else{
+            $("#logout").click(function (e) {
+                if (confirm("로그아웃 하시겠습니까?")) {
+                } else {
                     return false;
                 }
             });
             //수정된 내용 db에 반영하는 이벤트
-            $("#form_updateCustomer").submit(function(e){	//수정된 회원정보를 form이 제출
-                if(confirm_phone == false){
-                    alert("전화번호 중복 확인이 되지 않았습니다.")
-                    return false;
-                }
 
-                var url = "myPage"
-
-                var custid = $("#custid").val();
-                var pwd = $("#pwd").val();
-                var name = $("#name").val();
-                var birth = $("#birth").val();
-                var phone = $("#phone").val();
-                var email = $("#email").val();
-                var addr = $("#addr").val();
-                var gender = $("input:radio[name=gender]:checked").val();
-                var cateid = $("input:radio[name=favor]:checked").val();
-
-                var data = {
-                    custid:custid,
-                    pwd:pwd,
-                    name:name,
-                    email:email,
-                    birth:birth,
-                    phone:phone,
-                    addr:addr,
-                    gender:gender,
-                    cateid:cateid
-                };
-
-                console.log(data);
-
-                $.ajax({
-                    url:url,
-                    type:"POST",
-                    data:data,
-                    beforeSend : function(xhr)
-                    {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                        xhr.setRequestHeader(header, token);
-                    },
-                    success:function(){
-                        alert("회원 정보가 성공적으로 수정되었습니다.");
-                        $(location).attr("href","/myPage");
-                    }
-                });
-                e.preventDefault();
-            });	//#form_updateCustomer가 제출됨
 
             // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
             var time = 1;
@@ -85,15 +40,15 @@
             var cate_future = "";
             var cate_past = "";
 
-            for (var i = 1; i <=4; i++) {
-                cate_current = '#cate'+i+"_current";
-                cate_future = '#cate'+i+"_future";
-                cate_past = '#cate'+i+"_past";
+            for (var i = 1; i <= 4; i++) {
+                cate_current = '#cate' + i + "_current";
+                cate_future = '#cate' + i + "_future";
+                cate_past = '#cate' + i + "_past";
 
-                $(cate_current).click(function(e){
+                $(cate_current).click(function (e) {
                     var target = this.id;
-                    var cateid_num = $("#"+target).attr("cateid");
-                    var time_num = $("#"+target).attr("time");
+                    var cateid_num = $("#" + target).attr("cateid");
+                    var time_num = $("#" + target).attr("time");
 
                     time = time_num;
                     cateid = cateid_num;
@@ -106,10 +61,10 @@
                     location.replace(url);
                 });
 
-                $(cate_future).click(function(e){
+                $(cate_future).click(function (e) {
                     var target = this.id;
-                    var cateid_num = $("#"+target).attr("cateid");
-                    var time_num = $("#"+target).attr("time");
+                    var cateid_num = $("#" + target).attr("cateid");
+                    var time_num = $("#" + target).attr("time");
 
                     time = time_num;
                     cateid = cateid_num;
@@ -122,10 +77,10 @@
                     location.replace(url);
                 });
 
-                $(cate_past).click(function(e){
+                $(cate_past).click(function (e) {
                     var target = this.id;
-                    var cateid_num = $("#"+target).attr("cateid");
-                    var time_num = $("#"+target).attr("time");
+                    var cateid_num = $("#" + target).attr("cateid");
+                    var time_num = $("#" + target).attr("time");
 
                     time = time_num;
                     cateid = cateid_num;
@@ -140,9 +95,9 @@
             }
 
             // 검색하면 결과가 나오도록
-            var searchKeyword = function(f){
-                $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
-                    if(e.which == 13){
+            var searchKeyword = function (f) {
+                $("#search_txt").keydown(function (e) { // 엔터 누르면 검색되도록 (아직 구현 X)
+                    if (e.which == 13) {
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
                         var url = "search?keyword="+keyword;
@@ -150,7 +105,7 @@
                     }
                 });
 
-                $("#search_btn").click(function(){ // 버튼 누르면 검색됨
+                $("#search_btn").click(function () { // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
                     var url = "search?keyword="+keyword;
@@ -159,28 +114,7 @@
             }// 검색 end
 
             searchKeyword();
-            $(document).on('click', '#btn_phoneconfirm', function(){ // 전화번호 중복
-                var phone = $("#phone").val();
-                var url = "ConfirmCustomerPhone";
-                var data = {phone:phone};
-
-                $.ajax(url, {
-                    data:data,
-                    success:function(answer){
-                        if(answer == 1){
-                            alert("중복된 번호입니다");
-                            confirm_phone = false;
-                        }
-                        else {
-                            alert("사용가능한 번호입니다");
-                            confirm_phone = true;
-                        }
-                    }
-                });
-            }); // 전화번호 중복 end
-
-
-        });	//전체 $funtion
+        })
     </script>
 </head>
 <body class="mypage_layout">
