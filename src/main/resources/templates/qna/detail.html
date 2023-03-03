@@ -25,10 +25,10 @@
   <div th:text="${q.ticket.ticketid}"></div>
   <div th:text="${q.ticket.ticket_name}"></div>
   <div th:if="${q.qna_fname}!=null">
-    <div th:text="${q.qna_fname}"></div>
-    <div th:if="${#strings.endsWith(q.qna_fname,'.jpg')} or ${#strings.endsWith(q.qna_fname,'.png')} or ${#strings.endsWith(q.qna_fname,'.gif')}">
-      <img th:src="@{'/qna_files/'+${q.qna_fname}}">
-    </div>
+    <a th:href="@{'/qna_files/'+${q.qna_fname}}" th:text="${q.qna_fname}"></a>
+<!--    <div th:if="${#strings.endsWith(q.qna_fname,'.jpg')} or ${#strings.endsWith(q.qna_fname,'.png')} or ${#strings.endsWith(q.qna_fname,'.gif')}">-->
+<!--      <img th:src="@{'/qna_files/'+${q.qna_fname}}">-->
+<!--    </div>-->
   </div>
 
   <!-- 답글 작성/수정 (admin만 가능) (전체 글이 아니라 답글만 작성/수정하는 것) -->
