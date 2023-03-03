@@ -8,5 +8,5 @@ import java.util.List;
 public interface DrawDAO extends JpaRepository<Draw, Integer> {
 
     List<Draw> findByTicketid(int ticketid);
-    
+    List<Draw> findByCustid(String custid);
 }
