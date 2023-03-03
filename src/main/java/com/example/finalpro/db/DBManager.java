@@ -1,9 +1,5 @@
 package com.example.finalpro.db;
 
-import com.example.finalpro.entity.Customer;
-import com.example.finalpro.entity.Seat;
-import com.example.finalpro.vo.CustomerVO;
-import com.example.finalpro.entity.Qna;
 import com.example.finalpro.vo.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -11,10 +7,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;

@@ -116,6 +116,14 @@
 
             searchKeyword();
 
+            var seatname = $("#seatname").html()
+
+            if(seatname == "none"){
+                $("#pay_btn").html("드로우 실패");
+                $("#pay_btn").attr('disabled', true);
+                $("#pay_btn").css({ 'pointer-events': 'none' });
+            }
+
             //결제하기 버튼 누르면 regist2로 이동
             $(document).on('click', '#pay_btn', function() { // 전화번호 중복
                 sessionStorage.setItem("ticketid",$("#ticketid").html());
@@ -196,7 +204,7 @@
             <li>제목 : <span th:text="${d.ticket_name}"/></li>
             <li>관람일 : <span th:text="${d.ticket_date}"/></li>
             <li>상영관 : <span th:text="${d.loc}"/></li>
-            <li>관람좌석 : <span th:text="${d.seatname}"/></li>
+            <li>관람좌석 : <span th:text="${d.seatname}" id = "seatname"/></li>
             <li><span th:text="${d.ticketid}" id="ticketid" hidden="hidden"></span></li>
             <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
             <button id="pay_btn" type="button">결제하기</button>
