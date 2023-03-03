@@ -30,7 +30,7 @@
     <tr th:each="t : ${list}" id="ticket">
         <td th:text="${t.ticketid}"></td>
         <td>
-            <a th:text="${t.ticket_name}" th:href="@{'/admin/updateTicket/'+${t.ticketid}}"></a>
+            <a th:text="${t.ticket_name}" th:href="@{'/admin/ticket/update/'+${t.ticketid}}"></a>
         </td>
         <th:block>
             <td th:if="${t.cateid==1}" th:text="시사회"></td>
@@ -47,24 +47,24 @@
    </tbody>
   </table>
     <br><br>
-    <a href="/admin/insertTicket">추가하기</a>
+    <a href="/admin/ticket/insertTicket">추가하기</a>
 <br><br>
     <!--페이징 처리-->
-    <a th:text="처음" th:href="@{'/admin/listTicket?page=1&keyword='+${keyword}}"></a>
+    <a th:text="처음" th:href="@{'/admin/ticket/listTicket?page=1&keyword='+${keyword}}"></a>
     <th:block th:if="${paging.getStartPage() > 1}">
-        <a th:text="이전" th:href="@{'/admin/listTicket?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
+        <a th:text="이전" th:href="@{'/admin/ticket/listTicket?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
     </th:block>
 <th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
-    <a th:text="${page}" th:href="@{'/admin/listTicket?page='+${page}+'&keyword='+${keyword}}"></a>
+    <a th:text="${page}" th:href="@{'/admin/ticket/listTicket?page='+${page}+'&keyword='+${keyword}}"></a>
 </th:block>
     <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
-        <a th:text="다음" th:href="@{'/admin/listTicket?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
+        <a th:text="다음" th:href="@{'/admin/ticket/listTicket?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
     </th:block>
-    <a th:text="끝" th:href="@{'/admin/listTicket?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
+    <a th:text="끝" th:href="@{'/admin/ticket/listTicket?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
 
     <!-- 검색 기능-->
     <div>
-        <form name="search-form" th:action="@{/admin/listTicket}" method="get">
+        <form name="search-form" th:action="@{/admin/ticket/listTicket}" method="get">
             <input type="text" name="keyword" value="">
             <input type="submit" value="검색">
         </form>

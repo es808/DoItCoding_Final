@@ -34,9 +34,9 @@
 
             $("#btn_cancel").click(function(){
                 if (confirm('회원정보 수정을 취소하시겠습니까?')){
-                    location.href = "mainTest.html";	//clicked '확인'
+                    location.href = "/main";	//clicked '확인'
                 }else{
-                    location.href = "mypage_Info.html";	//clicked '취소'
+                    location.href = "/myPage";	//clicked '취소'
                 }
             });	//#btn_cancel 이벤트
 
@@ -120,7 +120,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -136,7 +136,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -152,7 +152,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -163,7 +163,7 @@
                     if(e.which == 13){
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "searchPage.html?keyword="+keyword;
+                        var url = "/search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -171,7 +171,7 @@
                 $("#search_btn").click(function(){ // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "searchPage.html?keyword="+keyword;
+                    var url = "/search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
@@ -202,20 +202,20 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="main"><img src="./image/logo.png" id="logo"></a>
+<a href="main"><img src="./images/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/login" id="login"><img src="./image/loginicon.png">로그인</a>
-    <a href="/logout" id="logout"><img src="./image/logouticon.png">로그아웃</a>
-    <a href="signUp" id="regist"><img src="./image/signupicon.png">회원가입</a>
-    <a href="myPage" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="./image/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
-        <li class="home"><a href="mainTest.html">홈</a></li>
+        <li class="home"><a href="/main">홈</a></li>
         <li><a href="#">시사회</a>
             <ul>
                 <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>

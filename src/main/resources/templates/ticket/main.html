@@ -64,7 +64,7 @@ $(function(){
 						height: 400
 					});
 					$("#rank_preview"+i).attr('ticketid', arr[i].ticketid);
-					var url = "detailPageTest.html?ticketid="+arr[i].ticketid;
+					var url = "/detail?ticketid="+arr[i].ticketid;
 					$("#rank_preview"+i).attr('href', url);
 					$("#rank_preview"+i).append(img);
 					
@@ -98,7 +98,7 @@ $(function(){
 						height: 400,
 					});
 					$("#current_preview"+i).attr('ticketid', arr[i].ticketid);
-					var url = "detailPageTest.html?ticketid="+arr[i].ticketid;
+					var url = "/detail?ticketid="+arr[i].ticketid;
 					$("#current_preview"+i).attr('href', url);
 					$("#current_preview"+i).append(img);
 					
@@ -131,7 +131,7 @@ $(function(){
 						height: 400
 					});
 					$("#future_preview"+i).attr('ticketid', arr[i].ticketid);
-					var url = "detailPageTest.html?ticketid="+arr[i].ticketid;
+					var url = "/detail?ticketid="+arr[i].ticketid;
 					$("#future_preview"+i).attr('href', url);
 					$("#future_preview"+i).append(img);
 					
@@ -244,7 +244,7 @@ $(function(){
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "category?time="+time+"?cateid="+cateid;
+	    	 var url = "/category?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 		
@@ -260,7 +260,7 @@ $(function(){
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "category?time="+time+"?cateid="+cateid;
+	    	 var url = "/category?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 		
@@ -276,7 +276,7 @@ $(function(){
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "category?time="+time+"?cateid="+cateid;
+	    	 var url = "/category?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 	}
@@ -287,7 +287,7 @@ $(function(){
 			if(e.which == 13){
 				var keyword = $("#search_txt").val();
 				sessionStorage.setItem("keyword", keyword);
-				var url = "search?keyword="+keyword;
+				var url = "/search?keyword="+keyword;
 				location.replace(url);
 				}
 		});
@@ -295,7 +295,7 @@ $(function(){
 		$("#search_btn").click(function(){ // 버튼 누르면 검색됨
 			var keyword = $("#search_txt").val();
 			sessionStorage.setItem("keyword", keyword);
-			var url = "search?keyword="+keyword;
+			var url = "/search?keyword="+keyword;
 			location.replace(url);
 		});
 	}// 검색 end
@@ -330,15 +330,15 @@ $(function(){
  		<img src="/ticket/main.css" id="logo">
  		<div class="main_user">
 			<div th:text="${session.id}" id="session_id" hidden="hidden"></div>
-			<a href="loginTest.html" id="login"><img src="/image/loginicon.png">로그인</a>
-			<a href="main.html" id="logout"><img src="/image/logouticon.png">로그아웃</a>
-			<a href="signupTest.html" id="regist"><img src="/image/signupicon.png">회원가입</a>
-			<a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>
+			<a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+			<a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+			<a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+			<a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
  		</div>
  	    <nav id="navigation">
               <div class="search" id="search" name="search">
 				   <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-				   <a class="search_btn" type="button" id="search_btn"><img  src="/image/searchicon.png" width="35" height="35"></a>
+				   <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
 			  </div>
               <ul>
                   <li class="home"><a href="/main">홈</a></li>
@@ -377,13 +377,13 @@ $(function(){
 	 		<div class="slider" data-role="slider" data-width="1380" data-height="600" style="position: relative; overflow: hidden; width: 500px; height: 500px;">
 				<div class="container" style="position: absolute; overflow: hidden;">
 					<div class="item" style="float: left;">
-						<img src="/image/monster.jpg" class="poster">
-					</div>
-					<div class="item" style="float: left;">				
-						<img src="./images/가면산장살인사건_main_3.jpg" class="poster">
+						<img src="/images/monster.jpg" class="poster">
 					</div>
 					<div class="item" style="float: left;">
-						<img src="./images/마틸다.jpg" class="poster">
+						<img src="/images/가면산장살인사건_main_3.jpg" class="poster">
+					</div>
+					<div class="item" style="float: left;">
+						<img src="/images/마틸다.jpg" class="poster">
 					</div>
 				</div>
 			</div>
@@ -402,11 +402,11 @@ $(function(){
 	     	</ul>
 	     	<br>
 	    </div>	
-	    	<img class="main_rank" src="/image/firsticon.jpg" width="80" height="80">
+	    	<img class="main_rank" src="/images/icon/firsticon.jpg" width="80" height="80">
 	     	<a class="img"  id="rank_preview0"></a>
-	     	 <img class="main_rank" src="/image/secondicon.jpg" width="80" height="80">
+	     	 <img class="main_rank" src="/images/icon/secondicon.jpg" width="80" height="80">
 	     	<a class="img"  id="rank_preview1"></a>
-	     	<img class="main_rank" src="/image/thirdicon.jpg" width="80" height="80">
+	     	<img class="main_rank" src="/images/icon/thirdicon.jpg" width="80" height="80">
 	     	<a class="img"  id="rank_preview2"></a>
 		<br>
 		<div>

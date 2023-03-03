@@ -6,6 +6,7 @@ import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
@@ -48,7 +49,7 @@ public class CustomerController {
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
 
     @RequestMapping("/list")
-    public void list(Model model){
+    public void list(Model model) {
         model.addAttribute("list", dao.findAll());
     }
 
@@ -83,7 +84,7 @@ public class CustomerController {
 
     @GetMapping("/")
     public String home() {
-        return "main";
+        return "/main";
     }
 
     @GetMapping("/main")
@@ -173,7 +174,7 @@ public class CustomerController {
             mav.setViewName("/login");
         } catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
-            mav.setViewName("error");
+            mav.setViewName("/error");
         }
 
 		/*
@@ -237,11 +238,64 @@ public class CustomerController {
     @GetMapping("/sendMessage")
     @ResponseBody
     public String sendMessage(String phone){
-        System.out.println(phone);
-        MessageController messageController = new MessageController();
-        code = messageController.sendCodePhone(phone);
-        System.out.println(code);
+        System.out.println("phone:"+phone);
+        code = SendMessage.sendCodePhone(phone);
+        System.out.println("code:"+code);
+
+//        MessageController ms = new MessageController();
+//        code = ms.sendCodePhone(phone);
         return code;
     }
+
+    //아이디 찾기
+    @RequestMapping("/findCustidForm")
+    public String findCustidForm(){
+        return "/customer/findCustid.html";
+    }
+
+    @RequestMapping("/findCustid")
+    @ResponseBody
+    public CustomerVO findCustid(String name, String phone){
+        System.out.println("이름"+name);
+        System.out.println("전화"+phone);
+        CustomerVO c = DBManager.findCustid(name, phone);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
+
+//    //비밀번호 재설정
+//    @RequestMapping("/findPwdForm")
+//    public String findPwdForm(){
+//        return "/customer/findPwd.html";
+//    }
+//
+//    @RequestMapping("/findPwd")
+//    public String findPwd(CustomerVO c, HttpSession session, Model m){
+//        System.out.println("업데이트 컨트롤러 가동:"+c);
+//        c.setPwd(passwordEncoder.encode(c.getPwd()));
+//        System.out.println("암호화:"+c);
+////        c.setRole("customer");
+//
+//        try {
+//            DBManager.
+//        }
+//    }
+
+//    @PostMapping("/myPage")
+//    public String updateCustomer(CustomerVO c, HttpSession session, Model m){
+//        System.out.println("업데이트 컨트롤러 가동:"+c);
+//        c.setPwd(passwordEncoder.encode(c.getPwd()));
+//        System.out.println("암호화 : "+c);
+//        c.setRole("customer");
+//
+//        try{
+//            DBManager.updateCustomer(c);
+//            System.out.println("sessionId = "+session.getAttribute("id"));
+//            myPage(session,m);
+//        }catch (Exception e){
+//
+//        }
+//        return "myPage/myPage";
+//    }
 
 }
