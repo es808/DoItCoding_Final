@@ -28,7 +28,7 @@ public class DBManager {
 		}
 	}
 
-	public static List<CustomerVO> findAll() {
+	public static List<CustomerVO> findAllCustomer() {
 		List<CustomerVO> list = null;
 		SqlSession session = sqlSessionFactory.openSession();
 		list = session.selectList("customer.findAll");
@@ -107,6 +107,15 @@ public class DBManager {
 		return list;
 	}
 
+	// 회원정보 조회
+	public static CustomerVO findByCustid(String custid){
+		CustomerVO c = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		c = session.selectOne("customer.findByCustid", custid);
+		session.close();
+		return c;
+	}
+
 	// 특정 좌석의 잔여좌석 조회
 	public static int findLeftSeatByTicketid(int ticketid){
 		int num = 0;
@@ -127,6 +136,7 @@ public class DBManager {
 		return t;
 	}
 
+
 	// ******** admin.ticket ********
 
 	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
@@ -145,6 +155,7 @@ public class DBManager {
 
 		return list;
 	}
+
 	// admin의 ticketList
 	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
 	public static List<TicketVO> findTicketPaging(int startRecord, int endRecord){
@@ -286,6 +297,12 @@ public class DBManager {
 		return list;
 	}
 
+
+
+
+
+
+
 	// admin에서 ticket을 insert
 	public static int insertTicket(TicketVO ticket){
 		int re = -1;
@@ -305,7 +322,30 @@ public class DBManager {
 		return re;
 	}
 
+
 	// ******** admin.customer ********
+
+	//Customer 아이디 찾기
+	public static CustomerVO findCustid(String name, String phone){
+		CustomerVO vo = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("phone", phone);
+		SqlSession session = sqlSessionFactory.openSession();
+		vo= session.selectOne("customer.findCustid", map);
+		session.close();
+		return vo;
+	}
+
+	//Customer 비밀번호 재설정
+	public static int findPwd(CustomerVO customer){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.update("customer.findPwd", customer);
+		session.commit();
+		session.close();
+		return re;
+	}
 
 	// 고객정보 수정
 	public static int updateCustomer(CustomerVO customer){
@@ -400,6 +440,7 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
 
 //	public static List<CustomerVO> findAll() {
 //		List<CustomerVO> list = null;

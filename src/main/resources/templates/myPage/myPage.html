@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css">
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/signUp_address.js}"></script>
     <script type="text/javascript">
         $(function(){
             var token = $("meta[name='_csrf']").attr("content");
@@ -32,9 +34,9 @@
 
             $("#btn_cancel").click(function(){
                 if (confirm('회원정보 수정을 취소하시겠습니까?')){
-                    location.href = "mainTest.html";	//clicked '확인'
+                    location.href = "/main";	//clicked '확인'
                 }else{
-                    location.href = "mypage_Info.html";	//clicked '취소'
+                    location.href = "/myPage";	//clicked '취소'
                 }
             });	//#btn_cancel 이벤트
 
@@ -54,7 +56,10 @@
                 var birth = $("#birth").val();
                 var phone = $("#phone").val();
                 var email = $("#email").val();
-                var addr = $("#addr").val();
+                var addr_postcode = $("#addr_postcode").val();
+                var addr_address = $("#addr_address").val();
+                var addr_detail = $("#addr_detail").val();
+                var addr_extra = $("#addr_extra").val();
                 var gender = $("input:radio[name=gender]:checked").val();
                 var cateid = $("input:radio[name=favor]:checked").val();
 
@@ -65,7 +70,10 @@
                     email:email,
                     birth:birth,
                     phone:phone,
-                    addr:addr,
+                    addr_postcode: addr_postcode,
+                    addr_address: addr_address,
+                    addr_detail: addr_detail,
+                    addr_extra: addr_extra,
                     gender:gender,
                     cateid:cateid
                 };
@@ -112,7 +120,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -128,7 +136,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -144,7 +152,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -155,7 +163,7 @@
                     if(e.which == 13){
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "searchPage.html?keyword="+keyword;
+                        var url = "/search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -163,7 +171,7 @@
                 $("#search_btn").click(function(){ // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "searchPage.html?keyword="+keyword;
+                    var url = "/search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
@@ -194,20 +202,20 @@
     </script>
 </head>
 <body class="mypage_layout">
-<a href="main"><img src="./image/logo.png" id="logo"></a>
+<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/login" id="login"><img src="./image/loginicon.png">로그인</a>
-    <a href="/logout" id="logout"><img src="./image/logouticon.png">로그아웃</a>
-    <a href="signUp" id="regist"><img src="./image/signupicon.png">회원가입</a>
-    <a href="myPage" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="./image/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
-        <li class="home"><a href="mainTest.html">홈</a></li>
+        <li class="home"><a href="/main">홈</a></li>
         <li><a href="#">시사회</a>
             <ul>
                 <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
@@ -241,10 +249,10 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li id="myinfo"><a href="mypage_Info.html">내 정보</a></li>
-        <li><a href="mypage_Book.html">예매내역</a></li>
-        <li><a href="mypage_Draw.html">드로우내역</a></li>
-        <li><a href="mypage_Review.html">내 후기</a></li>
+        <li id="myinfo"><a href="/myPage">내 정보</a></li>
+        <li><a href="/myPageBook">예매내역</a></li>
+        <li><a href="/myPageDraw">드로우내역</a></li>
+        <li><a href="/myPageReview">내 후기</a></li>
     </ul>
 </div>
 <div id="background">
@@ -287,12 +295,18 @@
             <td>전화번호</td>
             <td>
                 <input type="text" name="phone" id="phone" maxlength="13" size="15" class="box">
-                <button>중복확인</button>
+                <input type="button" value="중복확인">
             </td>
         </tr>
         <tr>
             <td>주소</td>
-            <td><input type="text" name="addr" class="box" size="30" id="addr" th:value="${id.addr}"></td>
+            <td>
+                <input type="text" name="addr_postcode" id="addr_postcode" class="box" th:value="${id.addr_postcode}">
+                <input type="button" id="btn_searchAddr" value="우편번호 찾기" onclick="execDaumPostcode()"><br>
+                <input id="addr_address" class="box" size="30" th:value="${id.addr_address}"><br>
+                <input id="addr_detail" class="box" th:value="${id.addr_detail}">
+                <input id="addr_extra" class="box" th:value="${id.addr_extra}">
+            </td>
         </tr>
         <tr>
             <td>성별</td>

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -58,5 +59,22 @@ public class BookController {
     @ResponseBody
     public int deleteBook(int bookid){
         return DBManager.deleteBook(bookid);
+    }
+
+    @RequestMapping("/regist2")
+    public ModelAndView regist2(){
+        ModelAndView mav = new ModelAndView("/ticket/regist2");
+        return mav;
+    }
+
+    // 결제하기
+    @RequestMapping("/payok")
+    @ResponseBody
+    public String payok(String imp_uid,String merchant_uid, int paid_amount, String apply_num){
+        System.out.println("imp_uid:"+imp_uid);
+        System.out.println("merchant_uid:"+merchant_uid);
+        System.out.println("paid_amount:"+paid_amount);
+        System.out.println("apply_num:"+apply_num);
+        return "OK";
     }
 }

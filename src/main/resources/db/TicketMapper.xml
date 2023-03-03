@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ticket">
   <select id="findAll" resultType="ticketVO">
     select * from ticket
@@ -18,10 +18,10 @@
       ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
     </if>
     <if test="time==1">
-      ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+7, 'yyyy/mm/dd')
+      ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+14, 'yyyy/mm/dd')
     </if>
     <if test="time==2">
-      ticket_date &gt; to_char(sysdate+7, 'yyyy/mm/dd')
+      ticket_date &gt; to_char(sysdate+14, 'yyyy/mm/dd')
     </if>
   </select>
 
@@ -83,8 +83,6 @@
         where n between #{startRecord} and #{endRecord}
     </select>
 
-
-
     <!--admin 사이트에서 ticket을 insert -->
     <insert id="insertTicket" parameterType="ticketVO">
         insert into ticket(ticketid,cateid,placeid,ticket_name,price,ticket_date,content,img_fname,img_fname_main,vid_url,min_age,runtime,cast,loc,lat,lng)
@@ -103,5 +101,4 @@
             where (ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%' )
         </if>
     </select>
-
 </mapper>

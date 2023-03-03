@@ -6,8 +6,10 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Insert title here</title>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/signUp_address.js}"></script>
     <script>
         $(function() {
             var token = $("meta[name='_csrf']").attr("content");
@@ -26,6 +28,9 @@
                 var phone = $("#phone").val();
                 var email = $("#email").val() + $("#email_com").val();
                 var addr_postcode = $("#addr_postcode").val();
+                var addr_address = $("#addr_address").val();
+                var addr_detail = $("#addr_detail").val();
+                var addr_extra = $("#addr_extra").val();
                 var gender = $("input:radio[name=gender]:checked").val();
                 var cateid = $("input:radio[name=cateid]:checked").val();
 
@@ -42,6 +47,9 @@
                     phone: phone,
                     gender: gender,
                     addr_postcode: addr_postcode,
+                    addr_address: addr_address,
+                    addr_detail: addr_detail,
+                    addr_extra: addr_extra,
                     cateid: cateid
                 };
 
@@ -75,104 +83,104 @@
                 })
 
 
-                    console.log("confirmPwd " + confirmPwd());
-                    console.log(data)
+                console.log("confirmPwd " + confirmPwd());
+                console.log(data)
 
-                    $.ajax({
-                        url,
-                        type: 'POST',
-                        data: data,
-                        beforeSend: function (xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                            xhr.setRequestHeader(header, token);
-                        },
-                        success: function () {
-                            $(location).attr("href", "/login");
-                        }
-                    }); // Ajax 통신 시작
-                    e.preventDefault();
-
-                }); // 회원가입 end
-
-                var checkIdPwd = function (custid, pwd) {
-                    var check_Flag = true;
-
-                    var reg_id = /^(?=.*?[a-z])(?=.*?[0-9]).{6,12}$/; // 아이디를 영문하고 숫자 필수 입력
-                    var reg_pwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/; // 비번을 대소문자 영어, 숫자, 특수문자까지 필수 입력
-
-                    if (!reg_id.test(custid)) {
-                        alert("아이디는 6-12자 영문, 숫자로만 입력하세요");
-                        check_Flag = false;
+                $.ajax({
+                    url,
+                    type: 'POST',
+                    data: data,
+                    beforeSend: function (xhr) {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function () {
+                        $(location).attr("href", "/login");
                     }
+                }); // Ajax 통신 시작
+                e.preventDefault();
 
-                    if (!reg_pwd.test(pwd)) {
-                        alert("비밀번호는 대소문자를 포함한 영어, 숫자, 특수문자를 6글자 이상 입력하세요");
-                        check_Flag = false;
-                    }
+            }); // 회원가입 end
 
-                    return check_Flag;
-                } // check 아이디 비밀번호 적합성 end
+            var checkIdPwd = function (custid, pwd) {
+                var check_Flag = true;
 
-                $(document).ready(function () { // 아이디 비밀번호 영어, 숫자로만
-                    $("#custid").keyup(function () {
-                        $(this).val($(this).val().replace(/[^a-z0-9]/g, ""));
-                    });
-                    $("#pwd").keyup(function () {
-                        $(this).val($(this).val().replace(/[^A-Za-z0-9#?!@$%^&*-]/g, ""));
-                    });
+                var reg_id = /^(?=.*?[a-z])(?=.*?[0-9]).{6,12}$/; // 아이디를 영문하고 숫자 필수 입력
+                var reg_pwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/; // 비번을 대소문자 영어, 숫자, 특수문자까지 필수 입력
+
+                if (!reg_id.test(custid)) {
+                    alert("아이디는 6-12자 영문, 숫자로만 입력하세요");
+                    check_Flag = false;
+                }
+
+                if (!reg_pwd.test(pwd)) {
+                    alert("비밀번호는 대소문자를 포함한 영어, 숫자, 특수문자를 6글자 이상 입력하세요");
+                    check_Flag = false;
+                }
+
+                return check_Flag;
+            } // check 아이디 비밀번호 적합성 end
+
+            $(document).ready(function () { // 아이디 비밀번호 영어, 숫자로만
+                $("#custid").keyup(function () {
+                    $(this).val($(this).val().replace(/[^a-z0-9]/g, ""));
                 });
-                var confirmPwd = function () { // pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
-                    var confirm_Flag = true;
+                $("#pwd").keyup(function () {
+                    $(this).val($(this).val().replace(/[^A-Za-z0-9#?!@$%^&*-]/g, ""));
+                });
+            });
+            var confirmPwd = function () { // pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
+                var confirm_Flag = true;
 
-                    if ($("#pwd").val() != $("#pwd_confirm").val()) {
-                        alert("비밀번호가 일치하지 않습니다");
-                        confirm_Flag = false;
+                if ($("#pwd").val() != $("#pwd_confirm").val()) {
+                    alert("비밀번호가 일치하지 않습니다");
+                    confirm_Flag = false;
+                }
+
+                return confirm_Flag;
+
+            }; // confirm 패스워드 end
+
+
+            $(document).on('click', '#btn_idconfirm', function () { // 아이디 중복검사
+                var custid = $("#custid").val();
+                var url = "ConfirmCustomerId";
+                var data = {custid: custid};
+
+                $.ajax(url, {
+                    data: data,
+                    success: function (answer) {
+
+                        console.log(answer);
+
+                        if (answer == 1) {
+                            alert("중복된 아이디입니다");
+                            confirm_custid = false;
+                        } else {
+                            alert("사용가능한 아이디입니다");
+                            confirm_custid = true;
+                        }
                     }
-
-                    return confirm_Flag;
-
-                }; // confirm 패스워드 end
+                });
+            }); // 아이디 중복 end
 
 
-                $(document).on('click', '#btn_idconfirm', function () { // 아이디 중복검사
-                    var custid = $("#custid").val();
-                    var url = "ConfirmCustomerId";
-                    var data = {custid: custid};
-
-                    $.ajax(url, {
-                        data: data,
-                        success: function (answer) {
-
-                            console.log(answer);
-
-                            if (answer == 1) {
-                                alert("중복된 아이디입니다");
-                                confirm_custid = false;
-                            } else {
-                                alert("사용가능한 아이디입니다");
-                                confirm_custid = true;
-                            }
+            $(document).on('click', '#btn_phoneconfirm', function () { // 전화번호 중복
+                var phone = $("#phone").val();
+                var url = "ConfirmCustomerPhone";
+                var data = {phone:phone};
+                $.ajax(url, {
+                    data:data,
+                    success: function (answer) {
+                        if (answer == 1) {
+                            alert("중복된 번호입니다");
+                            confirm_phone = false;
+                        } else {
+                            alert("사용가능한 번호입니다");
+                            confirm_phone = true;
                         }
-                    });
-                }); // 아이디 중복 end
-
-
-                $(document).on('click', '#btn_phoneconfirm', function () { // 전화번호 중복
-                    var phone = $("#phone").val();
-                    var url = "ConfirmCustomerPhone";
-                    var data = {phone:phone};
-                    $.ajax(url, {
-                        data:data,
-                        success: function (answer) {
-                            if (answer == 1) {
-                                alert("중복된 번호입니다");
-                                confirm_phone = false;
-                            } else {
-                                alert("사용가능한 번호입니다");
-                                confirm_phone = true;
-                            }
-                        }
-                    });
-                }); // 전화번호 중복 end
+                    }
+                });
+            }); // 전화번호 중복 end
 
             $(document).on('click', '#btn_sendPhoneCode', function () { // 인증번호 전송
                 var phone = $("#phone").val();
@@ -204,14 +212,13 @@
                     }
                 });
             }); // 전화번호 중복 end
-
-            })// $(function)
+        })// $(function)
     </script>
 </head>
 <body>
 <div id="background_signup">
-    <a class="main" href="main">
-        <img  src="/image/homeicon.png" width="40" height="40"></a>
+    <a class="main" href="/main">
+        <img  src="/images/icon/homeicon.png" width="40" height="40"></a>
 </div>
 <form id="form_signup" >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -279,8 +286,11 @@
         <tr>
             <td>주소</td>
             <td>
-                <input type="text" name="addr_postcode" id="addr_postcode" class="box" size="30">
-                <input type="button" id="btn_addrconfirm" value="주소 찾기">
+                <input type="text" name="addr_postcode" id="addr_postcode" class="box">
+                <input type="button" id="btn_searchAddr" value="우편번호 찾기" onclick="execDaumPostcode()"><br>
+                <input id="addr_address" class="box" size="30"><br>
+                <input id="addr_detail" class="box">
+                <input id="addr_extra" class="box">
             </td>
         </tr>
         <tr>

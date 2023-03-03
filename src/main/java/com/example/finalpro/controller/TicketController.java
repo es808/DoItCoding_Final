@@ -48,6 +48,7 @@ public class TicketController {
 
     // 티켓 상세페이지
     @GetMapping("/detail")
+    @ResponseBody
     public ModelAndView detail(){
         ModelAndView mav = new ModelAndView("/detail");
         return mav;
@@ -100,12 +101,7 @@ public class TicketController {
 
         return DBManager.findSearchTicket(keyword);
     }
-    
-//    @RequestMapping("/RankingTicket")
-//    @ResponseBody
-//    public List<Ranking> main(@RequestParam("cateid")int cateid){
-//        return rankingDAO.findAllRanking(cateid);
-//    }
+
 
     // 티켓의 디테일 정보 뜨게 Ajax 활용해서 기능구현
     @RequestMapping("/DetailTicket")
