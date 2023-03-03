@@ -24,9 +24,8 @@ public class Customer {
     private String gender;
     private String role;
     private int cateid;
-    private String addr;
-//    private String addr_postcode;
-//    private String addr_address;
-//    private String addr_detail;
-//    private String addr_extra;
+    private String addr_postcode;
+    private String addr_address;
+    private String addr_detail;
+    private String addr_extra;
 }

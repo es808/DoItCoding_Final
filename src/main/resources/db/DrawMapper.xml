@@ -28,12 +28,6 @@
     update draw set seatid = null where ticketid = #{ticektid}
   </update>
 
-
-  <!-- 드로우 신청 -->
-  <insert id="insertDraw" parameterType="drawVO">
-    insert into draw(drawid,custid,ticketid,seatid) values(seq_drawid.nextval,#{custid},#{ticketid},#{seatid})
-  </insert>
-
   <!-- 시사회: 티켓id 별로 드로우 신청하면 그중에서 custid 랜덤하게 자리배정 -->
 
   <!-- 자리0: 티켓 id 별로 드로우 신청하면 취소표(leftseat=0)에 한해서 랜덤하게 자리 배정 -->
