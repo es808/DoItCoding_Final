@@ -33,13 +33,13 @@ public class CustomerController {
     private CustomerDAO dao;
 
     @Autowired
+    private CustomerDAO customerDAO;
+
+    @Autowired
     private CategoryService ts;
 
     @Autowired
     private CustomerService cs;
-
-    @Autowired
-    private CustomerDAO customerDAO;
 
     @Autowired
     private TicketService ticketService;
@@ -155,6 +155,9 @@ public class CustomerController {
 
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
+
+    @GetMapping("/myPageDraw")
+    public String myPageDraw() { return "myPage/myPageDraw";}
 
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}

@@ -58,5 +58,11 @@ public class SeatController {
         return DBManager.registSeat(seatid);
     }
 
+    // 좌석취소
+    @RequestMapping("/CancleSeat")
+    @ResponseBody
+    public int cancleSeat(int seatid){
+        return DBManager.cancleSeat(seatid);
+    }
 
 }
