@@ -151,7 +151,7 @@
                             sessionStorage.setItem("ticketid", '');
                             sessionStorage.setItem("ticketid", ticketid);
 
-                            var url = "myPageReview?custid="+custid+"?ticketid="+ticketid;
+                            var url = "/myPage/insertReview/"+ticketid;
                             location.replace(url);
                         });
 

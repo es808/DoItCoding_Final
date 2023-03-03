@@ -18,10 +18,11 @@
     <div th:text="${n.notice_hit}"></div>
     <div th:text="${n.notice_date}"></div>
     <div th:if="${n.notice_fname}!=null">
-        <div th:text="${n.notice_fname}"></div>
-        <div th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
-            <img th:src="@{'/notice_files/'+${n.notice_fname}}">
-        </div>
+        <a th:href="@{'/notice_files/'+${n.notice_fname}}" th:text="${n.notice_fname}"></a>
+<!--        <div th:text="${n.notice_fname}"></div>-->
+<!--        <div th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">-->
+<!--            <img th:src="@{'/notice_files/'+${n.notice_fname}}">-->
+<!--        </div>-->
     </div>
 </body>
 </html>

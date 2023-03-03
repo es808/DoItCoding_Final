@@ -159,9 +159,6 @@ public class CustomerController {
     @GetMapping("/myPageDraw")
     public String myPageDraw() { return "myPage/myPageDraw";}
 
-    @GetMapping("/myPageReview")
-    public String myPageReview() { return "myPage/myPageReview";}
-
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
         System.out.println("customer:"+c);
@@ -191,7 +188,7 @@ public class CustomerController {
         return mav;
     }
 
-    //아이디 중복 확인 메소
+    //아이디 중복 확인 메소드
     @GetMapping("/ConfirmCustomerId")
     @ResponseBody
     public int confirmCustomerId(String custid){

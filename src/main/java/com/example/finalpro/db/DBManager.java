@@ -258,12 +258,12 @@ public class DBManager {
 	}
 
 	// ticketid로 리뷰내역이 있나 확인
-	public static List<MyReviewVO> checkReviewByTicketid(int ticketid){
-		List<MyReviewVO> list = null;
+	public static int checkReviewByTicketid(ReviewVO r){
+		int re=-1;
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("review.checkReview",ticketid);
+		re = session.selectOne("review.checkReview",r);
 		session.close();
-		return list;
+		return re;
 	}
 
 	// 티켓 후기의 평균별점 구하기
@@ -630,4 +630,12 @@ public class DBManager {
 		return re;
 	}
 
+	// 마이페이지 - 리뷰 등록
+	public static int insertReview(ReviewVO r){
+		int re=-1;
+		SqlSession session=sqlSessionFactory.openSession(true);
+		re=session.insert("review.insert",r);
+		session.close();
+		return re;
+	}
 }

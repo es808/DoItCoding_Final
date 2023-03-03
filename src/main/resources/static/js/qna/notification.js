@@ -29,21 +29,24 @@ $(function(){
     // QNA 답변 알림
     let cnt_click=0
     $('#bell').click(function(){
-        cnt_click+=1
-        if(cnt_click%2==1){
-            $("#notif_container").css("display","block")
-            listNotification()
+        cnt_click += 1
+            if (cnt_click % 2 == 1) {
 
-            // DB 'checked' 칼럼 업데이트 n->y
-            $.ajax({
-                url:"/updateCheckedToY",
-                success:function (re){
-                    console.log(re)
-                }
-            })
-        }else{
-            $("#notif_container").css("display","none")
-        }
+                $("#notif_container").css("display", "block")
+                listNotification()
+
+                // DB 'checked' 칼럼 업데이트 n->y
+                $.ajax({
+                    url: "/updateCheckedToY",
+                    success: function (re) {
+                        console.log(re)
+                    }
+                })
+
+            } else {
+                $("#notif_container").css("display", "none")
+            }
+        console.log("cnt_click:",cnt_click)
     })
 
     $(document).on("click",".x",function (){
