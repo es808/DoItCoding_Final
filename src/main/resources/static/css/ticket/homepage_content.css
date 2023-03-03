@@ -237,13 +237,14 @@ button,[type="submit"]{
 }
 .booklist{
     position : relative;
-    left : 23%;
-    margin-bottom : 100px;
+    margin-left : 50px;
+    margin-bottom : 150px;
     width : 800px;
     height : 250px;
     border : 2px solid #dcdcdc;
     border-radius : 40px;
     margin : 60px;
+    <!--z-index : 99;-->
 }
 .booklist img{
     position : relative;
@@ -311,9 +312,9 @@ input[type="checkbox"]{
     height: 32px;
     margin-left: 750px;
     margin-top: 20px;
-    background-color: #dcdcdc;
+    background-color: #08348C;
     border: none;
-    color: #08348C;
+    color: #eeeeee;
     border-radius: 5px;
 }
 
@@ -419,7 +420,7 @@ review_background{
 #review_background{
     position : relative;
     width : 1000px;
-    height : 850px;
+    height : 1000px;
     border : 2px solid grey;
     background-color : #f7f7f7;
     margin-left : 270px;

@@ -1,13 +1,19 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
+import com.example.finalpro.dao.DrawDAO;
+import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Customer;
-import com.example.finalpro.service.CustomerService;
+import com.example.finalpro.entity.Draw;
 import com.example.finalpro.service.CategoryService;
+import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.MyBookVO;
+import com.example.finalpro.vo.MyDrawVO;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +23,29 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @Setter
 public class CustomerController {
+
+    @Autowired
+    private CustomerDAO customerDAO;
+
+    @RequestMapping("/FindCustomer")
+    @ResponseBody
+    public CustomerVO findCustomer(String custid){
+        return DBManager.findByCustid(custid);
+    }
+
     static String code;
 
     @Autowired
@@ -40,10 +61,13 @@ public class CustomerController {
     private CustomerService cs;
 
     @Autowired
-    private CustomerDAO customerDAO;
+    private TicketService ticketService;
 
     @Autowired
-    private TicketService ticketService;
+    private DrawDAO drawDAO;
+
+    @Autowired
+    private SeatDAO seatDAO;
 
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
@@ -145,6 +169,45 @@ public class CustomerController {
 
         }
         return "myPage/myPage";
+    }
+
+//    @GetMapping("/myPageDraw")
+//    public String myPageDraw(Model m) {
+//        DrawController drawController = new DrawController();
+//        String result[] =  drawController.drawResult();
+//        m.addAttribute("list", result);
+//        System.out.println(DBManager.drawLeftSeat(1));
+//
+//        return "myPage/myPageDraw";
+//    }
+
+    @GetMapping("/myPageDraw")
+    public String myPageDraw(HttpSession session, Model m){
+        String custid = (String)session.getAttribute("id");
+        List<MyDrawVO> myDraw = new ArrayList<>();
+        TicketVO myTicket = null;
+
+        List<Draw> list = drawDAO.findByCustid(custid);
+
+        for(Draw d : list){
+            MyDrawVO md = new MyDrawVO();
+            myTicket = DBManager.findByTicketid(d.getTicketid());
+            md.setCustid(d.getCustid());
+            md.setDrawid(d.getDrawid());
+            md.setSeatid(d.getSeatid());
+            md.setTicketid(d.getTicketid());
+            md.setImg_fname(myTicket.getImg_fname());
+            md.setLoc(myTicket.getLoc());
+            md.setTicket_date(myTicket.getTicket_date());
+            md.setTicket_name(myTicket.getTicket_name());
+            md.setSeatname(seatDAO.findById(d.getSeatid()).get().getSeatname());
+            System.out.println(md);
+            myDraw.add(md);
+        }
+
+        m.addAttribute("list",myDraw);
+
+        return "myPage/myPageDraw";
     }
 
     @GetMapping("/test")
@@ -255,56 +318,5 @@ public class CustomerController {
 //        code = ms.sendCodePhone(phone);
         return code;
     }
-
-    //아이디 찾기
-    @RequestMapping("/findCustidForm")
-    public String findCustidForm(){
-        return "/customer/findCustid.html";
-    }
-
-    @RequestMapping("/findCustid")
-    @ResponseBody
-    public CustomerVO findCustid(String name, String phone){
-        System.out.println("이름"+name);
-        System.out.println("전화"+phone);
-        CustomerVO c = DBManager.findCustid(name, phone);
-        System.out.println("검색한 회원의 정보"+c);
-        return c;
-    }
-
-//    //비밀번호 재설정
-//    @RequestMapping("/findPwdForm")
-//    public String findPwdForm(){
-//        return "/customer/findPwd.html";
-//    }
-//
-//    @RequestMapping("/findPwd")
-//    public String findPwd(CustomerVO c, HttpSession session, Model m){
-//        System.out.println("업데이트 컨트롤러 가동:"+c);
-//        c.setPwd(passwordEncoder.encode(c.getPwd()));
-//        System.out.println("암호화:"+c);
-////        c.setRole("customer");
-//
-//        try {
-//            DBManager.
-//        }
-//    }
-
-//    @PostMapping("/myPage")
-//    public String updateCustomer(CustomerVO c, HttpSession session, Model m){
-//        System.out.println("업데이트 컨트롤러 가동:"+c);
-//        c.setPwd(passwordEncoder.encode(c.getPwd()));
-//        System.out.println("암호화 : "+c);
-//        c.setRole("customer");
-//
-//        try{
-//            DBManager.updateCustomer(c);
-//            System.out.println("sessionId = "+session.getAttribute("id"));
-//            myPage(session,m);
-//        }catch (Exception e){
-//
-//        }
-//        return "myPage/myPage";
-//    }
 
 }
