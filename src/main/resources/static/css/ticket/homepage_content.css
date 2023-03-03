@@ -131,7 +131,7 @@
 }
 /* 마이페이지(myinfo) - background */
 #background{
-    position : absolute;
+    position : relative;
     width : 1000px;
     height : 850px;
     border : 2px solid grey;
@@ -139,6 +139,7 @@
     margin-left : 270px;
     margin-top : -400px;
     border-radius : 10px;
+    padding-bottom : 100px;
 }
 #background h2{
     position : absolute;
@@ -148,13 +149,15 @@
     margin-left : 60px;
     margin-top : 50px;
 }
+#background hr{
+    margin-top : 100px;
+}
 /* 마이페이지(myinfo) - 회원정보 수정 */
 #form_updateCustomer{
-    position : relative;
-    margin-left : 270px;
+    position : absolute;
+
     width : 700px;
-    padding-bottom : 300px;
-    margin-bottom : 100px;
+    margin-top : 400px;
 }
 #mypage_hr{
     margin-top : 100px;
@@ -1069,7 +1072,7 @@ h2{
     border : 3px solid #08428C;
     margin-left : 45px;
     margin-top : 20px;
-    background-color : #efefef;
+    background-color : #efefef ;
 }
 #notice_content span{
     margin-left : 10px;

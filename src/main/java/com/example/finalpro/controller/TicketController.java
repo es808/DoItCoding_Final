@@ -4,19 +4,15 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
-import com.example.finalpro.vo.NotificationByCustidVO;
-import com.example.finalpro.vo.NotificationVO;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.RankingVO;
 import com.example.finalpro.vo.TicketVO;
-import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -48,7 +44,7 @@ public class TicketController {
     // 티켓 상세페이지
     @GetMapping("/detail")
     public ModelAndView detail(){
-        ModelAndView mav = new ModelAndView("/detail");
+        ModelAndView mav = new ModelAndView("/ticket/detail");
         return mav;
     }
 
