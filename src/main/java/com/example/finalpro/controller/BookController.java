@@ -5,8 +5,10 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.service.BookService;
+import com.example.finalpro.vo.BookVO;
 import com.example.finalpro.vo.CountGenderVO;
 import com.example.finalpro.vo.CountGenerationVO;
+import com.example.finalpro.vo.MyBookVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,5 +78,19 @@ public class BookController {
         System.out.println("paid_amount:"+paid_amount);
         System.out.println("apply_num:"+apply_num);
         return "OK";
+    }
+
+    // 내 예매내역 출력하기
+    @RequestMapping("/BookByCustid")
+    @ResponseBody
+    public List<MyBookVO> bookByCustid(String custid){
+        return DBManager.bookByCustid(custid);
+    }
+
+    // 내 예매내역 삭제
+    @RequestMapping("/DeleteBook")
+    @ResponseBody
+    public int deleteBook(int bookid){
+        return DBManager.deleteBook(bookid);
     }
 }

@@ -7,10 +7,6 @@
     select * from customer
   </select>
 
-  <select id="findByCustid" resultType="customerVO">
-    select * from customer where custid=#{custid}
-  </select>
-
   <!--updateCustomer 고객 정보 수정하기-->
   <update id="updateCustomer" parameterType="customerVO">
     update customer set cateid=#{cateid}, pwd=#{pwd}, name=#{name}, birth=#{birth},
@@ -64,6 +60,10 @@
   <!-- findCustid 아이디 찾기 -->
   <select id="findCustid" resultType="customerVO">
     select custid from customer where name=#{name} and phone=#{phone}
+  </select>
+
+  <select id="findByCustid" resultType="customerVO">
+    select * from customer where custid=#{custid}
   </select>
 
   <!-- findPwd 비밀번호 재설정 -->

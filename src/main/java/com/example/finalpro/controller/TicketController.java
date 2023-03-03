@@ -50,7 +50,7 @@ public class TicketController {
     @GetMapping("/detail")
     @ResponseBody
     public ModelAndView detail(){
-        ModelAndView mav = new ModelAndView("/detail");
+        ModelAndView mav = new ModelAndView("/ticket/detail");
         return mav;
     }
 

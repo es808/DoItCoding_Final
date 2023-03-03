@@ -2,6 +2,14 @@ package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.vo.CustomerVO;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
@@ -25,6 +33,16 @@ import java.util.Optional;
 @Controller
 @Setter
 public class CustomerController {
+
+    @Autowired
+    private CustomerDAO customerDAO;
+
+    @RequestMapping("/FindCustomer")
+    @ResponseBody
+    public CustomerVO findCustomer(String custid){
+        return DBManager.findByCustid(custid);
+    }
+
     static String code;
 
     @Autowired
@@ -38,9 +56,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerService cs;
-
-    @Autowired
-    private CustomerDAO customerDAO;
 
     @Autowired
     private TicketService ticketService;
@@ -80,7 +95,7 @@ public class CustomerController {
 
     @GetMapping("/")
     public String home() {
-        return "/main";
+        return "main";
     }
 
     @GetMapping("/main")
@@ -151,6 +166,9 @@ public class CustomerController {
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
 
+    @GetMapping("/myPageDraw")
+    public String myPageDraw() { return "myPage/myPageDraw";}
+
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}
 
@@ -170,7 +188,7 @@ public class CustomerController {
             mav.setViewName("/login");
         } catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
-            mav.setViewName("/error");
+            mav.setViewName("error");
         }
 
 		/*
@@ -234,12 +252,10 @@ public class CustomerController {
     @GetMapping("/sendMessage")
     @ResponseBody
     public String sendMessage(String phone){
-        System.out.println("phone:"+phone);
-        code = SendMessage.sendCodePhone(phone);
-        System.out.println("code:"+code);
-
-//        MessageController ms = new MessageController();
-//        code = ms.sendCodePhone(phone);
+        System.out.println(phone);
+        MessageController messageController = new MessageController();
+        code = messageController.sendCodePhone(phone);
+        System.out.println(code);
         return code;
     }
 
@@ -294,4 +310,5 @@ public class CustomerController {
 //        return "myPage/myPage";
 //    }
 
+}
 }
