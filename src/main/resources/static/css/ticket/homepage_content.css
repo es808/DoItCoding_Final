@@ -592,6 +592,9 @@ table{
     color : #F2AE30;
     font-weight : 600;
 }
+#search_title hr{
+    color : red;
+}
 /* 검색결과 내용 */
 .search_result{
     position : relative;
@@ -1065,7 +1068,7 @@ h2{
     margin-top : 100px;
 }
 #regdate{
-    margin-left : 100px;
+    margin-left : 57px;
 }
 #notice_content{
     width : 800px; height : 200px;
@@ -1076,4 +1079,111 @@ h2{
 }
 #notice_content span{
     margin-left : 10px;
+}
+
+#ticketname{
+    margin-left : 300px;
+}
+#answer{
+    margin-left : 450px;
+}
+
+#background_detail_qna{
+    margin-top : 100px;
+    margin-left : 250px;
+    width : 900px; height : 640px;
+    background-color : #f7f7f7;
+    border-radius : 5px;
+    border : 3px solid #08428C;
+}
+#background_detail_qna h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 20px;
+}
+#background_detail_qna hr{
+    top : 70px;
+}
+
+
+
+/* QnA Detail 답변 */
+#background_answer{
+    margin-top : 40px;
+    margin-left : 250px;
+    width : 900px; height : 400px;
+    background-color : #f7f7f7;
+    border-radius : 5px;
+    border : 3px solid #08428C;
+}
+#detail_updatebtn{
+    position : absolute;
+    width : 110px;  height : 35px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    text-align : center;
+    border : none;
+    margin-left : 630px;
+    border-radius : 5px;
+}
+#detail_updatebtn a{
+    color : white;
+    line-height: 35px;
+    font-size : 14px;
+}
+#detail_deletebtn{
+    position : absolute;
+    width : 110px;  height : 35px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #D10505;
+    text-align : center;
+    border : none;
+    color : white;
+    margin-left : 750px;
+    border-radius : 5px;
+}
+#detail_deletebtn a{
+    color : white;
+    line-height: 35px;
+    font-size : 14px;
+}
+#background_answer h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 25px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 20px;
+}
+#background_answer hr{
+    top : 70px;
+}
+.textarea_qna_answer{
+    position : relative;
+    resize:none;
+    width : 800px; height : 200px;
+    border : 3px solid #08428C;
+    background-color : #efefef;
+    margin-left : 40px;
+    margin-top : 100px;
+    font-size : 16px;
+    color : #08428C;
+}
+#answer_submit{
+    position : absolute;
+    width : 110px;  height : 35px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    text-align : center;
+    border : none;
+    color : white;
+    margin-left : 740px;
+    border-radius : 5px;
+    font-size : 14px;
 }

@@ -58,8 +58,8 @@
     <h2>공지사항</h2>
     <hr>
     <div th:if="${session.id=='admin'}">
-        <a th:href="@{'/admin/notice/update/'+${n.notice_no}}">수정</a>
-        <a th:href="@{'/admin/notice/delete/'+${n.notice_no}}" id="delete">삭제</a>
+        <div id="detail_updatebtn"><a th:href="@{'/admin/notice/update/'+${n.notice_no}}">수정</a></div>
+        <div id="detail_deletebtn"><a th:href="@{'/admin/notice/delete/'+${n.notice_no}}" id="delete">삭제</a></div>
     </div>
     <div id="content_detail">
     <span class="title_detail">글번호&nbsp;&nbsp;&nbsp;<span th:text="${n.notice_no}"></span></span>
@@ -72,7 +72,8 @@
     <span class="title_detail">조회수&nbsp;&nbsp;&nbsp;<span th:text="${n.notice_hit}"></span></span><br>
         <br>
     <span class="title_detail">첨부파일&nbsp;&nbsp;&nbsp;<span th:if="${n.notice_fname}!=null">
-        <span th:text="${n.notice_fname}"></span><span th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
+        <span th:text="${n.notice_fname}"></span>
+        <span th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
             <img th:src="@{'/notice_files/'+${n.notice_fname}}">
         </span>
     </span>
