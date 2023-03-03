@@ -74,6 +74,18 @@ button{
     margin-top : 31px;
 }
 
+.imp-dialog customizable payment-kcp pc{
+    margin-top : 600px;
+    margin-left : 600px;
+    position:absolute;
+    top: calc(50% - 75px);
+    left: calc(50% - 75px);
+}
+
+#blockOverlayID{
+    display: none;
+}
+
 <!-- 마우스효과 -->
 button.hover:hover:not(.x){
     background-color : #F2AE30;

@@ -2,6 +2,14 @@ package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.vo.CustomerVO;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
@@ -24,6 +32,16 @@ import java.util.Optional;
 @Controller
 @Setter
 public class CustomerController {
+
+    @Autowired
+    private CustomerDAO customerDAO;
+
+    @RequestMapping("/FindCustomer")
+    @ResponseBody
+    public CustomerVO findCustomer(String custid){
+        return DBManager.findByCustid(custid);
+    }
+
     static String code;
 
     @Autowired
@@ -149,15 +167,6 @@ public class CustomerController {
 
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
-
-    @GetMapping("/myPageDraw")
-    public String myPageDraw(Model m) {
-        DrawController drawController = new DrawController();
-        String result[] =  drawController.drawResult();
-        m.addAttribute("list", result);
-        System.out.println(DBManager.drawLeftSeat(1));
-
-        return "myPage/myPageDraw";}
 
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}

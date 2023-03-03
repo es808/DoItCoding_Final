@@ -14,12 +14,12 @@
 </head>
 <body>
 <div id="background_login">
-    <a class="main" href="mainTest.html">
+    <a class="main" href="main">
         <img th:src="@{/image/homeicon.png}" width="40" height="40"></a>
 </div>
 <div>
     <form action="/login" method="post">
-        <img src="/image/logo.png" id="logo">
+        <img src="/image/icon/logo.png" id="logo">
         <h2>Login</h2>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <ul>

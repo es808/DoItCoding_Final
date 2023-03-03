@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script th:src="@{/js/notice/detail.js}"></script>
+</head>
+<body>
+    <div th:if="${session.id=='admin'}">
+        <a th:href="@{'/admin/notice/update/'+${n.notice_no}}">수정</a>
+        <a th:href="@{'/admin/notice/delete/'+${n.notice_no}}" id="delete">삭제</a>
+    </div>
+    <div th:text="${n.notice_no}"></div>
+    <div th:text="${n.notice_category}"></div>
+    <div th:text="${n.notice_title}"></div>
+    <div th:text="${n.notice_content}"></div>
+    <div th:text="${n.notice_hit}"></div>
+    <div th:text="${n.notice_date}"></div>
+    <div th:if="${n.notice_fname}!=null">
+        <div th:text="${n.notice_fname}"></div>
+        <div th:if="${#strings.endsWith(n.notice_fname,'.jpg')} or ${#strings.endsWith(n.notice_fname,'.png')} or ${#strings.endsWith(n.notice_fname,'.gif')}">
+            <img th:src="@{'/notice_files/'+${n.notice_fname}}">
+        </div>
+    </div>
+</body>
+</html>

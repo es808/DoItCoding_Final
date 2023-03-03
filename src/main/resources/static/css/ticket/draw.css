@@ -16,15 +16,15 @@ div{
 <!-- 좌석 -->
 #background{
     width : 600px;  height : 450px;
-    background-color : white;
+    background-color : #ffffff;
     border : 2px solid gray;
     border-radius : 10px 10px 10px 10px;
 }
 #screen{
     position : relative;
-    left : 290px; top : 50px;
+    left : 200px; top : -150px;
     margin : 10px;
-    width : 500px; height: 40px;
+    width : 400px; height: 40px;
     line-height : 40px;
     text-align : center;
     background-color : #08348C;
@@ -42,11 +42,11 @@ button{
 }
 <!-- 좌석 선택 -->
 .seat_status{
-    position : absolute;
+    position : relative;
     width : 100px;
-    font-size : 13px;
-    margin-top : 155px;
-    margin-left : 230px;
+    font-size : 12px;
+    margin-top : 240px;
+    margin-left : 400px;
     border : 2px solid gray;
     border-radius : 10px;
 }
@@ -61,7 +61,7 @@ button{
     margin-top : -30px;
 }
 .seat_status>#check{
-    background-color : #ff7f00;
+    background-color : #F2AE30;
     width : 12px;
     height : 12px;
     margin-left : -30px;
@@ -76,10 +76,10 @@ button{
 
 <!-- 마우스효과 -->
 button.hover:hover:not(.x){
-    background-color : #ff7f00;
+    background-color : #F2AE30;
 }
 button.active:not(.x){
-    background-color : #ff7f00;
+    background-color : #F2AE30;
     color : #08348C;
     font-weight : 700;
 }
@@ -90,6 +90,6 @@ button.active:not(.x){
 #insertBtn{
     width : 100px; height : 35px;
     position : absolute;
-    margin-top : 320px;
-    margin-left : 250px;
+    margin-top : 140px;
+    margin-left : 160px;
 }

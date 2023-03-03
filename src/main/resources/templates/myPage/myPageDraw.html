@@ -159,6 +159,7 @@
             }// 검색 end
 
             searchKeyword();
+<<<<<<< HEAD
             $(document).on('click', '#btn_phoneconfirm', function(){ // 전화번호 중복
                 var phone = $("#phone").val();
                 var url = "ConfirmCustomerPhone";
@@ -190,6 +191,23 @@
     <a href="/logout" id="logout"><img src="./image/logouticon.png">로그아웃</a>
     <a href="signUp" id="regist"><img src="./image/signupicon.png">회원가입</a>
     <a href="myPage" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
+=======
+            $("#logout").click(function(){
+                sessionStorage.removeItem("custid");
+            });
+
+        })
+
+    </script>
+</head>
+<body class="main_layout">
+<a href="mainTest.html"><img src="./image/logo.png" id="logo"></a>
+<div class="main_user">
+    <a href="loginTest.html" id="login"><img src="./image/loginicon.png">로그인</a>
+    <a href="mainTest.html" id="logout"><img src="./image/logouticon.png">로그아웃</a>
+    <a href="signupTest.html" id="regist"><img src="./image/signupicon.png">회원가입</a>
+    <a href="mypage_Info.html" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
+>>>>>>> origin/MyungJin
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
@@ -231,8 +249,13 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
+<<<<<<< HEAD
         <li id="myinfo"><a href="mypage_Info.html">내 정보</a></li>
         <li><a href="mypage_Book.html">예매내역</a></li>
+=======
+        <li><a href="mypage_Info.html">내 정보</a></li>
+        <li id="mybook"><a href="mypage_Book.html">예매내역</a></li>
+>>>>>>> origin/MyungJin
         <li><a href="mypage_Draw.html">드로우내역</a></li>
         <li><a href="mypage_Review.html">내 후기</a></li>
     </ul>

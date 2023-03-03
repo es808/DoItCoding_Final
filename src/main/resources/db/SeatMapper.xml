@@ -32,5 +32,9 @@
     update seat set check_seat='y' where seatid=#{seatid}
   </update>
 
+  <!-- 좌석취소 -->
+  <update id="cancleSeat" parameterType="int">
+    update seat set check_seat='n' where seatid=#{seatid}
+  </update>
 
 </mapper>

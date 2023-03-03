@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/qna/detail.js}"></script>
+</head>
+<body>
+  <!--  수정/삭제 (작성자만 가능) (전체 글을 수정/삭제하는 것) -->
+  <div th:if="${session.id}==${q.customer.custid} or ${session.id}=='admin'">
+    <a th:href="@{'/qna/update/'+${q.qna_no}}">수정</a>
+    <a th:href="@{'/qna/delete/'+${q.qna_no}}" id="a_delete">삭제</a>
+  </div>
+  <div th:text="${q.qna_no}" id="qna_no"></div>
+  <div th:text="${q.customer.name}"></div>
+  <div th:text="${q.customer.custid}" id="div_custid"></div>
+  <div th:text="${q.qna_category}"></div>
+  <div th:text="${q.qna_title}"></div>
+  <div th:text="${q.qna_content}"></div>
+  <div th:text="${q.qna_hit}"></div>
+  <div th:text="${q.qna_date}"></div>
+  <div th:text="${q.qna_open}"></div>
+  <div th:text="${q.qna_answer}" id="div_qna_answer"></div>
+  <div th:text="${q.ticket.ticketid}"></div>
+  <div th:text="${q.ticket.ticket_name}"></div>
+  <div th:if="${q.qna_fname}!=null">
+    <div th:text="${q.qna_fname}"></div>
+    <div th:if="${#strings.endsWith(q.qna_fname,'.jpg')} or ${#strings.endsWith(q.qna_fname,'.png')} or ${#strings.endsWith(q.qna_fname,'.gif')}">
+      <img th:src="@{'/qna_files/'+${q.qna_fname}}">
+    </div>
+  </div>
+
+  <!-- 답글 작성/수정 (admin만 가능) (전체 글이 아니라 답글만 작성/수정하는 것) -->
+  <div th:if="${session.id}=='admin'">
+    <div>답글 작성/수정(원래 답글 있으면 새로운 내용으로 수정됨)</div>
+    <div th:if="${q.qna_answer}==null">
+      <textarea rows="7" cols="40" class="textarea_qna_answer"></textarea>
+    </div>
+    <div th:unless="${q.qna_answer}==null">
+      <textarea rows="7" cols="40" class="textarea_qna_answer" th:text="${q.qna_answer}"></textarea>
+    </div>
+    <button id="answer_submit">등록</button>
+    <button id="answer_delete">삭제</button>
+<!--    <a th:href="@{'/qna_notification_email/'+${q.customer.custid}}">알림 메일 보내기</a>-->
+  </div>
+
+</body>
+</html>
