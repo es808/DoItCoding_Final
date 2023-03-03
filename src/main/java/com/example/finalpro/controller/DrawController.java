@@ -59,11 +59,12 @@ public class DrawController {
     //드로우 가동
     @GetMapping("/drawExec")
     @ResponseBody
-    public String drawTest2(){
+    public String drawExec(){
         int count = DBManager.findLeftSeatByTicketid(1);
         List<DrawVO> draw = drawList(1);
         System.out.println("드로우 사이즈:"+draw.size());
         String custidArr[] = new String[count];           //드로우에 당첨된 회원아이디 저장
+        Random r = new Random();
 
         int seatArr[] = leftSeat(1);
 
@@ -77,7 +78,6 @@ public class DrawController {
         }
 
         for (int i = 0; i < count; i++){
-            Random r = new Random();
             int number = r.nextInt(list.size());        //랜덤함수를 드로우를 신청한 회원 수 만큼의 크기로 설정
             custidArr[i] = list.get(number).getCustid();      //랜덤함수에 배정된 회원아이디를 배열에 저장
             lucker[i] = custidArr[i];
