@@ -1,6 +1,8 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
+import com.example.finalpro.dao.DrawDAO;
+import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.vo.CustomerVO;
 import lombok.Setter;
@@ -13,8 +15,12 @@ import java.util.List;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
+import com.example.finalpro.entity.Draw;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.MyBookVO;
+import com.example.finalpro.vo.MyDrawVO;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +30,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -56,9 +67,14 @@ public class CustomerController {
     @Autowired
     private CustomerService cs;
 
-
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private DrawDAO drawDAO;
+
+    @Autowired
+    private SeatDAO seatDAO;
 
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
@@ -158,6 +174,45 @@ public class CustomerController {
         return "myPage/myPage";
     }
 
+//    @GetMapping("/myPageDraw")
+//    public String myPageDraw(Model m) {
+//        DrawController drawController = new DrawController();
+//        String result[] =  drawController.drawResult();
+//        m.addAttribute("list", result);
+//        System.out.println(DBManager.drawLeftSeat(1));
+//
+//        return "myPage/myPageDraw";
+//    }
+
+    @GetMapping("/myPageDraw")
+    public String myPageDraw(HttpSession session, Model m){
+        String custid = (String)session.getAttribute("id");
+        List<MyDrawVO> myDraw = new ArrayList<>();
+        TicketVO myTicket = null;
+
+        List<Draw> list = drawDAO.findByCustid(custid);
+
+        for(Draw d : list){
+            MyDrawVO md = new MyDrawVO();
+            myTicket = DBManager.findByTicketid(d.getTicketid());
+            md.setCustid(d.getCustid());
+            md.setDrawid(d.getDrawid());
+            md.setSeatid(d.getSeatid());
+            md.setTicketid(d.getTicketid());
+            md.setImg_fname(myTicket.getImg_fname());
+            md.setLoc(myTicket.getLoc());
+            md.setTicket_date(myTicket.getTicket_date());
+            md.setTicket_name(myTicket.getTicket_name());
+            md.setSeatname(seatDAO.findById(d.getSeatid()).get().getSeatname());
+            System.out.println(md);
+            myDraw.add(md);
+        }
+
+        m.addAttribute("list",myDraw);
+
+        return "myPage/myPageDraw";
+    }
+
     @GetMapping("/test")
     public String test(){
         return "list";
@@ -165,15 +220,6 @@ public class CustomerController {
 
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
-
-    @GetMapping("/myPageDraw")
-    public String myPageDraw(Model m) {
-        DrawController drawController = new DrawController();
-        String result[] =  drawController.drawResult();
-        m.addAttribute("list", result);
-        System.out.println(DBManager.drawLeftSeat(1));
-
-        return "myPage/myPageDraw";}
 
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}
@@ -196,14 +242,6 @@ public class CustomerController {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
             mav.setViewName("error");
         }
-
-		/*
-		memberDAO.save(m);
-		Optional<Member> obj = memberDAO.findById(m.getId());
-		if(obj.isEmpty()) {
-			mav.addObject("msg", "회원가입에 실패하였습니다.");
-			mav.setViewName("error");
-		}*/
         return mav;
     }
 

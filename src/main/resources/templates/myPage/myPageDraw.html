@@ -18,7 +18,6 @@
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
 
-
             if (custid != null) {
                 $("#login").css('display', 'none');
                 $("#regist").css('display', 'none');
@@ -116,23 +115,20 @@
             }// 검색 end
 
             searchKeyword();
-
         })
     </script>
 </head>
 <body class="mypage_layout">
 <a href="/main"><img src="images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
-    <a href="/logout" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
-    <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
-    <a href="/myPage" id="mypage"><img src="images/icon/mypageicon.png">마이페이지</a>
+    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/myPage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
-    <div class="search" id="search" name="search">
-        <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
-    </div>
+    <form action="" method="post" class="search">
+        <input class="search_txt" type="search" placeholder="검색어 입력...">
+        <a class="search_btn" href="example.html"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
+    </form>
     <ul>
         <li class="home"><a href="/main">홈</a></li>
         <li><a href="#">시사회</a>
@@ -168,33 +164,28 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li id="myinfo"><a href="/myPage">내 정보</a></li>
-        <li><a href="/myPageBook">예매내역</a></li>
-        <li><a href="/myPageDraw">드로우내역</a></li>
-        <li><a href="/myPageReview">내 후기</a></li>
+        <li><a href="myPage">내 정보</a></li>
+        <li><a href="myPageBook">예매내역</a></li>
+        <li id="mydraw"><a href="myPageDraw">드로우내역</a></li>
+        <li><a href="myPageReview">내 후기</a></li>
     </ul>
 </div>
-<div id="background">
-    <h2>드로우 조회</h2>
-    <hr>
-</div>
-<h1>드로우 당첨 회원 목록</h1>
-<form method="post" id="form_updateCustomer">
-    <table border="1" width="th" >
-        <thead>
-        <tr>
-            <th>아이디</th>
-        </tr>
-        </thead>
-        <tbody th:each="d:${list}">
-        <tr>
-            <td th:text="${d}"></td>
-        </tr>
-        </tbody>
-    </table>
+<form action="" method="post" id="form">
+    <div class="drawlist">
+        <ul th:each="d:${list}">
+            <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
+            <li>드로우번호 :<span th:text ="${d.drawid}"/> </li>
+            <li>제목 : <span th:text="${d.ticket_name}"/></li>
+            <li>관람일 : <span th:text="${d.ticket_date}"/></li>
+            <li>상영관 : <span th:text="${d.loc}"/></li>
+            <li>관람좌석 : <span th:text="${d.seatname}"/></li>
+        </ul>
+        <button>결과확인</button>
+        <input type="checkbox" id="check2">
+        <label for="check2"></label>
+    </div>
 </form>
-
-<div id="main-footer">
+<div id="main-footer" class = "footer">
     <footer>
         <div>Footer</div>
     </footer>
