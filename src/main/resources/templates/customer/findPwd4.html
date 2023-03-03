@@ -214,23 +214,28 @@
     })
 
     $("#btn_updatePwd2").click(function(e){  //이메일로 비밀번호 재설정
-      console.log("비밀번호 재설정")
-      var url = "updatePwdbyEmail"
-      var custid = $("#custid2").val()
-      var email = $("#email").val()
-      var pwd = $("#pwd2").val()
+      var url = "updatePwdbyEmail";
+      var custid = $("#custid2").val();
+      var email = $("#email").val();
+      var pwd = $("#pwd2").val();
 
-      var data = {custid:custid, email:email, pwd:pwd}
+      data = {custid:custid, phone:phone, pwd:pwd}
+
+      if (checkPwd(pwd) == false) { //비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료
+        return false;
+      }
+
+      if (confirmPwd() == false) {  // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료
+        return false;
+      }
 
       $.ajax({
         url:url,
         data:data,
         success:function(){
-          console.log("비밀번호 재설정함!")
           location.href="/login"
         }
-      })
-
+      });
     });
 
     var confirmPwd = function () {  //pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
