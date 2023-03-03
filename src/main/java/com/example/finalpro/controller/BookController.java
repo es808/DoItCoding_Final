@@ -52,4 +52,11 @@ public class BookController {
     public int bookTicket(String custid, int ticketid, int seatid){
         return DBManager.bookTicket(custid,ticketid,seatid);
     }
+
+    // 내 예매내역 삭제
+    @RequestMapping("/DeleteBook")
+    @ResponseBody
+    public int deleteBook(int bookid){
+        return DBManager.deleteBook(bookid);
+    }
 }

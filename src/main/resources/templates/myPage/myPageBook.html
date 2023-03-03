@@ -156,14 +156,18 @@
 
                         $(document).on('click', checkbox_delete, function(){ // 체크박스 체크하면 bookid 가져옴
                             var target = this.id;
+                            var bookid_deleteList = [];
                             if($("#"+target).attr('checked', true)){
                                 var bookid_delete = $("#"+target).attr("bookid");
-                                delete_book(bookid_delete);
+                                bookid_deleteList.push(bookid_delete);
+                                delete_book(bookid_deleteList);
                             }
                         });
                     }
                 }
             });
+
+
 
             // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
             var time = 1;
