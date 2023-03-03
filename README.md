@@ -24,8 +24,6 @@
 
   ```maven 의존성 설정 (thymleaf, Spring web, mybatis, jpa, Spring Security, lombok, tomcat)```
   
-  ```maven 의존성 설정 (thymleaf, Spring web, mybatis, jpa, Spring Security, lombok, tomcat)```
-  
 - **2/19**
 
   ```DB구조 생성 및 JPA를 위한 Entity 생성, mybatis를 위한 vo, DBManager, SqlMapper.xml, SqlMapConfig.xml을 생```
