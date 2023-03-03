@@ -96,55 +96,34 @@
     }); // 인증번호 확인 end
 
     $("#btn_updatePwd").click(function(e){    //전화번호로 비밀번호 재설정
-      console.log("확인중")
+      console.log("폰 비번 변경 ok")
       var url = "updatePwdbyPhone";
       var custid = $("#custid").val();
       var phone = $("#phone").val();
       var pwd = $("#pwd").val();
 
-      data = {custid:custid, phone:phone, pwd:pwd}
+      console.log("아이디"+custid)
+      console.log("전화"+phone)
+      console.log("비번"+pwd)
 
-      if (checkPwd(pwd) == false) { // 아이디, 비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료
-        return false;
-      }
-
-      if (confirmPwd() == false) { // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료
-        return false;
-      }
+      var data = {custid:custid, phone:phone, pwd:pwd};
+      console.log(data);
 
       $.ajax({
         url:url,
+        type:"POST",
         data:data,
+        beforeSend : function(xhr)
+        {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+          xhr.setRequestHeader(header, token);
+        },
         success:function(){
-          location.href="/login"
+          alert("비밀번호가 성공적으로 수정되었습니다.");
+          $(location).attr("href","/login");
         }
       });
+      e.preventDefault();
     });
-
-    var checkPwd = function (pwd) {
-      var check_Flag = true;
-
-      var reg_pwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/; // 비번을 대소문자 영어, 숫자, 특수문자까지 필수 입력
-
-      if (!reg_pwd.test(pwd)) {
-        alert("비밀번호는 대소문자를 포함한 영어, 숫자, 특수문자를 6글자 이상 입력하세요");
-        check_Flag = false;
-      }
-
-      return check_Flag;
-    } // check 비밀번호 적합성 end
-
-    var confirmPwd = function () { // pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
-      var confirm_Flag = true;
-
-      if ($("#pwd").val() != $("#pwd_confirm").val()) {
-        alert("비밀번호가 일치하지 않습니다");
-        confirm_Flag = false;
-      }
-
-      return confirm_Flag;
-
-    }; // confirm 패스워드 end
 
 
   }) // 전체 $(function)

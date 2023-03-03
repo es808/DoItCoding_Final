@@ -128,6 +128,17 @@
             <artifactId>jaxrpc-api</artifactId>
             <version>1.1</version>
         </dependency>
+
+        <!-- 이메일 전송 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>6.0.5</version>
+        </dependency>
     </dependencies>
 
     <build>

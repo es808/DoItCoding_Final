@@ -259,39 +259,51 @@ public class CustomerController {
         return c;
     }
 
-//    //비밀번호 재설정
-//    @RequestMapping("/findPwdForm")
-//    public String findPwdForm(){
-//        return "/customer/findPwd.html";
-//    }
-//
-//    @RequestMapping("/findPwd")
-//    public String findPwd(CustomerVO c, HttpSession session, Model m){
-//        System.out.println("업데이트 컨트롤러 가동:"+c);
-//        c.setPwd(passwordEncoder.encode(c.getPwd()));
-//        System.out.println("암호화:"+c);
-////        c.setRole("customer");
-//
-//        try {
-//            DBManager.
-//        }
-//    }
+    //전화번호로 개인정보 확인
+    @RequestMapping("/findPwdForm")
+    public String checkByPhoneForm(){
+        return "/customer/findPwd.html";
+    }
 
-//    @PostMapping("/myPage")
-//    public String updateCustomer(CustomerVO c, HttpSession session, Model m){
-//        System.out.println("업데이트 컨트롤러 가동:"+c);
-//        c.setPwd(passwordEncoder.encode(c.getPwd()));
-//        System.out.println("암호화 : "+c);
-//        c.setRole("customer");
-//
-//        try{
-//            DBManager.updateCustomer(c);
-//            System.out.println("sessionId = "+session.getAttribute("id"));
-//            myPage(session,m);
-//        }catch (Exception e){
-//
-//        }
-//        return "myPage/myPage";
-//    }
+    @RequestMapping("/checkByPhone")
+    @ResponseBody
+    public CustomerVO checkByPhone(String custid, String phone){
+        System.out.println("아이디"+custid);
+        System.out.println("전화"+phone);
+        CustomerVO c = DBManager.checkByPhone(custid, phone);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
 
+    //전화번호로 비밀번호 재설정
+    @RequestMapping("/updatePwdbyPhone")
+    public String updatePwdbyPhone(CustomerVO c){
+        System.out.println("아이디"+c.getCustid());
+        System.out.println("전화"+c.getPhone());
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("암호화:"+c );
+
+        try{
+            DBManager.updatePwdbyPhone(c);
+        }catch(Exception e){
+            System.out.println("예외발생:"+e.getMessage());
+        }
+        return "/login";
+    }
+
+    //이메일로 개인정보 확인
+    @RequestMapping("/checkByEmailForm")
+    public String checkByEmailForm(){
+        return "/customer/findPwd.html";
+    }
+
+    @RequestMapping("/checkByEmail")
+    @ResponseBody
+    public CustomerVO checkByEmail(String custid, String email){
+        System.out.println("아이디"+custid);
+        System.out.println("전화"+email);
+        CustomerVO c = DBManager.checkByPhone(custid, email);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
 }
