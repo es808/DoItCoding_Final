@@ -15,9 +15,9 @@
  - ORM : MyBatis, JPA
  - Framework : SpringBoot(3.0)
 
+<hr>
 ### 📝 프로젝트 기록(조영민)
 - **2/15**
-
 
   ```Spring security (login, signup) 설정 완료.```
 - **2/17**
