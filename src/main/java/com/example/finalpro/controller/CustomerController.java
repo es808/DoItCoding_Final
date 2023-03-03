@@ -10,6 +10,7 @@ import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.DrawVO;
 import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
@@ -165,15 +166,6 @@ public class CustomerController {
         return "myPage/myPage";
     }
 
-//    @GetMapping("/myPageDraw")
-//    public String myPageDraw(Model m) {
-//        DrawController drawController = new DrawController();
-//        String result[] =  drawController.drawResult();
-//        m.addAttribute("list", result);
-//        System.out.println(DBManager.drawLeftSeat(1));
-//
-//        return "myPage/myPageDraw";
-//    }
 
     @GetMapping("/myPageDraw")
     public String myPageDraw(HttpSession session, Model m){
@@ -181,12 +173,13 @@ public class CustomerController {
         List<MyDrawVO> myDraw = new ArrayList<>();
         TicketVO myTicket = null;
 
-        List<Draw> list = drawDAO.findByCustid(custid);
+        List<DrawVO> list = DBManager.findByDrawCustid(custid);
 
-        for(Draw d : list){
+        for(DrawVO d : list) {
             MyDrawVO md = new MyDrawVO();
             myTicket = DBManager.findByTicketid(d.getTicketid());
             md.setCustid(d.getCustid());
+            md.setDrawid(d.getDrawid());
             md.setDrawid(d.getDrawid());
             md.setSeatid(d.getSeatid());
             md.setTicketid(d.getTicketid());
@@ -194,7 +187,13 @@ public class CustomerController {
             md.setLoc(myTicket.getLoc());
             md.setTicket_date(myTicket.getTicket_date());
             md.setTicket_name(myTicket.getTicket_name());
-            md.setSeatname(seatDAO.findById(d.getSeatid()).get().getSeatname());
+
+            if(d.getSeatid() != 0){
+                md.setSeatname(seatDAO.findById(d.getSeatid()).get().getSeatname());
+            }else{
+                md.setSeatname("none");
+            }
+
             System.out.println(md);
             myDraw.add(md);
         }

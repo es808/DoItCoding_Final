@@ -28,4 +28,8 @@
     update draw set seatid = null where ticketid = #{ticektid}
   </update>
 
+  <select id="findByDrawCustid" resultType="drawVO">
+    select * from draw where custid = #{custid}
+  </select>
+
 </mapper>

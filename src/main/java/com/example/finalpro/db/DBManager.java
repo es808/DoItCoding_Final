@@ -649,4 +649,20 @@ public class DBManager {
 	}
 
 
+	public static String findBySeatId(int seatid) {
+		String re = "none";
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.selectOne("seat.findBySeatId",seatid);
+		System.out.println("seatName:"+re);
+		session.close();
+		return re;
+	}
+
+	public static List<DrawVO> findByDrawCustid(String custid) {
+		List<DrawVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		list = session.selectList("findByDrawCustid", custid);
+		session.close();
+		return list;
+	}
 }
