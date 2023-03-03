@@ -87,7 +87,8 @@
                                                                     if (final > 0) {
                                                                         // 예약완료 문자 발송 여기!
                                                                         alert("예약 성공!");
-                                                                        $(location).attr('href',"/detail?ticketid"+ticketid);
+                                                                        window.close();
+                                                                        //$(location).attr('href',"/detail?ticketid"+ticketid);
                                                                     }else{
                                                                         alert("예약에 실패하였습니다. 다시 시도해주세요.");
                                                                     }
@@ -108,7 +109,6 @@
                     })
                 }
             })
-
         });
     </script>
 </head>

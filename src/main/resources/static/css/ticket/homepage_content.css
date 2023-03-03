@@ -320,10 +320,11 @@ input[type="checkbox"]{
 /* 마이페이지(draw) - 예매 내역 */
 .drawlist{
     position : relative;
-    left : 23%;
+    left : 10px;
+    padding-bottom : 100px;
     margin-bottom : 100px;
     width : 800px;
-    height : 250px;
+    height : 150px;
     border : 2px solid #dcdcdc;
     border-radius : 40px;
     margin : 60px;
@@ -338,7 +339,7 @@ input[type="checkbox"]{
 .drawlist li{
     position : relative;
     margin : 18px;
-    left : 170px;
+    left : 210px;
     bottom : 260px;
     color : #091140;
 }
@@ -351,7 +352,7 @@ input[type="checkbox"]{
 .drawlist button{
     position : relative;
     width : 100px;  height : 32px;
-    left : 670px;
+    left : 650px;
     bottom : 410px;
     background-color : #08348C;
     border : none;
