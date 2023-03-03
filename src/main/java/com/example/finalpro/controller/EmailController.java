@@ -1,6 +1,10 @@
 package com.example.finalpro.controller;
 
+import com.example.finalpro.db.DBManager;
 import com.example.finalpro.service.EmailService;
+
+import com.example.finalpro.vo.BookVO;
+import com.example.finalpro.vo.TicketVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +17,7 @@ public class EmailController {
     private EmailService emailService;
 
     @GetMapping("/sendEmailCode")
-    public String sendEmailCode(){
+    public String sendEmailCode(String email){
 
         String code  = "";
         Random r = new Random();
@@ -24,7 +28,8 @@ public class EmailController {
         code += r.nextInt(10);
         code += r.nextInt(10);
 
-        emailService.sendEmail("haesam92@naver.com", "[T-CATCH] 비밀번호 재설정 인증코드", code+"를 입력해주세요.");
+        emailService.sendEmail(email, "[T-CATCH] 비밀번호 재설정 인증코드", code+"를 입력해주세요.");
         return code;
     }
+
 }

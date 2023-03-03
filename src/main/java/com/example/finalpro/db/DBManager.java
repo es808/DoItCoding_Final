@@ -648,5 +648,4 @@ public class DBManager {
 		session.close();
 		return re;
 	}
-
 }
