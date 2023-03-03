@@ -15,7 +15,6 @@ public class CustomerVO {
     private String birth;
     private String email;
     private String phone;
-
     private String addr_postcode;
     private String addr_address;
     private String addr_detail;

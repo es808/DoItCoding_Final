@@ -37,4 +37,8 @@
     update seat set check_seat='n' where seatid=#{seatid}
   </update>
 
+  <select id="findBySeatId" resultType="String">
+    select seatname from seat where seatid = #{seatid}
+  </select>
+
 </mapper>
