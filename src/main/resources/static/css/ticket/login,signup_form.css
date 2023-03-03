@@ -8,7 +8,7 @@ a{
 li{
     list-style: none;
 }
-div,table{
+div,table,#form_find{
     position: absolute;
     top:50%;
     left: 50%;
@@ -384,15 +384,24 @@ button.active:not(.x){
 
 /* 아이디 찾기 */
 #form_find img{
-    position : relative;
-    width: 370px;
-    height: 110px;
-    margin-left : -130px;
-    top : -220px;
+    margin-top : -140px;
 }
-#form_find h2{
-    width : 200px;
-    position : absolute;
-    margin-left : -40px;
-    margin-top : -100px;
+#form_find table{
+    width : 100%;
+    margin-left : 90px;
+}
+#form_find #btn_findCustid{
+    margin-left : 140px;
+    margin-top : 110px;
+}
+#btn_findCustid{
+    width : 110px;  height : 35px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    text-align : center;
+    border : none;
+    color : white;
+    border-radius : 5px;
+    font-size : 14px;
 }

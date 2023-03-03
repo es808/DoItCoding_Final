@@ -118,11 +118,14 @@
         })
     </script>
 </head>
-<body class="mypage_layout">
+<body class="main_layout">
 <a href="/main"><img src="images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
-    <a href="/myPage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+    <a href="/ticket/notice" id="center"><img src="/images/icon/center.png">고객센터</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <form action="" method="post" class="search">
@@ -164,14 +167,16 @@
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li><a href="myPage">내 정보</a></li>
-        <li><a href="myPageBook">예매내역</a></li>
-        <li id="mydraw"><a href="myPageDraw">드로우내역</a></li>
-        <li><a href="myPageReview">내 후기</a></li>
+        <li><a href="/myPage">내 정보</a></li>
+        <li><a href="/myPageBook">예매내역</a></li>
+        <li id="mydraw"><a href="/myPageDraw">드로우내역</a></li>
+        <li><a href="/myPageReview">내 후기</a></li>
+        <li><a href="/myPageQnA">내 문의내역</a></li>
     </ul>
 </div>
-<form action="" method="post" id="form">
-    <div class="drawlist">
+<div id="review_background">
+    <form action="" method="post" id="form">
+    <div class="drawList">
         <ul th:each="d:${list}">
             <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
             <li>드로우번호 :<span th:text ="${d.drawid}"/> </li>
@@ -185,9 +190,10 @@
         <label for="check2"></label>
     </div>
 </form>
+</div>
 <div id="main-footer">
     <footer class = "footer">
-        <div>Footer</div>
+        <div>ⓒ CodingDoit corp.</div>
     </footer>
 </div>
 </body>

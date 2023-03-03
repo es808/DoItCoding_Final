@@ -226,15 +226,6 @@ public class CustomerController {
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
 
-    @GetMapping("/myPageDraw")
-    public String myPageDraw(Model m) {
-        DrawController drawController = new DrawController();
-        String result[] =  drawController.drawResult();
-        m.addAttribute("list", result);
-        System.out.println(DBManager.drawLeftSeat(1));
-
-        return "myPage/myPageDraw";}
-
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}
 
@@ -326,5 +317,27 @@ public class CustomerController {
 //        code = ms.sendCodePhone(phone);
         return code;
     }
+    //아이디 찾기
+    @RequestMapping("/findCustidForm")
+    public String findCustidForm(){
+        return "/customer/findCustid.html";
+    }
+
+    @RequestMapping("/findCustid")
+    @ResponseBody
+    public CustomerVO findCustid(String name, String phone){
+        System.out.println("이름"+name);
+        System.out.println("전화"+phone);
+        CustomerVO c = DBManager.findCustid(name, phone);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
+
+    //전화번호로 개인정보 확인
+    @RequestMapping("/findPwdForm")
+    public String checkByPhoneForm(){
+        return "/customer/findPwd.html";
+    }
+
 
 }

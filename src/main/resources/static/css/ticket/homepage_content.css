@@ -325,37 +325,36 @@ input[type="checkbox"]{
     color : #08428C;
     background-color : #dcdcdc;
 }
-.drawlist{
-    position : relative;
-    left : 23%;
-    margin-bottom : 100px;
+.drawList{
+    position : absolute;
+    top : -10px; right : 60px;
     width : 800px;
     height : 250px;
     border : 2px solid #dcdcdc;
     border-radius : 40px;
     margin : 60px;
 }
-.drawlist img{
+.drawList img{
     position : relative;
     border-radius : 40px;
     right : 8px;
     bottom : 2px;
     border : 1px solid #dcdcdc;
 }
-.drawlist li{
+.drawList li{
     position : relative;
     margin : 18px;
     left : 170px;
     bottom : 260px;
     color : #091140;
 }
-.drawlist h2{
+.drawList h2{
     position : relative;
     left : 222px;
     bottom : 265px;
     color : #08348C;
 }
-.drawlist button{
+.drawList button{
     position : relative;
     width : 100px;  height : 32px;
     left : 670px;
@@ -365,12 +364,13 @@ input[type="checkbox"]{
     color : white;
     border-radius : 5px;
 }
-.drawlist button:hover{
+.drawList button:hover{
     background-color : #F2AE30;
     color : #08348C;
     transition-duration: 0.5s;
 }
-input[type="checkbox"]+label{
+.drawList input[type="checkbox"]+label{
+    z-index : 100;
     display: inline-block;
     position : relative;
     width : 50px; height : 50px;
