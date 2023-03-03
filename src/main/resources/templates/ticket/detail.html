@@ -250,9 +250,9 @@
                                 console.log("open:"+open);
                                 console.log("today:"+today);
 
-                                if(open <= today && today < close){
-                                    console.log("드로우날짜가:"+"OK");
-                                    $("#btndraw").css({
+                                if(open <= today < close){
+                                    console.log("OK");
+                                    $("#btndraw").removeAttr("disabled").css({
                                         "border":"1px solid #ff7f00",
                                         "background-color":"#ff7f00",
                                         "display":"inline"
@@ -263,6 +263,7 @@
                                         location.replace(url);
                                     });
                                 }
+
                             }
                         });
                     }

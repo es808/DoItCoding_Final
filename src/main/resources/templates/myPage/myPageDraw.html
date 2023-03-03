@@ -58,7 +58,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time=" + time + "?cateid=" + cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -74,7 +74,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time=" + time + "?cateid=" + cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -90,7 +90,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "categoryPage.html?time=" + time + "?cateid=" + cateid;
+                    var url = "category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -101,7 +101,7 @@
                     if (e.which == 13) {
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "searchPage.html?keyword=" + keyword;
+                        var url = "search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -109,12 +109,29 @@
                 $("#search_btn").click(function () { // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "searchPage.html?keyword=" + keyword;
+                    var url = "search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
 
             searchKeyword();
+
+            //결제하기 버튼 누르면 regist2로 이동
+            $(document).on('click', '#pay_btn', function() { // 전화번호 중복
+                sessionStorage.setItem("ticketid",$("#ticketid").html());
+                sessionStorage.setItem("custid",custid);
+                sessionStorage.setItem("as",$("#seatid").html());
+                window.open('/regist2');
+
+                //결제하면 드로우 테이블에서 삭제
+                $.ajax({
+                    url:"drawDelete",
+                    data:{drawid:$("#drawid").html()},
+                    success:function (){
+                        location.reload();
+                    }
+                })
+            });
         })
     </script>
 </head>
@@ -127,44 +144,69 @@
 <nav id="navigation">
     <form action="" method="post" class="search">
         <input class="search_txt" type="search" placeholder="검색어 입력...">
-        <a class="search_btn" href="example.html"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" href="example.html"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
     </form>
     <ul>
-        <li class="home"><a href="mainTest.jsp">홈</a></li>
-        <li><a href="#">시사회</a></li>
-        <li><a href="#">뮤지컬</a></li>
-        <li><a href="#">연극</a></li>
-        <li><a href="#">콘서트</a></li>
+        <li class="home"><a href="/main">홈</a></li>
+        <li><a href="#">시사회</a>
+            <ul>
+                <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+                <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+                <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">뮤지컬</a>
+            <ul>
+                <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+                <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+                <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">연극</a>
+            <ul>
+                <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+                <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+                <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">콘서트</a>
+            <ul>
+                <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+                <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+                <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+            </ul>
+        </li>
     </ul>
 </nav>
 <div id="menu-bar">
     <ul>
         <li id="title">MyPage</li>
-        <li><a href="myPage">내 정보</a></li>
-        <li><a href="myPageBook">예매내역</a></li>
-        <li id="mydraw"><a href="myPageDraw">드로우내역</a></li>
-        <li><a href="myPageReview">내 후기</a></li>
+        <li><a href="/myPage">내 정보</a></li>
+        <li><a href="/myPageBook">예매내역</a></li>
+        <li id="mydraw"><a href="/myPageDraw">드로우내역</a></li>
+        <li><a href="/myPageReview">내 후기</a></li>
     </ul>
 </div>
 <form action="" method="post" id="form">
-    <div class="drawlist">
+
         <ul th:each="d:${list}">
+            <div class="drawlist">
             <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
-            <li>드로우번호 :<span th:text ="${d.drawid}"/> </li>
+            <li>드로우번호 :<span th:text ="${d.drawid}" id="drawid"/> </li>
             <li>제목 : <span th:text="${d.ticket_name}"/></li>
             <li>관람일 : <span th:text="${d.ticket_date}"/></li>
             <li>상영관 : <span th:text="${d.loc}"/></li>
             <li>관람좌석 : <span th:text="${d.seatname}"/></li>
-            <li>test : <span th:text="${d.ticketid}"/></li>
+            <li><span th:text="${d.ticketid}" id="ticketid" hidden="hidden"></span></li>
+            <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
+            <button id="pay_btn" type="button">결제하기</button>
+            </div>
         </ul>
-        <button>결과확인</button>
-        <input type="checkbox" id="check2">
-        <label for="check2"></label>
-    </div>
+
 </form>
-<div id="main-footer" class = "footer">
-    <footer>
-        <div>Footer</div>
+<div id="main-footer">
+    <footer class = "footer">
+        <div>ⓒ CodingDoit corp.</div>
     </footer>
 </div>
 </body>

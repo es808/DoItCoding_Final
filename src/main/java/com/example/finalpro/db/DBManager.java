@@ -648,6 +648,15 @@ public class DBManager {
 		return re;
 	}
 
+	// 드로우 완료
+	public static int drawDelete(int drawid){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("draw.drawDelete",drawid);
+		System.out.println("drawDelete:"+re);
+		session.close();
+		return re;
+	}
 
 	public static String findBySeatId(int seatid) {
 		String re = "none";
