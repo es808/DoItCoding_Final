@@ -379,3 +379,16 @@ button.active:not(.x){
     margin-top : 320px;
     margin-left : 250px;
 }
+
+
+
+/* 아이디 찾기 */
+#logo_find{
+    width: 370px;
+    height: 110px;
+    padding-bottom : 580px;
+}
+#h2_find{
+    position : absolute;
+    padding-bottom : 550px;
+}
