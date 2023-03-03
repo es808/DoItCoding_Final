@@ -13,6 +13,7 @@
 		<typeAlias type="com.example.finalpro.vo.PlaceVO" alias="placeVO"/>
 		<typeAlias type="com.example.finalpro.vo.ReviewVO" alias="reviewVO"/>
 		<typeAlias type="com.example.finalpro.vo.MyReviewVO" alias="myReviewVO"/>
+		<typeAlias type="com.example.finalpro.vo.MyBookVO" alias="myBookVO"/>
 		<typeAlias type="com.example.finalpro.vo.SeatVO" alias="seatVO"/>
 		<typeAlias type="com.example.finalpro.vo.TicketVO" alias="ticketVO"/>
 		<typeAlias type="com.example.finalpro.vo.RankingVO" alias="rankingVO"/>

@@ -28,4 +28,14 @@
     <select id="findTicketidByCuistid" parameterType="java.lang.String" resultType="java.lang.Integer">
         select ticketid from book where custid=#{custid}
     </select>
+
+  <!-- 내 예약내역 출력 -->
+  <select id="bookByCustid" resultType="myBookVO">
+    select bookid, s.seatid, t.ticketid,img_fname, ticket_name,ticket_date, loc, seatname from book b, ticket t, seat s where t.ticketid=b.ticketid and b.seatid = s.seatid and custid=#{custid}
+  </select>
+
+  <!-- 내 예매내역 삭제 -->
+  <delete id="deleteBook" parameterType="int">
+    delete from book where bookid=#{bookid}
+  </delete>
 </mapper>

@@ -42,8 +42,6 @@ public class CustomerController {
         return DBManager.findByCustid(custid);
     }
 
-
-
     static String code;
 
     @Autowired
@@ -57,9 +55,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerService cs;
-
-    @Autowired
-    private CustomerDAO customerDAO;
 
     @Autowired
     private TicketService ticketService;
@@ -169,6 +164,9 @@ public class CustomerController {
 
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
+
+    @GetMapping("/myPageDraw")
+    public String myPageDraw() { return "myPage/myPageDraw";}
 
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}

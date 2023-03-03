@@ -391,6 +391,16 @@ public class DBManager {
 		return re;
 	}
 
+	// 좌석취소
+	public static int cancleSeat(int seatid){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("seat.cancleSeat",seatid);
+		System.out.println("cancleSeat:"+re);
+		session.close();
+		return re;
+	}
+
 	// 티켓예매
 	public static int bookTicket(String custid, int ticketid, int seatid){
 		int re = -1;
@@ -582,4 +592,23 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
+	//마이페이지-내 예매내역 출력
+	public static List<MyBookVO> bookByCustid(String custid){
+		List<MyBookVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("book.bookByCustid",custid);
+		session.close();
+		return list;
+	}
+
+	//마이페이지 - 예매내역 삭제
+	public static int deleteBook(int bookid){
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("book.deleteBook",bookid);
+		session.close();
+		return re;
+	}
+
 }
