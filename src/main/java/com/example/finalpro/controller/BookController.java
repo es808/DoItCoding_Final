@@ -56,12 +56,6 @@ public class BookController {
         return DBManager.bookTicket(custid,ticketid,seatid);
     }
 
-    // 내 예매내역 삭제
-    @RequestMapping("/DeleteBook")
-    @ResponseBody
-    public int deleteBook(int bookid){
-        return DBManager.deleteBook(bookid);
-    }
 
     @RequestMapping("/regist2")
     public ModelAndView regist2(){

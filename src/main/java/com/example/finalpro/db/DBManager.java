@@ -649,12 +649,12 @@ public class DBManager {
 	}
 
 	//마이페이지 - 예매내역 삭제
-	public static int deleteBook(int bookid){
-		int re = 0;
-		SqlSession session = sqlSessionFactory.openSession(true);
-		re = session.delete("book.deleteBook",bookid);
-		session.close();
-		return re;
-	}
+//	public static int deleteBook(int bookid){
+//		int re = 0;
+//		SqlSession session = sqlSessionFactory.openSession(true);
+//		re = session.delete("book.deleteBook",bookid);
+//		session.close();
+//		return re;
+//	}
 
 }

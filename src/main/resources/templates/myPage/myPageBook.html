@@ -186,21 +186,25 @@
                             });
                         }
 
-
+                        let bookid_deleteList = new Set();
                         $(document).on('click', checkbox_delete, function(){ // 체크박스 체크하면 bookid 가져옴
                             number +=1;
                             var target = this.id;
                             console.log("체크박스 누르면타겟은:"+target);
                             console.log("체크박스 누르면:"+number);
+
                             var bookid_delete = $("#"+target).attr("bookid");
-                            console.log(bookid_delete);
+
                             if(number % 2 == 1){
                                 $("#"+target).attr('checked', true);
-                                var bookid_delete = $("#"+target).attr("bookid");
+                                bookid_deleteList.add(bookid_delete);
                                 delete_book(bookid_delete);
+                                console.log(bookid_deleteList);
                             }else {
                                 $("#"+target).attr('checked', false);
+                                bookid_deleteList.delete(bookid_delete);
                                 var bookid_delete = $("#"+target).removeAttr("bookid");
+                                console.log(bookid_deleteList);
                             }
                         });
                     }

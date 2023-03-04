@@ -249,15 +249,15 @@ public class CustomerController {
         return answer;
     }
 
-    @GetMapping("/sendMessage")
-    @ResponseBody
-    public String sendMessage(String phone){
-        System.out.println(phone);
-        MessageController messageController = new MessageController();
-        code = messageController.sendCodePhone(phone);
-        System.out.println(code);
-        return code;
-    }
+//    @GetMapping("/sendMessage")
+//    @ResponseBody
+//    public String sendMessage(String phone){
+//        System.out.println(phone);
+//        MessageController messageController = new MessageController();
+//        code = messageController.sendCodePhone(phone);
+//        System.out.println(code);
+//        return code;
+//    }
 
     //아이디 찾기
     @RequestMapping("/findCustidForm")
@@ -310,5 +310,4 @@ public class CustomerController {
 //        return "myPage/myPage";
 //    }
 
-}
 }
