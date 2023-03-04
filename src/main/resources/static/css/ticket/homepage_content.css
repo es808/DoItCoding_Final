@@ -1196,3 +1196,77 @@ h2{
     border-radius : 5px;
     font-size : 14px;
 }
+
+
+/* notice, QnA 글 등록 */
+.title_insert{
+    font-size : 17px;
+    font-weight : bold;
+    color : #08428C;
+    padding : 40px;
+    margin-top : 10px;
+}
+.textarea_insert{
+    position : relative;
+    resize:none;
+    width : 800px; height : 200px;
+    border : 2px solid #08428C;
+    background-color : #efefef;
+    margin-left : 40px;
+    margin-top : 10px;
+}
+#insert_title{
+    position : relative;
+    border : 2px solid #08428C;
+    background-color : #efefef;
+    width : 150px; height : 25px;
+}
+.insert_select{
+    border : 2px solid #08428C;
+    background-color : #08428C;
+    color : white;
+    height : 25px;
+    margin-left : -45px;
+}
+#insert_submit{
+    position : absolute;
+    width : 90px;  height : 35px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    text-align : center;
+    border : none;
+    color : white;
+    margin-left : 758px;
+    margin-top : -15px;
+    border-radius : 5px;
+}
+#background_insert{
+    margin-top : 100px;
+    margin-left : 250px;
+    width : 900px; height : 650px;
+    background-color : #f7f7f7;
+    border-radius : 5px;
+    border : 3px solid #08428C;
+}
+#background_insert h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 20px;
+}
+#background_insert hr{
+    top : 70px;
+}
+.insert_label{
+    font-weight: 400;
+    font-size : 15px;
+}
+#select_qna{
+    margin-left : 120px;
+}
+#select_category{
+    margin-left : -40px;
+}

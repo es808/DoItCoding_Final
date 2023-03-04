@@ -11,7 +11,7 @@
 <body class="main_layout">
 <img src="/images/icon/logo.png" id="logo">
 <div class="main_user">
-  <a href="/ticket/notice" id="center"><img src="/images/icon/center.png">고객센터</a>
+  <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
   <a href="loginTest.html" id="login"><img src="/images/icon/loginicon.png">로그인</a>
   <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
   <a href="signupTest.html" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
@@ -90,8 +90,8 @@
     </div>
 </div>
   <!-- 답글 작성/수정 (admin만 가능) (전체 글이 아니라 답글만 작성/수정하는 것) -->
-<div id="background_answer">
   <div th:if="${session.id}=='admin'">
+    <div id="background_answer">
     <h2>답글 작성 및 수정</h2>
     <hr>
     <div th:if="${q.qna_answer}==null">
@@ -103,7 +103,7 @@
     <button id="answer_submit">등록</button>
     <button id="answer_delete">삭제</button>
 <!--    <a th:href="@{'/qna_notification_email/'+${q.customer.custid}}">알림 메일 보내기</a>-->
-  </div>
+    </div>
 </div>
 <div id="main-footer">
   <footer class="footer">
