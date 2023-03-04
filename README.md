@@ -18,22 +18,18 @@
 ### 📝 프로젝트 기록
 - 2/15 개발툴 기본설정 완료.
 
-### 브런치
-1.23.02.15 
-유근형 브런치 생성.
-
 
 // 남은 css 페이지 - 윤경
 
 * admin -> customer
-list.html
-listQna.html
-listTicket.html
-update.html
+- list.html
+- listQna.html
+- listTicket.html
+- update.html
 
 * admin -> ticket
-insertTicket.html
-listTicket.html
-updateTicket.html
+- insertTicket.html
+- listTicket.html
+- updateTicket.html
 
 * qna -> notification (알람 homepage_frame 있는 모든 부분 적용)
