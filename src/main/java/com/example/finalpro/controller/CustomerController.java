@@ -52,6 +52,9 @@ public class CustomerController {
     private CustomerDAO dao;
 
     @Autowired
+    private CustomerDAO customerDAO;
+
+    @Autowired
     private CategoryService ts;
 
     @Autowired
@@ -62,6 +65,12 @@ public class CustomerController {
 
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
+
+    @RequestMapping("/FindCustomer")
+    @ResponseBody
+    public CustomerVO findCustomer(String custid){
+        return DBManager.findByCustid(custid);
+    }
 
     @RequestMapping("/list")
     public void list(Model model) {
@@ -169,9 +178,6 @@ public class CustomerController {
     @GetMapping("/myPageDraw")
     public String myPageDraw() { return "myPage/myPageDraw";}
 
-    @GetMapping("/myPageReview")
-    public String myPageReview() { return "myPage/myPageReview";}
-
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
         System.out.println("customer:"+c);
@@ -201,7 +207,7 @@ public class CustomerController {
         return mav;
     }
 
-    //아이디 중복 확인 메소
+    //아이디 중복 확인 메소드
     @GetMapping("/ConfirmCustomerId")
     @ResponseBody
     public int confirmCustomerId(String custid){

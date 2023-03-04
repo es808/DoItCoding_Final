@@ -7,6 +7,10 @@
     select * from customer
   </select>
 
+  <select id="findByCustid" resultType="customerVO">
+    select * from customer where custid=#{custid}
+  </select>
+
   <!--updateCustomer 고객 정보 수정하기-->
   <update id="updateCustomer" parameterType="customerVO">
     update customer set cateid=#{cateid}, pwd=#{pwd}, name=#{name}, birth=#{birth},

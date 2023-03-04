@@ -38,4 +38,10 @@
   <delete id="deleteBook" parameterType="int">
     delete from book where bookid=#{bookid}
   </delete>
+
+<!--  예약 확정 문자 보내기 위한 ajax를 위한 bookid 찾기-->
+  <select id="findBookidByOthers" parameterType="bookVO" resultType="java.lang.Integer">
+    select bookid from book where custid=#{custid} and ticketid=#{ticketid} and seatid=#{seatid}
+  </select>
+
 </mapper>
