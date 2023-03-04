@@ -33,18 +33,14 @@
             })
 
             // 무한 스크롤 처리
-
             let scrollPage;
-
             if(scrollPage == undefined){
                 scrollPage = 1;
             }
 
-
             let loading = false;
             $(document).ready(function(){
                 selectTicket(scrollPage);
-
                 // Scroll
                 $(window).scroll(function(){
                     let scrollNow = $(window).scrollTop();
@@ -58,7 +54,7 @@
             // 카테고리+시간에 해당하는 목록 출력
             var selectTicket = function(scrollPage){
                 loading = true;
-                $.ajax("SelectTicketMain", {
+                $.ajax("SelectTicketCategory", {
                     data:{time:time, cateid:cateid, page:scrollPage},
                     success:function(arr){
                         console.log("ajax 통신!")
@@ -104,7 +100,6 @@
                     }
                 }); // ajax 끝
             }// selectTIcket end
-            selectTicket();
 
             // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
 

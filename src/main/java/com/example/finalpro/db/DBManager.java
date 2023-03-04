@@ -152,6 +152,24 @@ public class DBManager {
 		return list;
 	}
 
+	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
+	// time=0은 과거, time=1은 현재, time=2는 미래
+	// category에서 무한 스크롤하기
+	public static List<TicketVO> findAllTicketByCategoryInfiniteScroll(int time, int cateid, int startRecord, int endRecord){
+		List<TicketVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("time", time);
+		map.put("cateid", cateid);
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("ticket.findAllTicketByCategoryPaging", map);
+		session.close();
+
+		return list;
+	}
+
 	// ******** admin.ticket ********
 
 	// admin의 ticketList

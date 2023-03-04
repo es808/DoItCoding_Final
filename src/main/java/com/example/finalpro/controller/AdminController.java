@@ -57,6 +57,7 @@ public class AdminController {
     @GetMapping("/admin/listTicket")
     public ModelAndView adminListTicket(Model model, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String keyword, @RequestParam(defaultValue = "ticketid") String order){
         ModelAndView mav = new ModelAndView("/admin/ticket/listTicket");
+
         // 페이징 처리
             // int page : 현재 페이지
             // int totalRecord : 총 ticket 숫자

@@ -343,9 +343,9 @@ public class QnaController {
     }
     
     // myPage에서 내가 쓴 1대1 문의 보기
-    @GetMapping("/myPageQna")
+    @GetMapping("/myPageQnA")
     public ModelAndView myPageQnaList(HttpSession session, @RequestParam(defaultValue = "1") int page){
-        ModelAndView mav = new ModelAndView("/myPage/myPageQna");
+        ModelAndView mav = new ModelAndView("/myPage/myPageQnA");
         String loginId=(String) session.getAttribute("id");
         Customer loginCustomer=cs.findByCustid(loginId);
 
