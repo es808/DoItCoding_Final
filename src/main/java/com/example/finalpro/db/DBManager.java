@@ -457,7 +457,6 @@ public class DBManager {
 		return re;
 	}
 
-
 	// 티켓예매
 	public static int bookTicket(String custid, int ticketid, int seatid){
 		int re = -1;
