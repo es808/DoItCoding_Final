@@ -1,8 +1,12 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
+import com.example.finalpro.dao.DrawDAO;
+import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.entity.Draw;
+import com.example.finalpro.vo.*;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,9 @@ import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.DrawVO;
+import com.example.finalpro.vo.MyDrawVO;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +32,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -54,6 +66,12 @@ public class CustomerController {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private DrawDAO drawDAO;
+
+    @Autowired
+    private SeatDAO seatDAO;
+
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
 
@@ -68,6 +86,10 @@ public class CustomerController {
         model.addAttribute("list", dao.findAll());
     }
 
+    @RequestMapping("/list_jpa")
+    public void list_jpa(Model model){
+        model.addAttribute("list", ts.findAll());
+    }
 
     @RequestMapping("/list_jpa_id")
     public void list_jpa_id(Model model) {
@@ -95,7 +117,7 @@ public class CustomerController {
 
     @GetMapping("/")
     public String home() {
-        return "main";
+        return "/main";
     }
 
     @GetMapping("/main")
@@ -158,6 +180,43 @@ public class CustomerController {
         return "myPage/myPage";
     }
 
+
+    @GetMapping("/myPageDraw")
+    public String myPageDraw(HttpSession session, Model m){
+        String custid = (String)session.getAttribute("id");
+        List<MyDrawVO> myDraw = new ArrayList<>();
+        TicketVO myTicket = null;
+
+        List<DrawVO> list = DBManager.findByDrawCustid(custid);
+
+        for(DrawVO d : list) {
+            MyDrawVO md = new MyDrawVO();
+            myTicket = DBManager.findByTicketid(d.getTicketid());
+            md.setCustid(d.getCustid());
+            md.setDrawid(d.getDrawid());
+            md.setDrawid(d.getDrawid());
+            md.setSeatid(d.getSeatid());
+            md.setTicketid(d.getTicketid());
+            md.setImg_fname(myTicket.getImg_fname());
+            md.setLoc(myTicket.getLoc());
+            md.setTicket_date(myTicket.getTicket_date());
+            md.setTicket_name(myTicket.getTicket_name());
+
+            if(d.getSeatid() != 0){
+                md.setSeatname(seatDAO.findById(d.getSeatid()).get().getSeatname());
+            }else{
+                md.setSeatname("none");
+            }
+
+            System.out.println(md);
+            myDraw.add(md);
+        }
+
+        m.addAttribute("list",myDraw);
+
+        return "myPage/myPageDraw";
+    }
+
     @GetMapping("/test")
     public String test(){
         return "list";
@@ -166,8 +225,8 @@ public class CustomerController {
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
 
-    @GetMapping("/myPageDraw")
-    public String myPageDraw() { return "myPage/myPageDraw";}
+    @GetMapping("/myPageReview")
+    public String myPageReview() { return "myPage/myPageReview";}
 
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
@@ -185,7 +244,7 @@ public class CustomerController {
             mav.setViewName("/login");
         } catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
-            mav.setViewName("error");
+            mav.setViewName("/error");
         }
 
 		/*
@@ -246,15 +305,17 @@ public class CustomerController {
         return answer;
     }
 
-//    @GetMapping("/sendMessage")
-//    @ResponseBody
-//    public String sendMessage(String phone){
-//        System.out.println(phone);
-//        MessageController messageController = new MessageController();
-//        code = messageController.sendCodePhone(phone);
-//        System.out.println(code);
-//        return code;
-//    }
+    @GetMapping("/sendMessage")
+    @ResponseBody
+    public String sendMessage(String phone){
+        System.out.println("phone:"+phone);
+        code = SendMessage.sendCodePhone(phone);
+        System.out.println("code:"+code);
+
+//        MessageController ms = new MessageController();
+//        code = ms.sendCodePhone(phone);
+        return code;
+    }
 
     //아이디 찾기
     @RequestMapping("/findCustidForm")
@@ -272,39 +333,82 @@ public class CustomerController {
         return c;
     }
 
-//    //비밀번호 재설정
-//    @RequestMapping("/findPwdForm")
-//    public String findPwdForm(){
-//        return "/customer/findPwd.html";
-//    }
-//
-//    @RequestMapping("/findPwd")
-//    public String findPwd(CustomerVO c, HttpSession session, Model m){
-//        System.out.println("업데이트 컨트롤러 가동:"+c);
-//        c.setPwd(passwordEncoder.encode(c.getPwd()));
-//        System.out.println("암호화:"+c);
-////        c.setRole("customer");
-//
-//        try {
-//            DBManager.
-//        }
-//    }
+    //전화번호로 개인정보 확인
+    @RequestMapping("/findPwdForm")
+    public String checkByPhoneForm(){
+        return "/customer/findPwd.html";
+    }
 
-//    @PostMapping("/myPage")
-//    public String updateCustomer(CustomerVO c, HttpSession session, Model m){
-//        System.out.println("업데이트 컨트롤러 가동:"+c);
-//        c.setPwd(passwordEncoder.encode(c.getPwd()));
-//        System.out.println("암호화 : "+c);
-//        c.setRole("customer");
-//
-//        try{
-//            DBManager.updateCustomer(c);
-//            System.out.println("sessionId = "+session.getAttribute("id"));
-//            myPage(session,m);
-//        }catch (Exception e){
-//
-//        }
-//        return "myPage/myPage";
-//    }
+    @RequestMapping("/checkByPhone")
+    @ResponseBody
+    public CustomerVO checkByPhone(String custid, String phone){
+        System.out.println("아이디"+custid);
+        System.out.println("전화"+phone);
+        CustomerVO c = DBManager.checkByPhone(custid, phone);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
 
+    //전화번호로 비밀번호 재설정
+    @RequestMapping("/updatePwdbyPhone")
+    @ResponseBody
+    public String updatePwdbyPhone(CustomerVO c){
+        System.out.println("아이디"+c.getCustid());
+        System.out.println("전화"+c.getPhone());
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("암호화:"+c );
+
+        try{
+            DBManager.updatePwdbyPhone(c);
+        }catch(Exception e){
+            System.out.println("예외발생:"+e.getMessage());
+        }
+        return "OK";
+    }
+
+    //이메일로 개인정보 확인
+    @RequestMapping("/checkByEmailForm")
+    public String checkByEmailForm(){
+        return "/customer/findPwd.html";
+    }
+
+    @RequestMapping("/checkByEmail")
+    @ResponseBody
+    public CustomerVO checkByEmail(String custid, String email){
+        System.out.println("아이디"+custid);
+        System.out.println("전화"+email);
+        CustomerVO c = DBManager.checkByEmail(custid, email);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
+
+    @GetMapping("/CustomerEmailAuthentication")
+    @ResponseBody
+    public int customerEmailAuthentication(String emailCode){
+        System.out.println(this.code);
+        System.out.println("code:"+emailCode);
+        int answer = 0;
+        if(!this.code.equals(emailCode)){
+            answer = 1;
+        }
+        System.out.println(answer);
+        return answer;
+    }
+
+    //이메일로 비밀번호 재설정
+    @RequestMapping("/updatePwdbyEmail")
+    @ResponseBody
+    public String updatePwdbyEmail(CustomerVO c){
+        System.out.println("아이디"+c.getCustid());
+        System.out.println("이메일"+c.getEmail());
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("암호화:"+c );
+
+        try{
+            DBManager.updatePwdbyEmail(c);
+        }catch(Exception e){
+            System.out.println("예외발생:"+e.getMessage());
+        }
+        return "OK";
+    }
 }

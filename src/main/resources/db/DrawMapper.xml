@@ -15,4 +15,21 @@
   <!-- 시사회: 티켓id 별로 드로우 신청하면 그중에서 custid 랜덤하게 자리배정 -->
 
   <!-- 자리0: 티켓 id 별로 드로우 신청하면 취소표(leftseat=0)에 한해서 랜덤하게 자리 배정 -->
+
+  <select id="drawTest" resultType="drawVO">
+    select * from draw where ticketid = #{ticketid}
+  </select>
+
+  <update id="updateDraw">
+    update draw set seatid = #{seatid} where custid = #{custid}
+  </update>
+
+  <update id="drawDeleteSeatId">
+    update draw set seatid = null where ticketid = #{ticektid}
+  </update>
+
+  <select id="findByDrawCustid" resultType="drawVO">
+    select * from draw where custid = #{custid}
+  </select>
+
 </mapper>

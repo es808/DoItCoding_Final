@@ -3,42 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 </head>
-<body>
+<body class="main_layout">
+<img src="/images/icon/logo.png" id="logo">
+<div class="main_user">
+  <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+  <a href="loginTest.html" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+  <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+  <a href="signupTest.html" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+  <a href="mypage_Info.html" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+</div>
+<nav id="navigation">
+  <div class="search" id="search" name="search">
+    <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
+    <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
+  </div>
+  <ul>
+    <li class="home"><a href="/main">홈</a></li>
+    <li><a href="#">시사회</a>
+      <ul>
+        <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+        <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+        <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+      </ul>
+    </li>
+    <li><a href="#">뮤지컬</a>
+      <ul>
+        <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+        <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+        <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+      </ul>
+    </li>
+    <li><a href="#">연극</a>
+      <ul>
+        <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+        <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+        <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+      </ul>
+    </li>
+    <li><a href="#">콘서트</a>
+      <ul>
+        <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+        <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+        <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+      </ul>
+    </li>
+    <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
+  </ul>
+</nav>
+<div id="background_insert">
+  <h2>Q&A 등록</h2>
+  <hr>
+  <div id="content_detail">
   <form action="/qna/update" method="post" enctype="multipart/form-data">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <input type="hidden" th:name="qna_no" th:value="${q.qna_no}">
     <input type="hidden" name="qna_fname" th:value="${q.qna_fname}">
     <input type="hidden" name="customer" th:value="${q.customer}">
 
-    <select name="qna_category" id="select_category" required>
+    <span class="title_insert">분류&nbsp;&nbsp;&nbsp;</span>
+    <select name="qna_category" id="select_category" required class="insert_select">
       <option value="예매/드로우"
               th:attr="selected=${q.qna_category == '예매/드로우' ? 'true' : 'false'}">예매/드로우</option>
       <option value="결제/환불"
               th:attr="selected=${q.qna_category == '결제/환불' ? 'true' : 'false'}">결제/환불</option>
       <option value="기타"
               th:attr="selected=${q.qna_category == '기타' ? 'true' : 'false'}">기타</option>
-    </select>
+    </select><br>
     <br>
-    <input name="qna_title" placeholder="제목" th:value="${q.qna_title}" required><br>
-    <textarea name="qna_content" placeholder="내용" th:text="${q.qna_content}" rows="5" cols="50" required></textarea>
-    <br>
-    <input type="file" name="uploadFile"><br>
-    <input type="radio" id="y" name="qna_open" value="y" required
-           th:attr="checked=${q.qna_open == 'y' ? 'true' : 'false'}">
-    <label for="y">공개</label>
-    <input type="radio" id="n" name="qna_open" value="n"
-           th:attr="checked=${q.qna_open == 'n' ? 'true' : 'false'}">
-    <label for="n">비공개</label><br>
-    <select name="ticketid" id="select_ticket" required>
+    <span class="title_insert">제목&nbsp;&nbsp;&nbsp;
+      <input name="qna_title" th:value="${q.qna_title}" required id="insert_title"></span>
+    <span class="title_insert" id="select_qna">작품선택&nbsp;&nbsp;&nbsp;</span>
+    <select name="ticketid" id="select_ticket" required class="insert_select">
       <option value="0">해당 없음</option>
       <option th:each="ticketVO:${ticketVOList}"
               th:text="|[${ticketVO.ticket_date}]${ticketVO.ticket_name}(${ticketVO.loc})|"
               th:value="${ticketVO.ticketid}"
               th:attr="selected=${q.ticket.ticketid == ticketVO.ticketid ? 'true' : 'false'}"></option>
     </select><br>
-    <input type="submit" value="등록">
+    <br>
+    <span class="title_insert">내용&nbsp;&nbsp;&nbsp;<br>
+      <textarea name="qna_content" placeholder="내용" th:text="${q.qna_content}" rows="5" cols="50" required class="textarea_insert"></textarea></span><br>
+    <br>
+    <span class="title_insert">첨부파일&nbsp;&nbsp;&nbsp;<input type="file" name="uploadFile"></span><br>
+    <br>
+    <span class="title_insert">공개여부&nbsp;&nbsp;&nbsp;
+      <label for="y" class="insert_label">공개</label>
+    <input type="radio" id="y" name="qna_open" value="y" required
+           th:attr="checked=${q.qna_open == 'y' ? 'true' : 'false'}">
+      <label for="n" class="insert_label">비공개</label>
+    <input type="radio" id="n" name="qna_open" value="n"
+           th:attr="checked=${q.qna_open == 'n' ? 'true' : 'false'}"></span><br>
+    <br>
+    <input type="submit" value="등록" id="insert_submit">
   </form>
+  </div>
+</div>
+  <div id="main-footer">
+    <footer class="footer">
+      <div>ⓒ CodingDoit corp.
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

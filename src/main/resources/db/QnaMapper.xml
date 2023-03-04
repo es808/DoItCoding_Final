@@ -14,9 +14,9 @@
     </update>
 
     <!-- 비공개 글일 경우 로그인한 사용자가 작성자가 맞는지 확인 (맞으면 1, 틀리면 0을 반환) -->
-<!--    <select id="checkWriter" parameterType="qnaVO" resultType="java.lang.Integer">-->
-<!--        select count(*) from qna where custid=#{custid} and qna_no=#{qna_no}-->
-<!--    </select>-->
+    <!--    <select id="checkWriter" parameterType="qnaVO" resultType="java.lang.Integer">-->
+    <!--        select count(*) from qna where custid=#{custid} and qna_no=#{qna_no}-->
+    <!--    </select>-->
     <update id="deleteAnswer" parameterType="java.lang.Integer">
         update qna set qna_answer='' where qna_no=#{qna_no}
     </update>

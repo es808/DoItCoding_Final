@@ -201,36 +201,49 @@
       });
     }); //인증번호 전송 end
 
-    $("#btn_emailCode").click(function(){
-      var user_code = $("#emailCode").val();
-      if(send_code==user_code){
-        alert("인증번호 확인완료.");
-        authentication = true;
-        $("#form_updatePwdbyEmail").css("display","block")
-      }else{
-        alert("인증번호 불일치");
-        authentication = false;
-      }
-    })
+    $(document).on('click', '#btn_emailCode', function () { // 인증번호 확인
+      var emailCode = $("#emailCode").val();
+      console.log(emailCode);
+      var url = "CustomerEmailAuthentication";
+      var data = {emailCode:emailCode};
+      $.ajax(url, {
+        data:data,
+        success: function (answer) {
+          if (answer == 1) {
+            alert("인증번호 불일치");
+            authentication = false;
+          } else {
+            alert("인증번호 확인완료.");
+            authentication = true;
+            $("#form_updatePwdbyEmail").css("display","block")
+          }
+        }
+      });
+    }); // 인증번호 확인 end
 
     $("#btn_updatePwd2").click(function(e){  //이메일로 비밀번호 재설정
-      console.log("비밀번호 재설정")
-      var url = "updatePwdbyEmail"
-      var custid = $("#custid2").val()
-      var email = $("#email").val()
-      var pwd = $("#pwd2").val()
+      var url = "updatePwdbyEmail";
+      var custid = $("#custid2").val();
+      var email = $("#email").val();
+      var pwd = $("#pwd2").val();
 
-      var data = {custid:custid, email:email, pwd:pwd}
+      data = {custid:custid, phone:phone, pwd:pwd}
+
+      if (checkPwd(pwd) == false) { //비번 적합성을 통과하지 못하면 false를 반환하여 함수를 즉시 종료
+        return false;
+      }
+
+      if (confirmPwd() == false) {  // pwd와 pwd_confirm이 불일치하면 false를 반환하여 함수를 즉시 종료
+        return false;
+      }
 
       $.ajax({
         url:url,
         data:data,
         success:function(){
-          console.log("비밀번호 재설정함!")
           location.href="/login"
         }
-      })
-
+      });
     });
 
     var confirmPwd = function () {  //pwd와 pwd_confirm이 일치하면 true, 불일치하면 false를 반환하도록 하는 메소드
@@ -306,7 +319,7 @@
       </tr>
     </table>
     <div>
-      <button id="btn_updatePwd">비밀번호 재설정</button>
+      <button id="btn_updatePwd" type="submit">비밀번호 재설정</button>
     </div>
   </div>
 </div>
@@ -357,7 +370,7 @@
         </tr>
       </table>
       <div>
-        <button id="btn_updatePwd2">비밀번호 재설정</button>
+        <button id="btn_updatePwd2" type="submit">비밀번호 재설정</button>
       </div>
     </div>
   </div>

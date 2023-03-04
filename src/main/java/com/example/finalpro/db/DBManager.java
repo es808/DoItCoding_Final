@@ -1,6 +1,7 @@
 package com.example.finalpro.db;
 
 import com.example.finalpro.entity.Customer;
+import com.example.finalpro.entity.Seat;
 import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.entity.Qna;
 import com.example.finalpro.vo.*;
@@ -334,11 +335,45 @@ public class DBManager {
 		return vo;
 	}
 
-	//Customer 비밀번호 재설정
-	public static int findPwd(CustomerVO customer){
+	//전화번호로 개인정보 확인
+	public static CustomerVO checkByPhone(String custid, String phone){
+		CustomerVO vo = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("phone", phone);
+		SqlSession session = sqlSessionFactory.openSession();
+		vo= session.selectOne("customer.checkByPhone", map);
+		session.close();
+		return vo;
+	}
+
+	//Customer 전화번호로 비밀번호 재설정
+	public static int updatePwdbyPhone(CustomerVO customer){
 		int re = -1;
 		SqlSession session = sqlSessionFactory.openSession();
-		re = session.update("customer.findPwd", customer);
+		re = session.update("customer.updatePwdbyPhone", customer);
+		session.commit();
+		session.close();
+		return re;
+	}
+
+	//이메일로 개인정보 확인
+	public static CustomerVO checkByEmail(String custid, String email){
+		CustomerVO vo = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("email", email);
+		SqlSession session = sqlSessionFactory.openSession();
+		vo= session.selectOne("customer.checkByEmail", map);
+		session.close();
+		return vo;
+	}
+
+	//Customer 이메일로 비밀번호 재설정
+	public static int updatePwdbyEmail(CustomerVO customer){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.update("customer.updatePwdbyEmail", customer);
 		session.commit();
 		session.close();
 		return re;
@@ -367,7 +402,7 @@ public class DBManager {
 		session.close();
 		return list;
 	}
-	
+
 	// custid에 따른 qna 작성 총 숫자
 	public static int getTotalQnaRecord(String custid){
 		int totalRecord = 0;
@@ -442,15 +477,6 @@ public class DBManager {
 		return re;
 	}
 
-	// 좌석취소
-	public static int cancleSeat(int seatid){
-		int re = -1;
-		SqlSession session = sqlSessionFactory.openSession(true);
-		re = session.update("seat.cancleSeat",seatid);
-		System.out.println("cancleSeat:"+re);
-		session.close();
-		return re;
-	}
 
 	// 티켓예매
 	public static int bookTicket(String custid, int ticketid, int seatid){
@@ -473,6 +499,40 @@ public class DBManager {
 		bookid=session.selectOne("book.findBookidByOthers",b);
 		session.close();
 		return bookid;
+	}
+
+	public static List drawTest(int ticketid){
+		List<DrawVO> draw = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		draw = session.selectList("draw.drawTest",ticketid);
+		session.close();
+		return draw;
+	}
+
+	public static List<SeatVO> drawLeftSeat(int ticketid){
+		//selectDrawLeftSeat
+		List<SeatVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		list = session.selectList("seat.selectDrawLeftSeat",ticketid);
+		session.close();
+		return list;
+	}
+
+	public static int drawUpdate(String custid, int seatid) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("seatid", seatid);
+		re = session.update("draw.updateDraw",map);
+		session.close();
+		return re;
+	}
+
+	public static void drawDeleteSeatId(int ticketid) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		session.update("draw.drawDeleteSeatId",ticketid);
+		session.close();
 	}
 
 
@@ -688,5 +748,33 @@ public class DBManager {
 		re=session.insert("review.insert",r);
 		session.close();
 		return re;
+	}
+
+	// 좌석취소
+	public static int cancleSeat(int seatid){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("seat.cancleSeat",seatid);
+		System.out.println("cancleSeat:"+re);
+		session.close();
+		return re;
+	}
+
+
+	public static String findBySeatId(int seatid) {
+		String re = "none";
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.selectOne("seat.findBySeatId",seatid);
+		System.out.println("seatName:"+re);
+		session.close();
+		return re;
+	}
+
+	public static List<DrawVO> findByDrawCustid(String custid) {
+		List<DrawVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		list = session.selectList("findByDrawCustid", custid);
+		session.close();
+		return list;
 	}
 }

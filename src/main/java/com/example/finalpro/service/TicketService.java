@@ -126,5 +126,9 @@ public class TicketService {
     }
 
 
-    public Optional<Ticket> findByTicketid(int ticketid){return dao.findById(ticketid);}
+    public Optional<Ticket> findByTicketid(int ticketid) {
+        return dao.findById(ticketid);
+    }
+
+
 }

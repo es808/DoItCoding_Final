@@ -70,10 +70,15 @@
                     if(price==0){
                         $("#price").append("0원(전석 초대)");
                     }else{
-                        $("#price").append(price);
+                        $("#price").append(price+"원");
                     }
                     $("#cast").append(cast);
-                    $("#content").append(content);
+                    if(content.endsWith(".jpg")||content.endsWith(".png")||content.endsWith(".gif")){
+                        var tag = $("<img/>").attr("src","images/"+content);
+                        $("#content").html(tag);
+                    }else{
+                        $("#content").append(content);
+                    }
 
                     var img = $("<img>").attr({
                         src: "images/"+img_fname,
@@ -250,9 +255,9 @@
                                 console.log("open:"+open);
                                 console.log("today:"+today);
 
-                                if(open <= today && today < close){
-                                    console.log("드로우날짜가:"+"OK");
-                                    $("#btndraw").css({
+                                if(open <= today < close){
+                                    console.log("OK");
+                                    $("#btndraw").removeAttr("disabled").css({
                                         "border":"1px solid #ff7f00",
                                         "background-color":"#ff7f00",
                                         "display":"inline"
@@ -263,6 +268,7 @@
                                         location.replace(url);
                                     });
                                 }
+
                             }
                         });
                     }
@@ -436,6 +442,7 @@
 <body class="main_layout">
 <a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
     <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
     <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
     <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
@@ -476,6 +483,7 @@
                 <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
             </ul>
         </li>
+        <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
     </ul>
 </nav>
 <!-- 상세 페이지 -->
@@ -563,10 +571,9 @@
 </div>
 
 <div id="main-footer">
-
+    <footer class="footer">
+        <div>ⓒ CodingDoit corp.</div>
+    </footer>
 </div>
 </body>
-<footer>
-    <div>ⓒ CodingDoit corp.</div>
-</footer>
 </html>

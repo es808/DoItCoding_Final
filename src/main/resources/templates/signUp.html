@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <!--       csrf token 전송을 위한 _csrf.token, _csrf.headerName 설정-->
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Insert title here</title>
     <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -222,7 +222,7 @@
 </div>
 <form id="form_signup" >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    <div>
+    <div id="title_signup">
         <h2>SignUp</h2>
     </div>
     <table>
@@ -263,7 +263,8 @@
         </tr>
         <tr>
             <td>생년월일</td>
-            <td><input type="text" name="birth" class="box" id="birth"></td>
+            <td><input type="text" name="birth" class="box" id="birth">&nbsp;&nbsp;<label class="info">*예시 : 1999/09/09</label></td>
+
         </tr>
         <tr>
             <td>전화번호</td>
@@ -278,9 +279,9 @@
         <tr>
             <td>전화번호 인증</td>
             <td>
-                <input type ="text" id ="phoneCode" name="phoneCode" maxlength="6" size = "6" class="box">
-                <input type="button" id="btn_sendPhoneCode" value="인증번호 보내기">
-                <input type="button" id="btn_phoneCode" value="인증번호 확인">
+                <input type ="text" id ="phoneCode" name="phoneCode" maxlength="11" size = "12" class="box">
+                <input type="button" id="btn_sendPhoneCode" value="전송">
+                <input type="button" id="btn_phoneCode" value="인증확인">
             </td>
         </tr>
         <tr>

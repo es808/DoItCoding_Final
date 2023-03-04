@@ -131,7 +131,7 @@
 }
 /* 마이페이지(myinfo) - background */
 #background{
-    position : absolute;
+    position : relative;
     width : 1000px;
     height : 850px;
     border : 2px solid grey;
@@ -139,6 +139,7 @@
     margin-left : 270px;
     margin-top : -400px;
     border-radius : 10px;
+    padding-bottom : 100px;
 }
 #background h2{
     position : absolute;
@@ -148,13 +149,15 @@
     margin-left : 60px;
     margin-top : 50px;
 }
+#background hr{
+    margin-top : 100px;
+}
 /* 마이페이지(myinfo) - 회원정보 수정 */
 #form_updateCustomer{
-    position : relative;
-    margin-left : 270px;
+    position : absolute;
+
     width : 700px;
-    padding-bottom : 300px;
-    margin-bottom : 100px;
+    margin-top : 400px;
 }
 #mypage_hr{
     margin-top : 100px;
@@ -383,37 +386,41 @@ input[type="checkbox"]{
 }
 
 /* 마이페이지(draw) - 예매 내역 */
-.drawlist{
-    position : relative;
-    left : 23%;
-    margin-bottom : 100px;
+#menu-bar #mydraw{
+    font-weight : bolder;
+    color : #08428C;
+    background-color : #dcdcdc;
+}
+.drawList{
+    position : absolute;
+    top : -10px; right : 60px;
     width : 800px;
     height : 250px;
     border : 2px solid #dcdcdc;
     border-radius : 40px;
     margin : 60px;
 }
-.drawlist img{
+.drawList img{
     position : relative;
     border-radius : 40px;
     right : 8px;
     bottom : 2px;
     border : 1px solid #dcdcdc;
 }
-.drawlist li{
+.drawList li{
     position : relative;
     margin : 18px;
     left : 170px;
     bottom : 260px;
     color : #091140;
 }
-.drawlist h2{
+.drawList h2{
     position : relative;
     left : 222px;
     bottom : 265px;
     color : #08348C;
 }
-.drawlist button{
+.drawList button{
     position : relative;
     width : 100px;  height : 32px;
     left : 670px;
@@ -423,12 +430,13 @@ input[type="checkbox"]{
     color : white;
     border-radius : 5px;
 }
-.drawlist button:hover{
+.drawList button:hover{
     background-color : #F2AE30;
     color : #08348C;
     transition-duration: 0.5s;
 }
-input[type="checkbox"]+label{
+.drawList input[type="checkbox"]+label{
+    z-index : 100;
     display: inline-block;
     position : relative;
     width : 50px; height : 50px;
@@ -655,6 +663,9 @@ table{
     font-size : 30px;
     color : #F2AE30;
     font-weight : 600;
+}
+#search_title hr{
+    color : red;
 }
 /* 검색결과 내용 */
 .search_result{
@@ -973,6 +984,8 @@ h2{
     z-index:600;
 }
 
+
+
 /* 공지사항,QnA list */
 #notice_background{
     position : relative;
@@ -1170,6 +1183,8 @@ h2{
     top : 70px;
 }
 
+
+
 /* QnA Detail 답변 */
 #background_answer{
     margin-top : 40px;
@@ -1246,4 +1261,78 @@ h2{
     margin-left : 740px;
     border-radius : 5px;
     font-size : 14px;
+}
+
+
+/* notice, QnA 글 등록 */
+.title_insert{
+    font-size : 17px;
+    font-weight : bold;
+    color : #08428C;
+    padding : 40px;
+    margin-top : 10px;
+}
+.textarea_insert{
+    position : relative;
+    resize:none;
+    width : 800px; height : 200px;
+    border : 2px solid #08428C;
+    background-color : #efefef;
+    margin-left : 40px;
+    margin-top : 10px;
+}
+#insert_title{
+    position : relative;
+    border : 2px solid #08428C;
+    background-color : #efefef;
+    width : 150px; height : 25px;
+}
+.insert_select{
+    border : 2px solid #08428C;
+    background-color : #08428C;
+    color : white;
+    height : 25px;
+    margin-left : -45px;
+}
+#insert_submit{
+    position : absolute;
+    width : 90px;  height : 35px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    text-align : center;
+    border : none;
+    color : white;
+    margin-left : 758px;
+    margin-top : -15px;
+    border-radius : 5px;
+}
+#background_insert{
+    margin-top : 100px;
+    margin-left : 250px;
+    width : 900px; height : 650px;
+    background-color : #f7f7f7;
+    border-radius : 5px;
+    border : 3px solid #08428C;
+}
+#background_insert h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 20px;
+}
+#background_insert hr{
+    top : 70px;
+}
+.insert_label{
+    font-weight: 400;
+    font-size : 15px;
+}
+#select_qna{
+    margin-left : 120px;
+}
+#select_category{
+    margin-left : -40px;
 }
