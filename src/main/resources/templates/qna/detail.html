@@ -23,8 +23,9 @@
   <div th:text="${q.qna_date}"></div>
   <div th:text="${q.qna_open}"></div>
   <div th:text="${q.qna_answer}" id="div_qna_answer"></div>
-  <div th:text="${q.ticket.ticketid}"></div>
-  <div th:text="${q.ticket.ticket_name}"></div>
+  <th:block th:if="${q.ticket.ticketid}!=0">
+    <div th:text="${q.ticket.ticket_name}"></div>
+  </th:block>
   <div th:if="${q.qna_fname}!=null">
     <a th:href="@{'/qna_files/'+${q.qna_fname}}" th:text="${q.qna_fname}"></a>
 <!--    <div th:if="${#strings.endsWith(q.qna_fname,'.jpg')} or ${#strings.endsWith(q.qna_fname,'.png')} or ${#strings.endsWith(q.qna_fname,'.gif')}">-->

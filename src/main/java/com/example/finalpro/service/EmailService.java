@@ -26,7 +26,7 @@ public class EmailService {
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper helper=new MimeMessageHelper(mimeMessage, true, "UTF-8");
-                helper.setFrom("kgukgu33@gmail.com");
+                helper.setFrom("codingdoit.tcatch@gmail.com");
                 helper.setTo(to);
                 helper.setSubject(subject);
                 helper.setText(text,true);
