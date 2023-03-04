@@ -109,3 +109,7 @@ Spring으로 main, search, category 구현 완료. 모두 복잡한 sql문이 �
   - 예매 완료시 확인 문자메시지 전송 기능 추가
 - 3/3
   - 마이페이지 내 후기(Review) 보기, 작성, 수정, 삭제 기능 추가
+- 3/4
+  - notification 수정(0개일 때 처리(숫자 표시 x, "알림이 없습니다." 출력))
+  - myPageBook에서 insertReview로 넘어갈 때 이미 리뷰를 등록한 티켓이면 alert 띄우고 insert 화면으로 안 넘어가게 처리
+  - QNA 답글 등록시 링크가 포함된 email 발송 기능

@@ -1,8 +1,10 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.entity.Customer;
 import com.example.finalpro.entity.Qna;
 import com.example.finalpro.entity.Ticket;
+import com.example.finalpro.service.EmailService;
 import com.example.finalpro.service.QnaService;
 import com.example.finalpro.service.SearchService;
 import com.example.finalpro.service.TicketService;
@@ -38,8 +40,8 @@ public class QnaController {
     @Autowired
     private SearchService ss;
 
-//    @Autowired
-//    private JavaMailSender mailSender;
+    @Autowired
+    private EmailService es;
 
     @GetMapping("/qna/resetSearch")
     public ModelAndView resetSearch(HttpSession session){
@@ -276,15 +278,22 @@ public class QnaController {
         q.setQna_no(qna_no);
         q.setQna_answer(qna_answer);
 
+        Qna qna=qs.findById(qna_no).get();
+        Customer customer=qna.getCustomer();
         // insert일 경우 notification 추가
         if(insertOrUpdate.equals("insert")) {
-            String qnaWriter = qs.findById(qna_no).get().getCustomer().getCustid();
+            String qnaWriter = customer.getCustid();
             NotificationVO notificationVO = new NotificationVO(0, qnaWriter, qna_no, null);
             int re=DBManager.insertNotification(notificationVO);
+
+            // 답글 알림 이메일 보내기
+            String to=customer.getEmail();
+            String subject="[T-CATCH] 문의에 답변이 등록되었습니다";
+            String text="<h2>QNA 답변 등록 알림</h2>"
+                    +"<div>"+qna.getQna_title()+"에 답변이 등록되었습니다.</div>"
+                    +"<a href='http://localhost:8088/qna/detail/"+qna_no+"'>확인하기</a>";
+            es.sendHtmlEmail(to, subject, text);
         }
-
-        // 답글 알림 이메일 보내기
-
         return DBManager.updateAnswer(q);
     }
 
