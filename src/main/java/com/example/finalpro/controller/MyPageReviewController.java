@@ -6,6 +6,7 @@ import com.example.finalpro.entity.MyPageReview;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.ReviewService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.MyReviewVO;
 import com.example.finalpro.vo.ReviewVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
@@ -41,7 +42,7 @@ public class MyPageReviewController {
     //리뷰 등록 폼
     @GetMapping("/myPage/insertReview/{ticketid}")
     public ModelAndView insertForm(@PathVariable String ticketid){
-        ModelAndView mav=new ModelAndView("insert");
+        ModelAndView mav=new ModelAndView("/myPage/insertReview");
         mav.addObject("ticketid",ticketid);
         return mav;
     }
@@ -51,16 +52,8 @@ public class MyPageReviewController {
         ModelAndView mav=new ModelAndView();
         String loginId=(String) session.getAttribute("id");
         r.setCustid(loginId);
-
-        // 중복 체크 (아이디와 티켓아이디 겹치는 것 있는지 확인) (갯수 반환함)
-        int re_check=DBManager.checkReviewByTicketid(r);
-        if(re_check==0){
-            int re=DBManager.insertReview(r);
-            mav.setViewName("redirect:/myPageReview");
-        }else{
-            mav.addObject("msg", "이미 해당 작품에 대한 리뷰를 등록했습니다.");
-            mav.setViewName("/error");
-        }
+        int re=DBManager.insertReview(r);
+        mav.setViewName("redirect:/myPageReview");
         return mav;
     }
 
@@ -103,15 +96,15 @@ public class MyPageReviewController {
         return mav;
     }
 
-    // 티켓의 리뷰가 있나 확인
-//    @GetMapping("/CheckReview")
-//    @ResponseBody
-//    public int findCheckReview(String custid, int ticketid){
-//        MyReviewVO r=new MyReviewVO();
-//        r.setCustid(custid);
-//        r.setTicketid(ticketid);
-//        return DBManager.checkReviewByTicketid(r);
-//    }
+//     같은 사용자, 같은 티켓의 리뷰가 있나 확인
+    @GetMapping("/CheckReview")
+    @ResponseBody
+    public int findCheckReview(String custid, int ticketid){
+        ReviewVO r=new ReviewVO();
+        r.setCustid(custid);
+        r.setTicketid(ticketid);
+        return DBManager.checkReviewByTicketid(r);
+    }
 
 //    // 리뷰 등록 submit AJAX
 //    @PostMapping("/InsertReview")

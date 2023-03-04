@@ -151,8 +151,19 @@
                             sessionStorage.setItem("ticketid", '');
                             sessionStorage.setItem("ticketid", ticketid);
 
-                            var url = "/myPage/insertReview/"+ticketid;
-                            location.replace(url);
+                            $.ajax({
+                                url:"/CheckReview",
+                                data:{ticketid:ticketid, custid:custid},
+                                success:function (re){
+                                    if(re==0){
+                                        var url = "/myPage/insertReview/"+ticketid;
+                                        location.replace(url);
+                                    }else{
+                                        alert("이미 리뷰를 등록했습니다.")
+                                    }
+                                }
+                            })
+
                         });
 
                         // 예매내역 삭제
