@@ -21,15 +21,15 @@
 
 // 남은 css 페이지 - 윤경
 
-* admin -> customer
+< admin -> customer >
 - list.html
 - listQna.html
 - listTicket.html
 - update.html
 
-* admin -> ticket
+< admin -> ticket >
 - insertTicket.html
 - listTicket.html
 - updateTicket.html
 
-* qna -> notification (알람 homepage_frame 있는 모든 부분 적용)
+< qna notification (알람 homepage_frame 있는 모든 부분 적용) >
