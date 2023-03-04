@@ -486,3 +486,52 @@ button.active:not(.x){
 #byEmail #btn_checkByEmail{
     margin-left: 370px;
 }
+
+
+
+/* 관리자페이지 - 메인 */
+#background_admin{
+    width : 500px;
+    height : 350px;
+    background-color : #f5f5f5;
+    border : 1px solid #dcdcdc;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow : 10px 10px #dedede;
+}
+#logo_admin{
+    width: 370px;
+    height: 110px;
+    margin-top: -160px;
+    position: absolute;
+    margin-left: -170px;
+}
+#h2_admin{
+    position: absolute;
+    width: 500px;
+    margin-top: -30px;
+    margin-left: -230px;
+}
+#menu_admin{
+    margin-top: 70px;
+    width: 600px;
+    margin-left: 80px;
+}
+#menu_admin span{
+    background-color: #08428C;
+    border-radius: 5px;
+    width: 120px;
+    height: 38px;
+    display: inline-block;
+    margin-left: 22px;
+    text-align: center;
+}
+#menu_admin span a{
+    color: white;
+    line-height: 37px;
+    font-size: 15px;
+}
+#menu_admin span:hover{
+    transition-duration: 0.4s;
+    border-top: 7px solid #F2AE30;
+    border-bottom: 7px solid #F2AE30;
+}
