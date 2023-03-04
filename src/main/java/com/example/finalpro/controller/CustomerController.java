@@ -16,7 +16,6 @@ import java.util.List;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
-import com.example.finalpro.service.EmailService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
