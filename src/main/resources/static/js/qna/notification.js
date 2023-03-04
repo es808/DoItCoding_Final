@@ -3,7 +3,9 @@ $(function(){
     $.ajax({
         url:"/countNChecked",
         success:function (cnt){
-            $('#notif_not_checked').html(cnt)
+            if(cnt!=0) {
+                $('#notif_not_checked').html(cnt)
+            }
         }
     })
 
@@ -13,14 +15,19 @@ $(function(){
         $.ajax({
             url:"/listNotification",
             success:function (list){
-                $.each(list,function (){
-                    let div_no=$("<div></div>").text(this.notif_no)
-                    let div_title=$("<a></a>").text(this.qna_title+"에 답글이 달렸습니다.")
-                        .attr("href","/qna/detail/"+this.qna_no)
-                    let div_x=$("<a></a>").text("X").addClass("x").attr("notif_no",this.notif_no)
-                    let div_no_title=$("<div></div>").append(div_no, div_title, div_x)
-                    $('#notif_container').append(div_no_title)
-                })
+                console.log("list",list)
+                if(list.length!=0) {
+                    $.each(list, function () {
+                        let div_no = $("<div></div>").text(this.notif_no)
+                        let div_title = $("<a></a>").text(this.qna_title + "에 답글이 달렸습니다.")
+                            .attr("href", "/qna/detail/" + this.qna_no)
+                        let div_x = $("<a></a>").text("X").addClass("x").attr("notif_no", this.notif_no)
+                        let div_no_title = $("<div></div>").append(div_no, div_title, div_x)
+                        $('#notif_container').append(div_no_title)
+                    })
+                }else{
+                    $('#notif_container').append($("<div></div>").text("알림이 없습니다."))
+                }
                 $('#notif_not_checked').html("")
             }
         })
@@ -31,7 +38,6 @@ $(function(){
     $('#bell').click(function(){
         cnt_click += 1
             if (cnt_click % 2 == 1) {
-
                 $("#notif_container").css("display", "block")
                 listNotification()
 
@@ -42,7 +48,6 @@ $(function(){
                         console.log(re)
                     }
                 })
-
             } else {
                 $("#notif_container").css("display", "none")
             }
