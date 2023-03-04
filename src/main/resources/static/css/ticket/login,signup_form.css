@@ -395,13 +395,94 @@ button.active:not(.x){
     margin-top : 110px;
 }
 #btn_findCustid{
-    width : 110px;  height : 35px;
-    font-size : 12px;
-    font-weight : 500;
+    position : relative;
+    color : #dcdcdc;
     background-color : #08348C;
-    text-align : center;
-    border : none;
-    color : white;
+    width : 90px; height : 31px;
     border-radius : 5px;
-    font-size : 14px;
+    border : none;
+    font-size : 12px;
+    left : 5px;
+}
+#printId{
+    position : absolute;
+    top : 110px; left : -145px;
+    width : 300px;
+    font-weight: 400;
+    color : #D10505;
+}
+#code_validation{
+    position : relative;
+    margin-top : 90px;
+    margin-left : 50px;
+}
+#btn_sendPhoneCode, #btn_phoneCode{
+    font-weight: 500;
+    color : white;
+}
+#checkId{
+    position : absolute;
+    top : 160px; left : -70px;
+    width : 300px;
+    font-weight: 400;
+    color : #D10505;
+}
+#mapping{
+    position : absolute;
+    top : 330px;
+    left : 320px;
+}
+
+
+
+/* 비밀번호 찾기 */
+#form_pwd{
+    position: absolute;
+    margin-top: -165px;
+}
+#form_pwd span{
+    color : #08348C;
+    margin : 3px;
+}
+#byPhone, #byEmail{
+    margin-top : 165px;
+    width : 500px;
+    margin-left : -60px;
+}
+#byPhone #btn_checkByPhone, #byEmail #btn_checkByEmail{
+    margin-left: 355px;
+    margin-top: 20px;
+    height: 30px;
+    border: none;
+    background-color: #08348C;
+    color: white;
+    width: 110px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+#printPwdbyPhone, #printPwdbyEmail{
+    position: absolute;
+    top: 40px;
+    left: -105px;
+    width: 500px;
+    font-weight: 400;
+    color: #D10505;
+}
+#code_validation_pwd, #code_validation2{
+    margin-top: 70px;
+    width: 600px;
+    margin-left: 175px;
+}
+#form_updatePwdbyPhone, #form_updatePwdbyEmail{
+    margin-top: 147px;
+    width: 700px;
+    margin-left: 44px;
+}
+#form_updatePwdbyPhone button, #form_updatePwdbyEmail button{
+    width: 110px;
+    border-radius: 5px;
+    margin-top: 140px;
+}
+#byEmail #btn_checkByEmail{
+    margin-left: 370px;
 }

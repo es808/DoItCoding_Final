@@ -5,6 +5,7 @@
   <title>Title</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css" >
 <script>
   $(function(){
 
@@ -13,7 +14,7 @@
 
     $("#byPhone").css("display","none")   //전화번호 입력창
     $("#byEmail").css("display","none")   //이메일 입력창
-    $("#code_validation").css("display","none")
+    $("#code_validation_pwd").css("display","none")
     $("#form_updatePwdbyPhone").css("display","none")
 
     //개인정보 인증 수단 선택 (전화번호 또는 이메일)
@@ -48,7 +49,7 @@
             $("#printPwdbyPhone").html("정보를 잘못 입력하셨습니다. 다시 입력해주세요.");
           }else{
             $("#printPwdbyPhone").html("");
-            $("#code_validation").css("display","block")
+            $("#code_validation_pwd").css("display","block")
 
             //전화번호 인증 확인
             var authentication = false;
@@ -85,10 +86,10 @@
         data:data,
         success: function (answer) {
           if (answer == 1) {
-            alert("인증번호 불일치");
+            alert("인증번호를 다시 확인해주세요.");
             authentication = false;
           } else {
-            alert("인증번호 확인완료.");
+            alert("인증이 완료되었습니다.");
             authentication = true;
             $("#form_updatePwdbyPhone").css("display","block")
           }
@@ -258,16 +259,15 @@
 
 </script>
 <body>
-<div id="background">
+<div id="background_login">
   <a class="main" href="/main">
     <img  src="/images/icon/homeicon.png" width="40" height="40"></a>
 </div>
-<div>
+<div id="form_pwd">
   <img src="/images/icon/logo.png" id="logo">
   <h2>비밀번호 재설정</h2>
-  <input type="radio" class="radio-value" name="findPwd" value="phone">전화번호로 재설정
-  <input type="radio" class="radio-value" name="findPwd" value="email">이메일로 재설정
-</div>
+  <span><input type="radio" class="radio-value" name="findPwd" value="phone">전화번호로 재설정</span>
+  <span><input type="radio" class="radio-value" name="findPwd" value="email">이메일로 재설정</span>
 
 <!-- 전화번호로 비밀번호 재설정 -->
 <div id="byPhone">    <!-- 전화번호 radio -->
@@ -287,13 +287,13 @@
     <input type="submit" id="btn_checkByPhone" value="개인정보 확인" name="btn_checkByPhone"><br>
   </form>    <!-- 아이디와 전화번호 입력 form end -->
 
-  <table id="code_validation">
+  <table id="code_validation_pwd">
     <tr>
       <td>전화번호 인증</td>
       <td>
         <input type ="text" id ="phoneCode" name="phoneCode" maxlength="6" size = "6" class="box">
-        <input type="button" id="btn_sendPhoneCode" value="인증번호 보내기">
-        <input type="button" id="btn_phoneCode" value="인증번호 확인">
+        <input type="button" id="btn_sendPhoneCode" value="문자전송">
+        <input type="button" id="btn_phoneCode" value="인증확인">
       </td>
     </tr>
   </table>
@@ -343,8 +343,8 @@
         <td>이메일 인증</td>
         <td>
           <input type ="text" id ="emailCode" name="emailCode" maxlength="6" size = "6" class="box">
-          <input type="button" id="btn_sendEmailCode" value="인증번호 보내기">
-          <input type="button" id="btn_emailCode" value="인증번호 확인">
+          <input type="button" id="btn_sendEmailCode" value="이메일전송">
+          <input type="button" id="btn_emailCode" value="인증확인">
         </td>
       </tr>
     </table>
@@ -369,6 +369,6 @@
       </div>
     </div>
   </div>
-
+</div>
 </body>
 </html>

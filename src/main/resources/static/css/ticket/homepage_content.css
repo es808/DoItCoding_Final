@@ -92,7 +92,7 @@
 #menu-bar{
     margin-top : 100px;
 }
-#menu-bar li:not(#title){
+#menu-bar li:not(#title,.title_notice){
     color : #08428C;
     width : 200px; height : 25px;
     padding : 15px;
@@ -102,16 +102,16 @@
     border-radius : 10px 0 0 10px;
     line-height : 25px;
 }
-#menu-bar li:hover:not(#title){
+#menu-bar li:hover:not(#title,.title_notice){
     font-weight : bolder;
     color : #08428C;
     background-color : #dcdcdc;
     transition-duration: 0.5s;
 }
-#menu-bar li a:not(#title){
+#menu-bar li a:not(#title,.title_notice){
     color : #08428C;
 }
-#menu-bar #myinfo{
+#menu-bar #myinfo, #menu_notice, #menu_qna{
     font-weight : bolder;
     color : #08428C;
     background-color : #dcdcdc;
@@ -137,7 +137,7 @@
     border : 2px solid grey;
     background-color : #f7f7f7;
     margin-left : 270px;
-    margin-top : -400px;
+    margin-top : -430px;
     border-radius : 10px;
     padding-bottom : 100px;
 }
@@ -226,6 +226,22 @@ button,[type="submit"]{
     color : white;
     margin-left : 10px;
     border-radius : 5px;
+}
+#addr_postcode, #addr_address, #addr_detail{
+    margin-top : 8px;
+}
+#mypage_caption{
+    margin-top: -20px;
+}
+#mypage_check,#btn_searchAddr{
+    border-radius: 5px;
+    margin-left: 10px;
+    height: 32px;
+    border: none;
+    background-color: #08348C;
+    color: white;
+    width: 100px;
+    font-size: 12px;
 }
 
 
@@ -424,7 +440,7 @@ review_background{
     border : 2px solid grey;
     background-color : #f7f7f7;
     margin-left : 270px;
-    margin-top : -400px;
+    margin-top : -430px;
     border-radius : 10px;
     padding-bottom : 100px;
 }
@@ -581,7 +597,7 @@ table{
     position : absolute;
     left : 70%; top : 40%;
     margin-left : -240px;
-    margin-top : -400px;
+    margin-top: -360px;
     width : 500px; height : 500px;
 }
 #search_title{
@@ -921,6 +937,19 @@ h2{
 
 
 /* 공지사항,QnA list */
+.title_notice{
+    display : inline-block;
+    width : 199px; height : 70px;
+    padding : 15px;
+    font-size : 20px;
+    font-weight : bold;
+    text-align : center;
+    border : 1.5px solid #08428C;
+    border-radius : 10px 0 0 10px;
+    background-color : #08428C;
+    color : #F2AE30;
+    line-height: 70px;
+}
 #notice_background{
     position : relative;
     width : 1000px;
@@ -928,7 +957,7 @@ h2{
     border : 2px solid grey;
     background-color : #f7f7f7;
     margin-left : 270px;
-    margin-top : -400px;
+    margin-top: -600px;
     border-radius : 10px;
 }
 #notice_background h2{
@@ -956,12 +985,13 @@ h2{
     font-weight : 500;
     font-size : 15px;
 }
-.notice_table th,td{
+.notice_table th,notice_table td{
     padding : 13px;
     text-align : center;
 }
 .notice_table td{
     background-color : white;
+    text-align: center;
 }
 #btnWrite{
     z-index : 100;
