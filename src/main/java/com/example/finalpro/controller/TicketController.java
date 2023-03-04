@@ -64,33 +64,14 @@ public class TicketController {
 
 
     // 시간, 장르 별로 Ajax 출력하기
+    // 시간, 장르 별로 Ajax 출력하기
     @RequestMapping("/SelectTicketMain")
     @ResponseBody
-    public List<TicketVO> selectTicket(int cateid, int time, int page){
+    public List<TicketVO> selectTicket(int cateid, int time){
         System.out.println("cateid "+cateid);
         System.out.println("time "+time);
-        System.out.println("page "+page);
-        String keyword = "";
 
-
-        // 페이징 처리
-        // int page : 현재 페이지
-        // int totalRecord : 총 ticket 숫자
-        // int startRecord : 현재 page에서 출력되는 record의 시작 rownum
-        // int endRecord : 현재 page에서 출력되는 record의 끝 rownum
-        // int startPage : '이전'을 누르기 전에 출력되는 가장 작은 페이지 버튼 숫자
-        // int endPage : '다음'을 누르기 전에 출력되는 가장 큰 페이지 버튼 숫자
-        int totalRecord = DBManager.getTotalRecord(keyword);
-        Paging paging = new Paging(totalRecord, page);
-        int startRecord = paging.getStartRecord();
-        int endRecord = paging.getEndRecord();
-        int startPage = paging.getStartPage();
-        int endPage = paging.getEndPage();
-
-        System.out.println("totalRecord :"+totalRecord);
-
-
-        return DBManager.findAllTicketByCategory(time,cateid, startRecord, endRecord);
+        return DBManager.findAllTicketByCategory(time,cateid);
     }
 
     // 검색 결과 ticket들 Ajax 출력하기

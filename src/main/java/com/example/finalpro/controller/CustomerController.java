@@ -37,12 +37,6 @@ public class CustomerController {
     @Autowired
     private CustomerDAO customerDAO;
 
-    @RequestMapping("/FindCustomer")
-    @ResponseBody
-    public CustomerVO findCustomer(String custid){
-        return DBManager.findByCustid(custid);
-    }
-
     static String code;
 
     @Autowired
@@ -50,9 +44,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerDAO dao;
-
-    @Autowired
-    private CustomerDAO customerDAO;
 
     @Autowired
     private CategoryService ts;

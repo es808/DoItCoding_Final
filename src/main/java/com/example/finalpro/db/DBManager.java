@@ -136,25 +136,22 @@ public class DBManager {
 		return t;
 	}
 
-
-	// ******** admin.ticket ********
-
 	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
 	// time=0은 과거, time=1은 현재, time=2는 미래
-	public static List<TicketVO> findAllTicketByCategory(int time, int cateid, int startRecord, int endRecord){
+	public static List<TicketVO> findAllTicketByCategory(int time, int cateid){
 		List<TicketVO> list = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("time", time);
 		map.put("cateid", cateid);
-		map.put("startRecord", startRecord);
-		map.put("endRecord", endRecord);
 
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findAllTicketByCategoryPaging", map);
+		list = session.selectList("ticket.findAllTicketByCategory", map);
 		session.close();
 
 		return list;
 	}
+
+	// ******** admin.ticket ********
 
 	// admin의 ticketList
 	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
@@ -358,12 +355,30 @@ public class DBManager {
 	}
 
 	// custid에 따른 qna 작성 리스트
-	public static List<QnaVO> listQnaByCustid(String custid){
+	public static List<QnaVO> listQnaByCustid(String custid, int startRecord, int endRecord){
 		List<QnaVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("qna.selectQnaByCustid", custid);
+		list = session.selectList("qna.selectQnaByCustid", map);
 		session.close();
 		return list;
+	}
+	
+	// custid에 따른 qna 작성 총 숫자
+	public static int getTotalQnaRecord(String custid){
+		int totalRecord = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		totalRecord = session.selectOne("qna.getTotalQnaRecord", custid);
+		session.close();
+		if(totalRecord==0){
+			totalRecord = 1;
+		}
+
+		return totalRecord;
 	}
 
 	public static List<CustomerVO> findCustomerPagingSearch(int startRecord, int endRecord, String keyword, String order){

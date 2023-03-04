@@ -27,8 +27,11 @@
     </update>
 
     <!--custid 고객 아이디에 따라 작성한 qna 목록 출력하기-->
-    <select id="selectQnaByCustid" resultType="qnaVO">
-        select * from qna where custid=#{custid}
+    <select id="selectQnaByCustid" resultType="qnaVO" parameterType="java.util.HashMap">
+        select * from
+        (select rownum n, a.* from
+        (select * from qna where custid=#{custid} order by qna_no) a)
+        where n between #{startRecord} and #{endRecord}
     </select>
 
     <!--    조회수 증가  -->
@@ -68,5 +71,10 @@
         </if>
         order by QNA_DATE desc) a)
         where r between #{startNo} and #{endNo}
+    </select>
+
+    <!--myPage에서 custid에 따른 qna Record 숫자를 구하기-->
+    <select id="getTotalQnaRecord" resultType="java.lang.Integer">
+        select count(*) from qna where custid=#{custid}
     </select>
 </mapper>

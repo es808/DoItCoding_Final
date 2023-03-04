@@ -100,3 +100,6 @@ admin 페이지에서 ticket과 customer 정보를 입력, 수정할 때 지도�
 
 1. category 페이지에서 무한 스크롤 기능으로 ticket이 뜨는 거 완료.
 2. admin/listTicket 이랑 admin/listCustomer에서 정렬하는 기능 추가.
+
+------ 23.03.04
+1. myPage에서 Qna 내역 보는 거 출력, 페이징 처리 완료 (단, 테이블과 페이징 요소 간의 CSS 처리는 아직)
