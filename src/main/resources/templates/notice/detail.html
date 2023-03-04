@@ -7,6 +7,7 @@
     <script th:src="@{/js/notice/detail.js}"></script>
 </head>
 <body>
+    <a href="/notice/list/1/all">공지 목록</a>
     <div th:if="${session.id=='admin'}">
         <a th:href="@{'/admin/notice/update/'+${n.notice_no}}">수정</a>
         <a th:href="@{'/admin/notice/delete/'+${n.notice_no}}" id="delete">삭제</a>
