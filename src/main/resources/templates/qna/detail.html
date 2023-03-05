@@ -4,110 +4,110 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <script type="text/javascript" th:src="@{/js/qna/detail.js}"></script>
 </head>
 <body class="main_layout">
-<img src="/images/icon/logo.png" id="logo">
-<div class="main_user">
-  <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
-  <a href="loginTest.html" id="login"><img src="/images/icon/loginicon.png">로그인</a>
-  <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
-  <a href="signupTest.html" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
-  <a href="mypage_Info.html" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
-</div>
-<nav id="navigation">
-  <div class="search" id="search" name="search">
-    <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-    <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
+  <img src="/images/icon/logo.png" id="logo">
+  <div class="main_user">
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
   </div>
-  <ul>
-    <li class="home"><a href="/main">홈</a></li>
-    <li><a href="#">시사회</a>
-      <ul>
-        <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
-        <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
-        <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
-      </ul>
-    </li>
-    <li><a href="#">뮤지컬</a>
-      <ul>
-        <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
-        <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
-        <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
-      </ul>
-    </li>
-    <li><a href="#">연극</a>
-      <ul>
-        <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
-        <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
-        <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
-      </ul>
-    </li>
-    <li><a href="#">콘서트</a>
-      <ul>
-        <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
-        <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
-        <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
-      </ul>
-    </li>
-    <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
-  </ul>
-</nav>
-<a href="/qna/list/1/all">QNA 목록</a>
-  <!--  수정/삭제 (작성자만 가능) (전체 글을 수정/삭제하는 것) -->
-<div id="background_detail_qna">
-  <h2>Q&A</h2>
-  <hr>
-  <div th:if="${session.id}==${q.customer.custid} or ${session.id}=='admin'">
-    <div id="detail_updatebtn"><a th:href="@{'/qna/update/'+${q.qna_no}}">수정</a></div>
-    <div id="detail_deletebtn"><a th:href="@{'/qna/delete/'+${q.qna_no}}" id="a_delete">삭제</a></div>
-  </div>
-  <div id="content_detail">
-      <span class="title_detail">글번호&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_no}" id="qna_no"></span></span>
-<!--  <div th:text="${q.customer.name}"></div>-->
-      <span class="title_detail">분류&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_category}"></span></span>
-      <span class="title_detail" id="regdate">등록일&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_date}"></span></span><br>
-      <br>
-      <span class="title_detail">작성자&nbsp;&nbsp;&nbsp;<span th:text="${q.customer.custid}" id="div_custid"></span></span>
-      <span class="title_detail" id="ticketname">작품명&nbsp;&nbsp;&nbsp;<span th:text="${q.ticket.ticket_name}"></span></span><br>
-      <br>
-      <span class="title_detail">제목&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_title}"></span></span><br>
-    <br>
-      <span class="title_detail">내용&nbsp;&nbsp;&nbsp;<div id="notice_content"><span th:text="${q.qna_content}"></span></div></span><br>
-      <span class="title_detail">조회수&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_hit}"></span></span>
-    <span class="title_detail" id="answer">답변여부&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_answer}" id="div_qna_answer"></span></span><br>
-    <br>
-<!--  <div th:text="${q.qna_open}"></div>-->
-<!--  <div th:text="${q.ticket.ticketid}"></div>-->
-  <span class="title_detail">첨부파일&nbsp;&nbsp;&nbsp;<span th:if="${q.qna_fname}!=null">
-    <a th:href="@{'/qna_files/'+${q.qna_fname}}" th:text="${q.qna_fname}"></a>
-  </span>
-  </span>
+  <nav id="navigation">
+    <div class="search" id="search" name="search">
+      <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
+      <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
-</div>
-  <!-- 답글 작성/수정 (admin만 가능) (전체 글이 아니라 답글만 작성/수정하는 것) -->
-  <div th:if="${session.id}=='admin'">
-    <div id="background_answer">
-    <h2>답글 작성 및 수정</h2>
+    <ul>
+      <li class="home"><a href="/main">홈</a></li>
+      <li><a href="#">시사회</a>
+        <ul>
+          <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+          <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+          <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+        </ul>
+      </li>
+      <li><a href="#">뮤지컬</a>
+        <ul>
+          <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+          <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+          <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+        </ul>
+      </li>
+      <li><a href="#">연극</a>
+        <ul>
+          <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+          <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+          <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+        </ul>
+      </li>
+      <li><a href="#">콘서트</a>
+        <ul>
+          <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+          <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+          <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+        </ul>
+      </li>
+      <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
+    </ul>
+  </nav>
+  <a href="/qna/list/1/all">QNA 목록</a>
+    <!--  수정/삭제 (작성자만 가능) (전체 글을 수정/삭제하는 것) -->
+  <div id="background_detail_qna">
+    <h2>Q&A</h2>
     <hr>
-    <div th:if="${q.qna_answer}==null">
-      <textarea rows="7" cols="40" class="textarea_qna_answer"></textarea>
+    <div th:if="${session.id}==${q.customer.custid} or ${session.id}=='admin'">
+      <div id="detail_updatebtn"><a th:href="@{'/qna/update/'+${q.qna_no}}">수정</a></div>
+      <div id="detail_deletebtn"><a th:href="@{'/qna/delete/'+${q.qna_no}}" id="a_delete">삭제</a></div>
     </div>
-    <div th:unless="${q.qna_answer}==null">
-      <textarea rows="7" cols="40" class="textarea_qna_answer" th:text="${q.qna_answer}"></textarea>
-    </div>
-    <button id="answer_submit">등록</button>
-    <button id="answer_delete">삭제</button>
-<!--    <a th:href="@{'/qna_notification_email/'+${q.customer.custid}}">알림 메일 보내기</a>-->
-    </div>
-</div>
-<div id="main-footer">
-  <footer class="footer">
-    <div>ⓒ CodingDoit corp.
-    </div>
-  </footer>
-</div>
+    <div id="content_detail">
+        <span class="title_detail">글번호&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_no}" id="qna_no"></span></span>
+  <!--  <div th:text="${q.customer.name}"></div>-->
+        <span class="title_detail">분류&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_category}"></span></span>
+        <span class="title_detail" id="regdate">등록일&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_date}"></span></span><br>
+        <br>
+        <span class="title_detail">작성자&nbsp;&nbsp;&nbsp;<span th:text="${q.customer.custid}" id="div_custid"></span></span>
+        <span class="title_detail" id="ticketname">작품명&nbsp;&nbsp;&nbsp;<span th:text="${q.ticket.ticket_name}"></span></span><br>
+        <br>
+        <span class="title_detail">제목&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_title}"></span></span><br>
+      <br>
+        <span class="title_detail">내용&nbsp;&nbsp;&nbsp;<div id="notice_content"><span th:text="${q.qna_content}"></span></div></span><br>
+        <span class="title_detail">조회수&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_hit}"></span></span>
+      <span class="title_detail" id="answer">답변여부&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_answer}" id="div_qna_answer"></span></span><br>
+      <br>
+  <!--  <div th:text="${q.qna_open}"></div>-->
+  <!--  <div th:text="${q.ticket.ticketid}"></div>-->
+    <span class="title_detail">첨부파일&nbsp;&nbsp;&nbsp;<span th:if="${q.qna_fname}!=null">
+      <a th:href="@{'/qna_files/'+${q.qna_fname}}" th:text="${q.qna_fname}"></a>
+    </span>
+    </span>
+      </div>
+  </div>
+    <!-- 답글 작성/수정 (admin만 가능) (전체 글이 아니라 답글만 작성/수정하는 것) -->
+    <div th:if="${session.id}=='admin'">
+      <div id="background_answer">
+      <h2>답글 작성 및 수정</h2>
+      <hr>
+      <div th:if="${q.qna_answer}==null">
+        <textarea rows="7" cols="40" class="textarea_qna_answer"></textarea>
+      </div>
+      <div th:unless="${q.qna_answer}==null">
+        <textarea rows="7" cols="40" class="textarea_qna_answer" th:text="${q.qna_answer}"></textarea>
+      </div>
+      <button id="answer_submit">등록</button>
+      <button id="answer_delete">삭제</button>
+  <!--    <a th:href="@{'/qna_notification_email/'+${q.customer.custid}}">알림 메일 보내기</a>-->
+      </div>
+  </div>
+  <div id="main-footer">
+    <footer class="footer">
+      <div>ⓒ CodingDoit corp.
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

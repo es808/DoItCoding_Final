@@ -732,15 +732,6 @@ public class DBManager {
 		return re;
 	}
 
-	//마이페이지 - 예매내역 삭제
-	public static int deleteBook(int bookid){
-		int re = 0;
-		SqlSession session = sqlSessionFactory.openSession(true);
-		re = session.delete("book.deleteBook",bookid);
-		session.close();
-		return re;
-	}
-
 	// 알림 삭제
 	public static int deleteNotification(int notif_no){
 		int re=-1;
