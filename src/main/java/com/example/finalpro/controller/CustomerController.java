@@ -19,12 +19,10 @@ import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
-import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.vo.DrawVO;
 import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -243,14 +241,6 @@ public class CustomerController {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
             mav.setViewName("/error");
         }
-
-		/*
-		memberDAO.save(m);
-		Optional<Member> obj = memberDAO.findById(m.getId());
-		if(obj.isEmpty()) {
-			mav.addObject("msg", "회원가입에 실패하였습니다.");
-			mav.setViewName("error");
-		}*/
         return mav;
     }
 

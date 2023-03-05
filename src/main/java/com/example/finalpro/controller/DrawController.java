@@ -46,6 +46,13 @@ public class DrawController {
         return draw;
     }
 
+    // 결제완료하면 드로우 인스턴스 삭제
+    @RequestMapping("/drawDelete")
+    @ResponseBody
+    public int drawDelete(int drawid){
+        return DBManager.drawDelete(drawid);
+    }
+
     public int[] leftSeat(int ticketid){
         List<SeatVO> seat = DBManager.drawLeftSeat(ticketid);      //seatTable에 남은 좌석 정보 가져오기
         int seatArr[] = new int[seat.size()];
