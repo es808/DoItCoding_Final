@@ -55,24 +55,33 @@
     <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
   </ul>
 </nav>
+<div id="background_detail">
+  <h2>공지사항 수정</h2>
+  <hr>
+  <div id="content_detail">
   <div hidden="hidden" id="notice_category" th:text="${n.notice_category}"></div>
   <form action="/admin/notice/update" method="post" enctype="multipart/form-data">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <input type="hidden" th:name="notice_no" th:value="${n.notice_no}">
     <input type="hidden" name="notice_fname" th:value="${n.notice_fname}">
 
-    <select name="notice_category" id="select_category">
+    <span class="title_insert">분류&nbsp;&nbsp;&nbsp;</span>
+    <select name="notice_category" id="select_category" class="insert_select">
       <option value="예매/드로우">예매/드로우</option>
       <option value="결제/환불">결제/환불</option>
       <option value="기타">기타</option>
-    </select>
+    </select><br>
     <br>
-    <input th:name="notice_title" placeholder="제목" th:value="${n.notice_title}"><br>
-    <textarea name="notice_content" placeholder="내용" th:text="${n.notice_content}" rows="5" cols="30"></textarea>
+    <span class="title_insert">제목&nbsp;&nbsp;&nbsp;<input th:name="notice_title" th:value="${n.notice_title}" id="insert_title"></span><br>
     <br>
-    <input type="file" name="uploadFile"><br>
-    <input type="submit" value="등록">
+    <span class="title_insert">내용&nbsp;&nbsp;&nbsp;<br>
+    <textarea name="notice_content" placeholder="내용" th:text="${n.notice_content}" rows="5" cols="30" class="textarea_insert"></textarea></span><br>
+    <br>
+    <span class="title_insert">첨부파일&nbsp;&nbsp;&nbsp;<input type="file" name="uploadFile"></span><br>
+    <input type="submit" value="등록" id="insert_submit">
   </form>
+  </div>
+</div>
 <div id="main-footer">
   <footer class="footer">
     <div>ⓒ CodingDoit corp.

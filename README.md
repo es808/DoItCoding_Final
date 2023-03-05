@@ -106,6 +106,7 @@ admin 페이지에서 ticket과 customer 정보를 입력, 수정할 때 지도�
 
 
 
+
 2/15
 - 은선: 인텔리J 및 Git 사용법 숙지
 
@@ -119,6 +120,20 @@ admin 페이지에서 ticket과 customer 정보를 입력, 수정할 때 지도�
   (오류 -> main 우측 화살표 위치 조정, detail 테스트 필요, id,
 
 
+// 남은 css 페이지 - 윤경
+
+< admin -> customer >
+- list.html
+- listQna.html
+- listTicket.html
+- update.html
+
+< admin -> ticket >
+- insertTicket.html
+- listTicket.html
+- updateTicket.html
+
+< qna notification (알람 homepage_frame 있는 모든 부분 적용) >
 
 
 

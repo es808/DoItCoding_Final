@@ -137,6 +137,9 @@ public class DBManager {
 		return t;
 	}
 
+
+	// ******** admin.ticket ********
+
 	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
 	// time=0은 과거, time=1은 현재, time=2는 미래
 	public static List<TicketVO> findAllTicketByCategory(int time, int cateid){
