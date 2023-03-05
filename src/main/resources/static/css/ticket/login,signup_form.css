@@ -481,7 +481,9 @@ button.active:not(.x){
 #form_updatePwdbyPhone button, #form_updatePwdbyEmail button{
     width: 110px;
     border-radius: 5px;
-    margin-top: 140px;
+    left: -45px;
+    top: 45px;
+    position: absolute;
 }
 #byEmail #btn_checkByEmail{
     margin-left: 370px;
@@ -509,7 +511,7 @@ button.active:not(.x){
     position: absolute;
     width: 500px;
     margin-top: -30px;
-    margin-left: -230px;
+    margin-left: -240px;
 }
 #menu_admin{
     margin-top: 70px;
