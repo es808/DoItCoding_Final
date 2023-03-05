@@ -11,7 +11,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-    <form id="insertTicket" action="/admin/insertTicket" method="post" enctype="multipart/form-data">
+    <form id="insertTicket" action="/admin/ticket/insertTicket" method="post" enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         티켓id : <input type="number" name="ticketid"><br>
         장르 : <select id="cateid" name="cateid"> <br>

@@ -67,4 +67,29 @@
       where (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
     </if>
   </select>
+
+  <!-- findCustid 아이디 찾기 -->
+  <select id="findCustid" resultType="customerVO">
+    select custid from customer where name=#{name} and phone=#{phone}
+  </select>
+
+  <!-- 전화번호로 개인정보 확인 -->
+  <select id="checkByPhone" resultType="customerVO">
+    select * from customer where custid=#{custid} and phone=#{phone}
+  </select>
+
+  <!-- 전화번호로 비밀번호 재설정 -->
+  <update id="updatePwdbyPhone" parameterType="customerVO">
+    update customer set pwd=#{pwd} where custid=#{custid} and phone=#{phone}
+  </update>
+
+  <!-- 이메일로 개인정보 확인 -->
+  <select id="checkByEmail" resultType="customerVO">
+    select * from customer where custid=#{custid} and email=#{email}
+  </select>
+
+  <!-- 이메일로 비밀번호 재설정 -->
+  <update id="updatePwdbyEmail" parameterType="customerVO">
+    update customer set pwd=#{pwd} where custid=#{custid} and email=#{email}
+  </update>
 </mapper>

@@ -323,6 +323,62 @@ public class DBManager {
 
 	// ******** admin.customer ********
 
+	//Customer 아이디 찾기
+	public static CustomerVO findCustid(String name, String phone){
+		CustomerVO vo = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("phone", phone);
+		SqlSession session = sqlSessionFactory.openSession();
+		vo= session.selectOne("customer.findCustid", map);
+		session.close();
+		return vo;
+	}
+
+	//전화번호로 개인정보 확인
+	public static CustomerVO checkByPhone(String custid, String phone){
+		CustomerVO vo = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("phone", phone);
+		SqlSession session = sqlSessionFactory.openSession();
+		vo= session.selectOne("customer.checkByPhone", map);
+		session.close();
+		return vo;
+	}
+
+	//Customer 전화번호로 비밀번호 재설정
+	public static int updatePwdbyPhone(CustomerVO customer){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.update("customer.updatePwdbyPhone", customer);
+		session.commit();
+		session.close();
+		return re;
+	}
+
+	//이메일로 개인정보 확인
+	public static CustomerVO checkByEmail(String custid, String email){
+		CustomerVO vo = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("email", email);
+		SqlSession session = sqlSessionFactory.openSession();
+		vo= session.selectOne("customer.checkByEmail", map);
+		session.close();
+		return vo;
+	}
+
+	//Customer 이메일로 비밀번호 재설정
+	public static int updatePwdbyEmail(CustomerVO customer){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.update("customer.updatePwdbyEmail", customer);
+		session.commit();
+		session.close();
+		return re;
+	}
+
 	// 고객정보 수정
 	public static int updateCustomer(CustomerVO customer){
 		int re = -1;

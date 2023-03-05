@@ -47,8 +47,9 @@ public class TicketController {
 
     // 티켓 상세페이지
     @GetMapping("/detail")
+    @ResponseBody
     public ModelAndView detail(){
-        ModelAndView mav = new ModelAndView("/ticket/detail");
+        ModelAndView mav = new ModelAndView("/detail");
         return mav;
     }
 

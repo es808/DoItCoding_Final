@@ -80,10 +80,10 @@
                         var a = $("<a></a>").attr({
                             ticketid: arr[i].ticketid,
                             id: "preview"+i,
-                            href:"detail?ticketid="+arr[i].ticketid
+                            href:"/detail?ticketid="+arr[i].ticketid
                         });
                         var img = $("<img>").attr({
-                            src: "images/"+arr[i].img_fname,
+                            src: "/images/"+arr[i].img_fname,
                             width : 200,
                             height: 251,
                         });
@@ -106,7 +106,6 @@
                             custid:custid,
                             ticketid: arr[i].ticketid
                         })
-
 
                         var checkbox = $("<input>").attr({
                             type:"checkbox",
@@ -197,7 +196,6 @@
                             });
                         }
 
-
                         $(document).on('click', checkbox_delete, function(){ // 체크박스 체크하면 bookid 가져옴
                             number +=1;
                             var target = this.id;
@@ -242,7 +240,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "category?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -258,7 +256,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "category?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -274,7 +272,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "category?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -285,7 +283,7 @@
                     if(e.which == 13){
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "search?keyword="+keyword;
+                        var url = "/search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -293,7 +291,7 @@
                 $("#search_btn").click(function(){ // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "search?keyword="+keyword;
+                    var url = "/search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
@@ -308,17 +306,17 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="/main"><img src="images/icon/logo.png" id="logo"></a>
+<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
-    <a href="/main" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
-    <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
-    <a href="/myPage" id="mypage"><img src="images/icon/mypageicon.png">마이페이지</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
         <li class="home"><a href="/main">홈</a></li>

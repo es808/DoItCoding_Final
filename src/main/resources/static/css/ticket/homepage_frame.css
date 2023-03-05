@@ -162,3 +162,10 @@ hr{
     text-align: center;
     position : relative;
 }
+
+#chat-channel-button img{
+    position : absolute;
+    width : 85px; height: 35px;
+    margin-left : 14px;
+    top : 12px;
+}

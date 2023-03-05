@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script>
+  $(function(){
+
+    var custid;
+
+    $("#code_validation").css("display","none")
+    $("#mapping").css("display","none")
+
+    $("#btn_findCustid").click(function(e){     // form_findCustid (아이디 찾기)
+      var url = "findCustid";
+      var name = $("#name").val();
+      var phone = $("#phone").val();
+
+      // console.log("이름"+name)
+      // console.log("전화"+phone)
+
+      $.ajax({
+        url:url,
+        data:{name:name, phone:phone},
+        success:function(c){
+          // console.log("ok")
+          // console.log(c.custid)
+          custid = c.custid;
+          if(custid==undefined){
+            $("#printId").html("미가입 또는 정보를 잘못 입력하셨습니다.");
+          }else{
+            $("#printId").html("");
+            $("#code_validation").css("display","block")
+
+            //전화번호 인증 확인
+            var authentication = false;
+
+            if (authentication == false) {
+              alert("전화번호 인증을 확인해주세요.")
+              return false;
+            }
+
+          }
+        }
+      });
+      e.preventDefault();
+
+    });     // form_findCustid가 제출되었을 때
+
+
+    $("#btn_sendPhoneCode").click(function(){     //인증번호 전송
+      var phone = $("#phone").val();
+      // console.log("전화번호:"+phone);
+      var url = "sendMessage";
+      var data = {phone:phone};
+
+      $.ajax(url, {
+        data:data,
+        success: function (answer) {
+        }
+      });
+    });     // 인증번호 전송 end
+
+    $(document).on('click', '#btn_phoneCode', function () {     //인증번호 확인
+      var phoneCode = $("#phoneCode").val();
+      // console.log(phoneCode);
+      var url = "CustomerPhoneAuthentication";
+      var data = {phoneCode:phoneCode};
+
+      $.ajax(url, {
+        data:data,
+        success: function (answer) {
+          if (answer == 1) {
+            alert("인증번호 불일치");
+            authentication = false;
+          } else {
+            alert("인증번호 확인완료.");
+            authentication = true;
+            $("#printId").html("아이디는 "+custid+" 입니다.");
+            $("#mapping").css("display","block")
+          }
+        }
+      });
+    });     // 인증번호 확인 end
+
+
+  })      //전체 $(function)
+
+</script>
+<body>
+  <div id="background">
+    <a class="main" href="/main">
+      <img  src="/images/icon/homeicon.png" width="40" height="40"></a>
+  </div>
+  <div>
+    <form id="form_findCustid">
+      <img src="/images/icon/logo.png" id="logo">
+      <h2>아이디 찾기</h2>
+      <table>
+        <tr>
+          <td>이름</td>
+          <td><input type="text" name="name" class="box" size="10" id="name"></td>
+        </tr>
+        <tr>
+          <td>전화번호</td>
+          <td>
+            <input type ="text" id ="phone" name="phone" maxlength="11" size = "12" class="box">
+          </td>
+        </tr>
+      </table>
+      <input type="button" id="btn_findCustid" value="아이디 찾기" name="btn_findCustid"><br>
+    </form>
+    <table id="code_validation">
+      <tr>
+        <td>전화번호 인증</td>
+        <td>
+          <input type ="text" id ="phoneCode" name="phoneCode" maxlength="6" size = "6" class="box">
+          <input type="button" id="btn_sendPhoneCode" value="인증번호 보내기">
+          <input type="button" id="btn_phoneCode" value="인증번호 확인">
+        </td>
+      </tr>
+    </table>
+
+    <div><b id = "printId"></b></div><br>
+
+    <div id="mapping" class="caption">
+      <a href="/login">로그인</a><a href="/findPwdForm">PW찾기</a>
+    </div>
+  </div>
+</body>
+</html>
