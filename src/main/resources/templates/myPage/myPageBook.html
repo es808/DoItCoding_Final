@@ -32,41 +32,6 @@
                 }
             })
 
-            /*$("#addBtn").click(function(){
-                var arr = ($("#myform").serializeArray());
-                var score = arr[0].value;						//별점 스코어 변환
-                var review_content = $("#content").val();		//리뷰 내용
-
-                console.log(score,review_content)
-
-                var custid = "ym1234";
-                var ticketid = 28;
-                var reviewid = 3;
-
-                var data = {
-                    reviewid:reviewid,
-                    custid:custid,
-                    ticketid:ticketid,
-                    score:score,
-                    review_content:review_content
-                }
-                $.ajax({
-                    url:"InsertReview",
-                    data:data,
-                    success:function(data){
-                        if(data==1){
-                            alert("리뷰등록완료")
-                        }else{
-                            alert("리뷰등록실패")
-                        }
-                    }
-                })
-
-
-            })*/
-
-
-
             // 예매내역 출력
             $.ajax({
                 url:"BookByCustid",

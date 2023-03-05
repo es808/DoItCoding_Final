@@ -116,7 +116,10 @@
 
             searchKeyword();
 
-            var seatname = $("#seatname").html()
+            console.log('$("#draw_list"):'+$("#draw_list").length());
+            //for(i=0; i<$("#draw_list"))
+
+            var seatname = $("#seatname").html();
 
             if(seatname == "none"){
                 $("#pay_btn").html("드로우 실패");
@@ -196,21 +199,19 @@
     </ul>
 </div>
 <form action="" method="post" id="form">
-
-        <ul th:each="d:${list}">
-            <div class="drawlist">
-            <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
-            <li>드로우번호 :<span th:text ="${d.drawid}" id="drawid"/> </li>
-            <li>제목 : <span th:text="${d.ticket_name}"/></li>
-            <li>관람일 : <span th:text="${d.ticket_date}"/></li>
-            <li>상영관 : <span th:text="${d.loc}"/></li>
-            <li>관람좌석 : <span th:text="${d.seatname}" id = "seatname"/></li>
-            <li><span th:text="${d.ticketid}" id="ticketid" hidden="hidden"></span></li>
-            <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
-            <button id="pay_btn" type="button">결제하기</button>
-            </div>
-        </ul>
-
+    <ul th:each="d:${list}" id="draw_list">
+        <div class="drawlist">
+        <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
+        <li>드로우번호 :<span th:text ="${d.drawid}" id="drawid"/> </li>
+        <li>제목 : <span th:text="${d.ticket_name}"/></li>
+        <li>관람일 : <span th:text="${d.ticket_date}"/></li>
+        <li>상영관 : <span th:text="${d.loc}"/></li>
+        <li>관람좌석 : <span th:text="${d.seatname}" id="seatname"/></li>
+        <li><span th:text="${d.ticketid}" id="ticketid" hidden="hidden"></span></li>
+        <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
+        <button id="pay_btn" type="button">결제하기</button>
+        </div>
+    </ul>
 </form>
 <div id="main-footer">
     <footer class = "footer">
