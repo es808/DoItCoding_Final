@@ -13,11 +13,7 @@
         $(function() {
 
             var custid = sessionStorage.getItem("custid");
-
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            var confirm_phone = false;
-
+            
             if (custid != null) {
                 $("#login").css('display', 'none');
                 $("#regist").css('display', 'none');
@@ -115,7 +111,6 @@
             }// 검색 end
 
             searchKeyword();
-
             var seatname = $("#seatname").html()
 
             if(seatname == "none"){
@@ -128,18 +123,11 @@
             $(document).on('click', '#pay_btn', function() { // 전화번호 중복
                 sessionStorage.setItem("ticketid",$("#ticketid").html());
                 sessionStorage.setItem("custid",custid);
+                sessionStorage.setItem("seatid",$("#seatid").html());
                 sessionStorage.setItem("as",$("#seatid").html());
+                sessionStorage.setItem("drawid",$("#drawid").html());
                 window.open('/regist2');
-
-                //결제하면 드로우 테이블에서 삭제
-                $.ajax({
-                    url:"drawDelete",
-                    data:{drawid:$("#drawid").html()},
-                    success:function (){
-                        location.reload();
-                    }
                 })
-            });
         })
     </script>
 </head>
