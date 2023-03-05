@@ -1,14 +1,28 @@
 package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.CustomerDAO;
+import com.example.finalpro.dao.DrawDAO;
+import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.entity.Draw;
+import com.example.finalpro.vo.*;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
-import com.example.finalpro.service.EmailService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.vo.DrawVO;
+import com.example.finalpro.vo.MyDrawVO;
+import com.example.finalpro.vo.TicketVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +32,23 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @Setter
 public class CustomerController {
+
+    @Autowired
+    private CustomerDAO customerDAO;
+
     static String code;
 
     @Autowired
@@ -35,9 +58,6 @@ public class CustomerController {
     private CustomerDAO dao;
 
     @Autowired
-    private CustomerDAO customerDAO;
-
-    @Autowired
     private CategoryService ts;
 
     @Autowired
@@ -45,6 +65,12 @@ public class CustomerController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private DrawDAO drawDAO;
+
+    @Autowired
+    private SeatDAO seatDAO;
 
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
@@ -60,6 +86,10 @@ public class CustomerController {
         model.addAttribute("list", dao.findAll());
     }
 
+    @RequestMapping("/list_jpa")
+    public void list_jpa(Model model){
+        model.addAttribute("list", ts.findAll());
+    }
 
     @RequestMapping("/list_jpa_id")
     public void list_jpa_id(Model model) {
@@ -150,6 +180,43 @@ public class CustomerController {
         return "myPage/myPage";
     }
 
+
+    @GetMapping("/myPageDraw")
+    public String myPageDraw(HttpSession session, Model m){
+        String custid = (String)session.getAttribute("id");
+        List<MyDrawVO> myDraw = new ArrayList<>();
+        TicketVO myTicket = null;
+
+        List<DrawVO> list = DBManager.findByDrawCustid(custid);
+
+        for(DrawVO d : list) {
+            MyDrawVO md = new MyDrawVO();
+            myTicket = DBManager.findByTicketid(d.getTicketid());
+            md.setCustid(d.getCustid());
+            md.setDrawid(d.getDrawid());
+            md.setDrawid(d.getDrawid());
+            md.setSeatid(d.getSeatid());
+            md.setTicketid(d.getTicketid());
+            md.setImg_fname(myTicket.getImg_fname());
+            md.setLoc(myTicket.getLoc());
+            md.setTicket_date(myTicket.getTicket_date());
+            md.setTicket_name(myTicket.getTicket_name());
+
+            if(d.getSeatid() != 0){
+                md.setSeatname(seatDAO.findById(d.getSeatid()).get().getSeatname());
+            }else{
+                md.setSeatname("none");
+            }
+
+            System.out.println(md);
+            myDraw.add(md);
+        }
+
+        m.addAttribute("list",myDraw);
+
+        return "myPage/myPageDraw";
+    }
+
     @GetMapping("/test")
     public String test(){
         return "list";
@@ -157,9 +224,6 @@ public class CustomerController {
 
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
-
-    @GetMapping("/myPageDraw")
-    public String myPageDraw() { return "myPage/myPageDraw";}
 
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
@@ -238,7 +302,6 @@ public class CustomerController {
         return answer;
     }
 
-    //문자 전송
     @GetMapping("/sendMessage")
     @ResponseBody
     public String sendMessage(String phone){

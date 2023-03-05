@@ -4,6 +4,7 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.function.page.Paging;
 import com.example.finalpro.vo.NotificationByCustidVO;
 import com.example.finalpro.vo.NotificationVO;
 import com.example.finalpro.service.TicketService;
@@ -49,7 +50,7 @@ public class TicketController {
     @GetMapping("/detail")
     @ResponseBody
     public ModelAndView detail(){
-        ModelAndView mav = new ModelAndView("/detail");
+        ModelAndView mav = new ModelAndView("/ticket/detail");
         return mav;
     }
 
@@ -61,7 +62,6 @@ public class TicketController {
         return DBManager.findAllRankingOrderByScore(cateid);
     }
 
-
     // 시간, 장르 별로 Ajax 출력하기
     @RequestMapping("/SelectTicketMain")
     @ResponseBody
@@ -72,6 +72,31 @@ public class TicketController {
         return DBManager.findAllTicketByCategory(time,cateid);
     }
 
+    // 시간, 장르 별로 Ajax 출력하기
+    // category 에서 무한 스크롤로 나오게 하기
+    @RequestMapping("/SelectTicketCategory")
+    @ResponseBody
+    public List<TicketVO> selectTicketInfiniteScroll(int cateid, int time, int page){
+        System.out.println("cateid "+cateid);
+        System.out.println("time "+time);
+        String keyword = "";
+        // 페이징 처리
+        // int page : 현재 페이지
+        // int totalRecord : 총 ticket 숫자
+        // int startRecord : 현재 page에서 출력되는 record의 시작 rownum
+        // int endRecord : 현재 page에서 출력되는 record의 끝 rownum
+        // int startPage : '이전'을 누르기 전에 출력되는 가장 작은 페이지 버튼 숫자
+        // int endPage : '다음'을 누르기 전에 출력되는 가장 큰 페이지 버튼 숫자
+        int totalRecord = DBManager.getTotalRecord(keyword);
+        Paging paging = new Paging(totalRecord, page);
+        int startRecord = paging.getStartRecord();
+        int endRecord = paging.getEndRecord();
+        int startPage = paging.getStartPage();
+        int endPage = paging.getEndPage();
+
+        return DBManager.findAllTicketByCategoryInfiniteScroll(time,cateid, startRecord, endRecord);
+    }
+
     // 검색 결과 ticket들 Ajax 출력하기
     @RequestMapping("/SearchTicket")
     @ResponseBody
@@ -80,6 +105,12 @@ public class TicketController {
 
         return DBManager.findSearchTicket(keyword);
     }
+
+//    @RequestMapping("/RankingTicket")
+//    @ResponseBody
+//    public List<Ranking> main(@RequestParam("cateid")int cateid){
+//        return rankingDAO.findAllRanking(cateid);
+//    }
 
 
     // 티켓의 디테일 정보 뜨게 Ajax 활용해서 기능구현

@@ -1,6 +1,7 @@
 package com.example.finalpro.db;
 
 import com.example.finalpro.entity.Customer;
+import com.example.finalpro.entity.Seat;
 import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.entity.Qna;
 import com.example.finalpro.vo.*;
@@ -136,9 +137,6 @@ public class DBManager {
 		return t;
 	}
 
-
-	// ******** admin.ticket ********
-
 	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
 	// time=0은 과거, time=1은 현재, time=2는 미래
 	public static List<TicketVO> findAllTicketByCategory(int time, int cateid){
@@ -153,6 +151,26 @@ public class DBManager {
 
 		return list;
 	}
+
+	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
+	// time=0은 과거, time=1은 현재, time=2는 미래
+	// category에서 무한 스크롤하기
+	public static List<TicketVO> findAllTicketByCategoryInfiniteScroll(int time, int cateid, int startRecord, int endRecord){
+		List<TicketVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("time", time);
+		map.put("cateid", cateid);
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+
+		SqlSession session = sqlSessionFactory.openSession();
+		list = session.selectList("ticket.findAllTicketByCategoryPaging", map);
+		session.close();
+
+		return list;
+	}
+
+	// ******** admin.ticket ********
 
 	// admin의 ticketList
 	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
@@ -171,16 +189,16 @@ public class DBManager {
 
 	// ticket의 page에 따라 startRecord, endRecord에 해당하는 ticket 목록 출력
 	// +search 기능
-	public static List<TicketVO> findTicketPagingSearch(int startRecord, int endRecord, String keyword){
+	public static List<TicketVO> findTicketPagingSearch(int startRecord, int endRecord, String keyword, String order){
 		List<TicketVO> list = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRecord", startRecord);
 		map.put("endRecord", endRecord);
 		map.put("keyword", keyword);
-
+		map.put("order", order);
 
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("ticket.findTicketPagingSearch", map);
+		list = session.selectList("ticket.findTicketPagingSearchOrderBy", map);
 		session.close();
 
 		return list;
@@ -390,23 +408,44 @@ public class DBManager {
 	}
 
 	// custid에 따른 qna 작성 리스트
-	public static List<QnaVO> listQnaByCustid(String custid){
+	public static List<QnaVO> listQnaByCustid(String custid, int startRecord, int endRecord){
 		List<QnaVO> list = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("startRecord", startRecord);
+		map.put("endRecord", endRecord);
+
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("qna.selectQnaByCustid", custid);
+		list = session.selectList("qna.selectQnaByCustid", map);
 		session.close();
 		return list;
 	}
 
-	public static List<CustomerVO> findCustomerPagingSearch(int startRecord, int endRecord, String keyword){
+	// custid에 따른 qna 작성 총 숫자
+	public static int getTotalQnaRecord(String custid){
+		int totalRecord = 0;
+		SqlSession session = sqlSessionFactory.openSession();
+		totalRecord = session.selectOne("qna.getTotalQnaRecord", custid);
+		session.close();
+		if(totalRecord==0){
+			totalRecord = 1;
+		}
+
+		return totalRecord;
+	}
+
+	public static List<CustomerVO> findCustomerPagingSearch(int startRecord, int endRecord, String keyword, String order){
 		List<CustomerVO> list = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRecord", startRecord);
 		map.put("endRecord", endRecord);
 		map.put("keyword", keyword);
+		map.put("order", order);
+
+		System.out.println("order DBManager에서 : " + order);
 
 		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("customer.findCustomerPagingSearch", map);
+		list = session.selectList("customer.findCustomerPagingSearchOrderBy", map);
 		session.close();
 
 		return list;
@@ -487,6 +526,40 @@ public class DBManager {
 		bookid=session.selectOne("book.findBookidByOthers",b);
 		session.close();
 		return bookid;
+	}
+
+	public static List drawTest(int ticketid){
+		List<DrawVO> draw = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		draw = session.selectList("draw.drawTest",ticketid);
+		session.close();
+		return draw;
+	}
+
+	public static List<SeatVO> drawLeftSeat(int ticketid){
+		//selectDrawLeftSeat
+		List<SeatVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		list = session.selectList("seat.selectDrawLeftSeat",ticketid);
+		session.close();
+		return list;
+	}
+
+	public static int drawUpdate(String custid, int seatid) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("custid", custid);
+		map.put("seatid", seatid);
+		re = session.update("draw.updateDraw",map);
+		session.close();
+		return re;
+	}
+
+	public static void drawDeleteSeatId(int ticketid) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		session.update("draw.drawDeleteSeatId",ticketid);
+		session.close();
 	}
 
 
@@ -659,6 +732,15 @@ public class DBManager {
 		return re;
 	}
 
+	//마이페이지 - 예매내역 삭제
+	public static int deleteBook(int bookid){
+		int re = 0;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("book.deleteBook",bookid);
+		session.close();
+		return re;
+	}
+
 	// 알림 삭제
 	public static int deleteNotification(int notif_no){
 		int re=-1;
@@ -693,5 +775,22 @@ public class DBManager {
 		re=session.insert("review.insert",r);
 		session.close();
 		return re;
+	}
+
+	public static String findBySeatId(int seatid) {
+		String re = "none";
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.selectOne("seat.findBySeatId",seatid);
+		System.out.println("seatName:"+re);
+		session.close();
+		return re;
+	}
+
+	public static List<DrawVO> findByDrawCustid(String custid) {
+		List<DrawVO> list = null;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		list = session.selectList("findByDrawCustid", custid);
+		session.close();
+		return list;
 	}
 }

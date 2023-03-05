@@ -3,41 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script th:src="@{/js/notice/list.js}"></script>
 </head>
-<body>
-    <div th:if="${session.id}=='admin'">
-        <a th:href="@{/admin/notice/insert}">등록</a>
+<body class="main_layout">
+<img src="/images/icon/logo.png" id="logo">
+<div class="main_user">
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+    <a href="loginTest.html" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="signupTest.html" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="mypage_Info.html" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+</div>
+<nav id="navigation">
+    <div class="search" id="search" name="search">
+        <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
+        <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
-    <table border="1">
-        <tr>
-            <td>글번호</td>
-            <td>분류</td>
-            <td>제목</td>
-            <td>조회수</td>
-            <td>등록일</td>
-        </tr>
-        <tr th:each="n:${list}">
-            <td th:text="${n.notice_no}"></td>
-            <td th:text="${n.notice_category}"></td>
-            <td>
-                <a th:href="@{'/notice/detail/'+${n.notice_no}}" th:text="${n.notice_title}"></a>
-            </td>
-            <td th:text="${n.notice_hit}"></td>
-            <td th:text="${n.notice_date}"></td>
-        </tr>
-    </table>
-
+    <ul>
+        <li class="home"><a href="/main">홈</a></li>
+        <li><a href="#">시사회</a>
+            <ul>
+                <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+                <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+                <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">뮤지컬</a>
+            <ul>
+                <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+                <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+                <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">연극</a>
+            <ul>
+                <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+                <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+                <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">콘서트</a>
+            <ul>
+                <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+                <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+                <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
+    </ul>
+</nav>
 <!--    카테고리별로 보기-->
-    <div>카테고리별로 보기</div>
-    <a href="/notice/list/1/all">전체</a><br>
-    <a href="/notice/list/1/book">예매/드로우</a><br>
-    <a href="/notice/list/1/transaction">결제/환불</a><br>
-    <a href="/notice/list/1/etc">기타</a><br>
-
+    <div id="menu-bar">
+        <ul>
+        <li id="title">카테고리별</li>
+            <li><a href="/notice/list/1/all">전체</a></li>
+            <li><a href="/notice/list/1/book">예매/드로우</a></li>
+            <li><a href="/notice/list/1/transaction">결제/환불</a></li>
+            <li><a href="/notice/list/1/etc">기타</a></li>
+        </ul>
+    </div>
+    <div id="notice_background">
+        <h2>공지사항</h2>
+        <hr id="mypage_hr">
+            <div th:if="${session.id}=='admin'" id="btnWrite">
+                <a th:href="@{/admin/notice/insert}">등록</a>
+            </div>
+        <table class="notice_table">
+            <tr>
+                <th>글번호</th>
+                <th>분류</th>
+                <th>제목</th>
+                <th>조회수</th>
+                <th>등록일</th>
+            </tr>
+            <tr th:each="n:${list}">
+                <td th:text="${n.notice_no}"></td>
+                <td th:text="${n.notice_category}"></td>
+                <td>
+                    <a th:href="@{'/notice/detail/'+${n.notice_no}}" th:text="${n.notice_title}"></a>
+                </td>
+                <td th:text="${n.notice_hit}"></td>
+                <td th:text="${n.notice_date}"></td>
+            </tr>
+        </table>
 <!--    검색-->
     <!--    JS로 searchColumn을 가져가기 위한 값 출력(지정한 searchColumn을 계속 유지하는 처리 하기 위해)-->
+        <div id="qna">
     <div hidden="hidden" th:text="${session.noticeSearchColumn}" id="div_searchColumn"></div>
     <div hidden="hidden" th:text="${session.noticeKeyword}" id="div_keyword"></div>
 
@@ -48,19 +102,31 @@
             <option value="notice_content">내용</option>
         </select>
         <input type="search" name="keyword" id="keyword" required>
-        <input type="submit" value="검색">
+        <input type="submit" value="검색" id="search_list">
     </form>
-    <a href="/notice/resetSearch">검색 초기화</a><br>
+    <div id="reset_list">
+        <a href="/notice/resetSearch">검색 초기화</a>
+    </div>
+        </div>
 
 <!--    페이지-->
-    <th:block th:if="${firstPage}!=1">
-        <a th:href="@{'/notice/list/'+${firstPage - 1}}">◀</a>
-    </th:block>
-    <th:block th:each="i: ${#numbers.sequence(firstPage, lastPage)}">
-        <a th:href="@{'/notice/list/'+${i}}" th:text="${i}"></a>&nbsp
-    </th:block>
-    <th:block th:if="${lastPage}!=${totalPage}">
-        <a th:href="@{'/notice/list/'+${lastPage+1}}">▶</a>
-    </th:block>
+    <div id="paging">
+        <th:block th:if="${firstPage}!=1">
+            <a th:href="@{'/notice/list/'+${firstPage - 1}}">◀</a>
+        </th:block>
+        <th:block th:each="i: ${#numbers.sequence(firstPage, lastPage)}">
+            <a th:href="@{'/notice/list/'+${i}}" th:text="${i}"></a>&nbsp
+        </th:block>
+        <th:block th:if="${lastPage}!=${totalPage}">
+            <a th:href="@{'/notice/list/'+${lastPage+1}}">▶</a>
+        </th:block>
+    </div>
+    </div>
+<div id="main-footer">
+    <footer class="footer">
+        <div>ⓒ CodingDoit corp.
+        </div>
+    </footer>
+</div>
 </body>
 </html>

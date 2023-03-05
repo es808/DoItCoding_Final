@@ -99,6 +99,17 @@
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
         </dependency>
+<!-- emailSender 오류 발생해서 아래 dependency 추가해주니 해결됨 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.angus</groupId>
+                    <artifactId>angus-activation</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-discovery/commons-discovery -->
         <dependency>
@@ -131,13 +142,6 @@
             <groupId>javax.xml</groupId>
             <artifactId>jaxrpc-api</artifactId>
             <version>1.1</version>
-        </dependency>
-
-
-        <!-- 이메일 전송 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

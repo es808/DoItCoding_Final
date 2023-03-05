@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css" >
 <script>
   $(function(){
 
@@ -90,24 +91,21 @@
 
 </script>
 <body>
-  <div id="background">
+  <div id="background_login">
     <a class="main" href="/main">
       <img  src="/images/icon/homeicon.png" width="40" height="40"></a>
   </div>
-  <div>
-    <form id="form_findCustid">
+    <form id="form_find">
       <img src="/images/icon/logo.png" id="logo">
       <h2>아이디 찾기</h2>
       <table>
         <tr>
-          <td>이름</td>
-          <td><input type="text" name="name" class="box" size="10" id="name"></td>
+          <td class="login_title">이름</td>
+          <td><input type="text" name="name" class="box" size="12" id="name"></td>
         </tr>
         <tr>
-          <td>전화번호</td>
-          <td>
-            <input type ="text" id ="phone" name="phone" maxlength="11" size = "12" class="box">
-          </td>
+          <td class="login_title">전화번호</td>
+          <td><input type ="text" id ="phone" name="phone" maxlength="11" size = "12" class="box"></td>
         </tr>
       </table>
       <input type="button" id="btn_findCustid" value="아이디 찾기" name="btn_findCustid"><br>
@@ -128,6 +126,7 @@
     <div id="mapping" class="caption">
       <a href="/login">로그인</a><a href="/findPwdForm">PW찾기</a>
     </div>
+  </div>
   </div>
 </body>
 </html>

@@ -4,6 +4,8 @@ import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.entity.Qna;
 import com.example.finalpro.entity.Ticket;
+import com.example.finalpro.function.page.Paging;
+import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.EmailService;
 import com.example.finalpro.service.QnaService;
 import com.example.finalpro.service.SearchService;
@@ -42,6 +44,9 @@ public class QnaController {
 
     @Autowired
     private EmailService es;
+
+    @Autowired
+    private CustomerService cs;
 
     @GetMapping("/qna/resetSearch")
     public ModelAndView resetSearch(HttpSession session){
@@ -343,6 +348,32 @@ public class QnaController {
     @GetMapping("/qna/notification")
     public void notif_view(){
 
+    }
+
+    // myPage에서 내가 쓴 1대1 문의 보기
+    @GetMapping("/myPageQnA")
+    public ModelAndView myPageQnaList(HttpSession session, @RequestParam(defaultValue = "1") int page){
+        ModelAndView mav = new ModelAndView("/myPage/myPageQnA");
+        String loginId=(String) session.getAttribute("id");
+        Customer loginCustomer=cs.findByCustid(loginId);
+
+        // 페이징 처리
+        // int page : 현재 페이지
+        // int totalRecord : 총 ticket 숫자
+        // int startRecord : 현재 page에서 출력되는 record의 시작 rownum
+        // int endRecord : 현재 page에서 출력되는 record의 끝 rownum
+        // int startPage : '이전'을 누르기 전에 출력되는 가장 작은 페이지 버튼 숫자
+        // int endPage : '다음'을 누르기 전에 출력되는 가장 큰 페이지 버튼 숫자
+        int totalRecord = DBManager.getTotalQnaRecord(loginCustomer.getCustid());
+        Paging paging = new Paging(totalRecord, page);
+        int startRecord = paging.getStartRecord();
+        int endRecord = paging.getEndRecord();
+        int startPage = paging.getStartPage();
+        int endPage = paging.getEndPage();
+
+        mav.addObject("listQna", DBManager.listQnaByCustid(loginCustomer.getCustid(), startRecord, endRecord));
+        mav.addObject("paging", paging);
+        return mav;
     }
 
 

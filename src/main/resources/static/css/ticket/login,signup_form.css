@@ -8,7 +8,7 @@ a{
 li{
     list-style: none;
 }
-div,table{
+div,table,#form_find{
     position: absolute;
     top:50%;
     left: 50%;
@@ -124,7 +124,7 @@ ul li #pwd{
 /* 회원가입화면 */
 #background_signup{
     width : 500px;
-    height : 700px;
+    height : 750px;
     background-color : #f5f5f5;
     border : 1px solid #dcdcdc;
     border : none;
@@ -133,17 +133,25 @@ ul li #pwd{
 }
 table{
     display: inline-block;
-    padding-bottom : 20px;
+    padding-bottom : 30px;
 }
 td{
     font-size : 15px;
     font-weight : 600;
     color : #08348C;
-    padding : 10px;
+    padding : 4px;
+}
+#title_signup h2{
+    font-size : 22px;
+    margin-top : -350px;
+}
+.birth_info{
+    position : relative;
 }
 .box{
     font-size : 14px;
     height : 25px;
+    margin : 5px;
     border : 1.5px solid #08348C;
 }
 .cbox{
@@ -156,6 +164,9 @@ td{
     font-size : 11px;
     font-weight : 600;
     color : #D10505;
+}
+#addr_address,#addr_detail,#addr_extra{
+    margin-top : 4px;
 }
 option{
     font-size : 14px;
@@ -197,9 +208,9 @@ button{
     position : absolute;
     font-weight : 600;
     margin-left : 50px;
-    margin-top : 300px;
+    margin-top : 320px;
 }
-#btn_idconfirm,#btn_phoneconfirm,#btn_addrconfirm{
+#btn_idconfirm,#btn_phoneconfirm,#btn_addrconfirm,[type="button"]{
     color : #dcdcdc;
     background-color : #08348C;
     width : 80px;
@@ -207,6 +218,9 @@ button{
     border-radius : 5px;
     border : none;
     font-size : 12px;
+}
+#btn_searchAddr{
+    width : 100px;
 }
 
 
@@ -364,4 +378,30 @@ button.active:not(.x){
     position : absolute;
     margin-top : 320px;
     margin-left : 250px;
+}
+
+
+
+/* 아이디 찾기 */
+#form_find img{
+    margin-top : -140px;
+}
+#form_find table{
+    width : 100%;
+    margin-left : 90px;
+}
+#form_find #btn_findCustid{
+    margin-left : 140px;
+    margin-top : 110px;
+}
+#btn_findCustid{
+    width : 110px;  height : 35px;
+    font-size : 12px;
+    font-weight : 500;
+    background-color : #08348C;
+    text-align : center;
+    border : none;
+    color : white;
+    border-radius : 5px;
+    font-size : 14px;
 }

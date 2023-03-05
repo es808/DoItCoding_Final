@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Paging {
     // 한 페이지당 보이는 record의 숫자
-    private int pageSize = 3;
+    private int pageSize = 10;
     // 다음을 누르기 전에 표기되는 page의 숫자
     private int showingPageSize = 5;
 

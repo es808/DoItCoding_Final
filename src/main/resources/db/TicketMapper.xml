@@ -25,6 +25,24 @@
     </if>
   </select>
 
+    <!--main.html에서 카테고리, 시간 별로 상영작 출력하는 mapper sql 코드-->
+    <select id="findAllTicketByCategoryPaging" resultType="ticketVO">
+        select * from
+        (select rownum n, a.* from
+        (select * from ticket  where cateid=#{cateid} and
+        <if test="time==0">
+           ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
+        </if>
+        <if test="time==1">
+          ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+7, 'yyyy/mm/dd')
+        </if>
+        <if test="time==2">
+          ticket_date &gt; to_char(sysdate+7, 'yyyy/mm/dd')
+        </if>
+        order by ticketid) a)
+        where n between #{startRecord} and #{endRecord}
+    </select>
+
   <!--keyword' 를 매개변수로 ticket 리스트 검색 결과를 출력하기-->
   <select id="findSearchTicket" resultType="ticketVO">
     select * from ticket where ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%'
@@ -61,14 +79,7 @@
         <if test="keyword != null and keyword != ''">
             where (ticket_name like '%'||#{keyword}||'%' or cast like '%'||#{keyword}||'%' )
         </if>
-        <choose>
-            <when test="order != null and order != ''">
-                order by #{order}) a)
-            </when>
-            <otherwise>
-                order by ticketid) a)
-            </otherwise>
-        </choose>
+        order by ${order}) a)
         where n between #{startRecord} and #{endRecord}
     </select>
 
