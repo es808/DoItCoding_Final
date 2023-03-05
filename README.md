@@ -22,14 +22,14 @@
 // 남은 css 페이지 - 윤경
 
 < admin -> customer >
-- list.html
+- list.html                 --> 완료
 - listQna.html
 - listTicket.html
 - update.html
 
 < admin -> ticket >
 - insertTicket.html
-- listTicket.html
+- listTicket.html           --> 완료        
 - updateTicket.html
 
 < qna notification (알람 homepage_frame 있는 모든 부분 적용) >
