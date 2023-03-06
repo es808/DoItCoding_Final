@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
@@ -13,79 +13,16 @@
         $(function(){
 
             var custid = sessionStorage.getItem("custid");
-            var ticketid = sessionStorage.getItem("ticketid");
 
-            $.ajax({
-                url:"GetReviewAction",
-                data: {custid:sessionStorage.getItem("custid"),
-                    ticketid: sessionStorage.getItem("ticketid")},
-                success: function(data){
-                    $("#reviewlist").empty();
-                    $.each(data,function(index,value){
-                        //console.log("score: "+value.score);
-                        //console.log("custid: "+value.custid);
-                        //console.log("ticket_date: "+value.ticket_date);
-                        //console.log("review_content: "+value.review_content);
-                        //score = value.score;
-
-                        console.log("ticket_name: "+value.ticket_name);
-                        console.log("ticket_name: "+value.ticket_name);
-
-                        var div = $("<div></div>").attr({
-                            class: 'reviewlist'
-                        });
-
-                        var div1 = $("<div></div>");
-                        var div2 = $("<div></div>");
-                        var div3 = $("<div></div>");
-
-                        var ticketid = $("<h7></h7>").attr({
-                            type: "text",
-                            id : 'ticketid'
-                        });
-                        $(ticketid).css("display","none");
-                        $(ticketid).append(value.ticketid);
-                        $(div).append(ticketid);
-                        $(div).append($("<div></div>").html(ticketid));
-
-            if (custid != null) {
-                $("#login").css('display', 'none');
-                $("#regist").css('display', 'none');
-                $("#logout").css('display', 'inline-block');
-                $("#mypage").css('display', 'inline-block');
-            }
-
-            $("#logout").click(function (e) {
-                if (confirm("로그아웃 하시겠습니까?")) {
-                    $("#login").css('display', 'inline-block');
-                    $("#regist").css('display', 'inline-block');
-                    $("#logout").css('display', 'none');
-                    $("#mypage").css('display', 'none');
-                    sessionStorage.removeItem("custid");
-                    e.preventDefault();
-                }
-            })
-
-            // $("#btnEdit").click(function (){
-            //     $("#btnEditConfirm").removeAttr("hidden")
-            //     $("#textarea").removeAttr("readonly")
-            // })
-            //
-            // $("#btnEditConfirm").click(function (){
-            //     $.ajax({
-            //         url:"",
-            //         data:{score:}
-            //     })
-            // })
-
-            $(".delete").click(function (){
-                if(confirm("정말로 삭제하시겠습니까?")){
-                    let reviewid=$(this).attr("reviewid")
+            $(".delete").click(function () {
+                if (confirm("정말로 삭제하시겠습니까?")) {
+                    let reviewid = $(this).attr("reviewid")
                     console.log(reviewid)
-                    location.href="/myPage/deleteReview/"+reviewid
+                    location.href = "/myPage/deleteReview/" + reviewid
                 }
             })
         })
+
 
     </script>
 </head>
