@@ -60,7 +60,7 @@
 <div id="customer_background">
     <h2>고객정보 수정</h2>
     <hr id="admin_hr">
-    <form action="/admin/customer/update" method="post" id="updateForm">
+    <form action="/admin/updateCustomer" method="post" id="updateForm">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <span class="title_admin">ID&nbsp;&nbsp;<input type="text" th:value="${customer.custid}" readonly="readonly" name="custid" class="content_admin" id="id_admin"></span><br>
         <br>
