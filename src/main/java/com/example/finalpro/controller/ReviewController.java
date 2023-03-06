@@ -5,7 +5,6 @@ import com.example.finalpro.dao.ReviewDAO;
 import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.service.ReviewService;
-import com.example.finalpro.vo.MyReviewVO;
 import com.example.finalpro.vo.ReviewVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Controller

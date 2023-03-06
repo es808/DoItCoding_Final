@@ -1,11 +1,9 @@
 package com.example.finalpro;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -17,14 +15,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests()
-                .requestMatchers("/","/login","/signUp","/main","/detail","/search").permitAll()
-//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers("/css/**","/images/**","/image/**","/**", "/db/**").permitAll()
-                //.requestMatchers("/admin/**").hasRole("admin")
+                .requestMatchers("/admin/**").hasRole("admin")
+                .requestMatchers("/","/login","/signUp","/main","/detail","/search",
+                        "/css/**","/images/**","/image/**","/**", "/db/**").permitAll()
                 .anyRequest().authenticated();
 
         http.formLogin().loginPage("/login").permitAll()
-                .failureUrl("/error")
+                .failureUrl("/loginFailed")
                 .defaultSuccessUrl("/main",true);        //로그인 성공 후 이동 페이지 true를 붙여서 붙여서 절대경로 설정
 
 
@@ -37,9 +34,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer(){
-//        return (web -> web.ignoring().requestMatchers("/static/images/**", "/static/image/**","/js/**","/static/css/**"));
-//    }
 }

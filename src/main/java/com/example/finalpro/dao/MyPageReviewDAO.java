@@ -2,7 +2,6 @@ package com.example.finalpro.dao;
 
 import com.example.finalpro.entity.Customer;
 import com.example.finalpro.entity.MyPageReview;
-import com.example.finalpro.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

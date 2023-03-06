@@ -62,7 +62,7 @@ public class CustomerService implements UserDetailsService {
         if (obj.isPresent()) {
             Customer c = obj.get();
             user = User.builder().username(username).password(c.getPwd()).roles(c.getRole()).build();
-            System.out.println(user);
+            System.out.println(user.getAuthorities());
         } else {
             throw new UsernameNotFoundException(username);
         }

@@ -4,21 +4,12 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
-import com.example.finalpro.vo.CustomerVO;
-import com.example.finalpro.entity.Draw;
-import com.example.finalpro.vo.*;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 import com.example.finalpro.entity.Customer;
-import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
+import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
+import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.vo.DrawVO;
 import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.TicketVO;
@@ -80,45 +71,28 @@ public class CustomerController {
         return DBManager.findByCustid(custid);
     }
 
-    @RequestMapping("/list")
-    public void list(Model model) {
-        model.addAttribute("list", dao.findAll());
-    }
-
-    @RequestMapping("/list_jpa")
-    public void list_jpa(Model model){
-        model.addAttribute("list", ts.findAll());
-    }
-
-    @RequestMapping("/list_jpa_id")
-    public void list_jpa_id(Model model) {
-        model.addAttribute("list", ts.findById());
-    }
-
-    @RequestMapping("/list_customer")
-    public void list_customer(Model model) {
-        model.addAttribute("list", cs.findAll());
-    }
-
-    @RequestMapping("/list_ticket")
-    public void list_ticket(Model model) {
-        model.addAttribute("list", ticketService.findAll());
-    }
-
+    //로그인
     @GetMapping("/login")
     public void login() {
     }
 
+    //로그인 실패
+    @GetMapping("/loginFailed")
+    public void loginFailed(){
+    }
 
+    //회원가입
     @GetMapping("/signUp")
     public void signUp() {
     }
 
+    //메인
     @GetMapping("/")
     public String home() {
         return "/main";
     }
 
+    //메인 로그인 정보 세션에 저장
     @GetMapping("/main")
     public ModelAndView main(HttpSession session, Model m){
         ModelAndView mav = new ModelAndView("/main");
@@ -133,9 +107,6 @@ public class CustomerController {
 
         if(!authentication.getPrincipal().equals("anonymousUser")){
             User user = (User) authentication.getPrincipal();
-
-
-
             //이 인증된 User를 통해서 로그인된 회원의 아이디를 가져온다.
 
             String id = user.getUsername();
@@ -186,9 +157,7 @@ public class CustomerController {
     @GetMapping("/myPageDraw")
     public String myPageDraw(HttpSession session, Model m){
         String custid = (String)session.getAttribute("id");
-        if(custid == null){
-            return "/login";
-        }
+
         List<MyDrawVO> myDraw = new ArrayList<>();
         TicketVO myTicket = null;
 
@@ -230,9 +199,7 @@ public class CustomerController {
     @GetMapping("/myPageBook")
     public String myPageBook(HttpSession session) {
         String custid = (String)session.getAttribute("id");
-        if(custid == null){
-            return "/login";
-        }
+
         return "myPage/myPageBook";}
 
 //    @GetMapping("/myPageReview")

@@ -4,7 +4,6 @@ import com.example.finalpro.dao.TicketDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.vo.TicketVO;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

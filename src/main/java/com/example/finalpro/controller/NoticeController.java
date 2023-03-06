@@ -1,6 +1,5 @@
 package com.example.finalpro.controller;
 
-import ch.qos.logback.core.CoreConstants;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Notice;
 import com.example.finalpro.service.NoticeService;

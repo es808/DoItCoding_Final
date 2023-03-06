@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
@@ -8,6 +8,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4cce9cc8666a0ddc40cb3ff5eee6295b"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
     <script type="text/javascript">
 
         // 상세페이지
@@ -16,23 +17,7 @@
             var custid = sessionStorage.getItem("custid");
             var ticketid = sessionStorage.getItem("ticketid");
 
-            if(custid != null){
-                $("#login").css('display', 'none');
-                $("#regist").css('display', 'none');
-                $("#logout").css('display','inline-block');
-                $("#mypage").css('display','inline-block');
-            }
 
-            $("#logout").click(function(e){
-                if(confirm("로그아웃 하시겠습니까?")){
-                    $("#login").css('display', 'inline-block');
-                    $("#regist").css('display', 'inline-block');
-                    $("#logout").css('display','none');
-                    $("#mypage").css('display','none');
-                    sessionStorage.removeItem("custid");
-                    e.preventDefault();
-                }
-            })
             $( "#datepicker" ).datepicker();
 
             $.ajax({
@@ -105,15 +90,6 @@
                         $("#vid_url").append(vid);
                     }
 
-                    // if(sessionStorage.getItem("ticketid") ==19){
-                    //     var img1 = $("<img>").attr({
-                    //         src: "images/ART_INFO.jpg",
-                    //         width : 700,
-                    //         height: 6000
-                    //     });
-                    //     console.log(img1);
-                    //     $("#art_img").append(img1);
-                    // }
 
                     if(cateid==1){
                         $("#btnbook").attr("disabled",true).css({

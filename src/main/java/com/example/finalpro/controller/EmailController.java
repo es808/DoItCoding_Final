@@ -1,10 +1,6 @@
 package com.example.finalpro.controller;
 
-import com.example.finalpro.db.DBManager;
 import com.example.finalpro.service.EmailService;
-
-import com.example.finalpro.vo.BookVO;
-import com.example.finalpro.vo.TicketVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

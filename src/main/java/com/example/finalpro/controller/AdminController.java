@@ -12,22 +12,16 @@ import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.vo.QnaVO;
 import com.example.finalpro.vo.TicketVO;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.FileOutputStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +40,7 @@ public class AdminController {
 
     @Autowired
     private CustomerService customerService;
+
 
 
     // 페이징 처리를 위한 변수 선언 (ticket)

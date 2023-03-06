@@ -6,13 +6,15 @@ import com.example.finalpro.entity.MyPageReview;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.ReviewService;
 import com.example.finalpro.service.TicketService;
-import com.example.finalpro.vo.MyReviewVO;
 import com.example.finalpro.vo.ReviewVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
