@@ -2,6 +2,7 @@ package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.entity.Draw;
 import com.example.finalpro.service.DrawService;
 import com.example.finalpro.vo.DrawVO;
 import com.example.finalpro.vo.SeatVO;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +30,13 @@ public class DrawController {
 
     @Autowired
     private DrawDAO drawDAO;
+
+    @PostMapping("/DrawInsert")
+    @ResponseBody
+    public void drawInsert(Draw draw){
+        drawDAO.save(draw);
+    }
+
 
     // 잔여좌석이 0이거나 cateid=1일 때 드로우 버튼 활성화
     @RequestMapping("/DrawButtonOpen")
