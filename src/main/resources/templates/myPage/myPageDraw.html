@@ -9,23 +9,12 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css">
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
     <script type="text/javascript">
         $(function() {
             var custid = sessionStorage.getItem("custid");
 
-            if (custid != null) {
-                $("#login").css('display', 'none');
-                $("#regist").css('display', 'none');
-                $("#logout").css('display', 'inline-block');
-                $("#mypage").css('display', 'inline-block');
-            }
 
-            $("#logout").click(function (e) {
-                if (confirm("로그아웃 하시겠습니까?")) {
-                } else {
-                    return false;
-                }
-            });
             //수정된 내용 db에 반영하는 이벤트
 
 

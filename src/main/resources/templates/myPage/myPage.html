@@ -11,6 +11,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/signUp_address.js}"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
     <script type="text/javascript">
         $(function(){
 
@@ -19,21 +20,6 @@
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
-
-            if(custid != null){
-                $("#login").css('display', 'none');
-                $("#regist").css('display', 'none');
-                $("#logout").css('display','inline-block');
-                $("#mypage").css('display','inline-block');
-            }
-
-            $("#logout").click(function(e){
-                if(confirm("로그아웃 하시겠습니까?")){
-                }else{
-                    return false;
-                }
-            });
-
 
             $("#btn_cancel").click(function(){
                 if (confirm('회원정보 수정을 취소하시겠습니까?')){

@@ -12,7 +12,6 @@
   <script>
     Kakao.init('b2e1975d2187199e889d30007c46dd02'); // 사용하려는 앱의 JavaScript 키 입력
   </script>
-
   <script>
     function chatChannel() {
       Kakao.Channel.chat({
@@ -20,7 +19,6 @@
       });
     }
   </script>
-
   <script type="text/javascript">
     $(function(){
 
@@ -342,7 +340,7 @@
       $("#logout").click(function(e){
         if(confirm("로그아웃 하시겠습니까?")){
           sessionStorage.removeItem("custid");
-          custid = "none";
+
         }else{
           return false;
         }
