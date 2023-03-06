@@ -12,7 +12,8 @@
   </select>
 
   <insert id="insert" parameterType="reviewVO">
-    insert into review(reviewid,custid,ticketid,score,review_content) values(#{reviewid},#{custid},#{ticketid},#{score},#{review_content})
+    insert into review(reviewid,custid,ticketid,score,review_content)
+    values(seq_reviewid.nextval,#{custid},#{ticketid},#{score},#{review_content})
   </insert>
 
   <!-- 리뷰 스코어로 정렬 -->
@@ -29,9 +30,14 @@
     </if>
   </select>
 
+<!--  리뷰내역이 있나 확인-->
+<!--  <select id="checkReview" resultType="myReviewVO">-->
+<!--    select * from review r, ticket t where t.ticketid=r.ticketid and r.ticketid=#{ticketid}-->
+<!--  </select>-->
   <!--리뷰내역이 있나 확인-->
-  <select id="checkReview" resultType="myReviewVO">
-    select * from review r, ticket t where t.ticketid=r.ticketid and r.ticketid=#{ticketid}
+  <select id="checkReview" resultType="java.lang.Integer" parameterType="reviewVO">
+    select count(*) from review r, ticket t where t.ticketid=r.ticketid and r.ticketid=#{ticketid} and
+    r.custid=#{custid}
   </select>
 
   <!-- 사용자 리뷰 내역 출력 -->

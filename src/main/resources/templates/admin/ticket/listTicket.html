@@ -25,13 +25,29 @@
           <a th:text="개봉일자"></a>
       </th>
         <th>삭제</th>
+      <td>
+          <a th:with="text='ticketid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </td>
+      <td>
+          <a th:with="text='ticket_name'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </td>
+        <td>
+            <a th:with="text='cateid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+        </td>
+      <td>
+          <a th:with="text='price'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </td>
+      <td>
+          <a th:with="text='ticket_date'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </td>
+        <td>삭제</td>
     </tr>
    </thead>
    <tbody>
     <tr th:each="t : ${list}" id="ticket">
         <td th:text="${t.ticketid}"></td>
         <td>
-            <a th:text="${t.ticket_name}" th:href="@{'/admin/ticket/update/'+${t.ticketid}}"></a>
+            <a th:text="${t.ticket_name}" th:href="@{'/admin/updateTicket/'+${t.ticketid}}"></a>
         </td>
         <th:block>
             <td th:if="${t.cateid==1}" th:text="시사회"></td>
@@ -49,7 +65,7 @@
   </table>
     <br><br>
     <div id="admin_update">
-        <a href="/admin/ticket/insertTicket">추가하기</a>
+        <a href="/admin/insertTicket">추가하기</a>
     </div>
 <br><br>
     <!-- 검색 기능-->
@@ -73,6 +89,5 @@
         </th:block>
         <a th:text="끝" th:href="@{'/admin/ticket/listTicket?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
     </div>
-</div>
 </body>
 </html>

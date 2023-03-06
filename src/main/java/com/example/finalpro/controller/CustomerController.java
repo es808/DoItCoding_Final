@@ -4,6 +4,7 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.entity.Draw;
 import com.example.finalpro.vo.*;
 import lombok.Setter;
@@ -48,12 +49,6 @@ public class CustomerController {
     @Autowired
     private CustomerDAO customerDAO;
 
-    @RequestMapping("/FindCustomer")
-    @ResponseBody
-    public CustomerVO findCustomer(String custid){
-        return DBManager.findByCustid(custid);
-    }
-
     static String code;
 
     @Autowired
@@ -79,6 +74,12 @@ public class CustomerController {
 
 
     //public void setDao(CustomerDAO dao){ this.dao = dao; }
+
+    @RequestMapping("/FindCustomer")
+    @ResponseBody
+    public CustomerVO findCustomer(String custid){
+        return DBManager.findByCustid(custid);
+    }
 
     @RequestMapping("/list")
     public void list(Model model) {
@@ -224,9 +225,6 @@ public class CustomerController {
     @GetMapping("/myPageBook")
     public String myPageBook() { return "myPage/myPageBook";}
 
-    @GetMapping("/myPageReview")
-    public String myPageReview() { return "myPage/myPageReview";}
-
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
         System.out.println("customer:"+c);
@@ -256,7 +254,7 @@ public class CustomerController {
         return mav;
     }
 
-    //아이디 중복 확인 메소
+    //아이디 중복 확인 메소드
     @GetMapping("/ConfirmCustomerId")
     @ResponseBody
     public int confirmCustomerId(String custid){

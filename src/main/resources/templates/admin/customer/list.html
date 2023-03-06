@@ -21,13 +21,29 @@
                 <th>예매내역</th>
                 <th>Q&A내역</th>
                 <th>삭제</th>
+                <td>
+                    <a th:with="text='custid'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </td>
+                <td>
+                    <a th:with="text='name'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </td>
+                <td>
+                    <a th:with="text='birth'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </td>
+                <td>phone</td>
+                <td>
+                    <a th:with="text='gender'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </td>
+                <td>예매내역 조회</td>
+                <td>qna 내역 조회</td>
+                <td>삭제</td>
             </tr>
         </thead>
         <!--role이 admin이 아닌 customer만 출력하기-->
         <tbody th:each="c : ${customerList}">
-            <tr th:if="${c.role} != 'admin'">
+            <tr>
                 <td>
-                <a th:text="${c.custid}" th:href="@{'/admin/customer/update/'+${c.custid}}"></a>
+                <a th:text="${c.custid}" th:href="@{'/admin/updateCustomer/'+${c.custid}}"></a>
                 </td>
                 <td th:text="${c.name}"></td>
                 <td th:text="${c.birth}"></td>

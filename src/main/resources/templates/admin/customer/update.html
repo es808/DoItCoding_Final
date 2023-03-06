@@ -79,10 +79,10 @@
         <br>
         성별 :
         <label for="gender1">
-            <input type="radio" name="gender" id="gender1" value="남자" th:checked="${customer.gender == '남자'}">
+            <input type="radio" name="gender" id="gender1" value="남자" th:attr="checked=${customer.gender == '남자' ? 'true' : 'false'}">
             남자</label>
             <label for="gender2">
-        <input type="radio" name="gender" id="gender2" value="여자" th:checked="${customer.gender == '여자'}">
+        <input type="radio" name="gender" id="gender2" value="여자" th:attr="checked=${customer.gender == '여자' ? 'true' : 'false'}">
             여자</label><br>
         <input type="hidden" name="role" th:value="${customer.role}"><br>
         <input type="submit" value="수정">

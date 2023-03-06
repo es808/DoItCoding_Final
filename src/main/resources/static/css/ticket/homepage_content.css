@@ -358,6 +358,72 @@ input[type="checkbox"]{
     border-radius: 5px;
 }
 
+/*마이페이지(Qna) - 내가 쓴 1대1 문의 */
+.myPageQna_table{
+    position : absolute;
+    background-color : #08428C;
+    z-index : 10;
+    width : 800px;
+    height : 40px;
+    margin-top : -350px;
+    margin-left : -600px;
+    border: 2px solid #444444;
+    border : none;
+    border-radius : 10px 10px 0 0;
+}
+.myPageQna_table th{
+    color : #dcdcdc;
+    font-weight : 500;
+    font-size : 15px;
+}
+.myPageQna_table th,td{
+    padding : 13px;
+    text-align : center;
+}
+.myPageQna_table td{
+    background-color : white;
+}
+#btnWrite_Qna{
+    z-index : 100;
+    width : 100px;  height : 35px;
+    font-size : 13px;
+    font-weight : 500;
+    background-color : #08428C;
+    border : none;
+    margin-left : 800px;
+    margin-top : 30px;
+    border-radius : 5px;
+    text-align : center;
+}
+#btnWrite_Qna a{
+    line-height : 34px;
+    color : white;
+}
+#btnWrite_Qna:hover{
+    background-color : #F2AE30;
+    transition-duration: 0.5s;
+}
+#btnWrite_Qna a:hover{
+    color : #08348C;
+    transition-duration: 0.5s;
+}
+
+#paging_qna{
+    margin-left : 480px;
+    margin-top : 220px;
+    font-weight: 500;
+}
+#paging_qna a{
+    color : #08428C;
+    text-decoration: none;
+}
+.qna_mypage{
+    position: absolute;
+    margin-top: 100px;
+}
+#qna{
+    margin-top : -45px;
+}
 
 /* 마이페이지(draw) - 예매 내역 */
 #menu-bar #mydraw{

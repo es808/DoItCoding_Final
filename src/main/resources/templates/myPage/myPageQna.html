@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css">
-    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css">
+    <!--<link rel="stylesheet" type="text/css" href="/css/myPage/myPage.css">-->
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript">
         $(function(){
-
-            let time = sessionStorage.getItem("time"); // time 받아오기
-            let cateid = sessionStorage.getItem("cateid"); // cateid 받아오기
-            let custid = sessionStorage.getItem("custid");
+            // custid 받아오기
+            var custid = sessionStorage.getItem("custid");
 
             if(custid != null){
                 $("#login").css('display', 'none');
@@ -32,76 +33,8 @@
                 }
             })
 
-            // 무한 스크롤 처리
-            let scrollPage;
-            if(scrollPage == undefined){
-                scrollPage = 1;
-            }
-
-            let loading = false;
-            $(document).ready(function(){
-                selectTicket(scrollPage);
-                // Scroll
-                $(window).scroll(function(){
-                    let scrollNow = $(window).scrollTop();
-                    if (scrollNow + $(window).height() + 100 >= $('#search_all').height()){
-                        scrollPage += 1;
-                        selectTicket(scrollPage);
-                    }
-                })
-            })
-
-            // 카테고리+시간에 해당하는 목록 출력
-            var selectTicket = function(scrollPage){
-                loading = true;
-                $.ajax("SelectTicketCategory", {
-                    data:{time:time, cateid:cateid, page:scrollPage},
-                    success:function(arr){
-                        console.log("ajax 통신!")
-                        console.log("scrollPage :",scrollPage);
-                        loading = false;
-
-                        for (var i = 0; i < arr.length; i++) {
-                            var div = $("<div></div>").addClass("search_result");
-                            var a = $("<a></a>").attr({
-                                ticketid: arr[i].ticketid,
-                                id: "preview"+i,
-                                href:"/detail?ticketid="+arr[i].ticketid
-                            });
-                            var img = $("<img>").attr({
-                                src: "/images/"+arr[i].img_fname,
-                                width : 200,
-                                height: 251,
-                            });
-                            var title = $("<h2></h2>").html(arr[i].ticket_name);
-
-                            var ul = $("<ul></ul>");
-                            var cast = $("<li></li>").html(arr[i].cast);
-                            var ticket_date = $("<li></li>").html(arr[i].ticket_date);
-                            var runtime = $("<li></li>").html(arr[i].runtime);
-                            var loc = $("<li></li>").html(arr[i].loc);
-
-                            $(ul).append(cast, ticket_date, runtime, loc);
-                            $(a).append(img);
-                            $(div).append(a,title,ul);
-                            $("#search_all").append(div);
-
-                            // 이미지 클릭하면 detail 페이지로
-
-                            var preview_id = '#preview'+i
-
-                            $(document).on('click', preview_id, function(e){
-                                var target = this.id;
-                                var ticketid = $("#"+target).attr("ticketid");
-                                sessionStorage.setItem("ticketid", '');
-                                sessionStorage.setItem("ticketid", ticketid);
-                            });
-                        }
-                    }
-                }); // ajax 끝
-            }// selectTIcket end
-
             // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
+            var time = 1;
 
             var cate_current = "";
             var cate_future = "";
@@ -181,8 +114,11 @@
             }// 검색 end
 
             searchKeyword();
+            $("#logout").click(function(){
+                sessionStorage.removeItem("custid");
+            });
 
-        }); // 전체 funtion end
+        })
 
     </script>
 </head>
@@ -230,14 +166,68 @@
                 <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
             </ul>
         </li>
-        <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
     </ul>
 </nav>
-<div id="search_all">
+<div id="menu-bar">
+    <ul>
+        <li id="title">MyPage</li>
+        <li><a href="/myPage">내 정보</a></li>
+        <li id="mybook"><a href="/myPageBook">예매내역</a></li>
+        <li><a href="/myPageDraw">드로우내역</a></li>
+        <li><a href="/myPageReview">내 후기</a></li>
+        <li><a href="/myPageQnA">내 문의내역</a></li>
+    </ul>
+</div>
+
+<div id="review_background">
+    <div id="btnWrite_Qna">
+        <a th:href="@{/qna/insert}">문의 작성</a>
+    </div>
+    <table border="1" class="myPageQna_table">
+        <tr>
+            <th>글번호</th>
+            <th>분류</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>등록일</th>
+            <th>공개여부</th>
+            <th>답변</th>
+        </tr>
+        <tr th:each="q:${listQna}">
+            <td th:text="${q.qna_no}"></td>
+            <td th:text="${q.qna_category}"></td>
+            <td>
+                <a th:href="@{'/qna/detail/'+${q.qna_no}}" th:text="${q.qna_title}"></a>
+            </td>
+            <td th:text="${q.qna_hit}"></td>
+            <td th:text="${#dates.format(q.qna_date, 'yyyy/MM/dd')}"></td>
+            <td th:text="${q.qna_open}"></td>
+            <div>
+                <td th:if="${q.qna_answer != null}">Y</td>
+                <td th:unless="${q.qna_answer != null}">N</td>
+            </div>
+        </tr>
+    </table>
+    <div class="qna_mypage">
+        <div id="paging_qna">
+            <a th:text="처음" th:href="@{'/myPageQna?page=1'}"></a>
+            <th:block th:if="${paging.getStartPage() > 1}">
+                <a th:text="이전" th:href="@{'/myPageQna?page='+${paging.getStartPage()-1}}"></a>
+            </th:block>
+            <th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
+                <a th:text="${page}" th:href="@{'/myPageQna?page='+${page}}"></a>
+            </th:block>
+            <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
+                <a th:text="다음" th:href="@{'/myPageQna?page='+${paging.getEndPage()+ 1}}"></a>
+            </th:block>
+            <a th:text="끝" th:href="@{'/myPageQna?page='+${paging.totalPage}}"></a>
+        </div>
+    </div>
 </div>
 <div id="main-footer">
     <footer class="footer">
-        <div>ⓒ CodingDoit corp.</div>
+        <div>ⓒ CodingDoit corp.
+        </div>
     </footer>
 </div>
 </body>
