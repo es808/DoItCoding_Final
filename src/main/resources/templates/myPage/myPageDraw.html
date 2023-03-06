@@ -116,10 +116,28 @@
 
             searchKeyword();
 
-            console.log('$("#draw_list"):'+$("#draw_list").length());
-            //for(i=0; i<$("#draw_list"))
-
             var seatname = $("#seatname").html();
+
+            var drawids = document.querySelectorAll('.drawid');
+            var drawidData = Array.from(drawids).map(function(drawid){
+                return drawid.textContent;
+            });
+
+            var drawlists = document.querySelectorAll('.drawlist');
+            var drawlistData = Array.from(drawlists).map(function(drawlist){
+                return drawlist.textContent;
+            });
+
+            console.log('drawidData:'+drawidData);
+            console.log('배열인가?:'+drawidData.length);
+
+            console.log('drawlistData:'+drawlistData);
+            console.log('배열인가 크기는?:'+drawlistData.length);
+
+            for(var i=0; i<drawlistData.length; i++){
+                console.log("요소 하나씩 출력:"+drawlistData[i]);
+                console.log("요소 하나씩 json으로 출력:"+JSON.stringify(drawlistData[i]));
+            }
 
             if(seatname == "none"){
                 $("#pay_btn").html("드로우 실패");
@@ -207,7 +225,7 @@
         <li>관람일 : <span th:text="${d.ticket_date}"/></li>
         <li>상영관 : <span th:text="${d.loc}"/></li>
         <li>관람좌석 : <span th:text="${d.seatname}" id="seatname"/></li>
-        <li><span th:text="${d.ticketid}" id="ticketid" hidden="hidden"></span></li>
+        <li><span th:text="${d.ticketid}" class="ticketid" hidden="hidden"></span></li>
         <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
         <button id="pay_btn" type="button">결제하기</button>
         </div>
