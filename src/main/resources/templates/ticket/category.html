@@ -13,7 +13,7 @@
             var cateid = sessionStorage.getItem("cateid"); // cateid 받아오기
             var custid = sessionStorage.getItem("custid");
 
-            if(custid != null){
+            if(custid != 'none'){
                 $("#login").css('display', 'none');
                 $("#regist").css('display', 'none');
                 $("#logout").css('display','inline-block');
