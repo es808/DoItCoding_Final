@@ -29,7 +29,7 @@
         </div>
         <td th:text="${t.placeid}"></td>
         <td>
-            <a th:text="${t.ticket_name}" th:href="@{'detail/'+${t.ticketid}}"></a>
+            <a th:text="${t.ticket_name}" th:href="@{'/detail?ticketid='+${t.ticketid}}"></a>
         </td>
         <td th:text="${t.price}"></td>
         <td th:text="${t.ticket_date}"></td>

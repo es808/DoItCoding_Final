@@ -84,7 +84,7 @@ public class Paging {
         
         // 만약 totalPage가 6보다 작은, 예를 들어 3이면 1 2 3 페이지만 나오도록.
         // 안그러면 3페이지가 마지막인데 endPage가 계산되어 5페이지까지 나옴
-        if(totalPage < 6){
+        if(totalPage < endPage){
             setEndPage(totalPage);
         }
     }

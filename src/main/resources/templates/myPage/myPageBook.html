@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta charset="UTF-8">
@@ -10,6 +10,7 @@
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script th:src="@{/js/loginLogout.js}"></script>
+    <script type="text/javascript" th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
     <script type="text/javascript">
         $(function(){
             // custid 받아오기
@@ -120,6 +121,7 @@
                         // 체크박스의 아이디
                         var checkbox_delete = "#check2_"+i;
 
+
                         // delete_book함수는 bookid를 매개변수로 받아서 예매 취소 버튼을 누르면 예매취소 시키는 함수
                         var delete_book = function(bookid_delete,seat_delete) { // 예매내역 삭제 버튼 이벤트
                             console.log("삭제할 북아이디:" + bookid_delete);
@@ -167,87 +169,6 @@
                 }
             });
 
-            // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
-            var time = 1;
-
-            var cate_current = "";
-            var cate_future = "";
-            var cate_past = "";
-
-            for (var i = 1; i <=4; i++) {
-                cate_current = '#cate'+i+"_current";
-                cate_future = '#cate'+i+"_future";
-                cate_past = '#cate'+i+"_past";
-
-                $(cate_current).click(function(e){
-                    var target = this.id;
-                    var cateid_num = $("#"+target).attr("cateid");
-                    var time_num = $("#"+target).attr("time");
-
-                    time = time_num;
-                    cateid = cateid_num;
-                    console.log(cateid);
-
-                    sessionStorage.setItem("time", time);
-                    sessionStorage.setItem("cateid", cateid);
-
-                    var url = "/category?time="+time+"?cateid="+cateid;
-                    location.replace(url);
-                });
-
-                $(cate_future).click(function(e){
-                    var target = this.id;
-                    var cateid_num = $("#"+target).attr("cateid");
-                    var time_num = $("#"+target).attr("time");
-
-                    time = time_num;
-                    cateid = cateid_num;
-                    console.log(cateid);
-
-                    sessionStorage.setItem("time", time);
-                    sessionStorage.setItem("cateid", cateid);
-
-                    var url = "/category?time="+time+"?cateid="+cateid;
-                    location.replace(url);
-                });
-
-                $(cate_past).click(function(e){
-                    var target = this.id;
-                    var cateid_num = $("#"+target).attr("cateid");
-                    var time_num = $("#"+target).attr("time");
-
-                    time = time_num;
-                    cateid = cateid_num;
-                    console.log(cateid);
-
-                    sessionStorage.setItem("time", time);
-                    sessionStorage.setItem("cateid", cateid);
-
-                    var url = "/category?time="+time+"?cateid="+cateid;
-                    location.replace(url);
-                });
-            }
-
-            // 검색하면 결과가 나오도록
-            var searchKeyword = function(f){
-                $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
-                    if(e.which == 13){
-                        var keyword = $("#search_txt").val();
-                        sessionStorage.setItem("keyword", keyword);
-                        var url = "/search?keyword="+keyword;
-                        location.replace(url);
-                    }
-                });
-
-                $("#search_btn").click(function(){ // 버튼 누르면 검색됨
-                    var keyword = $("#search_txt").val();
-                    sessionStorage.setItem("keyword", keyword);
-                    var url = "/search?keyword="+keyword;
-                    location.replace(url);
-                });
-            }// 검색 end
-
-            searchKeyword();
             $("#logout").click(function(){
                 sessionStorage.removeItem("custid");
             });
@@ -259,6 +180,7 @@
 <body class="main_layout">
 <a href="/main"><img src="images/icon/logo.png" id="logo"></a>
 <div class="main_user">
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
     <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
     <a href="/main" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
     <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
@@ -267,7 +189,7 @@
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
         <li class="home"><a href="/main">홈</a></li>

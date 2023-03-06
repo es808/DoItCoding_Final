@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css">
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
     <script>
         $(function(){
 
@@ -59,51 +60,54 @@
                     success:function(arr){
                         console.log("ajax 통신!")
                         console.log("scrollPage :",scrollPage);
+                        console.log("arr :", arr);
                         loading = false;
 
                         for (var i = 0; i < arr.length; i++) {
-                            var div = $("<div></div>").addClass("search_result");
-                            var a = $("<a></a>").attr({
-                                ticketid: arr[i].ticketid,
-                                id: "preview"+i,
-                                href:"/detail?ticketid="+arr[i].ticketid
-                            });
-                            var img = $("<img>").attr({
-                                src: "/images/"+arr[i].img_fname,
-                                width : 200,
-                                height: 251,
-                            });
-                            var title = $("<h2></h2>").html(arr[i].ticket_name);
 
-                            var ul = $("<ul></ul>");
-                            var cast = $("<li></li>").html(arr[i].cast);
-                            var ticket_date = $("<li></li>").html(arr[i].ticket_date);
-                            var runtime = $("<li></li>").html(arr[i].runtime);
-                            var loc = $("<li></li>").html(arr[i].loc);
+                            if (arr[i].ticketid != 0) {
+                                var div = $("<div></div>").addClass("search_result");
+                                var a = $("<a></a>").attr({
+                                    ticketid: arr[i].ticketid,
+                                    id: "preview" + arr[i].ticketid,
+                                    href: "/detail?ticketid=" + arr[i].ticketid
+                                });
+                                var img = $("<img>").attr({
+                                    src: "/images/" + arr[i].img_fname,
+                                    width: 200,
+                                    height: 251,
+                                });
+                                var title = $("<h2></h2>").html(arr[i].ticket_name);
 
-                            $(ul).append(cast, ticket_date, runtime, loc);
-                            $(a).append(img);
-                            $(div).append(a,title,ul);
-                            $("#search_all").append(div);
+                                var ul = $("<ul></ul>");
+                                var cast = $("<li></li>").html(arr[i].cast);
+                                var ticket_date = $("<li></li>").html(arr[i].ticket_date);
+                                var runtime = $("<li></li>").html(arr[i].runtime);
+                                var loc = $("<li></li>").html(arr[i].loc);
 
-                            // 이미지 클릭하면 detail 페이지로
+                                $(ul).append(cast, ticket_date, runtime, loc);
+                                $(a).append(img);
+                                $(div).append(a, title, ul);
+                                $("#search_all").append(div);
 
-                            var preview_id = '#preview'+i
+                                // 이미지 클릭하면 detail 페이지로
 
-                            $(document).on('click', preview_id, function(e){
-                                var target = this.id;
-                                var ticketid = $("#"+target).attr("ticketid");
-                                sessionStorage.setItem("ticketid", '');
-                                sessionStorage.setItem("ticketid", ticketid);
-                            });
+                                var preview_id = '#preview' + arr[i].ticketid;
+
+                                $(document).on('click', preview_id, function (e) {
+                                    var target = this.id;
+                                    var ticketid = $("#" + target).attr("ticketid");
+                                    sessionStorage.setItem("ticketid", '');
+                                    sessionStorage.setItem("ticketid", ticketid);
+
+                                });
+                            }
                         }
                     }
                 }); // ajax 끝
             }// selectTIcket end
-            selectTicket();
 
             // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
-            var time = 1;
 
             var cate_current = "";
             var cate_future = "";
@@ -188,18 +192,19 @@
 
     </script>
 </head>
-<body class="mypage_layout">
-<a href="/main"><img src="/image/logo.png" id="logo"></a>
+<body class="main_layout">
+<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="loginTest.html" id="login"><img src="/image/loginicon.png">로그인</a>
-    <a href="/main" id="logout"><img src="/image/logouticon.png">로그아웃</a>
-    <a href="signupTest.html" id="regist"><img src="/image/signupicon.png">회원가입</a>
-    <a href="mypage_Info.html" id="mypage"><img src="/image/mypageicon.png">마이페이지</a>
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="/image/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
         <li class="home"><a href="/main">홈</a></li>
@@ -234,11 +239,10 @@
         <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
     </ul>
 </nav>
-<hr>
 <div id="search_all">
 </div>
 <div id="main-footer">
-    <footer>
+    <footer class="footer">
         <div>ⓒ CodingDoit corp.</div>
     </footer>
 </div>
