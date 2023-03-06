@@ -1,8 +1,6 @@
 package com.example.finalpro.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -14,5 +12,6 @@ public class Draw {
     private int drawid;
     private int ticketid;
     private String custid;
+
     private int seatid;
 }

@@ -59,43 +59,48 @@
                     success:function(arr){
                         console.log("ajax 통신!")
                         console.log("scrollPage :",scrollPage);
+                        console.log("arr :", arr);
                         loading = false;
 
                         for (var i = 0; i < arr.length; i++) {
-                            var div = $("<div></div>").addClass("search_result");
-                            var a = $("<a></a>").attr({
-                                ticketid: arr[i].ticketid,
-                                id: "preview"+i,
-                                href:"/detail?ticketid="+arr[i].ticketid
-                            });
-                            var img = $("<img>").attr({
-                                src: "/images/"+arr[i].img_fname,
-                                width : 200,
-                                height: 251,
-                            });
-                            var title = $("<h2></h2>").html(arr[i].ticket_name);
 
-                            var ul = $("<ul></ul>");
-                            var cast = $("<li></li>").html(arr[i].cast);
-                            var ticket_date = $("<li></li>").html(arr[i].ticket_date);
-                            var runtime = $("<li></li>").html(arr[i].runtime);
-                            var loc = $("<li></li>").html(arr[i].loc);
+                            if (arr[i].ticketid != 0) {
+                                var div = $("<div></div>").addClass("search_result");
+                                var a = $("<a></a>").attr({
+                                    ticketid: arr[i].ticketid,
+                                    id: "preview" + arr[i].ticketid,
+                                    href: "/detail?ticketid=" + arr[i].ticketid
+                                });
+                                var img = $("<img>").attr({
+                                    src: "/images/" + arr[i].img_fname,
+                                    width: 200,
+                                    height: 251,
+                                });
+                                var title = $("<h2></h2>").html(arr[i].ticket_name);
 
-                            $(ul).append(cast, ticket_date, runtime, loc);
-                            $(a).append(img);
-                            $(div).append(a,title,ul);
-                            $("#search_all").append(div);
+                                var ul = $("<ul></ul>");
+                                var cast = $("<li></li>").html(arr[i].cast);
+                                var ticket_date = $("<li></li>").html(arr[i].ticket_date);
+                                var runtime = $("<li></li>").html(arr[i].runtime);
+                                var loc = $("<li></li>").html(arr[i].loc);
 
-                            // 이미지 클릭하면 detail 페이지로
+                                $(ul).append(cast, ticket_date, runtime, loc);
+                                $(a).append(img);
+                                $(div).append(a, title, ul);
+                                $("#search_all").append(div);
 
-                            var preview_id = '#preview'+i
+                                // 이미지 클릭하면 detail 페이지로
 
-                            $(document).on('click', preview_id, function(e){
-                                var target = this.id;
-                                var ticketid = $("#"+target).attr("ticketid");
-                                sessionStorage.setItem("ticketid", '');
-                                sessionStorage.setItem("ticketid", ticketid);
-                            });
+                                var preview_id = '#preview' + arr[i].ticketid;
+
+                                $(document).on('click', preview_id, function (e) {
+                                    var target = this.id;
+                                    var ticketid = $("#" + target).attr("ticketid");
+                                    sessionStorage.setItem("ticketid", '');
+                                    sessionStorage.setItem("ticketid", ticketid);
+
+                                });
+                            }
                         }
                     }
                 }); // ajax 끝
