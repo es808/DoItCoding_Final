@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <title>Title</title>
 </head>
 <body>
-<h1>예매내역</h1>
-<table border="1" width="th" >
+<div id="admin_background">
+    <h2>예매내역</h2>
+    <hr id="admin_hr">
+<table class="admin_table">
     <thead>
     <tr>
         <th>장르</th>
@@ -25,11 +28,14 @@
             <td th:case="4">콘서트</td>
         </div>
         <td th:text="${t.placeid}"></td>
-        <td th:text="${t.ticket_name}"></td>
+        <td>
+            <a th:text="${t.ticket_name}" th:href="@{'detail/'+${t.ticketid}}"></a>
+        </td>
         <td th:text="${t.price}"></td>
         <td th:text="${t.ticket_date}"></td>
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>

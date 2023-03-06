@@ -55,8 +55,9 @@ public class AdminController {
 
     // 관리자 페이지에서 listTicket 페이지를 열기
     @GetMapping("/admin/listTicket")
-    public ModelAndView adminListTicket(Model model, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String keyword){
+    public ModelAndView adminListTicket(Model model, HttpSession session, @RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String keyword, @RequestParam(defaultValue = "ticketid") String order){
         ModelAndView mav = new ModelAndView("/admin/ticket/listTicket");
+
         // 페이징 처리
             // int page : 현재 페이지
             // int totalRecord : 총 ticket 숫자
@@ -82,24 +83,23 @@ public class AdminController {
         String keyword_session = (String) session.getAttribute("keyword");
 
         // 정렬하기
-//        String order_1 = "cateid";
-//        String order_2 = "price";
-//        String order_3 = "ticket_date";
-//
-//        System.out.println("order :"+order);
-//        session.setAttribute("order", order);
-//        if(session.getAttribute("order") == null){
-//            session.setAttribute("order", "");
-//        }
-//        String order_session = (String)session.getAttribute("order");
-//
-//        System.out.println("order :" + order);
-//        System.out.println("order_session :" + order_session);
+        session.setAttribute("order", order);
+        String order_session = (String) session.getAttribute("order");
+
+        System.out.println("order :" + order);
+        System.out.println("order_session :" + order_session);
         mav.addObject("paging", paging);
         mav.addObject("keyword", keyword_session);
+        mav.addObject("order", order_session);
+        mav.addObject("list", DBManager.findTicketPagingSearch(startRecord, endRecord, keyword_session, order_session));
 
-        mav.addObject("list", DBManager.findTicketPagingSearch(startRecord, endRecord, keyword_session));
+        return mav;
+    }
 
+    // 관리자페이지 - 메인
+    @RequestMapping("/mainAdmin")
+    public ModelAndView mainAdmin(){
+        ModelAndView mav = new ModelAndView("admin/mainAdmin");
         return mav;
     }
 
@@ -182,7 +182,7 @@ public class AdminController {
 
     // 관리자 페이지에서 customer의 list 출력
     @GetMapping("/admin/listCustomer")
-    public ModelAndView adminListCustomer(@RequestParam(defaultValue = "1") int page, HttpSession session, @RequestParam(required = false) String keyword){
+    public ModelAndView adminListCustomer(@RequestParam(defaultValue = "1") int page, HttpSession session, @RequestParam(required = false) String keyword, @RequestParam(defaultValue = "custid") String order){
         ModelAndView mav = new ModelAndView("/admin/customer/list");
 
         // 페이징 처리
@@ -208,11 +208,60 @@ public class AdminController {
         }
         String keyword_session = (String) session.getAttribute("keyword");
 
-        mav.addObject("customerList", DBManager.findCustomerPagingSearch(startRecord, endRecord, keyword_session));
+        // 정렬하기
+        System.out.println("order :"+order);
+        session.setAttribute("order", order);
+        String order_session = (String) session.getAttribute("order");
+        System.out.println("order_session :" + order_session);
+
+        List<CustomerVO> list = DBManager.findCustomerPagingSearch(startRecord, endRecord, keyword_session, order_session);
+//         list.removeIf(customerVO -> customerVO.getRole().equals("admin"));
+
+        mav.addObject("customerList", list);
         mav.addObject("keyword", keyword_session);
+        mav.addObject("order", order_session);
         mav.addObject("paging", paging);
         return mav;
     }
+
+//    // 관리자 페이지에서 customer의 list 출력
+//    @GetMapping("/admin/listCustomer")
+//    public ModelAndView adminListCustomer(@RequestParam(defaultValue = "1") int page, HttpSession session, @RequestParam(required = false) String keyword){
+//        ModelAndView mav = new ModelAndView("/admin/customer/list");
+//
+//        // 페이징 처리
+//        // int page : 현재 페이지
+//        // int totalRecord : 총 ticket 숫자
+//        // int startRecord : 현재 page에서 출력되는 record의 시작 rownum
+//        // int endRecord : 현재 page에서 출력되는 record의 끝 rownum
+//        // int startPage : '이전'을 누르기 전에 출력되는 가장 작은 페이지 버튼 숫자
+//        // int endPage : '다음'을 누르기 전에 출력되는 가장 큰 페이지 버튼 숫자
+//        int totalRecord = DBManager.getTotalCustomerRecord(keyword);
+//        Paging paging = new Paging(totalRecord, page);
+//        int startRecord = paging.getStartRecord();
+//        int endRecord = paging.getEndRecord();
+//        int startPage = paging.getStartPage();
+//        int endPage = paging.getEndPage();
+//
+//        // 검색기능
+//        System.out.println("keyword :"+keyword);
+//        //상태유지하기
+//        session.setAttribute("keyword", keyword);
+//        if(session.getAttribute("keyword") == null){
+//            session.setAttribute("keyword", "");
+//        }
+//        String keyword_session = (String) session.getAttribute("keyword");
+//
+//        List<CustomerVO> list = DBManager.findCustomerPagingSearch(startRecord, endRecord, keyword_session);
+////         list.removeIf(customerVO -> customerVO.getRole().equals("admin"));
+//
+//        System.out.println("list목록 " +list.size());
+//
+//        mav.addObject("customerList", list);
+//        mav.addObject("keyword", keyword_session);
+//        mav.addObject("paging", paging);
+//        return mav;
+//    }
 
     // 관리자 페이지 listCustomer에서 회원 아이디를 누르면 정보 수정 페이지로
     @GetMapping("/admin/updateCustomer/{custid}")
@@ -252,10 +301,27 @@ public class AdminController {
 
     // custid 별로 작성한 qna 목록 출력하기
     @GetMapping("/admin/listQnaByCustid/{custid}")
-    public ModelAndView adminListQnaByCustid(@PathVariable String custid){
+    public ModelAndView adminListQnaByCustid(@PathVariable String custid, @RequestParam(defaultValue = "1") int page){
         ModelAndView mav = new ModelAndView("/admin/customer/listQna");
-        List<QnaVO> list = DBManager.listQnaByCustid(custid);
+
+        // 페이징 처리
+        // int page : 현재 페이지
+        // int totalRecord : 총 ticket 숫자
+        // int startRecord : 현재 page에서 출력되는 record의 시작 rownum
+        // int endRecord : 현재 page에서 출력되는 record의 끝 rownum
+        // int startPage : '이전'을 누르기 전에 출력되는 가장 작은 페이지 버튼 숫자
+        // int endPage : '다음'을 누르기 전에 출력되는 가장 큰 페이지 버튼 숫자
+        int totalRecord = DBManager.getTotalQnaRecord(custid);
+        Paging paging = new Paging(totalRecord, page);
+        int startRecord = paging.getStartRecord();
+        int endRecord = paging.getEndRecord();
+        int startPage = paging.getStartPage();
+        int endPage = paging.getEndPage();
+
+
+        List<QnaVO> list = DBManager.listQnaByCustid(custid, startRecord, endRecord);
         mav.addObject("listQna", list);
+        mav.addObject("paging", paging);
         return mav;
     }
 

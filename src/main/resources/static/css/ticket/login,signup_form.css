@@ -8,7 +8,7 @@ a{
 li{
     list-style: none;
 }
-div,table{
+div,table,#form_find{
     position: absolute;
     top:50%;
     left: 50%;
@@ -124,7 +124,7 @@ ul li #pwd{
 /* 회원가입화면 */
 #background_signup{
     width : 500px;
-    height : 700px;
+    height : 750px;
     background-color : #f5f5f5;
     border : 1px solid #dcdcdc;
     border : none;
@@ -133,17 +133,25 @@ ul li #pwd{
 }
 table{
     display: inline-block;
-    padding-bottom : 20px;
+    padding-bottom : 30px;
 }
 td{
     font-size : 15px;
     font-weight : 600;
     color : #08348C;
-    padding : 10px;
+    padding : 4px;
+}
+#title_signup h2{
+    font-size : 22px;
+    margin-top : -350px;
+}
+.birth_info{
+    position : relative;
 }
 .box{
     font-size : 14px;
     height : 25px;
+    margin : 5px;
     border : 1.5px solid #08348C;
 }
 .cbox{
@@ -156,6 +164,9 @@ td{
     font-size : 11px;
     font-weight : 600;
     color : #D10505;
+}
+#addr_address,#addr_detail,#addr_extra{
+    margin-top : 4px;
 }
 option{
     font-size : 14px;
@@ -197,9 +208,9 @@ button{
     position : absolute;
     font-weight : 600;
     margin-left : 50px;
-    margin-top : 300px;
+    margin-top : 320px;
 }
-#btn_idconfirm,#btn_phoneconfirm,#btn_addrconfirm{
+#btn_idconfirm,#btn_phoneconfirm,#btn_addrconfirm,[type="button"]{
     color : #dcdcdc;
     background-color : #08348C;
     width : 80px;
@@ -207,6 +218,9 @@ button{
     border-radius : 5px;
     border : none;
     font-size : 12px;
+}
+#btn_searchAddr{
+    width : 100px;
 }
 
 
@@ -364,4 +378,162 @@ button.active:not(.x){
     position : absolute;
     margin-top : 320px;
     margin-left : 250px;
+}
+
+
+
+/* 아이디 찾기 */
+#form_find img{
+    margin-top : -140px;
+}
+#form_find table{
+    width : 100%;
+    margin-left : 90px;
+}
+#form_find #btn_findCustid{
+    margin-left : 140px;
+    margin-top : 110px;
+}
+#btn_findCustid{
+    position : relative;
+    color : #dcdcdc;
+    background-color : #08348C;
+    width : 90px; height : 31px;
+    border-radius : 5px;
+    border : none;
+    font-size : 12px;
+    left : 5px;
+}
+#printId{
+    position : absolute;
+    top : 110px; left : -145px;
+    width : 300px;
+    font-weight: 400;
+    color : #D10505;
+}
+#code_validation{
+    position : relative;
+    margin-top : 90px;
+    margin-left : 50px;
+}
+#btn_sendPhoneCode, #btn_phoneCode{
+    font-weight: 500;
+    color : white;
+}
+#checkId{
+    position : absolute;
+    top : 160px; left : -70px;
+    width : 300px;
+    font-weight: 400;
+    color : #D10505;
+}
+#mapping{
+    position : absolute;
+    top : 330px;
+    left : 320px;
+}
+
+
+
+/* 비밀번호 찾기 */
+#form_pwd{
+    position: absolute;
+    margin-top: -165px;
+}
+#form_pwd span{
+    color : #08348C;
+    margin : 3px;
+}
+#byPhone, #byEmail{
+    margin-top : 165px;
+    width : 500px;
+    margin-left : -60px;
+}
+#byPhone #btn_checkByPhone, #byEmail #btn_checkByEmail{
+    margin-left: 355px;
+    margin-top: 20px;
+    height: 30px;
+    border: none;
+    background-color: #08348C;
+    color: white;
+    width: 110px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+#printPwdbyPhone, #printPwdbyEmail{
+    position: absolute;
+    top: 40px;
+    left: -105px;
+    width: 500px;
+    font-weight: 400;
+    color: #D10505;
+}
+#code_validation_pwd, #code_validation2{
+    margin-top: 70px;
+    width: 600px;
+    margin-left: 175px;
+}
+#form_updatePwdbyPhone, #form_updatePwdbyEmail{
+    margin-top: 147px;
+    width: 700px;
+    margin-left: 44px;
+}
+#form_updatePwdbyPhone button, #form_updatePwdbyEmail button{
+    width: 110px;
+    border-radius: 5px;
+    left: -45px;
+    top: 45px;
+    position: absolute;
+}
+#byEmail #btn_checkByEmail{
+    margin-left: 370px;
+}
+
+
+
+/* 관리자페이지 - 메인 */
+#background_admin{
+    width : 500px;
+    height : 350px;
+    background-color : #f5f5f5;
+    border : 1px solid #dcdcdc;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow : 10px 10px #dedede;
+}
+#logo_admin{
+    width: 370px;
+    height: 110px;
+    margin-top: -160px;
+    position: absolute;
+    margin-left: -170px;
+}
+#h2_admin{
+    position: absolute;
+    width: 500px;
+    margin-top: -30px;
+    margin-left: -240px;
+}
+#menu_admin{
+    margin-top: 70px;
+    width: 600px;
+    margin-left: 80px;
+}
+#menu_admin span{
+    background-color: #08428C;
+    border-radius: 5px;
+    width: 120px;
+    height: 38px;
+    display: inline-block;
+    margin-left: 22px;
+    text-align: center;
+}
+#menu_admin span a{
+    color: white;
+    line-height: 37px;
+    font-size: 15px;
+}
+#menu_admin span:hover{
+    transition-duration: 0.4s;
+    border-top: 7px solid #F2AE30;
+    border-bottom: 7px solid #F2AE30;
 }

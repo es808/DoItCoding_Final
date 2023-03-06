@@ -3,27 +3,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <title>Title</title>
 </head>
 <body>
-    <h2>관리자 페이지</h2>
-    <br><hr>
-    <h3>티켓 리스트</h3>
-  <table border="1">
+<div id="admin_background">
+    <h2>작품 리스트</h2>
+    <hr id="admin_hr">
+    <table class="admin_table">
    <thead>
     <tr>
-      <td>ticketid</td>
-      <td>ticket_name</td>
-        <td>
-            <a th:text="cateid"></a>
-        </td>
-      <td>
-          <a th:text="price"></a>
-      </td>
-      <td>
-          <a th:text="ticket_date"></a>
-      </td>
-        <td>삭제</td>
+<!--      <th>번호</th>-->
+<!--      <th>작품명</th>-->
+<!--        <th>-->
+<!--            <a th:text="분류"></a>-->
+<!--        </th>-->
+<!--      <th>-->
+<!--          <a th:text="가격"></a>-->
+<!--      </th>-->
+<!--      <th>-->
+<!--          <a th:text="개봉일자"></a>-->
+<!--      </th>-->
+<!--        <th>삭제</th>-->
+      <th>
+          <a th:with="text='ticketid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </th>
+      <th>
+          <a th:with="text='ticket_name'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </th>
+        <th>
+            <a th:with="text='cateid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+        </th>
+      <th>
+          <a th:with="text='price'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </th>
+      <th>
+          <a th:with="text='ticket_date'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </th>
+        <th>삭제</th>
     </tr>
    </thead>
    <tbody>
@@ -47,27 +64,31 @@
    </tbody>
   </table>
     <br><br>
-    <a href="/admin/insertTicket">추가하기</a>
+    <div id="admin_update">
+        <a href="/admin/insertTicket">추가하기</a>
+    </div>
 <br><br>
-    <!--페이징 처리-->
-    <a th:text="처음" th:href="@{'/admin/listTicket?page=1&keyword='+${keyword}}"></a>
-    <th:block th:if="${paging.getStartPage() > 1}">
-        <a th:text="이전" th:href="@{'/admin/listTicket?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
-    </th:block>
-<th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
-    <a th:text="${page}" th:href="@{'/admin/listTicket?page='+${page}+'&keyword='+${keyword}}"></a>
-</th:block>
-    <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
-        <a th:text="다음" th:href="@{'/admin/listTicket?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
-    </th:block>
-    <a th:text="끝" th:href="@{'/admin/listTicket?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
-
     <!-- 검색 기능-->
     <div>
-        <form name="search-form" th:action="@{/admin/listTicket}" method="get">
-            <input type="text" name="keyword" value="">
-            <input type="submit" value="검색">
+        <form name="search-form" th:action="@{/admin/ticket/listTicket}" method="get">
+            <input type="text" name="keyword" value="" id="ticket_keyword">
+            <input type="submit" value="검색" id="admin_search">
         </form>
     </div>
+    <!--페이징 처리-->
+    <div id="paging_admin">
+        <a th:text="처음" th:href="@{'/admin/ticket/listTicket?page=1&keyword='+${keyword}}"></a>
+        <th:block th:if="${paging.getStartPage() > 1}">
+            <a th:text="이전" th:href="@{'/admin/ticket/listTicket?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
+        </th:block>
+    <th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
+        <a th:text="${page}" th:href="@{'/admin/ticket/listTicket?page='+${page}+'&keyword='+${keyword}}"></a>
+    </th:block>
+        <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
+            <a th:text="다음" th:href="@{'/admin/ticket/listTicket?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
+        </th:block>
+        <a th:text="끝" th:href="@{'/admin/ticket/listTicket?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
+    </div>
+</div>
 </body>
 </html>

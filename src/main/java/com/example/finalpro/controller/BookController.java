@@ -56,6 +56,7 @@ public class BookController {
         return DBManager.bookTicket(custid,ticketid,seatid);
     }
 
+
     @RequestMapping("/regist2")
     public ModelAndView regist2(){
         ModelAndView mav = new ModelAndView("/ticket/regist2");

@@ -27,9 +27,9 @@
   <select id="findCustomerPagingSearch" resultType="customerVO">
     select * from
     (select rownum n, a.* from
-    (select * from customer
+    (select * from customer where role='customer'
     <if test="keyword != null and keyword != ''">
-      where (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
+      and (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
     </if>
     order by custid) a)
     where n between #{startRecord} and #{endRecord}
@@ -38,21 +38,14 @@
   <!--page에 따라 startRecord와 endRecord 구해서 출력하기-->
   <!--search에 따라 출력하기-->
   <!--order 기능 추가-->
-  <select id="findCustomerPagingSearchOrderBy" resultType="customerVO">
+  <select id="findCustomerPagingSearchOrderBy" resultType="customerVO" parameterType="java.util.HashMap">
     select * from
     (select rownum n, a.* from
     (select * from customer
     <if test="keyword != null and keyword != ''">
       where (custid like '%'||#{keyword}||'%' or name like '%'||#{keyword}||'%' )
     </if>
-    <choose>
-      <when test="order != null and order != ''">
-        order by #{order}) a)
-      </when>
-      <otherwise>
-        order by custid) a)
-      </otherwise>
-    </choose>
+    order by ${order}) a)
     where n between #{startRecord} and #{endRecord}
   </select>
 
@@ -64,7 +57,32 @@
     </if>
   </select>
 
+  <!-- findCustid 아이디 찾기 -->
+  <select id="findCustid" resultType="customerVO">
+    select custid from customer where name=#{name} and phone=#{phone}
+  </select>
+
   <select id="findByCustid" resultType="customerVO">
     select * from customer where custid=#{custid}
   </select>
+
+  <!-- 전화번호로 개인정보 확인 -->
+  <select id="checkByPhone" resultType="customerVO">
+    select * from customer where custid=#{custid} and phone=#{phone}
+  </select>
+
+  <!-- 전화번호로 비밀번호 재설정 -->
+  <update id="updatePwdbyPhone" parameterType="customerVO">
+    update customer set pwd=#{pwd} where custid=#{custid} and phone=#{phone}
+  </update>
+
+  <!-- 이메일로 개인정보 확인 -->
+  <select id="checkByEmail" resultType="customerVO">
+    select * from customer where custid=#{custid} and email=#{email}
+  </select>
+
+  <!-- 이메일로 비밀번호 재설정 -->
+  <update id="updatePwdbyEmail" parameterType="customerVO">
+    update customer set pwd=#{pwd} where custid=#{custid} and email=#{email}
+  </update>
 </mapper>

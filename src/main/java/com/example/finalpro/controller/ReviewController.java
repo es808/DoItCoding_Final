@@ -48,19 +48,10 @@ public class ReviewController {
         return DBManager.findReviewByTicketAndCust(custid,ticketid);
     }
 
-    // 티켓의 리뷰가 있나 확인
-    @RequestMapping("/CheckReview")
-    @ResponseBody
-    public List<MyReviewVO> findCheckReview(int ticketid){
-
-        return DBManager.checkReviewByTicketid(ticketid);
-    }
-
     // 티켓의 평균 별점 구하기
     @RequestMapping("/AvgScore")
     @ResponseBody
     public int findAvgScore(int ticketid){
-
         return DBManager.findAvgScore(ticketid);
     }
 }

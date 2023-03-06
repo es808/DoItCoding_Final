@@ -3,27 +3,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <title>Title</title>
 </head>
 <body>
+<div id="admin_background">
     <h2>고객 리스트</h2>
-    <br><br>
-    <table border="1">
+    <hr id="admin_hr">
+    <table class="admin_table">
         <thead>
             <tr>
-                <td>custid</td>
-                <td>name</td>
-                <td>birth</td>
-                <td>phone</td>
-                <td>gender</td>
-                <td>예매내역 조회</td>
-                <td>qna 내역 조회</td>
-                <td>삭제</td>
+<!--                <th>고객ID</th>-->
+<!--                <th>성함</th>-->
+<!--                <th>생년월일</th>-->
+<!--                <th>전화번호</th>-->
+<!--                <th>성별</th>-->
+<!--                <th>예매내역</th>-->
+<!--                <th>Q&A내역</th>-->
+<!--                <th>삭제</th>-->
+                <th>
+                    <a th:with="text='custid'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
+                <th>
+                    <a th:with="text='name'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
+                <th>
+                    <a th:with="text='birth'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
+                <th>phone</th>
+                <th>
+                    <a th:with="text='gender'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
+                <th>예매내역</th>
+                <th>Q&A내역</th>
+                <th>삭제</th>
             </tr>
         </thead>
         <!--role이 admin이 아닌 customer만 출력하기-->
         <tbody th:each="c : ${customerList}">
-            <tr th:if="${c.role} != 'admin'">
+            <tr>
                 <td>
                 <a th:text="${c.custid}" th:href="@{'/admin/updateCustomer/'+${c.custid}}"></a>
                 </td>
@@ -31,11 +49,11 @@
                 <td th:text="${c.birth}"></td>
                 <td th:text="${c.phone}"></td>
                 <td th:text="${c.gender}"></td>
-                <td>예매내역
-                    <a th:href="@{'/admin/listTicketByCustid/'+${c.custid}}">예매내역 보기</a>
+                <td>
+                    <a th:href="@{'/admin/listTicketByCustid/'+${c.custid}}">내역보기</a>
                 </td>
                 <td >
-                    <a th:href="@{'/admin/listQnaByCustid/'+${c.custid}}">qna 내역보기</a>
+                    <a th:href="@{'/admin/listQnaByCustid/'+${c.custid}}">내역보기</a>
                 </td>
                 <td>
                     <a th:text="삭제하기" th:href="@{'/admin/deleteCustomer/'+${c.custid}}"></a>
@@ -44,23 +62,27 @@
         </tbody>
     </table>
 <br><br>
-    <a th:text="처음" th:href="@{'/admin/listCustomer?page=1&keyword='+${keyword}}"></a>
-    <th:block th:if="${paging.getStartPage() > 1}">
-        <a th:text="이전" th:href="@{'/admin/listCustomer?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
-    </th:block>
-    <th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
-        <a th:text="${page}" th:href="@{'/admin/listCustomer?page='+${page}+'&keyword='+${keyword}}"></a>
-    </th:block>
-    <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
-        <a th:text="다음" th:href="@{'/admin/listCustomer?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
-    </th:block>
-    <a th:text="끝" th:href="@{'/admin/listCustomer?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
     <!-- 검색 기능-->
     <div>
-        <form name="search-form" th:action="@{/admin/listCustomer}" method="get">
-            <input type="text" name="keyword" value="">
-            <input type="submit" value="검색">
+        <form name="search-form" th:action="@{/admin/customer/list}" method="get">
+            <input type="text" name="keyword" value="" id="admin_keyword">
+            <input type="submit" value="검색" id="admin_search">
         </form>
     </div>
+    <div id="paging_admin">
+        <a th:text="처음" th:href="@{'/admin/customer/list?page=1&keyword='+${keyword}}"></a>
+        <th:block th:if="${paging.getStartPage() > 1}">
+            <a th:text="이전" th:href="@{'/admin/customer/list?page='+${paging.getStartPage()-1}+'&keyword='+${keyword}}"></a>
+        </th:block>
+        <th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
+            <a th:text="${page}" th:href="@{'/admin/customer/list?page='+${page}+'&keyword='+${keyword}}"></a>
+        </th:block>
+        <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
+            <a th:text="다음" th:href="@{'/admin/customer/list?page='+${paging.getEndPage()+ 1}+'&keyword='+${keyword}}"></a>
+        </th:block>
+        <a th:text="끝" th:href="@{'/admin/customer/list?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
+    </div>
+</div>
+<div id="admin_div"></div>
 </body>
 </html>

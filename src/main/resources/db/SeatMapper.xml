@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seat">
   <select id="findAll" resultType="seatVO">
     select * from seat
@@ -21,7 +21,7 @@
   <select id="listSeatByTicketid" resultType="seatVO">
     select * from seat where ticketid=#{ticketid}
   </select>
-  
+
   <!-- 예매를 위해 ticketid와 seatname으로 좌석 아이디 찾기 -->
   <select id="findSeatId" resultType="int">
     select seatid from seat where ticketid=#{ticketid} and seatname=#{seatname}

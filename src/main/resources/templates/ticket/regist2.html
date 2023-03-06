@@ -88,6 +88,18 @@
                                                                 $(document).ready(function(){
                                                                     if (final > 0) {
                                                                         // 예약완료 문자 발송 여기!
+                                                                        $.ajax({
+                                                                            url:"sendBookingConfirmation",
+                                                                            data:{
+                                                                                custid:custid,
+                                                                                ticketid:ticketid,
+                                                                                seatid: sessionStorage.getItem("as"),
+                                                                                phone:phone
+                                                                            },
+                                                                            success:function (msg){
+                                                                                console.log(msg)
+                                                                            }
+                                                                        })
                                                                         alert("예약 성공!");
                                                                         $.ajax({
                                                                             url:"drawDelete",

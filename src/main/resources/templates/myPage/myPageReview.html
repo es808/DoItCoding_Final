@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
@@ -48,137 +48,102 @@
                         $(div).append(ticketid);
                         $(div).append($("<div></div>").html(ticketid));
 
+            if (custid != null) {
+                $("#login").css('display', 'none');
+                $("#regist").css('display', 'none');
+                $("#logout").css('display', 'inline-block');
+                $("#mypage").css('display', 'inline-block');
+            }
 
-                        $(div).append($("<span></span>").html("별점: "+value.score));
-                        $(div1).append($("<span></span>").html("작성자: "+value.custid));
-                        $(div2).append($("<span></span>").html("관람일: "+value.ticket_date));
-                        $(div3).append($("<span></span>").html("작품명: "+value.ticket_name));
-                        $(div).append(div1);
-                        $(div).append(div2);
-                        $(div).append(div3);
-
-                        var review_text = $("<textarea></textarea>").attr({
-                            type: "text",
-                            id : 'review_text',
-                            rows: 3,
-                            cols: 50
-                        });
-
-
-                        $(review_text).append(value.review_content);
-                        $(div).append(review_text);
-                        $(div).append($("<div></div>").html(review_text));
-
-                        var updateBtn = $("<button></button>").attr({
-                            class : 'updateBtn',
-                            type: 'button'
-                        });
-                        $(updateBtn).html("수정");
-
-                        var deleteBtn = $("<button></button>").attr({
-                            class : 'deleteBtn',
-                            type: 'button'
-                        });
-                        $(deleteBtn).html("삭제");
-
-                        $(div).append(updateBtn);
-                        $(div).append(deleteBtn);
-
-                        $("#form").append(div);
-
-                    });
-
+            $("#logout").click(function (e) {
+                if (confirm("로그아웃 하시겠습니까?")) {
+                    $("#login").css('display', 'inline-block');
+                    $("#regist").css('display', 'inline-block');
+                    $("#logout").css('display', 'none');
+                    $("#mypage").css('display', 'none');
+                    sessionStorage.removeItem("custid");
+                    e.preventDefault();
                 }
-            });
-            $(document).ready(function(){
-                $(document).on('click','.updateBtn',function(){
-                    var p = $(this).parent();
-                    var txt = $(p).find("textarea").val();
-                    var txt1 = $(p).find("h7").html();
-                    console.log(txt1);
-                    console.log('click');
-                    var review_content = $("#review_text").val();
-                    $.ajax({
-                        url: "UpdateReviewAction",
-                        data: {custid:sessionStorage.getItem("custid"),
-                            ticketid: txt1,
-                            review_content:txt
-                        },
-                        success: function(data){
-                            if(data==1){
-                                alert("리뷰가 수정되었습니다.");
-                            }else{
-                                alert("리뷰 수정에 실패하였습니다.");
-                            }
-                        }
-                    });
-                });
-            });
-            $(document).ready(function(){
-                $(document).on('click','.deleteBtn',function(){
-                    var p = $(this).parent();
-                    var txt1 = $(p).find("h7").html();
-                    console.log(txt1);
-                    console.log('click');
+            })
 
-                    $.ajax({
-                        url: "deleteReviewAction",
-                        data: {custid:sessionStorage.getItem("custid"),
-                            ticketid: txt1
-                        },
-                        success: function(data){
-                            if(data==1){
-                                alert("리뷰가 삭제되었습니다.");
-                            }else{
-                                alert("리뷰 삭제에 실패하였습니다.");
-                            }
-                        }
-                    });
-                });
-            });
-        });
+            // $("#btnEdit").click(function (){
+            //     $("#btnEditConfirm").removeAttr("hidden")
+            //     $("#textarea").removeAttr("readonly")
+            // })
+            //
+            // $("#btnEditConfirm").click(function (){
+            //     $.ajax({
+            //         url:"",
+            //         data:{score:}
+            //     })
+            // })
+
+            $(".delete").click(function (){
+                if(confirm("정말로 삭제하시겠습니까?")){
+                    let reviewid=$(this).attr("reviewid")
+                    console.log(reviewid)
+                    location.href="/myPage/deleteReview/"+reviewid
+                }
+            })
+        })
+
     </script>
 </head>
 <body class="main_layout">
-<a href="mainTest.html"><img src="./image/logo.png" id="logo"></a>
-<div class="main_user">
-    <a href="loginTest.html" id="login"><img src="./image/loginicon.png">로그인</a>
-    <a href="mainTest.html" id="logout"><img src="./image/logouticon.png">로그아웃</a>
-    <a href="signupTest.html" id="regist"><img src="./image/signupicon.png">회원가입</a>
-    <a href="mypage_Info.html" id="mypage"><img src="./image/mypageicon.png">마이페이지</a>
-</div>
-<nav id="navigation">
-    <form action="" method="post" class="search">
-        <input class="search_txt" type="search" placeholder="검색어 입력...">
-        <a class="search_btn" href="example.html"><img  src="./image/searchicon.png" width="35" height="35"></a>
+    <a href="/main"><img src="./image/icon/logo.png" id="logo"></a>
+    <div class="main_user">
+        <a href="/login" id="login"><img src="./image/icon/loginicon.png">로그인</a>
+        <a href="/main" id="logout"><img src="./image/icon/logouticon.png">로그아웃</a>
+        <a href="/signUp" id="regist"><img src="./image/icon/signupicon.png">회원가입</a>
+        <a href="/myPage" id="mypage"><img src="./image/icon/mypageicon.png">마이페이지</a>
+    </div>
+    <nav id="navigation">
+        <form action="" method="post" class="search">
+            <input class="search_txt" type="search" placeholder="검색어 입력...">
+            <a class="search_btn" href="example.html"><img  src="./image/icon/searchicon.png" width="35" height="35"></a>
+        </form>
+        <ul>
+            <li class="home"><a href="/main">홈</a></li>
+            <li><a href="#">시사회</a></li>
+            <li><a href="#">뮤지컬</a></li>
+            <li><a href="#">연극</a></li>
+            <li><a href="#">콘서트</a></li>
+        </ul>
+    </nav>
+    <div id="menu-bar">
+        <ul>
+            <li id="title">MyPage</li>
+            <li><a href="/myPage">내 정보</a></li>
+            <li><a href="/myPageBook">예매내역</a></li>
+            <li><a href="/myPageDraw">드로우내역</a></li>
+            <li id="myreview"><a href="/myPageReview">내 후기</a></li>
+            <li><a href="/myPageQnA">내 문의내역</a></li>
+        </ul>
+    </div>
+    <div id="review_background">
+    <!-- 후기 수정시 비활성화 상태에서 활성화 상태로 바꾸는거니까 ajax 활용 필요해보임! -->
+        <div id="reviewlist"></div>
+            <div class="reviewlist" th:each="r:${list}">
+                <div hidden="hidden"><span th:text="${r.reviewid}"></span></div>
+                <div><span th:text="${r.customer.custid}"></span></div>
+                <div hidden="hidden"><span th:text="${r.ticket.ticketid}"></span></div>
+                <div><span th:text="${r.ticket.ticket_name}"></span></div>
+                <div><span th:text="${r.ticket.ticket_date}"></span></div>
+                <div>
+                    <span th:each="i: ${#numbers.sequence(1, r.score)}">⭐</span>
+                </div>
+                <div><span th:text="${r.review_content}"></span></div>
+                <a th:href="@{'/myPage/updateReview/'+${r.reviewid}}">수정</a>
+                <a class="delete" th:attr="reviewid=${r.reviewid}">삭제</a>
+            </div>
+    <form action="" method="post" id="form">
     </form>
-    <ul>
-        <li class="home"><a href="/main">홈</a></li>
-        <li><a href="#">시사회</a></li>
-        <li><a href="#">뮤지컬</a></li>
-        <li><a href="#">연극</a></li>
-        <li><a href="#">콘서트</a></li>
-    </ul>
-</nav>
-<div id="menu-bar">
-    <ul>
-        <li id="title">MyPage</li>
-        <li><a href="mypage_Info.html">내 정보</a></li>
-        <li><a href="mypage_Book.html">예매내역</a></li>
-        <li><a href="mypage_Draw.html">드로우내역</a></li>
-        <li id="myreview"><a href="mypage_Review.html">내 후기</a></li>
-    </ul>
-</div>
-<div id="review_background">
-<!-- 후기 수정시 비활성화 상태에서 활성화 상태로 바꾸는거니까 ajax 활용 필요해보임! -->
-<form action="" method="post" id="form">
-</form>
-</div>
-<div id="main-footer">
-    <footer class="footer">
-        <div>ⓒ CodingDoit corp.
-        </div>
-    </footer>
-</div>
+    </div>
+    <div id="main-footer">
+        <footer class="footer">
+            <div>ⓒ CodingDoit corp.
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

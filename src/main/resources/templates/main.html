@@ -139,7 +139,6 @@
 
       // 미래상영작 출력
       var selectFutureBycategory = function(){
-
         $.ajax("SelectTicketMain", {
           data:{time:2, cateid:cateid},
           success:function(arr){
@@ -345,25 +344,84 @@
           return false;
         }
       })
+      // 알림 갯수
+      $.ajax({
+        url:"/countNChecked",
+        success:function (cnt){
+          $('#notif_not_checked').html(cnt)
+        }
+      })
 
+      //알림 목록 불러오기
+      function listNotification(){
+        $("#notif_container").empty();
+        $.ajax({
+          url:"/listNotification",
+          success:function (list){
+            $.each(list,function (){
+              let div_no=$("<div></div>").text(this.notif_no)
+              let div_title=$("<a></a>").text(this.qna_title+"에 답글이 달렸습니다.")
+                      .attr("href","/qna/detail/"+this.qna_no)
+              let div_x=$("<a></a>").text("X").addClass("x").attr("notif_no",this.notif_no)
+              let div_no_title=$("<div></div>").append(div_no, div_title, div_x)
+              $('#notif_container').append(div_no_title)
+            })
+            $('#notif_not_checked').html("")
+          }
+        })
+      }
+
+      // QNA 답변 알림
+      let cnt_click=0
+      $('#bell').click(function(){
+        cnt_click+=1
+        if(cnt_click%2==1){
+          $("#notif_container").css("display","block")
+          listNotification()
+
+          // DB 'checked' 칼럼 업데이트 n->y
+          $.ajax({
+            url:"/updateCheckedToY",
+            success:function (re){
+              console.log(re)
+            }
+          })
+        }else{
+          $("#notif_container").css("display","none")
+        }
+      })
+
+      $(document).on("click",".x",function (){
+        $.ajax({
+          url:"/deleteNotification",
+          data:{notif_no:$(this).attr("notif_no")},
+          success:function (){
+            listNotification()
+          }
+        })
+      })
 
     });
   </script>
 </head>
 <body class="main_layout">
 
-<img src="images/icon/logo.png" id="logo">
+<img src="/images/icon/logo.png" id="logo">
 <div class="main_user">
-  <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
-  <a href="/logout" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
-  <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
-  <a href="/myPage" id="mypage"><img src="images/icon/mypageicon.png">마이페이지</a>
+  <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+  <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+  <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+  <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+  <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
-
+<!-- qna notification -->
+<div id="notif_not_checked"></div><!--알림 갯수-->
+<a id="bell"><img src="/images/icon/alarm.png" width="45" height="45"></a>
+<div id="notif_container"></div>
 <nav id="navigation">
   <div class="search" id="search" name="search">
     <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-    <a class="search_btn" type="button" id="search_btn"><img src="images/icon/searchicon.png" width="35" height="35"></a>
+    <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
   </div>
   <ul>
     <li class="home"><a href="/main">홈</a></li>
@@ -395,7 +453,7 @@
         <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
       </ul>
     </li>
-    <li><a id="chat-channel-button" href="javascript:chatChannel()"><img src="images/icon/consult_small_yellow_pc.png"/></a></li>
+    <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
   </ul>
 </nav>
 <div id="main-header">
@@ -403,13 +461,13 @@
   <div class="slider" data-role="slider" data-width="1380" data-height="600" style="position: relative; overflow: hidden; width: 500px; height: 500px;">
     <div class="container" style="position: absolute; overflow: hidden;">
       <div  style="float: left;">
-        <img src="images/icon/monster.jpg" class="poster">
+        <img src="/images/icon/monster.jpg" class="poster">
       </div>
       <div class="item" style="float: left;">
-        <img src="images/icon/가면산장살인사건_main_3.jpg" class="poster">
+        <img src="/images/icon/가면산장살인사건_main_3.jpg" class="poster">
       </div>
       <div class="item" style="float: left;">
-        <img src="images/icon/마틸다.jpg" class="poster">
+        <img src="/images/icon/마틸다.jpg" class="poster">
       </div>
     </div>
   </div>
@@ -428,11 +486,11 @@
     </ul>
     <br>
   </div>
-  <img class="main_rank" src="images/icon/firsticon.jpg" width="80" height="80">
+  <img class="main_rank" src="/images/icon/firsticon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview0"></a>
-  <img class="main_rank" src="images/icon/secondicon.jpg" width="80" height="80">
+  <img class="main_rank" src="/images/icon/secondicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview1"></a>
-  <img class="main_rank" src="images/icon/thirdicon.jpg" width="80" height="80">
+  <img class="main_rank" src="/images/icon/thirdicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview2"></a>
   <br>
   <div>

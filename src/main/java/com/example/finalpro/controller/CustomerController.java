@@ -67,15 +67,35 @@ public class CustomerController {
     @Autowired
     private SeatDAO seatDAO;
 
-
     @RequestMapping("/list")
     public void list(Model model) {
         model.addAttribute("list", dao.findAll());
     }
 
+    @RequestMapping("/list_jpa")
+    public void list_jpa(Model model){
+        model.addAttribute("list", ts.findAll());
+    }
+
+    @RequestMapping("/list_jpa_id")
+    public void list_jpa_id(Model model) {
+        model.addAttribute("list", ts.findById());
+    }
+
+    @RequestMapping("/list_customer")
+    public void list_customer(Model model) {
+        model.addAttribute("list", cs.findAll());
+    }
+
+    @RequestMapping("/list_ticket")
+    public void list_ticket(Model model) {
+        model.addAttribute("list", ticketService.findAll());
+    }
+
     @GetMapping("/login")
     public void login() {
     }
+
 
     @GetMapping("/signUp")
     public void signUp() {
@@ -83,7 +103,7 @@ public class CustomerController {
 
     @GetMapping("/")
     public String home() {
-        return "main";
+        return "/main";
     }
 
     @GetMapping("/main")
@@ -202,8 +222,8 @@ public class CustomerController {
         }
         return "myPage/myPageBook";}
 
-    @GetMapping("/myPageReview")
-    public String myPageReview() { return "myPage/myPageReview";}
+//    @GetMapping("/myPageReview")
+//    public String myPageReview() { return "myPage/myPageReview";}
 
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
@@ -221,8 +241,16 @@ public class CustomerController {
             mav.setViewName("/login");
         } catch (Exception e) {
             mav.addObject("msg", "회원가입에 실패하였습니다.");
-            mav.setViewName("error");
+            mav.setViewName("/error");
         }
+
+		/*
+		memberDAO.save(m);
+		Optional<Member> obj = memberDAO.findById(m.getId());
+		if(obj.isEmpty()) {
+			mav.addObject("msg", "회원가입에 실패하였습니다.");
+			mav.setViewName("error");
+		}*/
         return mav;
     }
 
@@ -274,14 +302,108 @@ public class CustomerController {
         return answer;
     }
 
-    @GetMapping("/sendMessage")
-    @ResponseBody
-    public String sendMessage(String phone){
-        System.out.println(phone);
-        MessageController messageController = new MessageController();
-        code = messageController.sendCodePhone(phone);
-        System.out.println(code);
-        return code;
+//    @GetMapping("/sendMessage")
+//    @ResponseBody
+//    public String sendMessage(String phone){
+//        System.out.println(phone);
+//        MessageController messageController = new MessageController();
+//        code = messageController.sendCodePhone(phone);
+//        System.out.println(code);
+//        return code;
+//    }
+
+    //아이디 찾기
+    @RequestMapping("/findCustidForm")
+    public String findCustidForm(){
+        return "/customer/findCustid.html";
     }
 
+    @RequestMapping("/findCustid")
+    @ResponseBody
+    public CustomerVO findCustid(String name, String phone){
+        System.out.println("이름"+name);
+        System.out.println("전화"+phone);
+        CustomerVO c = DBManager.findCustid(name, phone);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
+
+    //전화번호로 개인정보 확인
+    @RequestMapping("/findPwdForm")
+    public String checkByPhoneForm(){
+        return "/customer/findPwd.html";
+    }
+
+    @RequestMapping("/checkByPhone")
+    @ResponseBody
+    public CustomerVO checkByPhone(String custid, String phone){
+        System.out.println("아이디"+custid);
+        System.out.println("전화"+phone);
+        CustomerVO c = DBManager.checkByPhone(custid, phone);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
+
+    //전화번호로 비밀번호 재설정
+    @RequestMapping("/updatePwdbyPhone")
+    @ResponseBody
+    public String updatePwdbyPhone(CustomerVO c){
+        System.out.println("아이디"+c.getCustid());
+        System.out.println("전화"+c.getPhone());
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("암호화:"+c );
+
+        try{
+            DBManager.updatePwdbyPhone(c);
+        }catch(Exception e){
+            System.out.println("예외발생:"+e.getMessage());
+        }
+        return "OK";
+    }
+
+    //이메일로 개인정보 확인
+    @RequestMapping("/checkByEmailForm")
+    public String checkByEmailForm(){
+        return "/customer/findPwd.html";
+    }
+
+    @RequestMapping("/checkByEmail")
+    @ResponseBody
+    public CustomerVO checkByEmail(String custid, String email){
+        System.out.println("아이디"+custid);
+        System.out.println("전화"+email);
+        CustomerVO c = DBManager.checkByEmail(custid, email);
+        System.out.println("검색한 회원의 정보"+c);
+        return c;
+    }
+
+    @GetMapping("/CustomerEmailAuthentication")
+    @ResponseBody
+    public int customerEmailAuthentication(String emailCode){
+        System.out.println(this.code);
+        System.out.println("code:"+emailCode);
+        int answer = 0;
+        if(!this.code.equals(emailCode)){
+            answer = 1;
+        }
+        System.out.println(answer);
+        return answer;
+    }
+
+    //이메일로 비밀번호 재설정
+    @RequestMapping("/updatePwdbyEmail")
+    @ResponseBody
+    public String updatePwdbyEmail(CustomerVO c){
+        System.out.println("아이디"+c.getCustid());
+        System.out.println("이메일"+c.getEmail());
+        c.setPwd(passwordEncoder.encode(c.getPwd()));
+        System.out.println("암호화:"+c );
+
+        try{
+            DBManager.updatePwdbyEmail(c);
+        }catch(Exception e){
+            System.out.println("예외발생:"+e.getMessage());
+        }
+        return "OK";
+    }
 }
