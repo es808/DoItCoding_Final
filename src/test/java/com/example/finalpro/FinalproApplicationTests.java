@@ -13,11 +13,4 @@ class FinalproApplicationTests {
     @Test
     void contextLoads() {
     }
-
-
-    @Test
-    void test(){
-        scheduledDraw.test();
-    }
-
 }

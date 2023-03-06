@@ -29,15 +29,16 @@ public class ScheduledDraw {
     @Scheduled(cron = "0 0 12 * * ?")
     public void draw(){
         List<Ticket> tickets = ticketDAO.findAll();
+        int toYear = date.getYear()+1900;
         int toMonth = date.getMonth()+1;
         int toDay = date.getDate();
         for(Ticket t : tickets){
 
-            String date = t.getTicket_date().substring(0,10);
-            System.out.println(date);
-            String arr[] = date.split("-");
+            String date = t.getTicket_date().substring(0,10);       //년 월 일 까지만 잘라준다.
+            String arr[] = date.split("-");                 // 년 월 일 기준으로 잘라 배열에 저장.
 
-            if(toMonth == Integer.parseInt(arr[1]) && toDay == Integer.parseInt(arr[2])-1){
+            // 현재 년 월이 일치하고 상영일이 today의 다음 날일때 draw 실행.
+            if(toYear == Integer.parseInt(arr[0]) && toMonth == Integer.parseInt(arr[1]) && toDay == Integer.parseInt(arr[2])-1){
                 System.out.println("draw실행:"+ t.getTicketid());
                 drawController.drawExec(t.getTicketid());
             }
