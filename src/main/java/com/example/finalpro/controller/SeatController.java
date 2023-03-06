@@ -65,4 +65,9 @@ public class SeatController {
         return DBManager.cancleSeat(seatid);
     }
 
+    @GetMapping("/CheckBook")
+    @ResponseBody
+    public int checkBook(int seatid){
+        return DBManager.findBySeatIdFromBook(seatid);
+    }
 }

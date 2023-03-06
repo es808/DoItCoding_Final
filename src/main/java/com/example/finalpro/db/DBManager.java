@@ -667,4 +667,13 @@ public class DBManager {
 		session.close();
 		return list;
 	}
+
+	public static int findBySeatIdFromBook(int seatid) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.selectOne("seat.findBySeatIdFromBook",seatid);
+		System.out.println("seatName:"+re);
+		session.close();
+		return re;
+	}
 }

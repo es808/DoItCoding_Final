@@ -149,7 +149,9 @@
             $(document).on('click', '#pay_btn', function() { // 전화번호 중복
                 sessionStorage.setItem("ticketid",$("#ticketid").html());
                 sessionStorage.setItem("custid",custid);
+                sessionStorage.setItem("seatid",$("#seatid").html());
                 sessionStorage.setItem("as",$("#seatid").html());
+                sessionStorage.setItem("drawid",$("#drawid").html());
                 window.open('/regist2');
 
                 //결제하면 드로우 테이블에서 삭제
