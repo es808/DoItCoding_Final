@@ -43,7 +43,6 @@ public class ScheduledDraw {
                 drawController.drawExec(t.getTicketid());
             }
         }
-        Date date = new Date();
     }
 
 }
