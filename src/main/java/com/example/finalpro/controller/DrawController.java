@@ -66,14 +66,14 @@ public class DrawController {
     //드로우 가동
     @GetMapping("/drawExec")
     @ResponseBody
-    public String drawExec(){
-        int count = DBManager.findLeftSeatByTicketid(1);
-        List<DrawVO> draw = drawList(1);
+    public String drawExec(int ticketid){
+        int count = DBManager.findLeftSeatByTicketid(ticketid);
+        List<DrawVO> draw = drawList(ticketid);
         System.out.println("드로우 사이즈:"+draw.size());
         String custidArr[] = new String[count];           //드로우에 당첨된 회원아이디 저장
         Random r = new Random();
 
-        int seatArr[] = leftSeat(1);
+        int seatArr[] = leftSeat(ticketid);
 
 
         lucker = new String[count];                 //전역변수에 저장하여 드로우 된 회원들을 저장
@@ -92,7 +92,7 @@ public class DrawController {
         }
 
 
-        DBManager.drawDeleteSeatId(1);              //여러번 드로우 할 경우를 대비해 드로우 전 draw테이블에 당첨여부 초기화
+        DBManager.drawDeleteSeatId(ticketid);              //여러번 드로우 할 경우를 대비해 드로우 전 draw테이블에 당첨여부 초기화
         for(int i = 0; i < count; i++){
             DBManager.drawUpdate(lucker[i], seatArr[i]);    //당첨된 회원이름과 남은 좌석을 draw 테이블에 반영
         }
