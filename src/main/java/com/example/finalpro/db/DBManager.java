@@ -271,16 +271,6 @@ public class DBManager {
 		session.close();
 		return list;
 	}
-
-	// ticketid로 리뷰내역이 있나 확인
-	public static int checkReviewByTicketid(ReviewVO r){
-		int re=-1;
-		SqlSession session = sqlSessionFactory.openSession();
-		re = session.selectOne("review.checkReview",r);
-		session.close();
-		return re;
-	}
-
 	// 티켓 후기의 평균별점 구하기
 	public static int findAvgScore(int ticketid){
 		int avg = 0;
