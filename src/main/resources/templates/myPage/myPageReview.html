@@ -40,16 +40,41 @@
         <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
     </div>
     <nav id="navigation">
-        <form action="" method="post" class="search">
-            <input class="search_txt" type="search" placeholder="검색어 입력...">
-            <a class="search_btn" href="example.html"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
-        </form>
+        <div class="search" id="search" name="search">
+            <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
+            <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
+        </div>
         <ul>
             <li class="home"><a href="/main">홈</a></li>
-            <li><a href="#">시사회</a></li>
-            <li><a href="#">뮤지컬</a></li>
-            <li><a href="#">연극</a></li>
-            <li><a href="#">콘서트</a></li>
+            <li><a href="#">시사회</a>
+                <ul>
+                    <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+                    <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+                    <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+                </ul>
+            </li>
+            <li><a href="#">뮤지컬</a>
+                <ul>
+                    <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+                    <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+                    <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+                </ul>
+            </li>
+            <li><a href="#">연극</a>
+                <ul>
+                    <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+                    <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+                    <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+                </ul>
+            </li>
+            <li><a href="#">콘서트</a>
+                <ul>
+                    <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+                    <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+                    <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+                </ul>
+            </li>
+            <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
         </ul>
     </nav>
     <div id="menu-bar">
