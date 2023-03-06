@@ -118,26 +118,6 @@
 
             var seatname = $("#seatname").html();
 
-            var drawids = document.querySelectorAll('.drawid');
-            var drawidData = Array.from(drawids).map(function(drawid){
-                return drawid.textContent;
-            });
-
-            var drawlists = document.querySelectorAll('.drawlist');
-            var drawlistData = Array.from(drawlists).map(function(drawlist){
-                return drawlist.textContent;
-            });
-
-            console.log('drawidData:'+drawidData);
-            console.log('배열인가?:'+drawidData.length);
-
-            console.log('drawlistData:'+drawlistData);
-            console.log('배열인가 크기는?:'+drawlistData.length);
-
-            for(var i=0; i<drawlistData.length; i++){
-                console.log("요소 하나씩 출력:"+drawlistData[i]);
-                console.log("요소 하나씩 json으로 출력:"+JSON.stringify(drawlistData[i]));
-            }
 
             if(seatname == "none"){
                 $("#pay_btn").html("드로우 실패");
@@ -153,15 +133,6 @@
                 sessionStorage.setItem("as",$("#seatid").html());
                 sessionStorage.setItem("drawid",$("#drawid").html());
                 window.open('/regist2');
-
-                //결제하면 드로우 테이블에서 삭제
-                $.ajax({
-                    url:"drawDelete",
-                    data:{drawid:$("#drawid").html()},
-                    success:function (){
-                        location.reload();
-                    }
-                })
             });
         })
     </script>
@@ -221,15 +192,15 @@
 <form action="" method="post" id="form">
     <ul th:each="d:${list}" id="draw_list">
         <div class="drawlist">
-        <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
-        <li>드로우번호 :<span th:text ="${d.drawid}" id="drawid"/> </li>
-        <li>제목 : <span th:text="${d.ticket_name}"/></li>
-        <li>관람일 : <span th:text="${d.ticket_date}"/></li>
-        <li>상영관 : <span th:text="${d.loc}"/></li>
-        <li>관람좌석 : <span th:text="${d.seatname}" id="seatname"/></li>
-        <li><span th:text="${d.ticketid}" class="ticketid" hidden="hidden"></span></li>
-        <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
-        <button id="pay_btn" type="button">결제하기</button>
+            <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
+            <li>드로우번호 :<span th:text ="${d.drawid}" id="drawid" class="drawid"/> </li>
+            <li>제목 : <span th:text="${d.ticket_name}"/></li>
+            <li>관람일 : <span th:text="${d.ticket_date}"/></li>
+            <li>상영관 : <span th:text="${d.loc}"/></li>
+            <li>관람좌석 : <span th:text="${d.seatname}" id="seatname"/></li>
+            <li><span th:text="${d.ticketid}" id="ticketid" hidden="hidden"></span></li>
+            <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
+            <button id="pay_btn" type="submit">결제하기</button>
         </div>
     </ul>
 </form>

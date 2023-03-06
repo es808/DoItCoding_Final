@@ -121,7 +121,10 @@
                             url: "DrawButtonOpen",
                             data: {ticketid: sessionStorage.getItem("ticketid")},
                             success: function(data){
-                                var close = new Date(data['ticket_date']);
+                                var ticketdate = new Date(data['ticket_date']);
+                                var close = new Date(ticketdate);
+                                close.setDate(ticketdate.getDate()-1);
+                                close.setHours(12,0,0);
                                 var open = new Date(close);
                                 open.setDate(close.getDate()-14);
                                 var today = new Date();
@@ -247,7 +250,10 @@
                             url: "DrawButtonOpen",
                             data: {ticketid: sessionStorage.getItem("ticketid")},
                             success: function(data){
-                                var close = new Date(data['ticket_date']);
+                                var ticketdate = new Date(data['ticket_date']);
+                                var close = new Date(ticketdate);
+                                close.setDate(ticketdate.getDate()-1);
+                                close.setHours(12,0,0);
                                 var open = new Date(close);
                                 open.setDate(close.getDate()-14);
                                 var today = new Date();

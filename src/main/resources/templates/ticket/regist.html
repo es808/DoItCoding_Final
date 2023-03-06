@@ -9,8 +9,6 @@
     <script type="text/javascript">
         $(function() {
 
-            sessionStorage.setItem("custid","mj1234");
-
             var ticketid = Number(sessionStorage.getItem("ticketid"));
             var custid = sessionStorage.getItem("custid");
             var seatname;
@@ -60,6 +58,7 @@
                         console.log("좌석번호:"+as);
                         sessionStorage.setItem("as",as);
                         window.open('/regist2');
+                        $(location).attr('href',"/detail?ticketid"+ticketid);
                     }
                 })
             })

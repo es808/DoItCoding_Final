@@ -394,6 +394,9 @@ public class DBManager {
 	// 티켓예매
 	public static int bookTicket(String custid, int ticketid, int seatid){
 		int re = -1;
+		System.out.println("custid:"+custid);
+		System.out.println("ticketid:"+ticketid);
+		System.out.println("seatid:"+seatid);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("custid", custid);
 		map.put("ticketid", ticketid);

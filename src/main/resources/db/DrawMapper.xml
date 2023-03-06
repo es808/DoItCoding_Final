@@ -25,7 +25,7 @@
   </update>
 
   <select id="findByDrawCustid" resultType="drawVO">
-    select * from draw where custid = #{custid}
+    select * from draw where custid=#{custid}
   </select>
 
   <delete id="drawDelete" parameterType="int">

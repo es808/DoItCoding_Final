@@ -4,6 +4,7 @@ import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.service.DrawService;
 import com.example.finalpro.vo.DrawVO;
+import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.SeatVO;
 import com.example.finalpro.vo.TicketVO;
 import lombok.Setter;

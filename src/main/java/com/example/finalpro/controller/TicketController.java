@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -123,6 +124,14 @@ public class TicketController {
         String formatedNow = now.format(formatter);
 
         return formatedNow;
+    }
+
+
+    //모든 티켓 조회
+    @RequestMapping("/AllTicket")
+    @ResponseBody
+    public List<TicketVO> findallTicket(){
+        return DBManager.findAllTicket();
     }
 
 }
