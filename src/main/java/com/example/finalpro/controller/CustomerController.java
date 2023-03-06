@@ -4,11 +4,21 @@ import com.example.finalpro.dao.CustomerDAO;
 import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.dao.SeatDAO;
 import com.example.finalpro.db.DBManager;
-import com.example.finalpro.entity.Customer;
-import com.example.finalpro.service.CategoryService;
-import com.example.finalpro.service.CustomerService;
-import com.example.finalpro.service.TicketService;
 import com.example.finalpro.vo.CustomerVO;
+import com.example.finalpro.entity.Draw;
+import com.example.finalpro.vo.*;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import com.example.finalpro.entity.Customer;
+import com.example.finalpro.service.CustomerService;
+import com.example.finalpro.service.CategoryService;
+import com.example.finalpro.service.TicketService;
+import com.example.finalpro.util.SendMessage;
 import com.example.finalpro.vo.DrawVO;
 import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.TicketVO;
@@ -38,12 +48,6 @@ public class CustomerController {
     @Autowired
     private CustomerDAO customerDAO;
 
-    @RequestMapping("/FindCustomer")
-    @ResponseBody
-    public CustomerVO findCustomer(String custid){
-        return DBManager.findByCustid(custid);
-    }
-
     static String code;
 
     @Autowired
@@ -66,6 +70,15 @@ public class CustomerController {
 
     @Autowired
     private SeatDAO seatDAO;
+
+
+    //public void setDao(CustomerDAO dao){ this.dao = dao; }
+
+    @RequestMapping("/FindCustomer")
+    @ResponseBody
+    public CustomerVO findCustomer(String custid){
+        return DBManager.findByCustid(custid);
+    }
 
     @RequestMapping("/list")
     public void list(Model model) {
@@ -254,7 +267,7 @@ public class CustomerController {
         return mav;
     }
 
-    //아이디 중복 확인 메소
+    //아이디 중복 확인 메소드
     @GetMapping("/ConfirmCustomerId")
     @ResponseBody
     public int confirmCustomerId(String custid){
@@ -302,15 +315,17 @@ public class CustomerController {
         return answer;
     }
 
-//    @GetMapping("/sendMessage")
-//    @ResponseBody
-//    public String sendMessage(String phone){
-//        System.out.println(phone);
-//        MessageController messageController = new MessageController();
-//        code = messageController.sendCodePhone(phone);
-//        System.out.println(code);
-//        return code;
-//    }
+    @GetMapping("/sendMessage")
+    @ResponseBody
+    public String sendMessage(String phone){
+        System.out.println("phone:"+phone);
+        code = SendMessage.sendCodePhone(phone);
+        System.out.println("code:"+code);
+
+//        MessageController ms = new MessageController();
+//        code = ms.sendCodePhone(phone);
+        return code;
+    }
 
     //아이디 찾기
     @RequestMapping("/findCustidForm")

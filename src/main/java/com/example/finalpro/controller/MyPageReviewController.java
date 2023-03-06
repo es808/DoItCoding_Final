@@ -6,6 +6,7 @@ import com.example.finalpro.entity.MyPageReview;
 import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.ReviewService;
 import com.example.finalpro.service.TicketService;
+import com.example.finalpro.vo.MyReviewVO;
 import com.example.finalpro.vo.ReviewVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.Setter;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,19 +32,48 @@ public class MyPageReviewController {
     @Autowired
     private TicketService ts;
 
-    @GetMapping("/myPageReview")
-    public ModelAndView MyPageReview(HttpSession session){
+    @GetMapping({"/myPageReview/{pageNum}", "/myPageReview"})
+    public ModelAndView MyPageReview(HttpSession session, @PathVariable(required = false) Integer pageNum){
+        if(pageNum==null){
+            pageNum=1;
+        }
         ModelAndView mav=new ModelAndView("/myPage/myPageReview");
         String loginId=(String) session.getAttribute("id");
         Customer loginCustomer=cs.findByCustid(loginId);
-        mav.addObject("list",rs.findByCustid(loginCustomer));
+        List<MyPageReview> list=rs.findByCustid(loginCustomer);
+        int totalRecord=list.size();
+        int pageSize=3;
+        int totalPage=(int)Math.ceil(totalRecord/(double)pageSize);
+        if(totalPage==0){
+            totalPage=1;
+        }
+        int firstRecord=(pageNum-1)*pageSize+1;
+        int lastRecord=pageNum*pageSize;
+        HashMap<String, Object> map=new HashMap<String, Object>();
+        map.put("firstRecord",firstRecord);
+        map.put("lastRecord",lastRecord);
+        map.put("custid",loginId);
+
+        // 페이지를 페이징
+        int pageGroupSize=5;   // 한 페이지 당 페이지 번호 몇 개씩 출력할지
+
+        int firstPage=((pageNum-1)/pageGroupSize)*pageGroupSize+1;
+        int lastPage=firstPage+pageGroupSize-1;
+        if(lastPage>totalPage){
+            lastPage=totalPage;
+        }
+        mav.addObject("firstPage",firstPage);
+        mav.addObject("lastPage",lastPage);
+
+        mav.addObject("totalPage",totalPage);
+        mav.addObject("list",DBManager.listReviewByCustid(map));
         return mav;
     }
 
     //리뷰 등록 폼
     @GetMapping("/myPage/insertReview/{ticketid}")
     public ModelAndView insertForm(@PathVariable String ticketid){
-        ModelAndView mav=new ModelAndView("insert");
+        ModelAndView mav=new ModelAndView("/myPage/insertReview");
         mav.addObject("ticketid",ticketid);
         return mav;
     }
@@ -51,16 +83,8 @@ public class MyPageReviewController {
         ModelAndView mav=new ModelAndView();
         String loginId=(String) session.getAttribute("id");
         r.setCustid(loginId);
-
-        // 중복 체크 (아이디와 티켓아이디 겹치는 것 있는지 확인) (갯수 반환함)
-        int re_check=DBManager.checkReviewByTicketid(r);
-        if(re_check==0){
-            int re=DBManager.insertReview(r);
-            mav.setViewName("redirect:/myPageReview");
-        }else{
-            mav.addObject("msg", "이미 해당 작품에 대한 리뷰를 등록했습니다.");
-            mav.setViewName("/error");
-        }
+        int re=DBManager.insertReview(r);
+        mav.setViewName("redirect:/myPageReview");
         return mav;
     }
 
@@ -103,15 +127,15 @@ public class MyPageReviewController {
         return mav;
     }
 
-    // 티켓의 리뷰가 있나 확인
-//    @GetMapping("/CheckReview")
-//    @ResponseBody
-//    public int findCheckReview(String custid, int ticketid){
-//        MyReviewVO r=new MyReviewVO();
-//        r.setCustid(custid);
-//        r.setTicketid(ticketid);
-//        return DBManager.checkReviewByTicketid(r);
-//    }
+//     같은 사용자, 같은 티켓의 리뷰가 있나 확인
+    @GetMapping("/CheckReview")
+    @ResponseBody
+    public int findCheckReview(String custid, int ticketid){
+        ReviewVO r=new ReviewVO();
+        r.setCustid(custid);
+        r.setTicketid(ticketid);
+        return DBManager.checkReviewByTicketid(r);
+    }
 
 //    // 리뷰 등록 submit AJAX
 //    @PostMapping("/InsertReview")

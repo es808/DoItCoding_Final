@@ -79,7 +79,12 @@
                         $("#price").append(price);
                     }
                     $("#cast").append(cast);
-                    $("#content").append(content);
+                    if(content.endsWith(".jpg")||content.endsWith(".png")||content.endsWith(".gif")){
+                        var tag = $("<img/>").attr("src","images/"+content);
+                        $("#content").html(tag);
+                    }else{
+                        $("#content").append(content);
+                    }
 
                     var img = $("<img>").attr({
                         src: "images/"+img_fname,
@@ -537,17 +542,18 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="/main"><img src="images/icon/logo.png" id="logo"></a>
+<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
-    <a href="/logout" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
-    <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
-    <a href="/myPage" id="mypage"><img src="images/icon/mypageicon.png">마이페이지</a>
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
         <li class="home"><a href="/main">홈</a></li>
@@ -579,6 +585,7 @@
                 <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
             </ul>
         </li>
+<!--        <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>-->
     </ul>
 </nav>
 <!-- 상세 페이지 -->
@@ -630,7 +637,7 @@
         <p id="content"></p>
 </div>
 <div id="detail_location">
-    <img src="images/icon/mapicon.png" width="60" height="50" id="mapicon">
+    <img src="/images/icon/mapicon.png" width="60" height="50" id="mapicon">
     <h2 class="detail_title" id="a">위치</h2>
     <div id="location_box"><div id="map" style="width:100%;height:500px"></div></div>
 </div>
@@ -641,8 +648,8 @@
         <div>
             <!-- 통계 -->
             <div>
-                <img src="images/icon/manicon.png" width="100" height="100">
-                <img src="images/icon/womanicon.png" width="100" height="100">
+                <img src="/images/icon/manicon.png" width="100" height="100">
+                <img src="/images/icon/womanicon.png" width="100" height="100">
                 <ul class="gender"></ul>
                 <div id="divide"></div>
                 <ul id="ulavgScore">
@@ -656,7 +663,7 @@
         <!-- 후기 정렬 ==>평점 높은순/평점 낮은순 -->
     <div class="review_all">
         <select id="reviewOrder">
-            <option>후기 보기(스포일러성 후기가 있을 수 있습니다)</option>
+            <option>스포일러성 후기가 있을 수 있습니다. 그래도 후기 보기</option>
             <option id="desc">평점 높은순</option>
             <option id="acs">평점 낮은순</option>
         </select>

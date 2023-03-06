@@ -87,14 +87,15 @@
                                                                 console.log("BookTicket성공");
                                                                 $(document).ready(function(){
                                                                     if (final > 0) {
-                                                                        // 예약완료 문자 발송 여기!
+                                                                        // 예약완료 문자, 이메일 발송
                                                                         $.ajax({
                                                                             url:"sendBookingConfirmation",
                                                                             data:{
                                                                                 custid:custid,
                                                                                 ticketid:ticketid,
                                                                                 seatid: sessionStorage.getItem("as"),
-                                                                                phone:phone
+                                                                                phone:phone,
+                                                                                email:email
                                                                             },
                                                                             success:function (msg){
                                                                                 console.log(msg)

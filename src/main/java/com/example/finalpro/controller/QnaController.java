@@ -6,6 +6,7 @@ import com.example.finalpro.entity.Qna;
 import com.example.finalpro.entity.Ticket;
 import com.example.finalpro.function.page.Paging;
 import com.example.finalpro.service.CustomerService;
+import com.example.finalpro.service.EmailService;
 import com.example.finalpro.service.QnaService;
 import com.example.finalpro.service.SearchService;
 import com.example.finalpro.service.TicketService;
@@ -42,10 +43,10 @@ public class QnaController {
     private SearchService ss;
 
     @Autowired
-    private CustomerService cs;
+    private EmailService es;
 
-//    @Autowired
-//    private JavaMailSender mailSender;
+    @Autowired
+    private CustomerService cs;
 
     @GetMapping("/qna/resetSearch")
     public ModelAndView resetSearch(HttpSession session){
@@ -72,6 +73,9 @@ public class QnaController {
         int totalRecord=DBManager.getTotalQnaRecord(hashMap);
         int pageSize=10;
         int totalPage=(int)Math.ceil((double)totalRecord/pageSize);
+        if(totalPage==0){
+            totalPage=1;
+        }
         mav.addObject("totalPage",totalPage);
 
         // 해당 페이지의 시작 글번호, 끝 글번호
@@ -91,7 +95,12 @@ public class QnaController {
         mav.addObject("firstPage",firstPage);
         mav.addObject("lastPage",lastPage);
 
-        mav.addObject("list",DBManager.findAllQna(hashMap));
+        List<QnaVO> list=DBManager.findAllQna(hashMap);
+        if(list.size()!=0) {
+            mav.addObject("list", list);
+        }else{
+            mav.addObject("msg","게시글이 없습니다.");
+        }
         return mav;
     }
 
@@ -282,15 +291,22 @@ public class QnaController {
         q.setQna_no(qna_no);
         q.setQna_answer(qna_answer);
 
+        Qna qna=qs.findById(qna_no).get();
+        Customer customer=qna.getCustomer();
         // insert일 경우 notification 추가
         if(insertOrUpdate.equals("insert")) {
-            String qnaWriter = qs.findById(qna_no).get().getCustomer().getCustid();
+            String qnaWriter = customer.getCustid();
             NotificationVO notificationVO = new NotificationVO(0, qnaWriter, qna_no, null);
             int re=DBManager.insertNotification(notificationVO);
+
+            // 답글 알림 이메일 보내기
+            String to=customer.getEmail();
+            String subject="[T-CATCH] 문의에 답변이 등록되었습니다";
+            String text="<h2>QNA 답변 등록 알림</h2>"
+                    +"<div>"+qna.getQna_title()+"에 답변이 등록되었습니다.</div>"
+                    +"<a href='http://localhost:8088/qna/detail/"+qna_no+"'>확인하기</a>";
+            es.sendHtmlEmail(to, subject, text);
         }
-
-        // 답글 알림 이메일 보내기
-
         return DBManager.updateAnswer(q);
     }
 
@@ -341,7 +357,7 @@ public class QnaController {
     public void notif_view(){
 
     }
-    
+
     // myPage에서 내가 쓴 1대1 문의 보기
     @GetMapping("/myPageQnA")
     public ModelAndView myPageQnaList(HttpSession session, @RequestParam(defaultValue = "1") int page){

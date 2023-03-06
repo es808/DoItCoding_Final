@@ -1,5 +1,6 @@
 package com.example.finalpro.controller;
 
+import ch.qos.logback.core.CoreConstants;
 import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Notice;
 import com.example.finalpro.service.NoticeService;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -57,6 +59,9 @@ public class NoticeController {
         int totalRecord=DBManager.getTotalNoticeRecord(hashMap);
         int pageSize=10;
         int totalPage=(int)Math.ceil((double)totalRecord/pageSize);
+        if(totalPage==0){
+            totalPage=1;
+        }
         mav.addObject("totalPage",totalPage);
         
         // 해당 페이지의 시작 글번호, 끝 글번호
@@ -75,8 +80,12 @@ public class NoticeController {
         }
         mav.addObject("firstPage",firstPage);
         mav.addObject("lastPage",lastPage);
-
-        mav.addObject("list",DBManager.findAllNotice(hashMap));
+        List<NoticeVO> list=DBManager.findAllNotice(hashMap);
+        if(list.size()!=0) {
+            mav.addObject("list", list);
+        }else{
+            mav.addObject("msg","게시글이 없습니다.");
+        }
         return mav;
     }
 

@@ -14,9 +14,6 @@
     <script th:src="@{/js/loginLogout.js}"></script>
     <script type="text/javascript">
         $(function(){
-
-            var custid = sessionStorage.getItem("custid");
-
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
@@ -109,7 +106,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "category?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -125,7 +122,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "category?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
 
@@ -141,7 +138,7 @@
                     sessionStorage.setItem("time", time);
                     sessionStorage.setItem("cateid", cateid);
 
-                    var url = "category?time="+time+"?cateid="+cateid;
+                    var url = "/category?time="+time+"?cateid="+cateid;
                     location.replace(url);
                 });
             }
@@ -152,7 +149,7 @@
                     if(e.which == 13){
                         var keyword = $("#search_txt").val();
                         sessionStorage.setItem("keyword", keyword);
-                        var url = "search?keyword="+keyword;
+                        var url = "/search?keyword="+keyword;
                         location.replace(url);
                     }
                 });
@@ -160,7 +157,7 @@
                 $("#search_btn").click(function(){ // 버튼 누르면 검색됨
                     var keyword = $("#search_txt").val();
                     sessionStorage.setItem("keyword", keyword);
-                    var url = "search?keyword="+keyword;
+                    var url = "/search?keyword="+keyword;
                     location.replace(url);
                 });
             }// 검색 end
@@ -193,7 +190,7 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="main"><img src="/images/icon/logo.png" id="logo"></a>
+<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
     <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
     <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
@@ -252,7 +249,6 @@
 <div id="background">
     <h2>회원정보 수정</h2>
     <hr>
-
 <form method="post" id="form_updateCustomer">
     <table id="get_customer">
         <tr>
