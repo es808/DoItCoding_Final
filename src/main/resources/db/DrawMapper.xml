@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="draw">
+  <select id="findAll" resultType="drawVO">
+    select * from draw
+  </select>
+
+  <!-- 드로우 신청 -->
+  <insert id="drawInsert" parameterType="drawVO">
+    insert into draw(drawid,custid,ticketid) values(seq_drawid.nextval,#{custid},#{ticketid})
+  </insert>
+
+  <!-- 드로우 중복 신청 방지 -->
+  <select id="selectDrawNoSame" resultType="drawVO">
+    select drawid,ticketid,custid from draw where ticketid=#{ticketid} and custid=#{custid}
+  </select>
+
+  <select id="drawTest" resultType="drawVO">
+    select * from draw where ticketid = #{ticketid}
+  </select>
+
+  <update id="updateDraw">
+    update draw set seatid = #{seatid} where custid = #{custid}
+  </update>
+
+  <update id="drawDeleteSeatId">
+    update draw set seatid = null where ticketid = #{ticektid}
+  </update>
+
+  <select id="findByDrawCustid" resultType="drawVO">
+    select * from draw where custid=#{custid}
+  </select>
+
+  <delete id="drawDelete" parameterType="int">
+    delete draw where drawid=#{drawid}
+  </delete>
+  <!-- 시사회: 티켓id 별로 드로우 신청하면 그중에서 custid 랜덤하게 자리배정 -->
+
+  <!-- 자리0: 티켓 id 별로 드로우 신청하면 취소표(leftseat=0)에 한해서 랜덤하게 자리 배정 -->
+</mapper>

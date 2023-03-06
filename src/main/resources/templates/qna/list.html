@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
+    <script th:src="@{/js/notice/list.js}"></script>
+    <script th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
+</head>
+<body class="main_layout">
+<img src="/images/icon/logo.png" id="logo">
+<div class="main_user">
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+</div>
+<nav id="navigation">
+    <div class="search" id="search" name="search">
+        <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
+        <a class="search_btn" type="button" id="search_btn"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
+    </div>
+    <ul>
+        <li class="home"><a href="/main">홈</a></li>
+        <li><a href="#">시사회</a>
+            <ul>
+                <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+                <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+                <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">뮤지컬</a>
+            <ul>
+                <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+                <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+                <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">연극</a>
+            <ul>
+                <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+                <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+                <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">콘서트</a>
+            <ul>
+                <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+                <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+                <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
+    </ul>
+</nav>
+<!--    카테고리별로 보기-->
+<div id="menu-bar">
+    <ul>
+        <li class="title_notice">고객센터</li>
+        <li><a href="/notice/list">공지사항</a></li>
+        <li id="menu_qna"><a href="/qna/list">Q&A</a></li>
+        <li class="title_notice">카테고리</li>
+        <li><a href="/qna/list/1/all">전체</a></li>
+        <li><a href="/qna/list/1/book">예매/드로우</a></li>
+        <li><a href="/qna/list/1/transaction">결제/환불</a></li>
+        <li><a href="/qna/list/1/etc">기타</a></li>
+    </ul>
+</div>
+<div id="notice_background">
+    <h2>Q&A</h2>
+    <hr id="mypage_hr">
+    <div id="btnWrite">
+        <a th:href="@{/qna/insert}">문의 작성</a>
+    </div>
+    <table class="notice_table">
+        <tr>
+            <th>글번호</th>
+            <th>작성자</th>
+            <th>분류</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>등록일</th>
+        </tr>
+        <th:block th:if="${msg}==null">
+            <tr th:each="q:${list}">
+                <td th:text="${q.qna_no}"></td>
+                <td th:text="${q.custid}"></td>
+                <td th:text="${q.qna_category}"></td>
+                <td>
+                    <th:block th:if="${q.qna_open}=='n' and ${q.custid}!=${session.id} and ${session.id}!='admin'">
+                        <span th:text="${q.qna_title}"></span>
+                    </th:block>
+                    <th:block th:if="${q.qna_open}=='y' or ${q.custid}==${session.id} or ${session.id}=='admin'">
+                        <a th:href="@{'/qna/detail/'+${q.qna_no}}" th:text="${q.qna_title}"></a>
+                    </th:block>
+                    <th:block th:if="${q.qna_open}=='n'">
+                        <span>🔒</span>
+                    </th:block>
+                    <th:block th:if="${q.qna_answer}!=null">
+                        <span>✔️️</span>
+                    </th:block>
+                </td>
+                <td th:text="${q.qna_hit}"></td>
+                <td th:text="${#dates.format(q.qna_date, 'yyyy/MM/dd HH:mm')}"></td>
+            </tr>
+        </th:block>
+        <th:block th:if="${msg}!=null">
+            <tr>
+                <td colspan="6" th:text="${msg}"></td>
+            </tr>
+        </th:block>
+    </table>
+
+    <!--    검색-->
+    <!--    JS로 searchColumn을 가져가기 위한 값 출력(지정한 searchColumn을 계속 유지하는 처리 하기 위해)-->
+    <div hidden="hidden" th:text="${session.qnaSearchColumn}" id="div_searchColumn"></div>
+    <div hidden="hidden" th:text="${session.qnaKeyword}" id="div_keyword"></div>
+    <div class="qna">
+    <form action="/qna/list" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <select name="searchColumn" id="select_column">
+                <option value="qna_title">제목</option>
+                <option value="qna_content">내용</option>
+            </select>
+        <input type="search" name="keyword" id="keyword">
+        <input type="submit" value="검색" id="search_list">
+    </form>
+    <div id="reset_list">
+        <a href="/qna/resetSearch">검색 초기화</a>
+    </div>
+
+    <!--    페이지-->
+    <div id="paging">
+        <th:block th:if="${firstPage}!=1">
+            <a th:href="@{'/qna/list/'+${firstPage - 1}}">◀</a>
+        </th:block>
+        <th:block th:each="i: ${#numbers.sequence(firstPage, lastPage)}">
+            <a th:href="@{'/qna/list/'+${i}}" th:text="${i}"></a>&nbsp
+        </th:block>
+        <th:block th:if="${lastPage}!=${totalPage}">
+            <a th:href="@{'/qna/list/'+${lastPage+1}}">▶</a>
+        </th:block>
+    </div>
+    </div>
+</div>
+<div id="main-footer">
+    <footer class="footer">
+        <div>ⓒ CodingDoit corp.
+        </div>
+    </footer>
+</div>
+</body>
+</html>

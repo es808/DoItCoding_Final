@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <!--<link rel="stylesheet" type="text/css" href="/css/myPage/myPage.css">-->
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1">
+    <script type="text/javascript" src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
+    <script th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            var custid = sessionStorage.getItem("custid");
+            var ticketid = sessionStorage.getItem("ticketid");
+
+            var custid = sessionStorage.getItem("custid");
+
+            $(".delete").click(function () {
+                if (confirm("정말로 삭제하시겠습니까?")) {
+                    let reviewid = $(this).attr("reviewid")
+                    console.log(reviewid)
+                    location.href = "/myPage/deleteReview/" + reviewid
+                }
+            })
+        })
+
+
+    </script>
+</head>
+<body class="main_layout">
+    <a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
+    <div class="main_user">
+        <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+        <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+        <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+        <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+        <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+    </div>
+    <nav id="navigation">
+        <form action="" method="post" class="search">
+            <input class="search_txt" type="search" placeholder="검색어 입력...">
+            <a class="search_btn" href="example.html"><img src="/images/icon/searchicon.png" width="35" height="35"></a>
+        </form>
+        <ul>
+            <li class="home"><a href="/main">홈</a></li>
+            <li><a href="#">시사회</a></li>
+            <li><a href="#">뮤지컬</a></li>
+            <li><a href="#">연극</a></li>
+            <li><a href="#">콘서트</a></li>
+        </ul>
+    </nav>
+    <div id="menu-bar">
+        <ul>
+            <li id="title">MyPage</li>
+            <li><a href="/myPage">내 정보</a></li>
+            <li><a href="/myPageBook">예매내역</a></li>
+            <li><a href="/myPageDraw">드로우내역</a></li>
+            <li id="myreview"><a href="/myPageReview">내 후기</a></li>
+            <li><a href="/myPageQnA">내가 쓴 1대1 문의</a></li>
+        </ul>
+    </div>
+    <div id="review_background">
+    <!-- 후기 수정시 비활성화 상태에서 활성화 상태로 바꾸는거니까 ajax 활용 필요해보임! -->
+        <div id="reviewlist">
+            <div class="reviewlist" th:each="r:${list}">
+                <img th:src="@{'/images/'+${r.img_fname}}" width="100" height="150">
+                <div hidden="hidden"><span th:text="${r.reviewid}"></span></div>
+<!--                <div><span th:text="${r.customer.custid}"></span></div>-->
+<!--                <div><span th:text="${r.ticket.ticketid}"></span></div>-->
+                <div><span th:text="${r.ticket_name}"></span></div>
+                <div><span th:text="${r.ticket_date}"></span></div>
+                <div>
+                    <span th:each="i: ${#numbers.sequence(1, r.score)}">⭐</span>
+                </div>
+                <div><span th:text="${r.review_content}"></span></div>
+                <a th:href="@{'/myPage/updateReview/'+${r.reviewid}}">수정</a>
+                <a class="delete" th:attr="reviewid=${r.reviewid}">삭제</a>
+            </div>
+        </div>
+
+<!--        페이지-->
+        <div id="paging">
+            <th:block th:if="${firstPage}!=1">
+                <a th:href="@{'/notice/list/'+${firstPage - 1}}">◀</a>
+            </th:block>
+            <th:block th:each="i:${#numbers.sequence(1,totalPage)}" >
+                <a th:text="${i}" th:href="@{'/myPageReview/'+${i}}"></a>&nbsp;
+            </th:block>
+            <th:block th:if="${lastPage}!=${totalPage}">
+                <a th:href="@{'/notice/list/'+${lastPage+1}}">▶</a>
+            </th:block>
+        </div>
+    </div>
+    <div id="main-footer">
+        <footer class="footer">
+            <div>ⓒ CodingDoit corp.
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

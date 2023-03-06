@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="book">
+
+  <select id="findAll" resultType="bookVO">
+    select * from book
+  </select>
+
+  <!-- 성별통계 -->
+  <select id="countGender" resultType="countGenderVO">
+    select gender,count(*) cnt from customer c, book b where c.custid = b.custid and b.ticketid=#{ticketid} group by gender
+  </select>
+
+  <!-- 세대통계 -->
+  <select id="countGeneration" resultType="countGenerationVO">
+    select generation, count(*) num
+    from (select custid,trunc((to_char(sysdate,'yyyy')-substr(birth,0,4)+1)/10)*10 generation from customer) c, book b
+    where c.custid=b.custid and b.ticketid=#{ticketid} group by generation
+  </select>
+
+  <!-- 예약하기 -->
+  <insert id="bookTicket" parameterType="bookVO">
+    insert into book(bookid,custid,ticketid,seatid) values(seq_bookid.nextval,#{custid},#{ticketid},#{seatid})
+  </insert>
+
+<!--    QNA insert화면에 티켓 목록 출력을 위한 sql-->
+    <select id="findTicketidByCuistid" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select ticketid from book where custid=#{custid}
+    </select>
+
+  <!-- 내 예약내역 출력 -->
+  <select id="bookByCustid" resultType="myBookVO">
+    select bookid, s.seatid, t.ticketid,img_fname, ticket_name,ticket_date, loc, seatname from book b, ticket t, seat s where t.ticketid=b.ticketid and b.seatid = s.seatid and custid=#{custid}
+  </select>
+
+  <!-- 내 예매내역 삭제 -->
+  <delete id="deleteBook" parameterType="int">
+    delete from book where bookid=#{bookid}
+  </delete>
+
+<!--  예약 확정 문자 보내기 위한 ajax를 위한 bookid 찾기-->
+  <select id="findBookidByOthers" parameterType="bookVO" resultType="java.lang.Integer">
+    select bookid from book where custid=#{custid} and ticketid=#{ticketid} and seatid=#{seatid}
+  </select>
+</mapper>

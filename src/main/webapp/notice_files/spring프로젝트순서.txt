@@ -1,0 +1,43 @@
+1128 deptTest
+1128 sist
+1128 test
+1129 bookTest
+1130 customerTest, MemberTest, MemberCRUD, goodsTest(~12/2)
+1202 boardTest  --> 답글처리, 이메일 보내기, 이메일/휴대폰 인증(타임리밋), 스케줄링,
+1207 empTest ajax, ajax 이미지 업로드, 급여명세서 이메일 보내기
+1209 aopTest
+1212 SecurityTest
+*1212 sistTest
+*1213 securityTest3
+*1213 interceptTest
+1213 thymeleafTest
+1214 jpaTest
+1214 bookTestJpa
+1219 boardTestJpa
+1221 boardTestJoin
+1221 boardTestJoinSecurity
+1221 test1221
+1222 jsoupTest
+1226 bugTest
+1226 bugTest-2
+*1226 importTest
+1226 jsonpTest
+1226 JunitTest, JunitTest2
+1226 kakaologin
+1226 sumTest
+1226 sumTest2
+
+
+
+0120 flaskTest
+
+
+
+
+4800*872.4-4800*872.2=4800(872.4-872.2)=4800*0.2
+
+872.357
+
+주제
+파이썬 플라스크 서버 적용 여부
+머신러닝, 몽고db 적용여부

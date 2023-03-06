@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--       csrf token 전송을 위한 _csrf.token, _csrf.headerName 설정-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/login,signup_form.css" >
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+
+    </script>
+</head>
+<body>
+<div id="background_admin">
+</div>
+<div>
+        <img src="/images/icon/logo.png" id="logo_admin">
+        <h2 id="h2_admin">관리자페이지</h2>
+    <div id="menu_admin">
+        <span><a href="/admin/listCustomer">계정관리</a>
+<!--            <ul>-->
+<!--                <li><a href="/admin/listCustomer">고객리스트</a></li>-->
+<!--                <li><a href="/admin/">Q&A리스트</a></li>-->
+<!--                <li><a href="/admin/listTicket">작품리스트</a></li>-->
+<!--            </ul>-->
+        </span>
+        <span><a href="/admin/listTicket">작품관리</a>
+<!--            <ul>-->
+<!--                <li><a href="">현재상영작</a></li>-->
+<!--                <li><a href="">개봉예정작</a></li>-->
+<!--                <li><a href="">과거상영작</a></li>-->
+<!--            </ul>-->
+        </span>
+        <span><a href="/notice/list">공지사항관리</a>
+<!--            <ul>-->
+<!--                <li><a href="">현재상영작</a></li>-->
+<!--                <li><a href="">개봉예정작</a></li>-->
+<!--                <li><a ihref="">과거상영작</a></li>-->
+<!--            </ul>-->
+        </span>
+    </div>
+</div>
+</body>
+</html>

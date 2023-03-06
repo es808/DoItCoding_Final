@@ -1,0 +1,8 @@
+create table member(
+id varchar2(50) primary key,
+pwd varchar2(50),
+name varchar2(50),
+email varchar2(50)
+);
+
+alter table member add phone varchar2(13);

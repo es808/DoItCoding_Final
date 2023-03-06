@@ -1,0 +1,95 @@
+body{
+    background-color : rgba(0, 0, 0, 0.3);
+}
+*{
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+div{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50% , -50%)
+}
+<!-- 좌석 -->
+#background{
+    width : 600px;  height : 450px;
+    background-color : #ffffff;
+    border : 2px solid gray;
+    border-radius : 10px 10px 10px 10px;
+}
+#screen{
+    position : relative;
+    left : 200px; top : -150px;
+    margin : 10px;
+    width : 400px; height: 40px;
+    line-height : 40px;
+    text-align : center;
+    background-color : #08348C;
+    color : #F2AE30;
+    border-radius : 5px;
+}
+button{
+    margin-top : 50px;
+    width : 35px;  height : 35px;
+    margin : 5px;
+    border-radius : 10px 10px 10px 10px;
+    border : none;
+    background-color : #08348C;
+    color : white;
+}
+<!-- 좌석 선택 -->
+.seat_status{
+    position : relative;
+    width : 100px;
+    font-size : 12px;
+    margin-top : 240px;
+    margin-left : 400px;
+    border : 2px solid gray;
+    border-radius : 10px;
+}
+.seat_status p{
+    margin-left : 33px;
+}
+.seat_status>#possible{
+    background-color : #08348C;
+    width : 12px;
+    height : 12px;
+    margin-left : -30px;
+    margin-top : -30px;
+}
+.seat_status>#check{
+    background-color : #F2AE30;
+    width : 12px;
+    height : 12px;
+    margin-left : -30px;
+}
+.seat_status>#soldout{
+    background-color : #dcdcdc;
+    width : 12px;
+    height : 12px;
+    margin-left : -30px;
+    margin-top : 31px;
+}
+
+<!-- 마우스효과 -->
+button.hover:hover:not(.x){
+    background-color : #F2AE30;
+}
+button.active:not(.x){
+    background-color : #F2AE30;
+    color : #08348C;
+    font-weight : 700;
+}
+.x{
+    background-color : #dcdcdc;
+    color : gray;
+}
+#insertBtn{
+    width : 100px; height : 35px;
+    position : absolute;
+    margin-top : 140px;
+    margin-left : 160px;
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <!--<link rel="stylesheet" type="text/css" href="/css/myPage/myPage.css">-->
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
+    <script type="text/javascript" th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
+    <script type="text/javascript">
+        $(function(){
+            // custid 받아오기
+            var custid = sessionStorage.getItem("custid");
+
+            // 예매내역 출력
+            $.ajax({
+                url:"BookByCustid",
+                data:{custid:custid},
+                success:function(arr){
+                    //체크박스 해제위해 변수 하나 지정
+                    var number = 0;
+
+                    for(var i =0; i<arr.length; i++){
+                        var div = $("<div></div>").addClass("booklist");
+                        var a = $("<a></a>").attr({
+                            ticketid: arr[i].ticketid,
+                            id: "preview"+i,
+                            href:"/detail?ticketid="+arr[i].ticketid
+                        });
+                        var img = $("<img>").attr({
+                            src: "/images/"+arr[i].img_fname,
+                            width : 200,
+                            height: 251,
+                        });
+                        var title = $("<li></li>").html("제목 :"+arr[i].ticket_name);
+                        var ul = $("<ul></ul>");
+                        var bookid = $("<li></li>").html("예매번호 :"+arr[i].bookid);
+                        var ticket_date = $("<li></li>").html("관람일 :"+arr[i].ticket_date);
+                        var loc = $("<li></li>").html("상영관 :"+arr[i].loc);
+                        var seatname = $("<li></li>").html("관람좌석 :"+arr[i].seatname);
+                        var seatid = arr[i].seatid
+                        // 오늘 날짜, 공연 날짜
+                        var close = new Date(arr[i].ticket_date);
+                        var today = new Date();
+                        console.log("close:"+close);
+                        console.log("today:"+today);
+
+                        var button = $("<button>후기작성</button>").attr({
+                            type:"button",
+                            id : "btn_toReview"+i,
+                            custid:custid,
+                            ticketid: arr[i].ticketid
+                        })
+
+                        var checkbox = $("<input>").attr({
+                            type:"checkbox",
+                            id:"check2_"+i,
+                            bookid:arr[i].bookid,
+                            seatid:seatid,
+                            num:0  //체크박스 해제위해 변수 하나 지정
+                        })
+                        var label = $("<label></label>").attr("for", "check2_"+i);
+
+                        $(ul).append(bookid,title,ticket_date, loc, seatname);
+                        $(a).append(img);
+                        if(close < today) {
+                            $(div).append(a, ul, button, label);
+                        }else {
+                            $(div).append(a, ul, checkbox, label);
+                        }
+                        $("#book_all").append(div);
+
+                        // 이미지 클릭하면 detail 페이지로
+
+                        var preview_id = '#preview'+i;
+
+                        $(document).on('click', preview_id, function(e){
+                            var target = this.id;
+                            var ticketid = $("#"+target).attr("ticketid");
+                            sessionStorage.setItem("ticketid", '');
+                            sessionStorage.setItem("ticketid", ticketid);
+                        });
+
+
+
+                        // 후기작성 버튼 누르면 myPageReview로
+                        var btn_toReview = '#btn_toReview'+i;
+
+                        $(document).on('click', btn_toReview, function(e){
+                            var target = this.id;
+                            console.log("리뷰작성하기의 타겟:"+target);
+                            var custid_btn = $("#"+target).attr("custid");
+                            var ticketid = $("#"+target).attr("ticketid");
+
+                            sessionStorage.setItem("custid", '');
+                            sessionStorage.setItem("custid", custid_btn);
+                            sessionStorage.setItem("ticketid", '');
+                            sessionStorage.setItem("ticketid", ticketid);
+
+                            $.ajax({
+                                url:"/CheckReview",
+                                data:{ticketid:ticketid, custid:custid},
+                                success:function (re){
+                                    if(re==0){
+                                        var url = "/myPage/insertReview/"+ticketid;
+                                        location.replace(url);
+                                    }else{
+                                        alert("이미 리뷰를 등록했습니다.")
+                                    }
+                                }
+                            })
+
+                        });
+
+                        // 예매내역 삭제 시작
+
+                        // 체크박스의 아이디
+                        var checkbox_delete = "#check2_"+i;
+
+
+                        // delete_book함수는 bookid를 매개변수로 받아서 예매 취소 버튼을 누르면 예매취소 시키는 함수
+                        var delete_book = function(bookid_delete,seat_delete) { // 예매내역 삭제 버튼 이벤트
+                            console.log("삭제할 북아이디:" + bookid_delete);
+                            console.log("삭제할 seat아이디:" + seat_delete);
+                            $.ajax({
+                                url: "CancleSeat",
+                                data: {seatid: seat_delete},
+                                success: function (resulte) {
+                                }
+                            });
+                            $.ajax({
+                                url: "DeleteBook",
+                                data: {bookid: bookid_delete},
+                                success: function (del) {
+                                }
+                            });
+                        }
+
+                        // checkbox_delete는 클릭한 체크박스의 아이디
+                        $(document).on('click', checkbox_delete, function(){ // 체크박스 체크하면 bookid 가져옴
+                            var target = this.id;
+                            console.log("체크박스 누르면 check2_i은:"+target);
+
+
+                            //$("#"+target).attr('checked', true);
+                            var bookid_delete = $("#"+target).attr("bookid");
+                            var seat_delete = $("#"+target).attr("seatid");
+                            var number = Number($("#"+target).attr("num"));
+                            number+=1;
+                            $("#"+target).attr("num",number);
+
+                            console.log("북아이디:"+bookid_delete);
+                            console.log("seat아이디:"+seat_delete);
+                            console.log("체크박스 누르면num:"+Number($("#"+target).attr("num")));
+
+                            $(document).on('click', '#book_cancel', function () {
+                                if(Number($("#"+target).attr("num"))%2==1) {
+                                    delete_book(bookid_delete, seat_delete);
+                                }else{
+                                    alert("삭제할 예매를 선택해주세요");
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+
+            $("#logout").click(function(){
+                sessionStorage.removeItem("custid");
+            });
+
+        })
+
+    </script>
+</head>
+<body class="main_layout">
+<a href="/main"><img src="images/icon/logo.png" id="logo"></a>
+<div class="main_user">
+    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
+    <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
+    <a href="/main" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="images/icon/mypageicon.png">마이페이지</a>
+</div>
+<nav id="navigation">
+    <div class="search" id="search" name="search">
+        <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
+        <a class="search_btn" type="button" id="search_btn"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
+    </div>
+    <ul>
+        <li class="home"><a href="/main">홈</a></li>
+        <li><a href="#">시사회</a>
+            <ul>
+                <li><a id="cate1_current" cateid="1" time="1">현재상영작</a></li>
+                <li><a id="cate1_future" cateid="1" time="2">개봉예정작</a></li>
+                <li><a id="cate1_past" cateid="1" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">뮤지컬</a>
+            <ul>
+                <li><a id="cate2_current" cateid="2" time="1">현재상영작</a></li>
+                <li><a id="cate2_future" cateid="2" time="2">개봉예정작</a></li>
+                <li><a id="cate2_past" cateid="2" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">연극</a>
+            <ul>
+                <li><a id="cate3_current" cateid="3" time="1">현재상영작</a></li>
+                <li><a id="cate3_future" cateid="3" time="2">개봉예정작</a></li>
+                <li><a id="cate3_past" cateid="3" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+        <li><a href="#">콘서트</a>
+            <ul>
+                <li><a id="cate4_current" cateid="4" time="1">현재상영작</a></li>
+                <li><a id="cate4_future" cateid="4" time="2">개봉예정작</a></li>
+                <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="menu-bar">
+    <ul>
+        <li id="title">MyPage</li>
+        <li><a href="/myPage">내 정보</a></li>
+        <li id="mybook"><a href="/myPageBook">예매내역</a></li>
+        <li><a href="/myPageDraw">드로우내역</a></li>
+        <li><a href="/myPageReview">내 후기</a></li>
+        <li><a href="/myPageQnA">내 문의내역</a></li>
+    </ul>
+</div>
+<div id="review_background">
+<form action="/myPageBook">
+    <div id="book_all"></div>
+    <button id="book_cancel" type="submit">예매취소</button>
+</form>
+</div>
+<div id="main-footer">
+    <footer class="footer">
+        <div>ⓒ CodingDoit corp.
+        </div>
+    </footer>
+</div>
+</body>
+</html>

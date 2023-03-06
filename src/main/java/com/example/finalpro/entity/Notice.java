@@ -16,7 +16,7 @@ public class Notice {
     private int notice_no;
     private String notice_title;
     private String notice_content;
-    private String notice_hit;
+    private int notice_hit;
     private Date notice_date;
     private String notice_category;
     private String notice_fname;

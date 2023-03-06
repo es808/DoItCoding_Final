@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="admin_background">
+    <h2>예매내역</h2>
+    <hr id="admin_hr">
+<table class="admin_table">
+    <thead>
+    <tr>
+        <th>장르</th>
+        <th>장소</th>
+        <th>이름</th>
+        <th>가격</th>
+        <th>상영날짜</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${ticketVOList}">
+        <div th:switch="${t.cateid}">
+            <td th:case="1">영화 시사회</td>
+            <td th:case="2">뮤지컬</td>
+            <td th:case="3">연극</td>
+            <td th:case="4">콘서트</td>
+        </div>
+        <td th:text="${t.placeid}"></td>
+        <td>
+            <a th:text="${t.ticket_name}" th:href="@{'/detail?ticketid='+${t.ticketid}}"></a>
+        </td>
+        <td th:text="${t.price}"></td>
+        <td th:text="${t.ticket_date}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>
