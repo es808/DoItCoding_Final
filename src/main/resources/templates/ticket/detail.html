@@ -33,7 +33,7 @@
                     e.preventDefault();
                 }
             })
-            $( "#datepicker" ).datepicker();
+
 
             $.ajax({
                 url: "DetailTicket",
@@ -52,6 +52,12 @@
                     var content = data['content'];
                     var lat = data['lat'];
                     var lng = data['lng'];
+
+                    $( "#datepicker" ).datepicker({
+                        dateFormat: 'yyyy-mm-dd hh:mm:ss',
+                        minDate: new Date(ticket_date),
+                        maxDate: new Date(ticket_date+1)
+                    });
 
                     //console.log(img_fname);
                     if(vid_url == null || vid_url == "") {
