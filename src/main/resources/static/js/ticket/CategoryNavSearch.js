@@ -1,60 +1,60 @@
 // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
 $(function (){
-var cate_current = "";
-var cate_future = "";
-var cate_past = "";
+    var cate_current = "";
+    var cate_future = "";
+    var cate_past = "";
 
-for (var i = 1; i <=4; i++) {
-    cate_current = '#cate'+i+"_current";
-    cate_future = '#cate'+i+"_future";
-    cate_past = '#cate'+i+"_past";
+    for (var i = 1; i <=4; i++) {
+        cate_current = '#cate'+i+"_current";
+        cate_future = '#cate'+i+"_future";
+        cate_past = '#cate'+i+"_past";
 
-    $(cate_current).click(function(e){
-        var target = this.id;
-        var cateid_num = $("#"+target).attr("cateid");
-        var time_num = $("#"+target).attr("time");
+        $(cate_current).click(function(e){
+            var target = this.id;
+            var cateid_num = $("#"+target).attr("cateid");
+            var time_num = $("#"+target).attr("time");
 
-        time = time_num;
-        cateid = cateid_num;
-        console.log(cateid);
+            time = time_num;
+            cateid = cateid_num;
+            console.log(cateid);
 
-        sessionStorage.setItem("time", time);
-        sessionStorage.setItem("cateid", cateid);
+            sessionStorage.setItem("time", time);
+            sessionStorage.setItem("cateid", cateid);
 
-        var url = "/category?time="+time+"?cateid="+cateid;
-        location.replace(url);
-    });
+            var url = "/category?time="+time+"?cateid="+cateid;
+            location.replace(url);
+        });
 
-    $(cate_future).click(function(e){
-        var target = this.id;
-        var cateid_num = $("#"+target).attr("cateid");
-        var time_num = $("#"+target).attr("time");
+        $(cate_future).click(function(e){
+            var target = this.id;
+            var cateid_num = $("#"+target).attr("cateid");
+            var time_num = $("#"+target).attr("time");
 
-        time = time_num;
-        cateid = cateid_num;
-        console.log(cateid);
+            time = time_num;
+            cateid = cateid_num;
+            console.log(cateid);
 
-        sessionStorage.setItem("time", time);
-        sessionStorage.setItem("cateid", cateid);
+            sessionStorage.setItem("time", time);
+            sessionStorage.setItem("cateid", cateid);
 
-        var url = "/category?time="+time+"?cateid="+cateid;
-        location.replace(url);
-    });
+            var url = "/category?time="+time+"?cateid="+cateid;
+            location.replace(url);
+        });
 
-    $(cate_past).click(function(e){
-        var target = this.id;
-        var cateid_num = $("#"+target).attr("cateid");
-        var time_num = $("#"+target).attr("time");
+        $(cate_past).click(function(e){
+            var target = this.id;
+            var cateid_num = $("#"+target).attr("cateid");
+            var time_num = $("#"+target).attr("time");
 
-        time = time_num;
-        cateid = cateid_num;
-        console.log(cateid);
+            time = time_num;
+            cateid = cateid_num;
+            console.log(cateid);
 
-        sessionStorage.setItem("time", time);
-        sessionStorage.setItem("cateid", cateid);
+            sessionStorage.setItem("time", time);
+            sessionStorage.setItem("cateid", cateid);
 
-        var url = "/category?time="+time+"?cateid="+cateid;
-        location.replace(url);
+            var url = "/category?time="+time+"?cateid="+cateid;
+            location.replace(url);
         });
     }
     // 검색하면 결과가 나오도록

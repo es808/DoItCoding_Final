@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -9,32 +9,14 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css">
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/signUp_address.js}"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
     <script type="text/javascript">
         $(function(){
-
-            var custid = sessionStorage.getItem("custid");
-
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
             var confirm_phone = false;
-
-            if(custid != null){
-                $("#login").css('display', 'none');
-                $("#regist").css('display', 'none');
-                $("#logout").css('display','inline-block');
-                $("#mypage").css('display','inline-block');
-            }
-
-            $("#logout").click(function(e){
-                if(confirm("로그아웃 하시겠습니까?")){
-                }else{
-                    return false;
-                }
-            });
-
 
             $("#btn_cancel").click(function(){
                 if (confirm('회원정보 수정을 취소하시겠습니까?')){
@@ -100,15 +82,98 @@
                 e.preventDefault();
             });	//#form_updateCustomer가 제출됨
 
+            // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
+            var time = 1;
+
+            var cate_current = "";
+            var cate_future = "";
+            var cate_past = "";
+
+            for (var i = 1; i <=4; i++) {
+                cate_current = '#cate'+i+"_current";
+                cate_future = '#cate'+i+"_future";
+                cate_past = '#cate'+i+"_past";
+
+                $(cate_current).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "/category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+
+                $(cate_future).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "/category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+
+                $(cate_past).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "/category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+            }
+
+            // 검색하면 결과가 나오도록
+            var searchKeyword = function(f){
+                $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
+                    if(e.which == 13){
+                        var keyword = $("#search_txt").val();
+                        sessionStorage.setItem("keyword", keyword);
+                        var url = "/search?keyword="+keyword;
+                        location.replace(url);
+                    }
+                });
+
+                $("#search_btn").click(function(){ // 버튼 누르면 검색됨
+                    var keyword = $("#search_txt").val();
+                    sessionStorage.setItem("keyword", keyword);
+                    var url = "/search?keyword="+keyword;
+                    location.replace(url);
+                });
+            }// 검색 end
+
+            searchKeyword();
             $(document).on('click', '#btn_phoneconfirm', function(){ // 전화번호 중복
-                var phone = $("#phone").val();
+                let phone = $("#phone").val();
                 var url = "ConfirmCustomerPhone";
                 var data = {phone:phone};
-
                 $.ajax(url, {
                     data:data,
                     success:function(answer){
-                        if(answer == 1){
+                        if(phone.length != 11){
+                            alert("잘못된 번호 입니다.")
+                            confirm_phone = false;
+                        }else if(answer == 1){
                             alert("중복된 번호입니다");
                             confirm_phone = false;
                         }
@@ -125,7 +190,7 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="main"><img src="/images/icon/logo.png" id="logo"></a>
+<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
 <div class="main_user">
     <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
     <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
@@ -184,7 +249,6 @@
 <div id="background">
     <h2>회원정보 수정</h2>
     <hr>
-
 <form method="post" id="form_updateCustomer">
     <table id="get_customer">
         <tr>
@@ -221,12 +285,12 @@
             <td>전화번호</td>
             <td>
                 <input type="text" name="phone" id="phone" maxlength="13" size="15" class="box">
-                <input type="button" value="중복확인">
+                <input type="button" value="중복확인" id="mypage_check">
             </td>
         </tr>
         <tr>
             <td>주소</td>
-            <td>
+            <td id="mypage_addr">
                 <input type="text" name="addr_postcode" id="addr_postcode" class="box" th:value="${id.addr_postcode}">
                 <input type="button" id="btn_searchAddr" value="우편번호 찾기" onclick="execDaumPostcode()"><br>
                 <input id="addr_address" class="box" size="30" th:value="${id.addr_address}"><br>
@@ -251,7 +315,7 @@
             </td>
         </tr>
     </table>
-    <div class="caption">
+    <div class="caption" id="mypage_caption">
         <button id="btn_cancel">취소</button>&nbsp;&nbsp;
         <input type="submit" value="수정하기">
     </div>

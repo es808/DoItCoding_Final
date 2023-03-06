@@ -13,6 +13,9 @@
 
             var ticketid = Number(sessionStorage.getItem("ticketid"));
             var custid = sessionStorage.getItem("custid");
+            var drawid = sessionStorage.getItem("drawid");
+            console.log("drawid:"+drawid);
+
             //티켓정보 출력
             $.ajax({
                 url: "DetailTicket",
@@ -73,7 +76,7 @@
                                                 data:{seatid:sessionStorage.getItem("as")},
                                                 success: function (result){
                                                     console.log("RegistBook성공")
-
+                                                    console.log("result:"+result);
                                                     if(result>0){
                                                         $.ajax({
                                                             url:"BookTicket",
@@ -82,30 +85,42 @@
                                                                 seatid: sessionStorage.getItem("as")},
                                                             success:function(final){
                                                                 console.log("BookTicket성공");
-
                                                                 $(document).ready(function(){
                                                                     if (final > 0) {
-                                                                        // 예약완료 문자 발송 여기!
+                                                                        // 예약완료 문자, 이메일 발송
                                                                         $.ajax({
                                                                             url:"sendBookingConfirmation",
                                                                             data:{
                                                                                 custid:custid,
                                                                                 ticketid:ticketid,
                                                                                 seatid: sessionStorage.getItem("as"),
-                                                                                phone:phone
+                                                                                phone:phone,
+                                                                                email:email
                                                                             },
                                                                             success:function (msg){
                                                                                 console.log(msg)
                                                                             }
                                                                         })
                                                                         alert("예약 성공!");
-                                                                        $(location).attr('href',"/detail?ticketid"+ticketid);
+                                                                        $.ajax({
+                                                                            url:"drawDelete",
+                                                                            data:{drawid:drawid},
+                                                                            success:function (){
+                                                                                console.log("삭제성공");
+                                                                            }
+                                                                        })
+
+                                                                        // window.close();
+                                                                        //$(location).attr('href',"/detail?ticketid"+ticketid);
                                                                     }else{
                                                                         alert("예약에 실패하였습니다. 다시 시도해주세요.");
                                                                     }
                                                                 })
+                                                                window.close();
                                                             }
                                                         })
+                                                    }else{
+                                                        alert("예약에 실패하였습니다. 다시 시도해주세요.");
                                                     }
                                                 }
                                             })
@@ -120,7 +135,6 @@
                     })
                 }
             })
-
         });
     </script>
 </head>

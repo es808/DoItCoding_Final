@@ -7,7 +7,6 @@
   <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
   <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-  <script type="text/javascript" th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
           integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
   <script>
@@ -88,7 +87,7 @@
                 height: 400
               });
               $("#rank_preview"+i).attr('ticketid', arr[i].ticketid);
-              var url = "detail?ticketid="+arr[i].ticketid;
+              var url = "/detail?ticketid="+arr[i].ticketid;
               $("#rank_preview"+i).attr('href', url);
               $("#rank_preview"+i).append(img);
 
@@ -122,7 +121,7 @@
                 height: 400,
               });
               $("#current_preview"+i).attr('ticketid', arr[i].ticketid);
-              var url = "detail?ticketid="+arr[i].ticketid;
+              var url = "/detail?ticketid="+arr[i].ticketid;
               $("#current_preview"+i).attr('href', url);
               $("#current_preview"+i).append(img);
 
@@ -156,7 +155,7 @@
                 height: 400
               });
               $("#future_preview"+i).attr('ticketid', arr[i].ticketid);
-              var url = "detail?ticketid="+arr[i].ticketid;
+              var url = "/detail?ticketid="+arr[i].ticketid;
               $("#future_preview"+i).attr('href', url);
               $("#future_preview"+i).append(img);
 
@@ -245,6 +244,88 @@
         selectFutureBycategory();
       })
 
+      // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
+      var time = 1;
+
+      var cate_current = "";
+      var cate_future = "";
+      var cate_past = "";
+
+      for (var i = 1; i <=4; i++) {
+        cate_current = '#cate'+i+"_current";
+        cate_future = '#cate'+i+"_future";
+        cate_past = '#cate'+i+"_past";
+
+        $(cate_current).click(function(e){
+          var target = this.id;
+          var cateid_num = $("#"+target).attr("cateid");
+          var time_num = $("#"+target).attr("time");
+
+          time = time_num;
+          cateid = cateid_num;
+          console.log(cateid);
+
+          sessionStorage.setItem("time", time);
+          sessionStorage.setItem("cateid", cateid);
+
+          var url = "/category?time="+time+"?cateid="+cateid;
+          location.replace(url);
+        });
+
+        $(cate_future).click(function(e){
+          var target = this.id;
+          var cateid_num = $("#"+target).attr("cateid");
+          var time_num = $("#"+target).attr("time");
+
+          time = time_num;
+          cateid = cateid_num;
+          console.log(cateid);
+
+          sessionStorage.setItem("time", time);
+          sessionStorage.setItem("cateid", cateid);
+
+          var url = "/category?time="+time+"?cateid="+cateid;
+          location.replace(url);
+        });
+
+        $(cate_past).click(function(e){
+          var target = this.id;
+          var cateid_num = $("#"+target).attr("cateid");
+          var time_num = $("#"+target).attr("time");
+
+          time = time_num;
+          cateid = cateid_num;
+          console.log(cateid);
+
+          sessionStorage.setItem("time", time);
+          sessionStorage.setItem("cateid", cateid);
+
+          var url = "/category?time="+time+"?cateid="+cateid;
+          location.replace(url);
+        });
+      }
+
+      // 검색하면 결과가 나오도록
+      var searchKeyword = function(f){
+        $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
+          if(e.which == 13){
+            var keyword = $("#search_txt").val();
+            sessionStorage.setItem("keyword", keyword);
+            var url = "/search?keyword="+keyword;
+            location.replace(url);
+          }
+        });
+
+        $("#search_btn").click(function(){ // 버튼 누르면 검색됨
+          var keyword = $("#search_txt").val();
+          sessionStorage.setItem("keyword", keyword);
+          var url = "/search?keyword="+keyword;
+          location.replace(url);
+        });
+      }// 검색 end
+
+      searchKeyword();
+
       // 로그인한 정보 불러오기
 
       // var custid = sessionStorage.getItem("custid");
@@ -266,6 +347,63 @@
           return false;
         }
       })
+      // 알림 갯수
+      $.ajax({
+        url:"/countNChecked",
+        success:function (cnt){
+          $('#notif_not_checked').html(cnt)
+        }
+      })
+
+      //알림 목록 불러오기
+      function listNotification(){
+        $("#notif_container").empty();
+        $.ajax({
+          url:"/listNotification",
+          success:function (list){
+            $.each(list,function (){
+              let div_no=$("<div></div>").text(this.notif_no)
+              let div_title=$("<a></a>").text(this.qna_title+"에 답글이 달렸습니다.")
+                      .attr("href","/qna/detail/"+this.qna_no)
+              let div_x=$("<a></a>").text("X").addClass("x").attr("notif_no",this.notif_no)
+              let div_no_title=$("<div></div>").append(div_no, div_title, div_x)
+              $('#notif_container').append(div_no_title)
+            })
+            $('#notif_not_checked').html("")
+          }
+        })
+      }
+
+      // QNA 답변 알림
+      let cnt_click=0
+      $('#bell').click(function(){
+        cnt_click+=1
+        if(cnt_click%2==1){
+          $("#notif_container").css("display","block")
+          listNotification()
+
+          // DB 'checked' 칼럼 업데이트 n->y
+          $.ajax({
+            url:"/updateCheckedToY",
+            success:function (re){
+              console.log(re)
+            }
+          })
+        }else{
+          $("#notif_container").css("display","none")
+        }
+      })
+
+      $(document).on("click",".x",function (){
+        $.ajax({
+          url:"/deleteNotification",
+          data:{notif_no:$(this).attr("notif_no")},
+          success:function (){
+            listNotification()
+          }
+        })
+      })
+
     });
   </script>
 </head>
@@ -279,7 +417,10 @@
   <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
   <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
-
+<!-- qna notification -->
+<div id="notif_not_checked"></div><!--알림 갯수-->
+<a id="bell"><img src="/images/icon/alarm.png" width="45" height="45"></a>
+<div id="notif_container"></div>
 <nav id="navigation">
   <div class="search" id="search" name="search">
     <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">

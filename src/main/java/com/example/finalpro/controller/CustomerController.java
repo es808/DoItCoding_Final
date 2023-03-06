@@ -19,7 +19,6 @@ import com.example.finalpro.service.CustomerService;
 import com.example.finalpro.service.CategoryService;
 import com.example.finalpro.service.TicketService;
 import com.example.finalpro.util.SendMessage;
-import com.example.finalpro.vo.CustomerVO;
 import com.example.finalpro.vo.DrawVO;
 import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.TicketVO;
@@ -157,6 +156,9 @@ public class CustomerController {
     public String myPage(HttpSession session, Model m) {
         System.out.println((String) session.getAttribute("id"));
         String id = (String) session.getAttribute("id");
+        if(id == null){
+            return "/login";
+        }
         Optional<Customer> c = customerDAO.findById(id);
         System.out.println(c.get());
         m.addAttribute("id",c.get());
@@ -184,6 +186,9 @@ public class CustomerController {
     @GetMapping("/myPageDraw")
     public String myPageDraw(HttpSession session, Model m){
         String custid = (String)session.getAttribute("id");
+        if(custid == null){
+            return "/login";
+        }
         List<MyDrawVO> myDraw = new ArrayList<>();
         TicketVO myTicket = null;
 
@@ -223,7 +228,15 @@ public class CustomerController {
     }
 
     @GetMapping("/myPageBook")
-    public String myPageBook() { return "myPage/myPageBook";}
+    public String myPageBook(HttpSession session) {
+        String custid = (String)session.getAttribute("id");
+        if(custid == null){
+            return "/login";
+        }
+        return "myPage/myPageBook";}
+
+//    @GetMapping("/myPageReview")
+//    public String myPageReview() { return "myPage/myPageReview";}
 
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {

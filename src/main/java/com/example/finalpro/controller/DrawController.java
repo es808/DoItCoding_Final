@@ -2,14 +2,17 @@ package com.example.finalpro.controller;
 
 import com.example.finalpro.dao.DrawDAO;
 import com.example.finalpro.db.DBManager;
+import com.example.finalpro.entity.Draw;
 import com.example.finalpro.service.DrawService;
 import com.example.finalpro.vo.DrawVO;
+import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.SeatVO;
 import com.example.finalpro.vo.TicketVO;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,6 +32,18 @@ public class DrawController {
     @Autowired
     private DrawDAO drawDAO;
 
+    @RequestMapping ("/DrawInsert")
+    @ResponseBody
+    public int drawInsert(int ticketid, String custid){
+        return DBManager.drawInsert(ticketid,custid);
+    }
+
+    @RequestMapping("/selectDrawNoSame")
+    @ResponseBody
+    public DrawVO selectDrawNoSame(int ticketid, String custid){
+        return DBManager.selectDrawNoSame(ticketid,custid);
+    }
+
     // 잔여좌석이 0이거나 cateid=1일 때 드로우 버튼 활성화
     @RequestMapping("/DrawButtonOpen")
     @ResponseBody
@@ -46,6 +61,13 @@ public class DrawController {
         return draw;
     }
 
+    // 결제완료하면 드로우 인스턴스 삭제
+    @RequestMapping("/drawDelete")
+    @ResponseBody
+    public int drawDelete(int drawid){
+        return DBManager.drawDelete(drawid);
+    }
+
     public int[] leftSeat(int ticketid){
         List<SeatVO> seat = DBManager.drawLeftSeat(ticketid);      //seatTable에 남은 좌석 정보 가져오기
         int seatArr[] = new int[seat.size()];
@@ -59,14 +81,14 @@ public class DrawController {
     //드로우 가동
     @GetMapping("/drawExec")
     @ResponseBody
-    public String drawExec(){
-        int count = DBManager.findLeftSeatByTicketid(1);
-        List<DrawVO> draw = drawList(1);
+    public String drawExec(int ticketid){
+        int count = DBManager.findLeftSeatByTicketid(ticketid);
+        List<DrawVO> draw = drawList(ticketid);
         System.out.println("드로우 사이즈:"+draw.size());
         String custidArr[] = new String[count];           //드로우에 당첨된 회원아이디 저장
         Random r = new Random();
 
-        int seatArr[] = leftSeat(1);
+        int seatArr[] = leftSeat(ticketid);
 
 
         lucker = new String[count];                 //전역변수에 저장하여 드로우 된 회원들을 저장
@@ -85,7 +107,7 @@ public class DrawController {
         }
 
 
-        DBManager.drawDeleteSeatId(1);              //여러번 드로우 할 경우를 대비해 드로우 전 draw테이블에 당첨여부 초기화
+        DBManager.drawDeleteSeatId(ticketid);              //여러번 드로우 할 경우를 대비해 드로우 전 draw테이블에 당첨여부 초기화
         for(int i = 0; i < count; i++){
             DBManager.drawUpdate(lucker[i], seatArr[i]);    //당첨된 회원이름과 남은 좌석을 draw 테이블에 반영
         }

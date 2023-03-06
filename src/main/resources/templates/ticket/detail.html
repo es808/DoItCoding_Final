@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/detail.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
-    <script type="text/javascript" th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4cce9cc8666a0ddc40cb3ff5eee6295b"></script>
     <script type="text/javascript">
 
@@ -54,6 +53,12 @@
                     var lat = data['lat'];
                     var lng = data['lng'];
 
+                    $( "#datepicker" ).datepicker({
+                        dateFormat: 'yyyy-mm-dd hh:mm:ss',
+                        minDate: new Date(ticket_date),
+                        maxDate: new Date(ticket_date+1)
+                    });
+
                     //console.log(img_fname);
                     if(vid_url == null || vid_url == "") {
                         $("#vid_url").css('display', 'none');
@@ -71,7 +76,7 @@
                     if(price==0){
                         $("#price").append("0원(전석 초대)");
                     }else{
-                        $("#price").append(price+"원");
+                        $("#price").append(price);
                     }
                     $("#cast").append(cast);
                     if(content.endsWith(".jpg")||content.endsWith(".png")||content.endsWith(".gif")){
@@ -88,6 +93,7 @@
                     });
                     $("#img_fname").append(img);
 
+                    sessionStorage.setItem("cateid",cateid);
 
                     if(vid_url != null){
                         var vid = $("<iframe>").attr({
@@ -109,7 +115,7 @@
                     //     $("#art_img").append(img1);
                     // }
 
-                    if(cateid==2){
+                    if(cateid==1){
                         $("#btnbook").attr("disabled",true).css({
                             "border":"1px solid #cccccc",
                             "background-color":"#cccccc",
@@ -121,7 +127,10 @@
                             url: "DrawButtonOpen",
                             data: {ticketid: sessionStorage.getItem("ticketid")},
                             success: function(data){
-                                var close = new Date(data['ticket_date']);
+                                var ticketdate = new Date(data['ticket_date']);
+                                var close = new Date(ticketdate);
+                                close.setDate(ticketdate.getDate()-1);
+                                close.setHours(12,0,0);
                                 var open = new Date(close);
                                 open.setDate(close.getDate()-14);
                                 var today = new Date();
@@ -137,8 +146,28 @@
                                     });
                                     $(document).on("click","#btndraw",function(){
                                         console.log("btndraw 클릭");
-                                        var url = "/draw";
-                                        location.replace(url);
+                                        $.ajax({
+                                            url:"selectDrawNoSame",
+                                            data:{ticketid:ticketid,
+                                                    custid:custid},
+                                            success:function (results){
+                                                console.log("뭐야"+results);
+                                                if(results != null && results !=""){
+                                                    alert("이미 신청하셨습니다.")
+                                                }else{
+                                                    $.ajax({
+                                                        url:'DrawInsert',
+                                                        data:{ticketid:ticketid,
+                                                            custid:custid},
+                                                        success:function(res){
+                                                            if(res>0){
+                                                                alert("드로우 신청이 완료되었습니다.");
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        })
                                     });
                                 }
 
@@ -209,10 +238,10 @@
                     console.log("open:"+open);
                     console.log("today:"+today);
 
-                    if(open <= today && today< close){
+                    if(open <= today && today< close && sessionStorage.getItem("cateid")!=1){
                         $("#btnbook").removeAttr("disabled").css({
                             "border":"1px solid #D10505",
-                            "background-color":"#D10505"
+                            "background-color":"#d10505"
                         });
                         $(document).on("click","#btnbook",function(){
                             //location.href="detailPageTest.html";
@@ -247,7 +276,10 @@
                             url: "DrawButtonOpen",
                             data: {ticketid: sessionStorage.getItem("ticketid")},
                             success: function(data){
-                                var close = new Date(data['ticket_date']);
+                                var ticketdate = new Date(data['ticket_date']);
+                                var close = new Date(ticketdate);
+                                close.setDate(ticketdate.getDate()-1);
+                                close.setHours(12,0,0);
                                 var open = new Date(close);
                                 open.setDate(close.getDate()-14);
                                 var today = new Date();
@@ -256,7 +288,7 @@
                                 console.log("open:"+open);
                                 console.log("today:"+today);
 
-                                if(open <= today < close){
+                                if(open <= today && today < close && sessionStorage.getItem("cateid")!=1){
                                     console.log("OK");
                                     $("#btndraw").removeAttr("disabled").css({
                                         "border":"1px solid #ff7f00",
@@ -265,8 +297,16 @@
                                     });
                                     $(document).on("click","#btndraw",function(){
                                         console.log("btndraw 클릭");
-                                        var url = "/draw";
-                                        location.replace(url);
+                                        $.ajax({
+                                            url:'DrawInsert',
+                                            data:{ticketid:ticketid,
+                                                custid:custid},
+                                            success:function(res){
+                                                if(res>0){
+                                                    alert("드로우 신청이 완료되었습니다.");
+                                                }
+                                            }
+                                        });;
                                     });
                                 }
 
@@ -415,6 +455,89 @@
                     }
                 }
             })
+
+            // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
+            var time = 1;
+
+            var cate_current = "";
+            var cate_future = "";
+            var cate_past = "";
+
+            for (var i = 1; i <=4; i++) {
+                cate_current = '#cate'+i+"_current";
+                cate_future = '#cate'+i+"_future";
+                cate_past = '#cate'+i+"_past";
+
+                $(cate_current).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+
+                $(cate_future).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+
+                $(cate_past).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+            }
+
+            // 검색하면 결과가 나오도록
+            var searchKeyword = function(f){
+                $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
+                    if(e.which == 13){
+                        var keyword = $("#search_txt").val();
+                        sessionStorage.setItem("keyword", keyword);
+                        var url = "search?keyword="+keyword;
+                        location.replace(url);
+                    }
+                });
+
+                $("#search_btn").click(function(){ // 버튼 누르면 검색됨
+                    var keyword = $("#search_txt").val();
+                    sessionStorage.setItem("keyword", keyword);
+                    var url = "search?keyword="+keyword;
+                    location.replace(url);
+                });
+            }// 검색 end
+
+            searchKeyword();
+
         })
     </script>
 </head>
@@ -462,7 +585,7 @@
                 <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
             </ul>
         </li>
-        <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
+<!--        <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>-->
     </ul>
 </nav>
 <!-- 상세 페이지 -->

@@ -35,8 +35,9 @@
     </select>
 
     <select id="findAll" resultType="noticeVO" parameterType="java.util.HashMap">
-        select notice_no, notice_category, notice_title, notice_content, notice_hit, notice_date,
-        notice_fname from (select rownum r, a.* from (select * from notice
+        select notice_no, notice_category, notice_title, notice_content, notice_hit,
+        notice_date, notice_fname from (select rownum r, a.* from
+        (select * from notice
         <if test="category!=null">
             where notice_category=#{category}
             <if test="keyword!=null">

@@ -16,7 +16,7 @@
     top: 380px;
 }
 #right_button{
-    z-index : 200;
+    z-index : 50;
     margin-left : 1310px;
 }
 .slider{
@@ -88,11 +88,49 @@
 
 
 
+/* 알림 */
+#bell_icon{
+    top : 700px;
+}
+#bell img{
+    top: 700px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    margin-left: 700px;
+    margin-top: -651px;
+}
+#notif_not_checked{
+    color: white;
+    position: absolute;
+    margin-left: 1103px;
+    font-size: 12px;
+    top: 49px;
+    z-index: 300;
+}
+#notif_container{
+    border: 2px solid #08428C;
+    margin-top: -79px;
+    position: absolute;
+    width: 290px;
+    z-index: 800;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    margin-left: 770px;
+    color: #08348C;
+}
+#notif_container a{
+    font-size : 13px;
+    text-decoration: none;
+    color : #08348C;
+    text-align : center;
+}
+
 /* 마이페이지(myinfo) - menu-bar */
 #menu-bar{
     margin-top : 100px;
 }
-#menu-bar li:not(#title){
+#menu-bar li:not(#title,.title_notice){
     color : #08428C;
     width : 200px; height : 25px;
     padding : 15px;
@@ -102,16 +140,16 @@
     border-radius : 10px 0 0 10px;
     line-height : 25px;
 }
-#menu-bar li:hover:not(#title){
+#menu-bar li:hover:not(#title,.title_notice){
     font-weight : bolder;
     color : #08428C;
     background-color : #dcdcdc;
     transition-duration: 0.5s;
 }
-#menu-bar li a:not(#title){
+#menu-bar li a:not(#title,.title_notice){
     color : #08428C;
 }
-#menu-bar #myinfo{
+#menu-bar #myinfo, #menu_notice, #menu_qna{
     font-weight : bolder;
     color : #08428C;
     background-color : #dcdcdc;
@@ -137,7 +175,7 @@
     border : 2px solid grey;
     background-color : #f7f7f7;
     margin-left : 270px;
-    margin-top : -400px;
+    margin-top : -430px;
     border-radius : 10px;
     padding-bottom : 100px;
 }
@@ -226,6 +264,22 @@ button,[type="submit"]{
     color : white;
     margin-left : 10px;
     border-radius : 5px;
+}
+#addr_postcode, #addr_address, #addr_detail{
+    margin-top : 8px;
+}
+#mypage_caption{
+    margin-top: -20px;
+}
+#mypage_check,#btn_searchAddr{
+    border-radius: 5px;
+    margin-left: 10px;
+    height: 32px;
+    border: none;
+    background-color: #08348C;
+    color: white;
+    width: 100px;
+    font-size: 12px;
 }
 
 
@@ -336,7 +390,7 @@ input[type="checkbox"]{
     font-weight : 500;
     font-size : 15px;
 }
-.myPageQna_table th,td{
+.myPageQna_table th,.myPageQna_table td{
     padding : 13px;
     text-align : center;
 }
@@ -398,7 +452,7 @@ input[type="checkbox"]{
     height : 250px;
     border : 2px solid #dcdcdc;
     border-radius : 40px;
-    margin : 60px;
+    margin: 10px;
 }
 .drawList img{
     position : relative;
@@ -490,7 +544,7 @@ review_background{
     border : 2px solid grey;
     background-color : #f7f7f7;
     margin-left : 270px;
-    margin-top : -400px;
+    margin-top : -430px;
     border-radius : 10px;
     padding-bottom : 100px;
 }
@@ -647,7 +701,7 @@ table{
     position : absolute;
     left : 70%; top : 40%;
     margin-left : -240px;
-    margin-top : -400px;
+    margin-top: -360px;
     width : 500px; height : 500px;
 }
 #search_title{
@@ -987,6 +1041,19 @@ h2{
 
 
 /* 공지사항,QnA list */
+.title_notice{
+    display : inline-block;
+    width : 199px; height : 70px;
+    padding : 15px;
+    font-size : 20px;
+    font-weight : bold;
+    text-align : center;
+    border : 1.5px solid #08428C;
+    border-radius : 10px 0 0 10px;
+    background-color : #08428C;
+    color : #F2AE30;
+    line-height: 70px;
+}
 #notice_background{
     position : relative;
     width : 1000px;
@@ -994,7 +1061,7 @@ h2{
     border : 2px solid grey;
     background-color : #f7f7f7;
     margin-left : 270px;
-    margin-top : -400px;
+    margin-top: -600px;
     border-radius : 10px;
 }
 #notice_background h2{
@@ -1022,12 +1089,13 @@ h2{
     font-weight : 500;
     font-size : 15px;
 }
-.notice_table th,td{
+.notice_table th,notice_table td{
     padding : 13px;
     text-align : center;
 }
 .notice_table td{
     background-color : white;
+    text-align: center;
 }
 #btnWrite{
     z-index : 100;
@@ -1159,9 +1227,6 @@ h2{
 #ticketname{
     margin-left : 300px;
 }
-#answer{
-    margin-left : 450px;
-}
 
 #background_detail_qna{
     margin-top : 100px;
@@ -1262,6 +1327,19 @@ h2{
     border-radius : 5px;
     font-size : 14px;
 }
+#answer_delete{
+    position: absolute;
+    width: 110px;
+    height: 35px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #D10505;
+    text-align: center;
+    border: none;
+    color: white;
+    margin-left: 620px;
+    border-radius: 5px;
+}
 
 
 /* notice, QnA 글 등록 */
@@ -1335,4 +1413,296 @@ h2{
 }
 #select_category{
     margin-left : -40px;
+}
+
+
+
+/* 관리자페이지 - 고객관리,티켓관리 */
+#admin_background{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    width : 900px;
+    height : 700px;
+    background-color : #f5f5f5;
+    border : 1px solid #dcdcdc;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow : 10px 10px #dedede;
+}
+#admin_background h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left : 60px;
+    margin-top : 40px;
+}
+#admin_hr{
+    margin-top : 100px;
+    height : 2px;
+    background-color : gray;
+}
+.admin_table{
+    position: absolute;
+    background-color: #08428C;
+    z-index: 10;
+    width: 800px;
+    height: 10px;
+    margin-top: -160px;
+    margin-left: -585px;
+    border: none;
+    border-radius: 10px 10px 0 0;
+}
+.admin_table th{
+    color : #dcdcdc;
+    font-weight : 500;
+    font-size : 15px;
+}
+.admin_table th,.admin_table td{
+    padding : 11px;
+    text-align : center;
+}
+.admin_table th a{
+    text-decoration: none;
+    color : #F2AE30;
+}
+.admin_table td{
+    background-color : white;
+    text-align: center;
+}
+#admin_keyword{
+    width: 200px; height: 30px;
+    border: 2px solid #08428C;
+    margin-left: 310px;
+    margin-top: 450px;
+}
+#admin_search{
+    width: 85px; height: 37px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #08348C;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+#paging_admin{
+    margin-left: 420px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+#paging_admin a{
+    text-decoration: none;
+    color : #08348C;
+}
+#ticket_keyword{
+    width: 200px; height: 30px;
+    border: 2px solid #08428C;
+    margin-left: 280px;
+    margin-top: 410px;
+}
+#admin_update{
+    width: 100px; height: 37px;
+    font-size: 13px;
+    background-color: #cccccc;
+    border: none;
+    margin-left: 595px;
+    margin-top: 450px;
+    border-radius: 5px;
+    text-align: center;
+    position: absolute;
+}
+#admin_update a{
+    text-decoration: none;
+    line-height: 37px;
+    font-size : 14px;
+    color : #08348C;
+}
+
+
+
+/* 관리자페이지 - 고객정보 수정 */
+#customer_background{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    width : 500px;
+    height : 700px;
+    background-color : #f5f5f5;
+    border : 1px solid #dcdcdc;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow : 10px 10px #dedede;
+}
+#customer_background h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left: 30px;
+    margin-top : 40px;
+}
+#updateForm{
+    margin-left: -20px;
+    margin-top: 18px;
+}
+.title_admin{
+    font-size: 15px;
+    font-weight: bold;
+    color: #08428C;
+    padding: 30px;
+    margin: 20px;
+}
+.content_admin{
+    width: 150px; height: 25px;
+    border: 2px solid #08348C;
+    margin-left: 10px;
+    font-size: 13px;
+}
+#id_admin{
+    background-color : #a9a9a9;
+}
+.admin_select{
+    border : 2px solid #08428C;
+    background-color : #08428C;
+    color : white;
+    height : 25px;
+    margin-left : 5px;
+}
+#gender1, #gender2{
+    font-weight: 400;
+}
+.addr_admin{
+    width: 120px; height: 25px;
+    border: 2px solid #08348C;
+    margin-left: 5px;
+    font-size: 13px;
+}
+#sample6_address, #sample6_detailAddress{
+    margin-left: 100px;
+    margin-top: 5px;
+    width: 140px;
+}
+#admin_cancel{
+    width: 100px;
+    height: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #dcdcdc;
+    border: none;
+    color: #08348C;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+#admin_caption{
+    margin-left: 160px;
+}
+#paging_adminqna{
+    margin-left: 420px;
+    margin-top: 480px;
+    font-weight: 600;
+}
+#paging_adminqna a{
+    text-decoration: none;
+    color : #08348C;
+}
+
+
+/* 작품 수정하기 */
+#adminticket_background{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    width : 1200px;
+    height : 750px;
+    background-color : #f5f5f5;
+    border : 1px solid #dcdcdc;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow : 10px 10px #dedede;
+}
+#adminticket_background h2{
+    position : absolute;
+    z-index : 200;
+    font-size: 28px;
+    color : #08428C;
+    margin-left: 30px;
+    margin-top : 40px;
+}
+#left_div{
+    margin-left: -20px;
+    position: absolute;
+}
+#right_div{
+    margin-left: 550px;
+    position: absolute;
+}
+#limit, #admin_price{
+    margin-left: -15px;
+}
+#admin_lng{
+    margin-left: -70px;
+}
+#admin_name{
+    width: 190px;
+}
+#map{
+    margin-left: 105px;
+    border: 2px solid #08348C;
+}
+#admin_date, #admin_time{
+    height: 25px;
+    border: 2px solid #08348C;
+    font-size: 14px;
+    font-family: 'SDSamliphopangche_Outline';
+    width: 105px;
+    margin-left: 10px;
+}
+.textarea_admin{
+    position: relative;
+    resize: none;
+    width: 550px; height: 100px;
+    border: 2px solid #08428C;
+    background-color: #efefef;
+    margin-left: 50px;
+    margin-top: 10px;
+    font-family: 'SDSamliphopangche_Outline';
+}
+#btn_search{
+    width: 90px; height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #08348C;
+    color: white;
+}
+#admin_submit{
+    background-color: #08348C;
+    margin-top: 550px;
+    margin-left: 480px;
+}
+#admin_reset{
+    background-color: #dcdcdc;
+    border: none;
+    height: 32px;
+    border-radius: 5px;
+    color: #08348C;
+    font-weight: 500;
+    margin-left: 10px;
+    width: 100px;
+}
+#admin_img{
+    margin-left: 350px;
+    width: 230px;
+    height: 280px;
+    margin-top: -130px;
+    border: 1px solid gray;
+}
+#ticket_hr{
+    width: 2px;
+    height: 540px;
+    background-color: gray;
+    position: absolute;
+    margin-left: 550px;
+    margin-top: -30px;
 }

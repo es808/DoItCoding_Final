@@ -96,6 +96,13 @@ public class AdminController {
         return mav;
     }
 
+    // 관리자페이지 - 메인
+    @RequestMapping("/mainAdmin")
+    public ModelAndView mainAdmin(){
+        ModelAndView mav = new ModelAndView("admin/mainAdmin");
+        return mav;
+    }
+
     // admin 에서 insertTicket 페이지를 열고 form을 보내기
     @GetMapping("/admin/insertTicket")
     public ModelAndView adminInsertTicket(){

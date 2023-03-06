@@ -57,7 +57,9 @@
 
     <select id="findAll" resultType="qnaVO" parameterType="java.util.HashMap">
         select qna_no, custid, qna_category, qna_title, qna_content, qna_hit, qna_date,
-        qna_fname, qna_open, qna_answer, ticketid from (select rownum r, a.* from (select * from qna
+        qna_fname, qna_open, qna_answer, ticketid from
+        (select rownum r, a.* from
+        (select * from qna
         <if test="category!=null">
             where qna_category=#{category}
             <if test="keyword!=null">

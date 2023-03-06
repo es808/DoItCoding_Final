@@ -8,13 +8,14 @@
   </select>
 
   <!-- 드로우 신청 -->
-  <insert id="insertDraw" parameterType="drawVO">
-    insert into draw(drawid,custid,ticketid,seatid) values(seq_drawid.nextval,#{custid},#{ticketid},#{seatid})
+  <insert id="drawInsert" parameterType="drawVO">
+    insert into draw(drawid,custid,ticketid) values(seq_drawid.nextval,#{custid},#{ticketid})
   </insert>
 
-  <!-- 시사회: 티켓id 별로 드로우 신청하면 그중에서 custid 랜덤하게 자리배정 -->
-
-  <!-- 자리0: 티켓 id 별로 드로우 신청하면 취소표(leftseat=0)에 한해서 랜덤하게 자리 배정 -->
+  <!-- 드로우 중복 신청 방지 -->
+  <select id="selectDrawNoSame" resultType="drawVO">
+    select drawid,ticketid,custid from draw where ticketid=#{ticketid} and custid=#{custid}
+  </select>
 
   <select id="drawTest" resultType="drawVO">
     select * from draw where ticketid = #{ticketid}
@@ -29,7 +30,13 @@
   </update>
 
   <select id="findByDrawCustid" resultType="drawVO">
-    select * from draw where custid = #{custid}
+    select * from draw where custid=#{custid}
   </select>
 
+  <delete id="drawDelete" parameterType="int">
+    delete draw where drawid=#{drawid}
+  </delete>
+  <!-- 시사회: 티켓id 별로 드로우 신청하면 그중에서 custid 랜덤하게 자리배정 -->
+
+  <!-- 자리0: 티켓 id 별로 드로우 신청하면 취소표(leftseat=0)에 한해서 랜덤하게 자리 배정 -->
 </mapper>

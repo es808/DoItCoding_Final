@@ -2,10 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <title>Title</title>
 </head>
 <body>
-<table border="1">
+<div id="admin_background">
+    <h2>Q&A내역</h2>
+    <hr id="admin_hr">
+    <table class="admin_table">
     <tr>
         <th>글번호</th>
         <th>분류</th>
@@ -31,16 +35,19 @@
     </tr>
 </table>
 <br><br>
-<a th:text="처음" th:href="@{'/admin/listQnaByCustid?page=1'}"></a>
-<th:block th:if="${paging.getStartPage() > 1}">
-    <a th:text="이전" th:href="@{'/admin/listQnaByCustid?page='+${paging.getStartPage()-1}}"></a>
-</th:block>
-<th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
-    <a th:text="${page}" th:href="@{'/admin/listQnaByCustid?page='+${page}}"></a>
-</th:block>
-<th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
-    <a th:text="다음" th:href="@{'/admin/listQnaByCustid?page='+${paging.getEndPage()+ 1}}"></a>
-</th:block>
-<a th:text="끝" th:href="@{'/admin/listQnaByCustid?page='+${paging.totalPage}}"></a>
+    <div id="paging_adminqna">
+        <a th:text="처음" th:href="@{'/admin/listQnaByCustid?page=1'}"></a>
+        <th:block th:if="${paging.getStartPage() > 1}">
+            <a th:text="이전" th:href="@{'/admin/listQnaByCustid?page='+${paging.getStartPage()-1}}"></a>
+        </th:block>
+        <th:block th:each="page : ${#numbers.sequence(paging.getStartPage(),paging.getEndPage())}">
+            <a th:text="${page}" th:href="@{'/admin/listQnaByCustid?page='+${page}}"></a>
+        </th:block>
+        <th:block th:if="${paging.getEndPage() < paging.getTotalPage()}">
+            <a th:text="다음" th:href="@{'/admin/listQnaByCustid?page='+${paging.getEndPage()+ 1}}"></a>
+        </th:block>
+        <a th:text="끝" th:href="@{'/admin/listQnaByCustid?page='+${paging.totalPage}}"></a>
+    </div>
+</div>
 </body>
 </html>

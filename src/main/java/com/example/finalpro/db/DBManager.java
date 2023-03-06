@@ -1,9 +1,5 @@
 package com.example.finalpro.db;
 
-import com.example.finalpro.entity.Customer;
-import com.example.finalpro.entity.Seat;
-import com.example.finalpro.vo.CustomerVO;
-import com.example.finalpro.entity.Qna;
 import com.example.finalpro.vo.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -11,10 +7,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
@@ -136,6 +130,9 @@ public class DBManager {
 		session.close();
 		return t;
 	}
+
+
+	// ******** admin.ticket ********
 
 	// 메인 페이지에서 카테고리 , 시간 별로 상영작 출력하기
 	// time=0은 과거, time=1은 현재, time=2는 미래
@@ -495,6 +492,15 @@ public class DBManager {
 		return re;
 	}
 
+	// 좌석취소
+	public static int cancleSeat(int seatid){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.update("seat.cancleSeat",seatid);
+		System.out.println("cancleSeat:"+re);
+		session.close();
+		return re;
+	}
 
 	// 티켓예매
 	public static int bookTicket(String custid, int ticketid, int seatid){
@@ -599,7 +605,7 @@ public class DBManager {
 		return totalRecord;
 	}
 
-	public static Object findAllNotice(HashMap<String, Object> hashMap) {
+	public static List<NoticeVO> findAllNotice(HashMap<String, Object> hashMap) {
 		List<NoticeVO> list=null;
 		SqlSession session=sqlSessionFactory.openSession();
 		list=session.selectList("notice.findAll", hashMap);
@@ -679,8 +685,8 @@ public class DBManager {
 		return totalRecord;
 	}
 
-	public static List<NoticeVO> findAllQna(HashMap<String, Object> hashMap) {
-		List<NoticeVO> list=null;
+	public static List<QnaVO> findAllQna(HashMap<String, Object> hashMap) {
+		List<QnaVO> list=null;
 		SqlSession session=sqlSessionFactory.openSession();
 		list=session.selectList("qna.findAll", hashMap);
 		session.close();
@@ -750,15 +756,6 @@ public class DBManager {
 		return list;
 	}
 
-	//마이페이지 - 예매내역 삭제
-//	public static int deleteBook(int bookid){
-//		int re = 0;
-//		SqlSession session = sqlSessionFactory.openSession(true);
-//		re = session.delete("book.deleteBook",bookid);
-//		session.close();
-//		return re;
-//	}
-
 	// 마이페이지 - 리뷰 등록
 	public static int insertReview(ReviewVO r){
 		int re=-1;
@@ -768,16 +765,45 @@ public class DBManager {
 		return re;
 	}
 
-	// 좌석취소
-	public static int cancleSeat(int seatid){
-		int re = -1;
-		SqlSession session = sqlSessionFactory.openSession(true);
-		re = session.update("seat.cancleSeat",seatid);
-		System.out.println("cancleSeat:"+re);
+	// 마이페이지 - 내가 쓴 리뷰 불러오기
+	public static List<ReviewVO> listReviewByCustid(HashMap<String, Object> map){
+		List<ReviewVO> list=null;
+		SqlSession session=sqlSessionFactory.openSession();
+		list=session.selectList("review.findByCustid",map);
+		session.close();
+		return list;
+	}
+
+	// 사용자의 티켓리뷰 출력
+//	public static List<MyReviewVO> findReviewByTicketAndCust(String custid, int ticketid){
+//		List<MyReviewVO> list = null;
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		map.put("custid", custid);
+//		map.put("ticketid", ticketid);
+//		SqlSession session = sqlSessionFactory.openSession();
+//		list = session.selectList("review.reviewByTicketAndCust",map);
+//		session.close();
+//		return list;
+//	}
+
+	// 마이페이지 리뷰등록 - 등록 전 ticketid로 리뷰내역이 있나 확인
+	public static int checkReviewByTicketid(ReviewVO r){
+		int re=-1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.selectOne("review.checkReview",r);
 		session.close();
 		return re;
 	}
 
+	// 드로우 완료
+	public static int drawDelete(int drawid){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("draw.drawDelete",drawid);
+		System.out.println("drawDelete:"+re);
+		session.close();
+		return re;
+	}
 
 	public static String findBySeatId(int seatid) {
 		String re = "none";
@@ -794,5 +820,36 @@ public class DBManager {
 		list = session.selectList("findByDrawCustid", custid);
 		session.close();
 		return list;
+	}
+
+	public static int findBySeatIdFromBook(int seatid) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.selectOne("seat.findBySeatIdFromBook",seatid);
+		System.out.println("seatName:"+re);
+		session.close();
+		return re;
+	}
+
+	public static int drawInsert(int ticketid, String custid) {
+		int re = -1;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ticketid", ticketid);
+		map.put("custid", custid);
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("draw.drawInsert",map);
+		session.close();
+		return re;
+	}
+
+	public static DrawVO selectDrawNoSame(int ticketid, String custid){
+		DrawVO d = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ticketid", ticketid);
+		map.put("custid", custid);
+		SqlSession session = sqlSessionFactory.openSession();
+		d = session.selectOne("draw.selectDrawNoSame",map);
+		session.close();
+		return d;
 	}
 }

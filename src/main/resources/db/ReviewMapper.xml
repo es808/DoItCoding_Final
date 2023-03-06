@@ -40,13 +40,23 @@
     r.custid=#{custid}
   </select>
 
-  <!-- 사용자 리뷰 내역 출력 -->
-  <select id="reviewByTicketAndCust" resultType="myReviewVO">
-    select * from review r, ticket t where t.ticketid= r.ticketid and custid=#{custid} and r.ticketid=#{ticketid}
-  </select>
+<!--  &lt;!&ndash; 사용자 리뷰 내역 출력 &ndash;&gt;-->
+<!--  <select id="reviewByTicketAndCust" resultType="myReviewVO">-->
+<!--    select * from review r, ticket t where t.ticketid= r.ticketid and custid=#{custid} and r.ticketid=#{ticketid}-->
+<!--  </select>-->
 
   <!-- 평균평점 구하기-->
   <select id="findAvgScore" resultType="int">
     select avg(score) from review where ticketid=#{ticketid}
+  </select>
+
+  <select id="findByCustid" parameterType="java.util.HashMap" resultType="reviewVO">
+    select reviewid, custid, ticketid, TICKET_NAME, TICKET_DATE, score, review_content, IMG_FNAME from
+    (select rownum n, a.* from
+    (select reviewid, r.custid, t.ticketid, score, REVIEW_CONTENT, TICKET_NAME, TICKET_DATE, IMG_FNAME
+    from review r, ticket t where r.ticketid=t.ticketid and r.custid=#{custid}
+    order by TICKET_DATE desc
+    ) a)
+    where n between #{firstRecord} and #{lastRecord}
   </select>
 </mapper>
