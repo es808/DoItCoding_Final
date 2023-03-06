@@ -103,3 +103,26 @@ admin 페이지에서 ticket과 customer 정보를 입력, 수정할 때 지도�
 
 ------ 23.03.04
 1. myPage에서 Qna 내역 보는 거 출력, 페이징 처리 완료 (단, 테이블과 페이징 요소 간의 CSS 처리는 아직)
+
+------ 23.03.06
+category
+-ticketid가 0인 것 출력하지않기 (QNA 해당없음 때문에 인스턴스는 필요한데 목록에 나오면 안됨) O
+-콘서트 인스턴스 제목 수정 O
+-톡상담 동작안함
+
+admin/listTicket
+-마지막에 내용없는 페이지 나옴 O
+
+admin/updateTicket
+-주소 검색창 안나옴 O
+-이미지 옆에 main이미지 없으면 엑박으로 나옴 O
+-원래 있던 이미지 다른 걸로 갈아끼우면 이미지 안나옴 -> 경로 문제 (images/ticket으로 업로드 됨)
+
+admin/updateCustomer
+-수정 누르면 404 나옴 (업뎃 안됨) -> html form의 action 경로가 이상했음 O
+
+admin/listTicketByCustid
+-티켓제목 누르면 404 O
+
+admin/listCustomer
+-삭제 누르면 자식레코드 있으면 에러페이지로 감 -> DB에서 custid를 참조하는 테이블들에 cascade 설정하면 된다.

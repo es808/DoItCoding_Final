@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/detail.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+    <script type="text/javascript" th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4cce9cc8666a0ddc40cb3ff5eee6295b"></script>
     <script type="text/javascript">
 
@@ -414,28 +415,6 @@
                     }
                 }
             })
-
-            // 검색하면 결과가 나오도록
-            var searchKeyword = function(f){
-                $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
-                    if(e.which == 13){
-                        var keyword = $("#search_txt").val();
-                        sessionStorage.setItem("keyword", keyword);
-                        var url = "search?keyword="+keyword;
-                        location.replace(url);
-                    }
-                });
-
-                $("#search_btn").click(function(){ // 버튼 누르면 검색됨
-                    var keyword = $("#search_txt").val();
-                    sessionStorage.setItem("keyword", keyword);
-                    var url = "search?keyword="+keyword;
-                    location.replace(url);
-                });
-            }// 검색 end
-
-            searchKeyword();
-
         })
     </script>
 </head>
