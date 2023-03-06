@@ -57,7 +57,7 @@
     캐스트 : <input type="text" name="cast" th:value="${ticket.cast}"> <br>
     이미지 : <input type="file" name="uploadFile"><br>
     <input type="hidden" name="img_fname" th:value="${ticket.img_fname}">
-    <img th:src="@{'/images/' + ${ticket.img_fname}}" width="400" height="350" alt="이미지"><br>
+    <img th:src="@{'/images/ticket/' + ${ticket.img_fname}}" width="400" height="350" alt="이미지"><br>
     메인 화면 이미지 : <input type="file" name="uploadFile_main">
     <input type="hidden" name="img_fname_main" th:value="${ticket.img_fname_main}">
     <img th:src="@{'/images/ticket_main/' + ${ticket.img_fname_main}}" width="400" height="350" alt="이미지"><br>

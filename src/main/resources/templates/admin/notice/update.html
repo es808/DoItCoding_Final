@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
     <script type="text/javascript" th:src="@{/js/admin/notice/update.js}"></script>
+    <script th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
 </head>
@@ -12,10 +14,10 @@
 <img src="/images/icon/logo.png" id="logo">
 <div class="main_user">
   <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
-  <a href="loginTest.html" id="login"><img src="/images/icon/loginicon.png">로그인</a>
-  <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
-  <a href="signupTest.html" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
-  <a href="mypage_Info.html" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+  <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+  <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+  <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+  <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
   <div class="search" id="search" name="search">

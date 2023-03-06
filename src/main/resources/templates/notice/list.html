@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script th:src="@{/js/notice/list.js}"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
+    <script th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
 </head>
 <body class="main_layout">
 <img src="/images/icon/logo.png" id="logo">
@@ -82,15 +84,20 @@
                 <th>조회수</th>
                 <th>등록일</th>
             </tr>
-            <tr th:each="n:${list}">
-                <td th:text="${n.notice_no}"></td>
-                <td th:text="${n.notice_category}"></td>
-                <td>
-                    <a th:href="@{'/notice/detail/'+${n.notice_no}}" th:text="${n.notice_title}"></a>
-                </td>
-                <td th:text="${n.notice_hit}"></td>
-                <td th:text="${n.notice_date}"></td>
-            </tr>
+            <th:block th:if="${msg}==null">
+                <tr th:each="n:${list}">
+                    <td th:text="${n.notice_no}"></td>
+                    <td th:text="${n.notice_category}"></td>
+                    <td>
+                        <a th:href="@{'/notice/detail/'+${n.notice_no}}" th:text="${n.notice_title}"></a>
+                    </td>
+                    <td th:text="${n.notice_hit}"></td>
+                    <td th:text="${#dates.format(n.notice_date, 'yyyy/MM/dd HH:mm')}"></td>
+                </tr>
+            </th:block>
+            <th:block th:unless="${msg}==null">
+                <tr><td colspan="5" th:text="${msg}"></td></tr>
+            </th:block>
         </table>
 <!--    검색-->
     <!--    JS로 searchColumn을 가져가기 위한 값 출력(지정한 searchColumn을 계속 유지하는 처리 하기 위해)-->

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script type="text/javascript" th:src="@{/js/qna/detail.js}"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
+    <script th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
 </head>
 <body class="main_layout">
   <img src="/images/icon/logo.png" id="logo">
@@ -68,10 +70,17 @@
         <span class="title_detail">글번호&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_no}" id="qna_no"></span></span>
   <!--  <div th:text="${q.customer.name}"></div>-->
         <span class="title_detail">분류&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_category}"></span></span>
-        <span class="title_detail" id="regdate">등록일&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_date}"></span></span><br>
+        <span class="title_detail" id="regdate">등록일&nbsp;&nbsp;&nbsp;<span th:text="${#dates.format(q.qna_date, 'yyyy/MM/dd HH:mm')}"></span></span><br>
         <br>
         <span class="title_detail">작성자&nbsp;&nbsp;&nbsp;<span th:text="${q.customer.custid}" id="div_custid"></span></span>
-        <span class="title_detail" id="ticketname">작품명&nbsp;&nbsp;&nbsp;<span th:text="${q.ticket.ticket_name}"></span></span><br>
+        <span class="title_detail" id="ticketname">작품명&nbsp;&nbsp;&nbsp;
+          <th:block th:if="${q.ticket.ticketid}!=0">
+            <span th:text="${q.ticket.ticket_name}"></span>
+          </th:block>
+          <th:block th:if="${q.ticket.ticketid}==0">
+            <span th:text="해당없음"></span>
+          </th:block>
+        </span><br>
         <br>
         <span class="title_detail">제목&nbsp;&nbsp;&nbsp;<span th:text="${q.qna_title}"></span></span><br>
       <br>

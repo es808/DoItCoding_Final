@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_frame.css"/>
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script th:src="@{/js/loginLogout.js}"></script>
     <script th:src="@{/js/notice/list.js}"></script>
+    <script th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
 </head>
 <body class="main_layout">
 <img src="/images/icon/logo.png" id="logo">
 <div class="main_user">
     <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
-    <a href="loginTest.html" id="login"><img src="/images/icon/loginicon.png">로그인</a>
-    <a href="/main" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
-    <a href="signupTest.html" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
-    <a href="mypage_Info.html" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
+    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
@@ -82,21 +84,35 @@
             <th>제목</th>
             <th>조회수</th>
             <th>등록일</th>
-            <th>공개여부</th>
-            <th>답변</th>
         </tr>
-        <tr th:each="q:${list}">
-            <td th:text="${q.qna_no}"></td>
-            <td th:text="${q.custid}"></td>
-            <td th:text="${q.qna_category}"></td>
-            <td>
-                <a th:href="@{'/qna/detail/'+${q.qna_no}}" th:text="${q.qna_title}"></a>
-            </td>
-            <td th:text="${q.qna_hit}"></td>
-            <td th:text="${q.qna_date}"></td>
-            <td th:text="${q.qna_open}"></td>
-            <td th:text="${q.qna_answer}"></td>
-        </tr>
+        <th:block th:if="${msg}==null">
+            <tr th:each="q:${list}">
+                <td th:text="${q.qna_no}"></td>
+                <td th:text="${q.custid}"></td>
+                <td th:text="${q.qna_category}"></td>
+                <td>
+                    <th:block th:if="${q.qna_open}=='n' and ${q.custid}!=${session.id} and ${session.id}!='admin'">
+                        <span th:text="${q.qna_title}"></span>
+                    </th:block>
+                    <th:block th:if="${q.qna_open}=='y' or ${q.custid}==${session.id} or ${session.id}=='admin'">
+                        <a th:href="@{'/qna/detail/'+${q.qna_no}}" th:text="${q.qna_title}"></a>
+                    </th:block>
+                    <th:block th:if="${q.qna_open}=='n'">
+                        <span>🔒</span>
+                    </th:block>
+                    <th:block th:if="${q.qna_answer}!=null">
+                        <span>✔️️</span>
+                    </th:block>
+                </td>
+                <td th:text="${q.qna_hit}"></td>
+                <td th:text="${#dates.format(q.qna_date, 'yyyy/MM/dd HH:mm')}"></td>
+            </tr>
+        </th:block>
+        <th:block th:if="${msg}!=null">
+            <tr>
+                <td colspan="6" th:text="${msg}"></td>
+            </tr>
+        </th:block>
     </table>
 
     <!--    검색-->

@@ -41,12 +41,12 @@ public class ReviewController {
         return DBManager.findReviewByTicketid(ticketid,re);
     }
 
-    // 사용자의 리뷰 출력
-    @RequestMapping("/ReviewByTicketidAndCustid")
-    @ResponseBody
-    public List<MyReviewVO> findReviewByTicketAndCust(String custid, int ticketid){
-        return DBManager.findReviewByTicketAndCust(custid,ticketid);
-    }
+//    // 사용자의 리뷰 출력
+//    @RequestMapping("/ReviewByTicketidAndCustid")
+//    @ResponseBody
+//    public List<MyReviewVO> findReviewByTicketAndCust(String custid, int ticketid){
+//        return DBManager.findReviewByTicketAndCust(custid,ticketid);
+//    }
 
     // 티켓의 평균 별점 구하기
     @RequestMapping("/AvgScore")

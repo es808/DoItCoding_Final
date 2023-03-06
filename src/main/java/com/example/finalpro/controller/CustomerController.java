@@ -143,6 +143,9 @@ public class CustomerController {
 
             session.setAttribute("id", id);
             System.out.println("session id = " + session.getAttribute("id"));
+//            if(id.equals("admin")){
+//                mav.setViewName("/main/Admin");
+//            }
             m.addAttribute("id", id);
         }else{
             session.removeAttribute("id");

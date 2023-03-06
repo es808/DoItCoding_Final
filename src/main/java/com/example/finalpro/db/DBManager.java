@@ -260,27 +260,6 @@ public class DBManager {
 		return list;
 	}
 
-	// 사용자의 티켓리뷰 출력
-	public static List<MyReviewVO> findReviewByTicketAndCust(String custid, int ticketid){
-		List<MyReviewVO> list = null;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("custid", custid);
-		map.put("ticketid", ticketid);
-		SqlSession session = sqlSessionFactory.openSession();
-		list = session.selectList("review.reviewByTicketAndCust",map);
-		session.close();
-		return list;
-	}
-
-	// ticketid로 리뷰내역이 있나 확인
-	public static int checkReviewByTicketid(ReviewVO r){
-		int re=-1;
-		SqlSession session = sqlSessionFactory.openSession();
-		re = session.selectOne("review.checkReview",r);
-		session.close();
-		return re;
-	}
-
 	// 티켓 후기의 평균별점 구하기
 	public static int findAvgScore(int ticketid){
 		int avg = 0;
@@ -598,7 +577,7 @@ public class DBManager {
 		return totalRecord;
 	}
 
-	public static Object findAllNotice(HashMap<String, Object> hashMap) {
+	public static List<NoticeVO> findAllNotice(HashMap<String, Object> hashMap) {
 		List<NoticeVO> list=null;
 		SqlSession session=sqlSessionFactory.openSession();
 		list=session.selectList("notice.findAll", hashMap);
@@ -678,8 +657,8 @@ public class DBManager {
 		return totalRecord;
 	}
 
-	public static List<NoticeVO> findAllQna(HashMap<String, Object> hashMap) {
-		List<NoticeVO> list=null;
+	public static List<QnaVO> findAllQna(HashMap<String, Object> hashMap) {
+		List<QnaVO> list=null;
 		SqlSession session=sqlSessionFactory.openSession();
 		list=session.selectList("qna.findAll", hashMap);
 		session.close();
@@ -754,6 +733,36 @@ public class DBManager {
 		int re=-1;
 		SqlSession session=sqlSessionFactory.openSession(true);
 		re=session.insert("review.insert",r);
+		session.close();
+		return re;
+	}
+
+	// 마이페이지 - 내가 쓴 리뷰 불러오기
+	public static List<ReviewVO> listReviewByCustid(HashMap<String, Object> map){
+		List<ReviewVO> list=null;
+		SqlSession session=sqlSessionFactory.openSession();
+		list=session.selectList("review.findByCustid",map);
+		session.close();
+		return list;
+	}
+
+	// 사용자의 티켓리뷰 출력
+//	public static List<MyReviewVO> findReviewByTicketAndCust(String custid, int ticketid){
+//		List<MyReviewVO> list = null;
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		map.put("custid", custid);
+//		map.put("ticketid", ticketid);
+//		SqlSession session = sqlSessionFactory.openSession();
+//		list = session.selectList("review.reviewByTicketAndCust",map);
+//		session.close();
+//		return list;
+//	}
+
+	// 마이페이지 리뷰등록 - 등록 전 ticketid로 리뷰내역이 있나 확인
+	public static int checkReviewByTicketid(ReviewVO r){
+		int re=-1;
+		SqlSession session = sqlSessionFactory.openSession();
+		re = session.selectOne("review.checkReview",r);
 		session.close();
 		return re;
 	}

@@ -73,6 +73,9 @@ public class QnaController {
         int totalRecord=DBManager.getTotalQnaRecord(hashMap);
         int pageSize=10;
         int totalPage=(int)Math.ceil((double)totalRecord/pageSize);
+        if(totalPage==0){
+            totalPage=1;
+        }
         mav.addObject("totalPage",totalPage);
 
         // 해당 페이지의 시작 글번호, 끝 글번호
@@ -92,7 +95,12 @@ public class QnaController {
         mav.addObject("firstPage",firstPage);
         mav.addObject("lastPage",lastPage);
 
-        mav.addObject("list",DBManager.findAllQna(hashMap));
+        List<QnaVO> list=DBManager.findAllQna(hashMap);
+        if(list.size()!=0) {
+            mav.addObject("list", list);
+        }else{
+            mav.addObject("msg","게시글이 없습니다.");
+        }
         return mav;
     }
 
