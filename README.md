@@ -49,15 +49,10 @@
 1.23.02.15 
 유근형 브런치 생성.
 
-// 남은 css 페이지 - 윤경
 
 2.23.02.17
 2차 프로젝트의 main 페이지를 스프링으로 옮기기
 
-< admin -> ticket >
-- insertTicket.html
-- listTicket.html
-- updateTicket.html
 
 ---- 23.02.20
 Spring 구조 복습

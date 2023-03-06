@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function(){
+            let ticketid = $("#ticket").attr("tid")
+            console.log(ticketid);
+            sessionStorage.setItem("ticketid", '');
+            sessionStorage.setItem("ticketid", ticketid);
+        })
+    </script>
 </head>
 <body>
 <div id="admin_background">
@@ -29,7 +38,7 @@
         </div>
         <td th:text="${t.placeid}"></td>
         <td>
-            <a th:text="${t.ticket_name}" th:href="@{'/detail?ticketid='+${t.ticketid}}"></a>
+            <a th:text="${t.ticket_name}" th:href="@{'/detail?ticketid='+${t.ticketid}}" th:attr="tid =${t.ticketid}" id="ticket"></a>
         </td>
         <td th:text="${t.price}"></td>
         <td th:text="${t.ticket_date}"></td>

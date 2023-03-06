@@ -156,7 +156,7 @@
                 height: 400
               });
               $("#future_preview"+i).attr('ticketid', arr[i].ticketid);
-              var url = "detail?ticketid="+arr[i].ticketid;
+              var url = "/detail?ticketid="+arr[i].ticketid;
               $("#future_preview"+i).attr('href', url);
               $("#future_preview"+i).append(img);
 
@@ -339,7 +339,6 @@
 <div id="notif_not_checked"></div><!--알림 갯수-->
 <a id="bell"><img src="/images/icon/alarm.png" width="45" height="45"></a>
 <div id="notif_container"></div>
-
 <nav id="navigation">
   <div class="search" id="search" name="search">
     <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
