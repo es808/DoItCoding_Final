@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
@@ -8,9 +8,11 @@
     <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <meta name="viewport" content="user-scalable=yes, initial-scale=1">
     <script type="text/javascript" src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script th:src="@{/js/loginLogout.js}"></script>
     <script type="text/javascript">
         $(function(){
+
+            var custid = sessionStorage.getItem("custid");
+            var ticketid = sessionStorage.getItem("ticketid");
 
             var custid = sessionStorage.getItem("custid");
 

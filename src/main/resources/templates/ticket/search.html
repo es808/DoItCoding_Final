@@ -45,10 +45,10 @@
 						var a = $("<a></a>").attr({
 							ticketid: arr[i].ticketid,
 							id: "preview"+i,
-							href:"/detail?ticketid="+arr[i].ticketid
+							href:"detail?ticketid="+arr[i].ticketid
 						});
 							var img = $("<img>").attr({
-								src: "/images/"+arr[i].img_fname,
+								src: "images/ticket/"+arr[i].img_fname,
 								width : 200,
 								height: 251
 							});
@@ -109,7 +109,7 @@
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "/category?time="+time+"?cateid="+cateid;
+	    	 var url = "categoryPage.html?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 		
@@ -125,7 +125,7 @@
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "/category?time="+time+"?cateid="+cateid;
+	    	 var url = "categoryPage.html?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 		
@@ -141,7 +141,7 @@
 	    	 sessionStorage.setItem("time", time);
 	    	 sessionStorage.setItem("cateid", cateid);
 	    	 
-	    	 var url = "/category?time="+time+"?cateid="+cateid;
+	    	 var url = "categoryPage.html?time="+time+"?cateid="+cateid;
 			location.replace(url);
 	     });
 	}
@@ -152,7 +152,7 @@
 			if(e.which == 13){
 				var keyword = $("#search_txt").val();
 				sessionStorage.setItem("keyword", keyword);
-				var url = "/search?keyword="+keyword;
+				var url = "searchPage.html?keyword="+keyword;
 				location.replace(url);
 				}
 		});
@@ -160,7 +160,7 @@
 		$("#search_btn").click(function(){ // 버튼 누르면 검색됨
 			var keyword = $("#search_txt").val();
 			sessionStorage.setItem("keyword", keyword);
-			var url = "/search?keyword="+keyword;
+			var url = "searchPage.html?keyword="+keyword;
 			location.replace(url);
 		});
 	}// 검색 end
@@ -220,16 +220,17 @@
 				  <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
              </ul>
         </nav>
+       <hr>
 		<div id="search_title">
  			
        </div>
        <div id="search_all">
 		</div>
-  	  <div id="main-footer">
-		<footer class="footer">
-			<div>ⓒ CodingDoit corp.
-</div>
-		</footer>
-	</div>	  
+		<div id="main-footer">
+			<footer class = "footer">
+				<div>ⓒ CodingDoit corp.
+				</div>
+			</footer>
+		</div>
 </body>
 </html>

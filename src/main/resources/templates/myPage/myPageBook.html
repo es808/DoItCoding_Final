@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta charset="UTF-8">
@@ -250,7 +250,6 @@
 <body class="main_layout">
 <a href="/main"><img src="images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
     <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
     <a href="/main" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
     <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
@@ -304,10 +303,9 @@
     </ul>
 </div>
 <div id="review_background">
-<form action="" method="post" id="form">
-    <div id="book_all">
-    </div>
-    <button id="book_cancel">예매취소</button>
+<form action="/myPageBook">
+    <div id="book_all"></div>
+    <button id="book_cancel" type="submit">예매취소</button>
 </form>
 </div>
 <div id="main-footer">

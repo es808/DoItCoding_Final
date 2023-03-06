@@ -53,6 +53,12 @@
                     var lat = data['lat'];
                     var lng = data['lng'];
 
+                    $( "#datepicker" ).datepicker({
+                        dateFormat: 'yyyy-mm-dd hh:mm:ss',
+                        minDate: new Date(ticket_date),
+                        maxDate: new Date(ticket_date+1)
+                    });
+
                     //console.log(img_fname);
                     if(vid_url == null || vid_url == "") {
                         $("#vid_url").css('display', 'none');
@@ -70,15 +76,10 @@
                     if(price==0){
                         $("#price").append("0원(전석 초대)");
                     }else{
-                        $("#price").append(price+"원");
+                        $("#price").append(price);
                     }
                     $("#cast").append(cast);
-                    if(content.endsWith(".jpg")||content.endsWith(".png")||content.endsWith(".gif")){
-                        var tag = $("<img/>").attr("src","images/"+content);
-                        $("#content").html(tag);
-                    }else{
-                        $("#content").append(content);
-                    }
+                    $("#content").append(content);
 
                     var img = $("<img>").attr({
                         src: "images/"+img_fname,
@@ -87,6 +88,7 @@
                     });
                     $("#img_fname").append(img);
 
+                    sessionStorage.setItem("cateid",cateid);
 
                     if(vid_url != null){
                         var vid = $("<iframe>").attr({
@@ -108,7 +110,7 @@
                     //     $("#art_img").append(img1);
                     // }
 
-                    if(cateid==2){
+                    if(cateid==1){
                         $("#btnbook").attr("disabled",true).css({
                             "border":"1px solid #cccccc",
                             "background-color":"#cccccc",
@@ -120,7 +122,10 @@
                             url: "DrawButtonOpen",
                             data: {ticketid: sessionStorage.getItem("ticketid")},
                             success: function(data){
-                                var close = new Date(data['ticket_date']);
+                                var ticketdate = new Date(data['ticket_date']);
+                                var close = new Date(ticketdate);
+                                close.setDate(ticketdate.getDate()-1);
+                                close.setHours(12,0,0);
                                 var open = new Date(close);
                                 open.setDate(close.getDate()-14);
                                 var today = new Date();
@@ -136,8 +141,28 @@
                                     });
                                     $(document).on("click","#btndraw",function(){
                                         console.log("btndraw 클릭");
-                                        var url = "/draw";
-                                        location.replace(url);
+                                        $.ajax({
+                                            url:"selectDrawNoSame",
+                                            data:{ticketid:ticketid,
+                                                    custid:custid},
+                                            success:function (results){
+                                                console.log("뭐야"+results);
+                                                if(results != null && results !=""){
+                                                    alert("이미 신청하셨습니다.")
+                                                }else{
+                                                    $.ajax({
+                                                        url:'DrawInsert',
+                                                        data:{ticketid:ticketid,
+                                                            custid:custid},
+                                                        success:function(res){
+                                                            if(res>0){
+                                                                alert("드로우 신청이 완료되었습니다.");
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        })
                                     });
                                 }
 
@@ -208,7 +233,7 @@
                     console.log("open:"+open);
                     console.log("today:"+today);
 
-                    if(open <= today && today< close){
+                    if(open <= today && today< close && sessionStorage.getItem("cateid")!=1){
                         $("#btnbook").removeAttr("disabled").css({
                             "border":"1px solid #D10505",
                             "background-color":"#d10505"
@@ -246,7 +271,10 @@
                             url: "DrawButtonOpen",
                             data: {ticketid: sessionStorage.getItem("ticketid")},
                             success: function(data){
-                                var close = new Date(data['ticket_date']);
+                                var ticketdate = new Date(data['ticket_date']);
+                                var close = new Date(ticketdate);
+                                close.setDate(ticketdate.getDate()-1);
+                                close.setHours(12,0,0);
                                 var open = new Date(close);
                                 open.setDate(close.getDate()-14);
                                 var today = new Date();
@@ -255,7 +283,7 @@
                                 console.log("open:"+open);
                                 console.log("today:"+today);
 
-                                if(open <= today < close){
+                                if(open <= today && today < close && sessionStorage.getItem("cateid")!=1){
                                     console.log("OK");
                                     $("#btndraw").removeAttr("disabled").css({
                                         "border":"1px solid #ff7f00",
@@ -264,8 +292,16 @@
                                     });
                                     $(document).on("click","#btndraw",function(){
                                         console.log("btndraw 클릭");
-                                        var url = "/draw";
-                                        location.replace(url);
+                                        $.ajax({
+                                            url:'DrawInsert',
+                                            data:{ticketid:ticketid,
+                                                custid:custid},
+                                            success:function(res){
+                                                if(res>0){
+                                                    alert("드로우 신청이 완료되었습니다.");
+                                                }
+                                            }
+                                        });;
                                     });
                                 }
 
@@ -415,6 +451,67 @@
                 }
             })
 
+            // 네비게이션 바에서 클릭하면 카테고리별 목록으로 넘어가도록
+            var time = 1;
+
+            var cate_current = "";
+            var cate_future = "";
+            var cate_past = "";
+
+            for (var i = 1; i <=4; i++) {
+                cate_current = '#cate'+i+"_current";
+                cate_future = '#cate'+i+"_future";
+                cate_past = '#cate'+i+"_past";
+
+                $(cate_current).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+
+                $(cate_future).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+
+                $(cate_past).click(function(e){
+                    var target = this.id;
+                    var cateid_num = $("#"+target).attr("cateid");
+                    var time_num = $("#"+target).attr("time");
+
+                    time = time_num;
+                    cateid = cateid_num;
+                    console.log(cateid);
+
+                    sessionStorage.setItem("time", time);
+                    sessionStorage.setItem("cateid", cateid);
+
+                    var url = "category?time="+time+"?cateid="+cateid;
+                    location.replace(url);
+                });
+            }
+
             // 검색하면 결과가 나오도록
             var searchKeyword = function(f){
                 $("#search_txt").keydown(function(e){ // 엔터 누르면 검색되도록 (아직 구현 X)
@@ -440,18 +537,17 @@
     </script>
 </head>
 <body class="main_layout">
-<a href="/main"><img src="/images/icon/logo.png" id="logo"></a>
+<a href="/main"><img src="images/icon/logo.png" id="logo"></a>
 <div class="main_user">
-    <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
-    <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
-    <a href="/logout" id="logout"><img src="/images/icon/logouticon.png">로그아웃</a>
-    <a href="/signUp" id="regist"><img src="/images/icon/signupicon.png">회원가입</a>
-    <a href="/myPage" id="mypage"><img src="/images/icon/mypageicon.png">마이페이지</a>
+    <a href="/login" id="login"><img src="images/icon/loginicon.png">로그인</a>
+    <a href="/logout" id="logout"><img src="images/icon/logouticon.png">로그아웃</a>
+    <a href="/signUp" id="regist"><img src="images/icon/signupicon.png">회원가입</a>
+    <a href="/myPage" id="mypage"><img src="images/icon/mypageicon.png">마이페이지</a>
 </div>
 <nav id="navigation">
     <div class="search" id="search" name="search">
         <input class="search_txt" type="search" placeholder="검색어 입력..." id="search_txt">
-        <a class="search_btn" type="button" id="search_btn"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" type="button" id="search_btn"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
     </div>
     <ul>
         <li class="home"><a href="/main">홈</a></li>
@@ -534,7 +630,7 @@
         <p id="content"></p>
 </div>
 <div id="detail_location">
-    <img src="/images/icon/mapicon.png" width="60" height="50" id="mapicon">
+    <img src="images/icon/mapicon.png" width="60" height="50" id="mapicon">
     <h2 class="detail_title" id="a">위치</h2>
     <div id="location_box"><div id="map" style="width:100%;height:500px"></div></div>
 </div>
@@ -545,8 +641,8 @@
         <div>
             <!-- 통계 -->
             <div>
-                <img src="/images/icon/manicon.png" width="100" height="100">
-                <img src="/images/icon/womanicon.png" width="100" height="100">
+                <img src="images/icon/manicon.png" width="100" height="100">
+                <img src="images/icon/womanicon.png" width="100" height="100">
                 <ul class="gender"></ul>
                 <div id="divide"></div>
                 <ul id="ulavgScore">
@@ -560,7 +656,7 @@
         <!-- 후기 정렬 ==>평점 높은순/평점 낮은순 -->
     <div class="review_all">
         <select id="reviewOrder">
-            <option>스포일러성 후기가 있을 수 있습니다. 그래도 후기 보기</option>
+            <option>후기 보기(스포일러성 후기가 있을 수 있습니다)</option>
             <option id="desc">평점 높은순</option>
             <option id="acs">평점 낮은순</option>
         </select>

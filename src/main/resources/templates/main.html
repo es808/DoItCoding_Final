@@ -12,6 +12,7 @@
   <script>
     Kakao.init('b2e1975d2187199e889d30007c46dd02'); // 사용하려는 앱의 JavaScript 키 입력
   </script>
+
   <script>
     function chatChannel() {
       Kakao.Channel.chat({
@@ -19,6 +20,7 @@
       });
     }
   </script>
+
   <script type="text/javascript">
     $(function(){
 
@@ -139,6 +141,7 @@
 
       // 미래상영작 출력
       var selectFutureBycategory = function(){
+
         $.ajax("SelectTicketMain", {
           data:{time:2, cateid:cateid},
           success:function(arr){
@@ -339,7 +342,7 @@
       $("#logout").click(function(e){
         if(confirm("로그아웃 하시겠습니까?")){
           sessionStorage.removeItem("custid");
-
+          custid = "none";
         }else{
           return false;
         }
@@ -406,7 +409,7 @@
 </head>
 <body class="main_layout">
 
-<img src="/images/icon/logo.png" id="logo">
+<img src="images/icon/logo.png" id="logo">
 <div class="main_user">
   <a href="/notice/list" id="center"><img src="/images/icon/center.png">고객센터</a>
   <a href="/login" id="login"><img src="/images/icon/loginicon.png">로그인</a>
@@ -453,7 +456,7 @@
         <li><a id="cate4_past" cateid="4" time="0">과거상영작</a></li>
       </ul>
     </li>
-    <a id="chat-channel-button" href="javascript:chatChannel()"><img src="/images/icon/consult_small_yellow_pc.png"/></a>
+    <li><a id="chat-channel-button" href="javascript:chatChannel()"><img src="images/icon/consult_small_yellow_pc.png"/></a></li>
   </ul>
 </nav>
 <div id="main-header">
@@ -461,13 +464,25 @@
   <div class="slider" data-role="slider" data-width="1380" data-height="600" style="position: relative; overflow: hidden; width: 500px; height: 500px;">
     <div class="container" style="position: absolute; overflow: hidden;">
       <div  style="float: left;">
-        <img src="/images/icon/monster.jpg" class="poster">
+        <img src="images/icon/monster.jpg" class="poster">
       </div>
       <div class="item" style="float: left;">
-        <img src="/images/icon/가면산장살인사건_main_3.jpg" class="poster">
+        <img src="images/icon/가면산장살인사건_main_3.jpg" class="poster">
       </div>
       <div class="item" style="float: left;">
-        <img src="/images/icon/마틸다.jpg" class="poster">
+        <img src="images/elizabeth_main_2.jpg" class="poster">
+      </div>
+      <div class="item" style="float: left;">
+        <img src="images/everything_main_1.jpg" class="poster">
+      </div>
+      <div class="item" style="float: left;">
+        <img src="images/frank_main_4.jpg" class="poster">
+      </div>
+      <div class="item" style="float: left;">
+        <img src="images/gravity_main_1.jpg" class="poster">
+      </div>
+      <div class="item" style="float: left;">
+        <img src="images/kanye_main_4.jpg" class="poster">
       </div>
     </div>
   </div>
@@ -486,11 +501,11 @@
     </ul>
     <br>
   </div>
-  <img class="main_rank" src="/images/icon/firsticon.jpg" width="80" height="80">
+  <img class="main_rank" src="images/icon/firsticon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview0"></a>
-  <img class="main_rank" src="/images/icon/secondicon.jpg" width="80" height="80">
+  <img class="main_rank" src="images/icon/secondicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview1"></a>
-  <img class="main_rank" src="/images/icon/thirdicon.jpg" width="80" height="80">
+  <img class="main_rank" src="images/icon/thirdicon.jpg" width="80" height="80">
   <a class="img"  id="rank_preview2"></a>
   <br>
   <div>

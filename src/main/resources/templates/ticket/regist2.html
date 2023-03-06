@@ -76,7 +76,7 @@
                                                 data:{seatid:sessionStorage.getItem("as")},
                                                 success: function (result){
                                                     console.log("RegistBook성공")
-
+                                                    console.log("result:"+result);
                                                     if(result>0){
                                                         $.ajax({
                                                             url:"BookTicket",
@@ -109,12 +109,13 @@
                                                                             }
                                                                         })
 
-                                                                        window.close();
+                                                                        // window.close();
                                                                         //$(location).attr('href',"/detail?ticketid"+ticketid);
                                                                     }else{
                                                                         alert("예약에 실패하였습니다. 다시 시도해주세요.");
                                                                     }
                                                                 })
+                                                                window.close();
                                                             }
                                                         })
                                                     }else{

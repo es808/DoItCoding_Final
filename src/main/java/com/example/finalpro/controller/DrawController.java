@@ -5,6 +5,7 @@ import com.example.finalpro.db.DBManager;
 import com.example.finalpro.entity.Draw;
 import com.example.finalpro.service.DrawService;
 import com.example.finalpro.vo.DrawVO;
+import com.example.finalpro.vo.MyDrawVO;
 import com.example.finalpro.vo.SeatVO;
 import com.example.finalpro.vo.TicketVO;
 import lombok.Setter;
@@ -31,12 +32,17 @@ public class DrawController {
     @Autowired
     private DrawDAO drawDAO;
 
-    @PostMapping("/DrawInsert")
+    @RequestMapping ("/DrawInsert")
     @ResponseBody
-    public void drawInsert(Draw draw){
-        drawDAO.save(draw);
+    public int drawInsert(int ticketid, String custid){
+        return DBManager.drawInsert(ticketid,custid);
     }
 
+    @RequestMapping("/selectDrawNoSame")
+    @ResponseBody
+    public DrawVO selectDrawNoSame(int ticketid, String custid){
+        return DBManager.selectDrawNoSame(ticketid,custid);
+    }
 
     // 잔여좌석이 0이거나 cateid=1일 때 드로우 버튼 활성화
     @RequestMapping("/DrawButtonOpen")
