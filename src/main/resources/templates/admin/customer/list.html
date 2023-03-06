@@ -13,30 +13,30 @@
     <table class="admin_table">
         <thead>
             <tr>
-                <th>고객ID</th>
-                <th>성함</th>
-                <th>생년월일</th>
-                <th>전화번호</th>
-                <th>성별</th>
+<!--                <th>고객ID</th>-->
+<!--                <th>성함</th>-->
+<!--                <th>생년월일</th>-->
+<!--                <th>전화번호</th>-->
+<!--                <th>성별</th>-->
+<!--                <th>예매내역</th>-->
+<!--                <th>Q&A내역</th>-->
+<!--                <th>삭제</th>-->
+                <th>
+                    <a th:with="text='custid'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
+                <th>
+                    <a th:with="text='name'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
+                <th>
+                    <a th:with="text='birth'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
+                <th>phone</th>
+                <th>
+                    <a th:with="text='gender'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+                </th>
                 <th>예매내역</th>
                 <th>Q&A내역</th>
                 <th>삭제</th>
-                <td>
-                    <a th:with="text='custid'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-                </td>
-                <td>
-                    <a th:with="text='name'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-                </td>
-                <td>
-                    <a th:with="text='birth'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-                </td>
-                <td>phone</td>
-                <td>
-                    <a th:with="text='gender'" th:text="${text}" th:href="@{'/admin/listCustomer?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-                </td>
-                <td>예매내역 조회</td>
-                <td>qna 내역 조회</td>
-                <td>삭제</td>
             </tr>
         </thead>
         <!--role이 admin이 아닌 customer만 출력하기-->
@@ -50,13 +50,13 @@
                 <td th:text="${c.phone}"></td>
                 <td th:text="${c.gender}"></td>
                 <td>
-                    <a th:href="@{'/admin/ticket/listTicket/'+${c.custid}}">내역보기</a>
+                    <a th:href="@{'/admin/listTicketByCustid/'+${c.custid}}">내역보기</a>
                 </td>
                 <td >
-                    <a th:href="@{'/admin/customer/listQna/'+${c.custid}}">내역보기</a>
+                    <a th:href="@{'/admin/listQnaByCustid/'+${c.custid}}">내역보기</a>
                 </td>
                 <td>
-                    <a th:text="삭제" th:href="@{'/admin/deleteCustomer/'+${c.custid}}"></a>
+                    <a th:text="삭제하기" th:href="@{'/admin/deleteCustomer/'+${c.custid}}"></a>
                 </td>
             </tr>
         </tbody>

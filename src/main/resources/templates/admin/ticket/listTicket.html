@@ -13,34 +13,34 @@
     <table class="admin_table">
    <thead>
     <tr>
-      <th>번호</th>
-      <th>작품명</th>
+<!--      <th>번호</th>-->
+<!--      <th>작품명</th>-->
+<!--        <th>-->
+<!--            <a th:text="분류"></a>-->
+<!--        </th>-->
+<!--      <th>-->
+<!--          <a th:text="가격"></a>-->
+<!--      </th>-->
+<!--      <th>-->
+<!--          <a th:text="개봉일자"></a>-->
+<!--      </th>-->
+<!--        <th>삭제</th>-->
+      <th>
+          <a th:with="text='ticketid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </th>
+      <th>
+          <a th:with="text='ticket_name'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
+      </th>
         <th>
-            <a th:text="분류"></a>
+            <a th:with="text='cateid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
         </th>
       <th>
-          <a th:text="가격"></a>
+          <a th:with="text='price'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
       </th>
       <th>
-          <a th:text="개봉일자"></a>
+          <a th:with="text='ticket_date'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
       </th>
         <th>삭제</th>
-      <td>
-          <a th:with="text='ticketid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-      </td>
-      <td>
-          <a th:with="text='ticket_name'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-      </td>
-        <td>
-            <a th:with="text='cateid'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-        </td>
-      <td>
-          <a th:with="text='price'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-      </td>
-      <td>
-          <a th:with="text='ticket_date'" th:text="${text}" th:href="@{'/admin/listTicket?page=1'+'&keyword='+${keyword}+'&order='+${text}}"></a>
-      </td>
-        <td>삭제</td>
     </tr>
    </thead>
    <tbody>
@@ -89,5 +89,6 @@
         </th:block>
         <a th:text="끝" th:href="@{'/admin/ticket/listTicket?page='+${paging.totalPage}+'&keyword='+${keyword}}"></a>
     </div>
+</div>
 </body>
 </html>

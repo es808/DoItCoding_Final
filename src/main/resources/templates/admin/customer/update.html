@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/ticket/homepage_content.css"/>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         function sample6_execDaumPostcode() {
@@ -56,37 +57,56 @@
     </script>
 </head>
 <body>
+<div id="customer_background">
+    <h2>고객정보 수정</h2>
+    <hr id="admin_hr">
     <form action="/admin/customer/update" method="post" id="updateForm">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        고객 아이디 : <input type="text" th:value="${customer.custid}" readonly="readonly" name="custid"><br>
-        고객 이름 : <input type="text" th:value="${customer.name}" name="name"><br>
-        고객 비밀번호 : <input type="text" th:value="${customer.pwd}" name="pwd"><br>
-        고객 선호 장르 : <select th:value="${customer.cateid}" name="cateid"><br>
+        <span class="title_admin">ID&nbsp;&nbsp;<input type="text" th:value="${customer.custid}" readonly="readonly" name="custid" class="content_admin" id="id_admin"></span><br>
+        <br>
+        <span class="title_admin">성함&nbsp;&nbsp;<input type="text" th:value="${customer.name}" name="name" class="content_admin"></span><br>
+        <br>
+        <span class="title_admin">비밀번호&nbsp;&nbsp;<input type="text" th:value="${customer.pwd}" name="pwd" class="content_admin"></span><br>
+        <br>
+        <span class="title_admin">생년월일&nbsp;&nbsp;<input type="text" th:value="${birth}" name="birth" class="content_admin">
+        <label class="info">*예시 : 1999/09/09</label></span><br>
+        <br>
+        <span class="title_admin">전화번호&nbsp;&nbsp;<input type="text" th:value="${customer.phone}" name="phone" class="content_admin">
+        <label class="info">'-'제외하고 입력</label></span><br>
+        <br>
+        <span class="title_admin">이메일&nbsp;&nbsp;<input type="email" th:value="${customer.email}" name="email" class="content_admin"></span><br>
+        <br>
+        <span class="title_admin">주소&nbsp;&nbsp;
+            <input type="text" id="sample6_postcode" placeholder="우편번호" name="addr_postcode" th:value="${customer.addr_postcode}" class="addr_admin">
+            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="btn_searchAddr"><br>
+            <input type="text" id="sample6_address" placeholder="주소" name="addr_address" th:value="${customer.addr_address}" class="addr_admin"><br>
+            <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="addr_detail" th:value="${customer.addr_detail}" class="addr_admin">
+            <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="addr_extra" th:value="${customer.addr_extra}" class="addr_admin">
+        </span><br>
+        <br>
+        <span class="title_admin">성별&nbsp;&nbsp;
+        <label for="gender1">남자
+            <input type="radio" name="gender" id="gender1" value="남자" th:attr="checked=${customer.gender == '남자' ? 'true' : 'false'}">
+            </label>
+            <label for="gender2">여자
+        <input type="radio" name="gender" id="gender2" value="여자" th:attr="checked=${customer.gender == '여자' ? 'true' : 'false'}">
+            </label>
+        </span><br>
+        <br>
+        <span class="title_admin">선호장르&nbsp;&nbsp;<select th:value="${customer.cateid}" name="cateid" class="admin_select"><br>
         <option th:value="1" th:selected="${customer.cateid == 1}">영화 시사회</option>
         <option th:value="2" th:selected="${customer.cateid == 2}">뮤지컬</option>
         <option th:value="3" th:selected="${customer.cateid == 3}">연극</option>
         <option th:value="4" th:selected="${customer.cateid == 4}">콘서트</option>
     </select>
-        생년월일 : <input type="text" th:value="${birth}" name="birth"><br>
-        전화번호 : <input type="text" th:value="${customer.phone}" name="phone"><br>
-        이메일 : <input type="email" th:value="${customer.email}" name="email"><br>
-        주소 :
-        <input type="text" id="sample6_postcode" placeholder="우편번호" name="addr_postcode" th:value="${customer.addr_postcode}">
-        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-        <input type="text" id="sample6_address" placeholder="주소" name="addr_address" th:value="${customer.addr_address}"><br>
-        <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="addr_detail" th:value="${customer.addr_detail}">
-        <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="addr_extra" th:value="${customer.addr_extra}">
+        </span>
         <br>
-        성별 :
-        <label for="gender1">
-            <input type="radio" name="gender" id="gender1" value="남자" th:attr="checked=${customer.gender == '남자' ? 'true' : 'false'}">
-            남자</label>
-            <label for="gender2">
-        <input type="radio" name="gender" id="gender2" value="여자" th:attr="checked=${customer.gender == '여자' ? 'true' : 'false'}">
-            여자</label><br>
-        <input type="hidden" name="role" th:value="${customer.role}"><br>
-        <input type="submit" value="수정">
-        <input type="reset" value="취소">
+        <div id="admin_caption">
+            <input type="hidden" name="role" th:value="${customer.role}"><br>
+            <input type="submit" value="수정">
+            <input type="reset" value="취소" id="admin_cancel">
+        </div>
     </form>
+</div>
 </body>
 </html>
