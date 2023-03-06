@@ -376,7 +376,7 @@ input[type="checkbox"]{
     font-weight : 500;
     font-size : 15px;
 }
-.myPageQna_table th,td{
+.myPageQna_table th,.myPageQna_table td{
     padding : 13px;
     text-align : center;
 }
