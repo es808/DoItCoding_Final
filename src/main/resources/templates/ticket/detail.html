@@ -88,6 +88,7 @@
                     });
                     $("#img_fname").append(img);
 
+                    sessionStorage.setItem("cateid",cateid);
 
                     if(vid_url != null){
                         var vid = $("<iframe>").attr({
@@ -140,11 +141,30 @@
                                     });
                                     $(document).on("click","#btndraw",function(){
                                         console.log("btndraw 클릭");
-                                        var url = "/draw";
-                                        location.replace(url);
+                                        $.ajax({
+                                            url:"selectDrawNoSame",
+                                            data:{ticketid:ticketid,
+                                                    custid:custid},
+                                            success:function (results){
+                                                console.log("뭐야"+results);
+                                                if(results != null && results !=""){
+                                                    alert("이미 신청하셨습니다.")
+                                                }else{
+                                                    $.ajax({
+                                                        url:'DrawInsert',
+                                                        data:{ticketid:ticketid,
+                                                            custid:custid},
+                                                        success:function(res){
+                                                            if(res>0){
+                                                                alert("드로우 신청이 완료되었습니다.");
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        })
                                     });
                                 }
-
                             }
                         });
                     }
@@ -212,7 +232,7 @@
                     console.log("open:"+open);
                     console.log("today:"+today);
 
-                    if(open <= today && today< close){
+                    if(open <= today && today< close && sessionStorage.getItem("cateid")!=1){
                         $("#btnbook").removeAttr("disabled").css({
                             "border":"1px solid #D10505",
                             "background-color":"#d10505"
@@ -262,7 +282,7 @@
                                 console.log("open:"+open);
                                 console.log("today:"+today);
 
-                                if(open <= today && today < close){
+                                if(open <= today && today < close && sessionStorage.getItem("cateid")!=1){
                                     console.log("OK");
                                     $("#btndraw").removeAttr("disabled").css({
                                         "border":"1px solid #ff7f00",
@@ -271,8 +291,16 @@
                                     });
                                     $(document).on("click","#btndraw",function(){
                                         console.log("btndraw 클릭");
-                                        var url = "/draw";
-                                        location.replace(url);
+                                        $.ajax({
+                                            url:'DrawInsert',
+                                            data:{ticketid:ticketid,
+                                                custid:custid},
+                                            success:function(res){
+                                                if(res>0){
+                                                    alert("드로우 신청이 완료되었습니다.");
+                                                }
+                                            }
+                                        });;
                                     });
                                 }
 

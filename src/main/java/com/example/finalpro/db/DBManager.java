@@ -679,4 +679,26 @@ public class DBManager {
 		session.close();
 		return re;
 	}
+
+	public static int drawInsert(int ticketid, String custid) {
+		int re = -1;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ticketid", ticketid);
+		map.put("custid", custid);
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.insert("draw.drawInsert",map);
+		session.close();
+		return re;
+	}
+
+	public static DrawVO selectDrawNoSame(int ticketid, String custid){
+		DrawVO d = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ticketid", ticketid);
+		map.put("custid", custid);
+		SqlSession session = sqlSessionFactory.openSession();
+		d = session.selectOne("draw.selectDrawNoSame",map);
+		session.close();
+		return d;
+	}
 }

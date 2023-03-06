@@ -327,7 +327,7 @@ input[type="checkbox"]{
     height : 150px;
     border : 2px solid #dcdcdc;
     border-radius : 40px;
-    margin : 60px;
+    margin: 10px;
 }
 .drawlist img{
     position : relative;
