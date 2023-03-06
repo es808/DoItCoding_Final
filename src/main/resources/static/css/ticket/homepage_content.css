@@ -108,9 +108,23 @@
     top: 49px;
     z-index: 300;
 }
-/*#notif_container{*/
-/*    border : 2px solid red;*/
-/*}*/
+#notif_container{
+    border: 2px solid #08428C;
+    margin-top: -79px;
+    position: absolute;
+    width: 290px;
+    z-index: 800;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    margin-left: 770px;
+    color: #08348C;
+}
+#notif_container a{
+    font-size : 13px;
+    text-decoration: none;
+    color : #08348C;
+    text-align : center;
+}
 
 /* 마이페이지(myinfo) - menu-bar */
 #menu-bar{

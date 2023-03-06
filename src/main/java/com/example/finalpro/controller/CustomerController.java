@@ -222,8 +222,8 @@ public class CustomerController {
         }
         return "myPage/myPageBook";}
 
-    @GetMapping("/myPageReview")
-    public String myPageReview() { return "myPage/myPageReview";}
+//    @GetMapping("/myPageReview")
+//    public String myPageReview() { return "myPage/myPageReview";}
 
     @PostMapping("/signUp")
     public ModelAndView signUpSubmit(Customer c) {
