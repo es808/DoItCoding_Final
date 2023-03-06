@@ -11,12 +11,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script type="text/javascript">
         $(function() {
-
             var custid = sessionStorage.getItem("custid");
-
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            var confirm_phone = false;
 
             if (custid != null) {
                 $("#login").css('display', 'none');
@@ -115,6 +110,19 @@
             }// 검색 end
 
             searchKeyword();
+            var seatname = $("#seatname").html()
+
+            $(document).on('submit', '#testForm', function (e) { // form이 제출 (회원가입 기능)
+                console.log($(this).find("span"));
+                var span = $(this).find("span");
+                console.log($(span[5]).html());
+                    sessionStorage.setItem("ticketid",$(span[5]).html());
+                    sessionStorage.setItem("custid",custid);
+                    sessionStorage.setItem("as",$(span[6]).html());
+                    sessionStorage.setItem("drawid",$(span[0]).html());
+                    window.open('/regist2');
+                    e.preventDefault();
+            })
         })
     </script>
 </head>
@@ -130,7 +138,7 @@
 <nav id="navigation">
     <form action="" method="post" class="search">
         <input class="search_txt" type="search" placeholder="검색어 입력...">
-        <a class="search_btn" href="example.html"><img  src="/images/icon/searchicon.png" width="35" height="35"></a>
+        <a class="search_btn" href="example.html"><img  src="images/icon/searchicon.png" width="35" height="35"></a>
     </form>
     <ul>
         <li class="home"><a href="/main">홈</a></li>
@@ -178,20 +186,22 @@
     <form action="" method="post" id="form">
     <div class="drawList">
         <ul th:each="d:${list}">
+            <form id="testForm">
+            <div class="drawlist">
             <img th:src="@{/images/}+${d.img_fname}" width="200" height="252">
-            <li>드로우번호 :<span th:text ="${d.drawid}"/> </li>
+            <li>드로우번호 :<span th:text ="${d.drawid}" id="drawid"/> </li>
             <li>제목 : <span th:text="${d.ticket_name}"/></li>
             <li>관람일 : <span th:text="${d.ticket_date}"/></li>
             <li>상영관 : <span th:text="${d.loc}"/></li>
-            <li>관람좌석 : <span th:text="${d.seatname}"/></li>
-            <li>test : <span th:text="${d.ticketid}"/></li>
+            <li>관람좌석 : <span th:text="${d.seatname}" id = "seatname"/></li>
+            <li><span th:text="${d.ticketid}" id="ticketid" hidden="hidden"></span></li>
+            <li><span th:text="${d.seatid}" id="seatid" hidden="hidden"></span></li>
+            <button id="pay_btn" type="submit"  th:if="${d.seatname != 'none'}" >결제하기</button>
+            </div>
+            </form>
         </ul>
-        <button>결과확인</button>
-        <input type="checkbox" id="check2">
-        <label for="check2"></label>
+
     </div>
-</form>
-</div>
 <div id="main-footer">
     <footer class = "footer">
         <div>ⓒ CodingDoit corp.</div>

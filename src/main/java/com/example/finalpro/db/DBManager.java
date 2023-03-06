@@ -1,9 +1,5 @@
 package com.example.finalpro.db;
 
-import com.example.finalpro.entity.Customer;
-import com.example.finalpro.entity.Seat;
-import com.example.finalpro.vo.CustomerVO;
-import com.example.finalpro.entity.Qna;
 import com.example.finalpro.vo.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -11,10 +7,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory;
@@ -777,6 +771,15 @@ public class DBManager {
 		return re;
 	}
 
+	// 드로우 완료
+	public static int drawDelete(int drawid){
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.delete("draw.drawDelete",drawid);
+		System.out.println("drawDelete:"+re);
+		session.close();
+		return re;
+	}
 
 	public static String findBySeatId(int seatid) {
 		String re = "none";
@@ -793,5 +796,14 @@ public class DBManager {
 		list = session.selectList("findByDrawCustid", custid);
 		session.close();
 		return list;
+	}
+
+	public static int findBySeatIdFromBook(int seatid) {
+		int re = -1;
+		SqlSession session = sqlSessionFactory.openSession(true);
+		re = session.selectOne("seat.findBySeatIdFromBook",seatid);
+		System.out.println("seatName:"+re);
+		session.close();
+		return re;
 	}
 }

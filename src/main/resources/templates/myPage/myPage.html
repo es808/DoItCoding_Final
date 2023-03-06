@@ -181,14 +181,16 @@
 
             searchKeyword();
             $(document).on('click', '#btn_phoneconfirm', function(){ // 전화번호 중복
-                var phone = $("#phone").val();
+                let phone = $("#phone").val();
                 var url = "ConfirmCustomerPhone";
                 var data = {phone:phone};
-
                 $.ajax(url, {
                     data:data,
                     success:function(answer){
-                        if(answer == 1){
+                        if(phone.length != 11){
+                            alert("잘못된 번호 입니다.")
+                            confirm_phone = false;
+                        }else if(answer == 1){
                             alert("중복된 번호입니다");
                             confirm_phone = false;
                         }

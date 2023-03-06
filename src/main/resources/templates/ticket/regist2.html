@@ -13,6 +13,9 @@
 
             var ticketid = Number(sessionStorage.getItem("ticketid"));
             var custid = sessionStorage.getItem("custid");
+            var drawid = sessionStorage.getItem("drawid");
+            console.log("drawid:"+drawid);
+
             //티켓정보 출력
             $.ajax({
                 url: "DetailTicket",
@@ -82,7 +85,6 @@
                                                                 seatid: sessionStorage.getItem("as")},
                                                             success:function(final){
                                                                 console.log("BookTicket성공");
-
                                                                 $(document).ready(function(){
                                                                     if (final > 0) {
                                                                         // 예약완료 문자 발송 여기!
@@ -99,13 +101,24 @@
                                                                             }
                                                                         })
                                                                         alert("예약 성공!");
-                                                                        $(location).attr('href',"/detail?ticketid"+ticketid);
+                                                                        $.ajax({
+                                                                            url:"drawDelete",
+                                                                            data:{drawid:drawid},
+                                                                            success:function (){
+                                                                                console.log("삭제성공");
+                                                                            }
+                                                                        })
+
+                                                                        window.close();
+                                                                        //$(location).attr('href',"/detail?ticketid"+ticketid);
                                                                     }else{
                                                                         alert("예약에 실패하였습니다. 다시 시도해주세요.");
                                                                     }
                                                                 })
                                                             }
                                                         })
+                                                    }else{
+                                                        alert("예약에 실패하였습니다. 다시 시도해주세요.");
                                                     }
                                                 }
                                             })
@@ -120,7 +133,6 @@
                     })
                 }
             })
-
         });
     </script>
 </head>
