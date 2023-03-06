@@ -85,7 +85,6 @@
                                                                 seatid: sessionStorage.getItem("as")},
                                                             success:function(final){
                                                                 console.log("BookTicket성공");
-
                                                                 $(document).ready(function(){
                                                                     if (final > 0) {
                                                                         // 예약완료 문자 발송 여기!
@@ -97,6 +96,9 @@
                                                                                 console.log("삭제성공");
                                                                             }
                                                                         })
+
+                                                                        // window.close();
+                                                                        //$(location).attr('href',"/detail?ticketid"+ticketid);
                                                                     }else{
                                                                         alert("예약에 실패하였습니다. 다시 시도해주세요.");
                                                                     }

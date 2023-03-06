@@ -68,33 +68,14 @@ public class CustomerController {
     private SeatDAO seatDAO;
 
 
-    //public void setDao(CustomerDAO dao){ this.dao = dao; }
-
     @RequestMapping("/list")
     public void list(Model model) {
         model.addAttribute("list", dao.findAll());
     }
 
-
-    @RequestMapping("/list_jpa_id")
-    public void list_jpa_id(Model model) {
-        model.addAttribute("list", ts.findById());
-    }
-
-    @RequestMapping("/list_customer")
-    public void list_customer(Model model) {
-        model.addAttribute("list", cs.findAll());
-    }
-
-    @RequestMapping("/list_ticket")
-    public void list_ticket(Model model) {
-        model.addAttribute("list", ticketService.findAll());
-    }
-
     @GetMapping("/login")
     public void login() {
     }
-
 
     @GetMapping("/signUp")
     public void signUp() {
@@ -142,6 +123,9 @@ public class CustomerController {
     public String myPage(HttpSession session, Model m) {
         System.out.println((String) session.getAttribute("id"));
         String id = (String) session.getAttribute("id");
+        if(id == null){
+            return "/login";
+        }
         Optional<Customer> c = customerDAO.findById(id);
         System.out.println(c.get());
         m.addAttribute("id",c.get());
@@ -169,6 +153,9 @@ public class CustomerController {
     @GetMapping("/myPageDraw")
     public String myPageDraw(HttpSession session, Model m){
         String custid = (String)session.getAttribute("id");
+        if(custid == null){
+            return "/login";
+        }
         List<MyDrawVO> myDraw = new ArrayList<>();
         TicketVO myTicket = null;
 
@@ -208,7 +195,12 @@ public class CustomerController {
     }
 
     @GetMapping("/myPageBook")
-    public String myPageBook() { return "myPage/myPageBook";}
+    public String myPageBook(HttpSession session) {
+        String custid = (String)session.getAttribute("id");
+        if(custid == null){
+            return "/login";
+        }
+        return "myPage/myPageBook";}
 
     @GetMapping("/myPageReview")
     public String myPageReview() { return "myPage/myPageReview";}

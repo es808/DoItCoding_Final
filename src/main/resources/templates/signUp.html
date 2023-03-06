@@ -142,7 +142,7 @@
 
 
             $(document).on('click', '#btn_idconfirm', function () { // 아이디 중복검사
-                var custid = $("#custid").val();
+                let custid = $("#custid").val();
                 var url = "ConfirmCustomerId";
                 var data = {custid: custid};
 
@@ -151,8 +151,10 @@
                     success: function (answer) {
 
                         console.log(answer);
-
-                        if (answer == 1) {
+                        if(!(custid.length > 5 && custid.length < 13)){
+                          alert("아이디는 6~12자로 입력해주세요")
+                            confirm_custid = false;
+                        }else if(answer == 1){
                             alert("중복된 아이디입니다");
                             confirm_custid = false;
                         } else {
@@ -165,16 +167,20 @@
 
 
             $(document).on('click', '#btn_phoneconfirm', function () { // 전화번호 중복
-                var phone = $("#phone").val();
+                let phone = $("#phone").val();
                 var url = "ConfirmCustomerPhone";
                 var data = {phone:phone};
                 $.ajax(url, {
                     data:data,
                     success: function (answer) {
-                        if (answer == 1) {
+                        if(phone.length != 11){
+                            alert("잘못된 번호 입니다.")
+                            confirm_phone = false;
+                        }else if(answer == 1){
                             alert("중복된 번호입니다");
                             confirm_phone = false;
-                        } else {
+                        }
+                        else {
                             alert("사용가능한 번호입니다");
                             confirm_phone = true;
                         }
