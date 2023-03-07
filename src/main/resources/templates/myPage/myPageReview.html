@@ -12,13 +12,7 @@
     <script th:src="@{/js/ticket/CategoryNavSearch.js}"></script>
     <script type="text/javascript">
         $(function(){
-
-            var custid = sessionStorage.getItem("custid");
-            var ticketid = sessionStorage.getItem("ticketid");
-
-            var custid = sessionStorage.getItem("custid");
-
-            $(".delete").click(function () {
+            $(".review_delete").click(function () {
                 if (confirm("정말로 삭제하시겠습니까?")) {
                     let reviewid = $(this).attr("reviewid")
                     console.log(reviewid)
@@ -91,7 +85,7 @@
     <!-- 후기 수정시 비활성화 상태에서 활성화 상태로 바꾸는거니까 ajax 활용 필요해보임! -->
         <div id="reviewlist">
             <div class="reviewlist" th:each="r:${list}">
-                <img th:src="@{'/images/'+${r.img_fname}}" width="100" height="150">
+                <img th:src="@{'/images/'+${r.img_fname}}" width="100" height="150" class="review_img">
                 <div hidden="hidden"><span th:text="${r.reviewid}"></span></div>
 <!--                <div><span th:text="${r.customer.custid}"></span></div>-->
 <!--                <div><span th:text="${r.ticket.ticketid}"></span></div>-->
@@ -101,8 +95,10 @@
                     <span th:each="i: ${#numbers.sequence(1, r.score)}">⭐</span>
                 </div>
                 <div><span th:text="${r.review_content}"></span></div>
-                <a th:href="@{'/myPage/updateReview/'+${r.reviewid}}">수정</a>
-                <a class="delete" th:attr="reviewid=${r.reviewid}">삭제</a>
+                <br>
+                <br>
+                <a class="review_update" th:href="@{'/myPage/updateReview/'+${r.reviewid}}">수정</a>
+                <a class="review_delete" th:attr="reviewid=${r.reviewid}" href="#">삭제</a>
             </div>
         </div>
 
