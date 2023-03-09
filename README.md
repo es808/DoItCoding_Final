@@ -23,6 +23,12 @@
 
 <hr>
 
+### ㏈ ER 다이어 그램
+
+<img width="425" alt="image" src="https://user-images.githubusercontent.com/49307938/223933230-ee8d8a15-c7ec-481f-99f0-2ce9decdf12b.png">
+
+<hr>
+
 ### 📝 프로젝트 기록(조영민)
 
 - **2/15**
