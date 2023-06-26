@@ -65,18 +65,15 @@
   </if>
 </select>
 ~~~
-
 </div>
 </details>
 
-
 <details>
-<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<summary>2. 상세 페이지 내 서버 시간 제공</summary>
 <div markdown="1">
 
  * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
- * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
- * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+
 ~~~
 <select id="findAllTicketByCategory" resultType="ticketVO">
   select * from ticket where cateid=#{cateid} and
@@ -91,18 +88,15 @@
   </if>
 </select>
 ~~~
-
 </div>
 </details>
 
-
 <details>
-<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<summary>3. 예매 오픈일에 맞춰 예매 버튼 활성화</summary>
 <div markdown="1">
 
  * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
- * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
- * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+
 ~~~
 <select id="findAllTicketByCategory" resultType="ticketVO">
   select * from ticket where cateid=#{cateid} and
@@ -117,18 +111,15 @@
   </if>
 </select>
 ~~~
-
 </div>
 </details>
 
-
 <details>
-<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<summary>4. 후기 페이지에 성별별 예매율 제공</summary>
 <div markdown="1">
 
  * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
- * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
- * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+
 ~~~
 <select id="findAllTicketByCategory" resultType="ticketVO">
   select * from ticket where cateid=#{cateid} and
@@ -143,18 +134,38 @@
   </if>
 </select>
 ~~~
-
 </div>
 </details>
 
-
 <details>
-<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<summary>5. 문자 인증을 통한 아이디 찾기</summary>
 <div markdown="1">
 
  * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
- * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
- * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+
+~~~
+<select id="findAllTicketByCategory" resultType="ticketVO">
+  select * from ticket where cateid=#{cateid} and
+  <if test="time==0">
+    ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
+  </if>
+  <if test="time==1">
+    ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+  <if test="time==2">
+    ticket_date &gt; to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+</select>
+~~~
+</div>
+</details>
+
+<details>
+<summary>6. 문자 및 이메일 인증을 통한 비밀번호 재설정</summary>
+<div markdown="1">
+
+ * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+
 ~~~
 <select id="findAllTicketByCategory" resultType="ticketVO">
   select * from ticket where cateid=#{cateid} and
