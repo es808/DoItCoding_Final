@@ -9,26 +9,26 @@
 
 그 외 주요 구현 기능은 다음과 같습니다.
 
- - 회원가입 및 로그인, 아이디 비밀번호 찾기(인증코드 이메일, 핸드폰으로 검증).<br>
- - 5점 만점으로 리뷰 남기기.<br>
- - 리뷰 점수를 바탕으로 메인 화면에서 카테고리 별로 랭킹 3위까지 출력.<br>
- - 카카오 챗봇을 통한 간단한 상담 (현재 불가능)<br>
- - 일반적인 사항 혹은 사용자가 예매한 상영작에 대한 1대1 문의 (비밀 글 처리 가능).<br>
- - 관리자 페이지에서 상영작, 회원 정보 관리 (입력, 수정, 삭제 등)<br>
- - 관리자가 공지사항 작성, 사용자가 작성한 1대1 문의 답변 (답변 시 사용자 메인 화면에 알람이 생성됨)<br>
+ * 회원가입 및 로그인, 아이디 비밀번호 찾기(인증코드 이메일, 핸드폰으로 검증).
+ * 5점 만점으로 리뷰 남기기.
+ * 리뷰 점수를 바탕으로 메인 화면에서 카테고리 별로 랭킹 3위까지 출력.
+ * 카카오 챗봇을 통한 간단한 상담 (현재 불가능)
+ * 일반적인 사항 혹은 사용자가 예매한 상영작에 대한 1대1 문의 (비밀 글 처리 가능).
+ * 관리자 페이지에서 상영작, 회원 정보 관리 (입력, 수정, 삭제 등)
+ * 관리자가 공지사항 작성, 사용자가 작성한 1대1 문의 답변 (답변 시 사용자 메인 화면에 알람이 생성됨)
 
 ### ⏰ 개발기간 및 인원
- - 2023.02.15 - 2023.03.06 (20일)
- - 6명 (김고운, 신윤경, 이명진, 유근형, 조영민, 황은선)
+ * 2023.02.15 - 2023.03.06 (20일)
+ * 6명 (김고운, 신윤경, 이명진, 유근형, 조영민, 황은선)
 <hr>
 
 ### ⚙️ 개발환경
- - java 17
- - DataBase : ORACLE
- - ORM : MyBatis, JPA
- - Framework : SpringBoot(3.0)
- - View : HTML5, CSS3, JavaScript, Thymeleaf
- - IDE : IntelliJ Ultimate 2022
+ * java 17
+ * DataBase : ORACLE
+ * ORM : MyBatis, JPA
+ * Framework : SpringBoot(3.0)
+ * View : HTML5, CSS3, JavaScript, Thymeleaf
+ * IDE : IntelliJ Ultimate 2022
 <hr>
 
 ### 🌊 서비스 흐름도
@@ -41,21 +41,138 @@
 <img width="800" alt="image" src="https://user-images.githubusercontent.com/97737386/230890793-5c7aaa4e-cca8-4330-b722-37e9d71755a0.png">
 <hr>
 
-### 💻 프로젝트 담당기능 및 코드
+### 💻 프로젝트 담당 기능 및 코드
 (▶ 버튼을 누르면 내용을 펼칠 수 있습니다.)
 
 <details>
-<summary>여기를 눌러주세요</summary>
-<div markdown="1">       
+<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<div markdown="1">
 
-😎숨겨진 내용😎
+ * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+ * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
+ * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+~~~
+<select id="findAllTicketByCategory" resultType="ticketVO">
+  select * from ticket where cateid=#{cateid} and
+  <if test="time==0">
+    ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
+  </if>
+  <if test="time==1">
+    ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+  <if test="time==2">
+    ticket_date &gt; to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+</select>
+~~~
 
 </div>
 </details>
-1. 메인 화면 구성 (시간, 카테고리, 랭킹별 상영작 출력)
-2. 검색 & 카테고리 페이지 (js파일로 모듈화)
-3. 로그인, 회원가입 기능 일부 구현
-4. 관리자 페이지 전담
+
+
+<details>
+<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<div markdown="1">
+
+ * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+ * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
+ * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+~~~
+<select id="findAllTicketByCategory" resultType="ticketVO">
+  select * from ticket where cateid=#{cateid} and
+  <if test="time==0">
+    ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
+  </if>
+  <if test="time==1">
+    ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+  <if test="time==2">
+    ticket_date &gt; to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+</select>
+~~~
+
+</div>
+</details>
+
+
+<details>
+<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<div markdown="1">
+
+ * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+ * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
+ * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+~~~
+<select id="findAllTicketByCategory" resultType="ticketVO">
+  select * from ticket where cateid=#{cateid} and
+  <if test="time==0">
+    ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
+  </if>
+  <if test="time==1">
+    ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+  <if test="time==2">
+    ticket_date &gt; to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+</select>
+~~~
+
+</div>
+</details>
+
+
+<details>
+<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<div markdown="1">
+
+ * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+ * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
+ * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+~~~
+<select id="findAllTicketByCategory" resultType="ticketVO">
+  select * from ticket where cateid=#{cateid} and
+  <if test="time==0">
+    ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
+  </if>
+  <if test="time==1">
+    ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+  <if test="time==2">
+    ticket_date &gt; to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+</select>
+~~~
+
+</div>
+</details>
+
+
+<details>
+<summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
+<div markdown="1">
+
+ * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+ * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
+ * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+~~~
+<select id="findAllTicketByCategory" resultType="ticketVO">
+  select * from ticket where cateid=#{cateid} and
+  <if test="time==0">
+    ticket_date &lt; to_char(sysdate, 'yyyy/mm/dd')
+  </if>
+  <if test="time==1">
+    ticket_date &gt; to_char(sysdate, 'yyyy/mm/dd') and ticket_date &lt;= to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+  <if test="time==2">
+    ticket_date &gt; to_char(sysdate+14, 'yyyy/mm/dd')
+  </if>
+</select>
+~~~
+
+</div>
+</details>
+
 <hr> 
 
 
