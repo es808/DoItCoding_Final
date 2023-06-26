@@ -187,7 +187,7 @@ DBManager를 테이블 별로 분리하지 않고 하나의 클래스에 모든 
 
 
 <details>
-  <h3> 📝 프로젝트 일지 </h3>
+  <summary><h3> 📝 프로젝트 일지 </h3></summary>
   <div markdown="1">
     
    * 2/15 - 2/20
