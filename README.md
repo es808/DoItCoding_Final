@@ -142,24 +142,15 @@
 <hr> 
 
 ### 🛠 주요 문제 해결 기록
-<details>
-<summary>1. 구글 SMTP 버전 이슈</summary>
-<div markdown="1"></br>
+#### 1. 구글 SMTP 버전 이슈
  * 상황: 비밀번호 재설정과 예매 및 드로우 내역 안내를 위해 구글 SMTP를 활용하여 메일을 보내는 기능을 구현해야 했습니다.
  * 문제: 교육 과정 중 진행했던 실습과 환경 및 버전이 달라져 이메일 발송이 안 되는 문제가 발생하였습니다.
  * 해결: 우선 구글링을 하며 버전을 바꾸어 실험해보고, SMTP 관련 인증도 다시 받아보았습니다. 그 과정에서 오류 메시지를 확인하니 emailSender 부분에서 오류가 발생하는 것을 알게 되었습니다. 'spring-boot-starter-mail'이라는 dependency를 추가하여 해결하였습니다.
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/684bb49967ce8ac3a8a5cad68e79427074660a6e/pom.
-</div>
-</details>
+
 <hr> 
 
 ### 추후 보완이 필요한 부분
-<details>
-<summary></summary>
-<div markdown="1">
-
-</div>
-</details>
 #### 1. AWS를 통한 웹사이트 배포
  * 상황: 시간과 기술적 한계로 최종 목표였던 AWS를 통한 웹사이트 배포는 하지 못했습니다.
  * 문제: 웹사이트가 배포되어야 사용할 수 있는 카카오 챗봇 서비스를 제대로 활용할 수 없습니다.
