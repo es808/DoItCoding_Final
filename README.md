@@ -44,12 +44,12 @@
 
 ### 🌊 서비스 흐름도
 
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/97737386/229759345-d6083d7b-17ca-4515-bfa6-0e26533c5371.png">
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/97737386/229759345-d6083d7b-17ca-4515-bfa6-0e26533c5371.png">
 <hr>
 
 ### 🧮 ER-Diagram
 
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/97737386/230890793-5c7aaa4e-cca8-4330-b722-37e9d71755a0.png">
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/97737386/230890793-5c7aaa4e-cca8-4330-b722-37e9d71755a0.png">
 <hr>
 
 ### 💻 프로젝트 담당 기능 및 코드
