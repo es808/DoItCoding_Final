@@ -62,7 +62,10 @@
 
  * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의
  * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력
- * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 조건문을 활용하여 sql문 정의
+ * 현재 날짜를 기준으로 mapper에서 조건문을 활용하여 sql문 정의
+   * 상영일이 현재 날짜보다 과거면 과거상영작
+   * 현재 날짜 ~ 현재 날짜+14일 이면 현재 상영작
+   * 현재 날짜+14일 보다 크면 개봉예정작
 
 ~~~
 <select id="findAllTicketByCategory" resultType="ticketVO">
@@ -95,12 +98,10 @@
 <summary>3. 예매 오픈일에 맞춰 예매 버튼 활성화</summary>
 <div markdown="1">
 
- * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
- * 
+[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/e1bf35ef3ad310eac2373fd15e6fd65cec10c52b/src/main/resources/templates/ticket/detail.html#L205)
 
-~~~
-
-~~~
+ * 개봉일 기준으로 일주일 전인 예매 오픈 일정에 맞춰 예매 버튼 활성화
+ * CSS 속성을 활용하여 예매 버튼 활성화
 </div>
 </details>
 
