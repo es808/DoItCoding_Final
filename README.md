@@ -58,7 +58,9 @@
 <details>
 <summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
 
-[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/category.html#L38)  
+[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/category.html#L38)
+
+![장르와 시간을 기준으로 상영작 출력](https://github.com/es808/test01/assets/116155163/e0a16c2c-8a92-4619-a0ab-39239a89cfd5)
 
  * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의
  * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력
@@ -89,6 +91,8 @@
 <div markdown="1">
 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/detail.html#L296)  
+
+![상세 페이지 내 서버 시간 제공](https://github.com/es808/test01/assets/116155163/ce03c564-30fa-4253-ba38-ad7555fef096)
 
  * JavaScript의 setInterval() 함수를 이용
  * 사용자 편의성 증진을 위하여 상세 페이지 내 예매 버튼 하단에 서버 시간을 제공
@@ -150,7 +154,7 @@
 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/customer/findPwd.html#L20) 
 
-- 1. 전화번호 인증을 통한 비밀전호 재설정
+ * 6-1) 전화번호 인증을 통한 비밀전호 재설정
 ![문자 인증을 통한 비밀번호 재설정](https://github.com/es808/test01/assets/116155163/b64c0736-93c9-4f07-b9e8-dae650c6005c)
 ~~~
 <!-- 전화번호로 비밀번호 재설정 -->
@@ -159,7 +163,7 @@
 </update>
 ~~~
 
-- 2. 이메일 인증을 통한 비밀전호 재설정
+ * 6-2) 이메일 인증을 통한 비밀전호 재설정
 ~~~
 <!-- 이메일로 비밀번호 재설정 -->
 <update id="updatePwdbyEmail" parameterType="customerVO">
