@@ -57,11 +57,13 @@
 
 <details>
 <summary>1. 장르와 시간을 기준으로 상영작 출력</summary>
-<div markdown="1">
 
- * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
- * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력.
- * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 sql문 정의
+[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/category.html#L38)  
+
+ * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의
+ * time 변수를 정의하여 각각 값이 0, 1, 2일 때 과거, 현재, 미래 상영작을 출력
+ * 현재 날짜를 기준으로 상영일이 현재 날짜보다 과거면 과거상영작, 현재 날짜 ~ 현재 날짜+14일이면 현재 상영작, 현재 날짜+14일보다 크면 개봉예정작으로 mapper에서 조건문을 활용하여 sql문 정의
+
 ~~~
 <select id="findAllTicketByCategory" resultType="ticketVO">
   select * from ticket where cateid=#{cateid} and
@@ -76,18 +78,16 @@
   </if>
 </select>
 ~~~
-</div>
 </details>
 
 <details>
 <summary>2. 상세 페이지 내 서버 시간 제공</summary>
 <div markdown="1">
 
- * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/detail.html#L296)  
 
-~~~
-
-~~~
+ * JavaScript의 setInterval() 함수를 이용
+ * 사용자 편의성 증진을 위하여 상세 페이지 내 예매 버튼 하단에 서버 시간을 제공
 </div>
 </details>
 
@@ -96,6 +96,7 @@
 <div markdown="1">
 
  * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+ * 
 
 ~~~
 
@@ -107,10 +108,15 @@
 <summary>4. 후기 페이지에 성별별 예매율 제공</summary>
 <div markdown="1">
 
- * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/detail.html#L307)  
+
+ * 상품 실구매자의 성별을 분석하여 후기 페이지에 성별별 예매율을 제공
+ * mapper에서 집계함수 중 count()함수를 활용하여 sql문 정의
 
 ~~~
-
+<select id="countGender" resultType="countGenderVO">
+  select gender,count(*) cnt from customer c, book b where c.custid = b.custid and b.ticketid=#{ticketid} group by gender
+</select>
 ~~~
 </div>
 </details>
@@ -119,10 +125,16 @@
 <summary>5. 문자 인증을 통한 아이디 찾기</summary>
 <div markdown="1">
 
- * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/customer/findCustid.html#L17)  
+
+ * 회원가입 시 등록한 이름과 전화번호를 가지고 아이디 찾기
+ * 개인정보가 일치하는 경우 문자로 인증코드를 전송받아 아이디를 찾을 수 있음
 
 ~~~
-
+<!-- findCustid 아이디 찾기 -->
+<select id="findCustid" resultType="customerVO">
+  select custid from customer where name=#{name} and phone=#{phone}
+</select>
 ~~~
 </div>
 </details>
@@ -131,45 +143,81 @@
 <summary>6. 문자 및 이메일 인증을 통한 비밀번호 재설정</summary>
 <div markdown="1">
 
- * cateid에 따라 장르별(시사회, 뮤지컬, 연극, 콘서트)로 다르게 출력되도록 정의.
+[📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/customer/findPwd.html#L20) 
+
+ * 전화번호 또는 이메일 인증을 통해 비밀번호 재설정
 
 ~~~
+<!-- 전화번호로 비밀번호 재설정 -->
+<update id="updatePwdbyPhone" parameterType="customerVO">
+  update customer set pwd=#{pwd} where custid=#{custid} and phone=#{phone}
+</update>
 
+<!-- 이메일로 비밀번호 재설정 -->
+<update id="updatePwdbyEmail" parameterType="customerVO">
+  update customer set pwd=#{pwd} where custid=#{custid} and email=#{email}
+</update>
 ~~~
-
 </div>
 </details>
 <hr> 
 
 ### 🛠 주요 문제 해결 기록
-#### 1. 구글 SMTP 버전 이슈
+<details>
+<summary>1. 구글 SMTP 버전 이슈</summary>
+<div markdown="1">
+  
  * 상황: 비밀번호 재설정과 예매 및 드로우 내역 안내를 위해 구글 SMTP를 활용하여 메일을 보내는 기능을 구현해야 했습니다.
  * 문제: 교육 과정 중 진행했던 실습과 환경 및 버전이 달라져 이메일 발송이 안 되는 문제가 발생하였습니다.
- * 해결: 우선 구글링을 하며 버전을 바꾸어 실험해보고, SMTP 관련 인증도 다시 받아보았습니다. 그 과정에서 오류 메시지를 확인하니 emailSender 부분에서 오류가 발생하는 것을 알게 되었습니다. 'spring-boot-starter-mail'이라는 dependency를 추가하여 해결하였습니다.</br>
+ * 해결: 우선 구글링을 하며 버전을 바꾸어 실험해보고, SMTP 관련 인증도 다시 받아보았습니다. 그 과정에서 오류 메시지를 확인하니 emailSender 부분에서 오류가 발생하는 것을 알게 되었습니다. 'spring-boot-starter-mail'이라는 dependency를 추가하여 해결하였습니다.
+ 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/684bb49967ce8ac3a8a5cad68e79427074660a6e/pom.)
+</div>
+</details>
+
 
 <hr> 
 
-### 추후 보완이 필요한 부분
-#### 1. AWS를 통한 웹사이트 배포
+### ➕ 추후 보완이 필요한 부분
+<details>
+<summary>1. AWS를 통한 웹사이트 배포</summary>
+<div markdown="1">
+  
  * 상황: 시간과 기술적 한계로 최종 목표였던 AWS를 통한 웹사이트 배포는 하지 못했습니다.
  * 문제: 웹사이트가 배포되어야 사용할 수 있는 카카오 챗봇 서비스를 제대로 활용할 수 없습니다.
  * 보완: 기능의 완성도를 더 높인 후, JUnit을 활용한 단위 테스트를 통해 서비스에 대한 검증이 제대로 이뤄진 이후 웹사이트 배포까지 해보고 싶습니다.
+</div>
+</details>
 
-#### 2. 드로우 알고리즘 변경
+<details>
+<summary>2. 드로우 알고리즘 변경</summary>
+<div markdown="1">
+  
  * 상황: 현재의 드로우 알고리즘은 신청자에 한하여 무작위 랜덤 추첨 방식입니다.
  * 문제: 현재 방식의 경우, 무작위 랜덤 추첨이기 때문에 사이트 이용 빈도가 높은 회원과 처음 사이트를 이용한 회원 모두 동일한 확률로 드로우 서비스를 이용할 수 있습니다. 공평한 방식이라고 생각했지만, 웹사이트에 대한 회원들의 충성도를 높이는 데에는 도움이 되지 않습니다.
  * 보완: 사이트 이용 빈도와 회원의 선호에 가중치를 두어 추첨할 수 있는 알고리즘으로 변경하면 좋을 것 같습니다.
+</div>
+</details>
 
-#### 3. 시간 관련 데이터 관리
+<details>
+<summary>3. 시간 관련 데이터 관리</summary>
+<div markdown="1">
+  
  * 상황: 예매 사이트이다 보니 시간과 관련된 데이터를 다루는 기능들이 많이 있습니다. 예를 들어 현재 시간을 기준으로 현재/과거/미래 상영작들로 구분하고, 예매 오픈일에 맞추어 예매 버튼을 활성화하거나 비활성화했습니다. 또 사용 편의성을 위해 상세 페이지 내 서버 시간을 제공하기도 하였습니다.
  * 문제: 시간 관련 데이터 형식들이 varchar2 또는 date로 통일되어 있지 않습니다. 또한 기능들이 조건문 또는 조인이 들어간 복잡한 sql 쿼리문이나 CSS를 통해 구현되어 있습니다.
  * 보완: 형 변환에 대한 공부를 더 한 후, 시간 관련 데이터의 형식을 하나로 통일하여 관리하면 좋을 것 같습니다. 또한 필요한 시간 데이터를 한번에 볼 수 있는 view를 만들어 기능을 구현했다면 좀 더 수월하게 코드를 짤 수 있을 것 같습니다.
+</div>
+</details>
 
-#### 4. 웹 크롤링을 통한 후기 제공
+<details>
+<summary>4. 웹 크롤링을 통한 후기 제공</summary>
+<div markdown="1">
+  
  * 상황: 별점 및 후기 기능의 신뢰성을 높이기 위해 예매 내역이 있는 회원에 한하여 후기를 작성할 수 있습니다. 
  * 문제: 예매 내역이 없는 현재 상영작과 개봉 예정작의 경우, 별점과 후기 기능을 제공할 수 없습니다. 따라서 메인 페이지에 노출되는 장르별 랭킹에 과거 상영작들만 출력됩니다. 
  * 보완: 파이썬을 활용해 후기를 제공하는 웹 사이트를 크롤링하여 현재 상영작과 상영 예정작의 기대 별점 및 예상 키워드 등을 제공하고 싶습니다.
+</div>
+</details>
 <hr>
 
 ### 프로젝트에 대한 전반적 회고
