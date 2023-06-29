@@ -130,6 +130,8 @@
 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/customer/findCustid.html#L17)  
 
+![문자 인증을 통한 아이디 찾기](https://github.com/es808/test01/assets/116155163/e75f202b-41a5-43fc-ad92-0aa5957d069c)
+
  * 회원가입 시 등록한 이름과 전화번호를 가지고 아이디 찾기
  * 개인정보가 일치하는 경우 문자로 인증코드를 전송받아 아이디를 찾을 수 있음
 
@@ -148,14 +150,17 @@
 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/customer/findPwd.html#L20) 
 
- * 전화번호 또는 이메일 인증을 통해 비밀번호 재설정
-
+- 1. 전화번호 인증을 통한 비밀전호 재설정
+![문자 인증을 통한 비밀번호 재설정](https://github.com/es808/test01/assets/116155163/b64c0736-93c9-4f07-b9e8-dae650c6005c)
 ~~~
 <!-- 전화번호로 비밀번호 재설정 -->
 <update id="updatePwdbyPhone" parameterType="customerVO">
   update customer set pwd=#{pwd} where custid=#{custid} and phone=#{phone}
 </update>
+~~~
 
+- 2. 이메일 인증을 통한 비밀전호 재설정
+~~~
 <!-- 이메일로 비밀번호 재설정 -->
 <update id="updatePwdbyEmail" parameterType="customerVO">
   update customer set pwd=#{pwd} where custid=#{custid} and email=#{email}
