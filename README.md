@@ -92,7 +92,7 @@
 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/detail.html#L296)  
 
-![상세 페이지 내 서버 시간 제공](https://github.com/es808/test01/assets/116155163/ce03c564-30fa-4253-ba38-ad7555fef096)
+![상세-페이지-내-서버-시간-제공](https://github.com/es808/test01/assets/116155163/88c619c0-3c41-45c0-bb92-1046c9671bef)
 
  * JavaScript의 setInterval() 함수를 이용
  * 사용자 편의성 증진을 위하여 상세 페이지 내 예매 버튼 하단에 서버 시간을 제공
@@ -156,6 +156,7 @@
 
  * 6-1) 전화번호 인증을 통한 비밀전호 재설정
 ![문자 인증을 통한 비밀번호 재설정](https://github.com/es808/test01/assets/116155163/b64c0736-93c9-4f07-b9e8-dae650c6005c)
+
 ~~~
 <!-- 전화번호로 비밀번호 재설정 -->
 <update id="updatePwdbyPhone" parameterType="customerVO">
@@ -164,6 +165,8 @@
 ~~~
 
  * 6-2) 이메일 인증을 통한 비밀전호 재설정
+![이메일 인증을 통한 비밀전호 재설정](https://github.com/es808/test01/assets/116155163/6ab12a8c-f563-435e-a3cb-dc4d228019c9)
+
 ~~~
 <!-- 이메일로 비밀번호 재설정 -->
 <update id="updatePwdbyEmail" parameterType="customerVO">
