@@ -105,6 +105,8 @@
 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/e1bf35ef3ad310eac2373fd15e6fd65cec10c52b/src/main/resources/templates/ticket/detail.html#L205)
 
+![예매 오픈일에 맞춰 예매 버튼 활성화](https://github.com/es808/test01/assets/116155163/56304534-a742-4597-a03a-0477efc00365)
+
  * 개봉일 기준으로 일주일 전인 예매 오픈 일정에 맞춰 예매 버튼 활성화
  * CSS 속성을 활용하여 예매 버튼 활성화
 </div>
@@ -115,6 +117,8 @@
 <div markdown="1">
 
 [📌 코드확인](https://github.com/es808/DoItCoding_Final/blob/148104ceca84f9f12b29643793347f207aba92d2/src/main/resources/templates/ticket/detail.html#L307)  
+
+![성별 통계](https://github.com/es808/test01/assets/116155163/4fd0c297-26e6-461a-8e01-3f4b86eed07e)
 
  * 상품 실구매자의 성별을 분석하여 후기 페이지에 성별별 예매율을 제공
  * mapper에서 집계함수 중 count()함수를 활용하여 sql문 정의
