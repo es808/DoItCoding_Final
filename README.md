@@ -68,6 +68,7 @@
    * 현재 날짜+14일 보다 크면 개봉예정작
 
 ~~~
+<!-- main.html에서 카테고리, 시간 별로 상영작 출력하는 mapper sql 코드 -->
 <select id="findAllTicketByCategory" resultType="ticketVO">
   select * from ticket where cateid=#{cateid} and
   <if test="time==0">
@@ -115,6 +116,7 @@
  * mapper에서 집계함수 중 count()함수를 활용하여 sql문 정의
 
 ~~~
+<!-- 성별통계 -->
 <select id="countGender" resultType="countGenderVO">
   select gender,count(*) cnt from customer c, book b where c.custid = b.custid and b.ticketid=#{ticketid} group by gender
 </select>
